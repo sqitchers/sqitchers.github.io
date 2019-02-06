@@ -70,7 +70,7 @@ body > footer {
     border-top: 1px solid #ddd;
     width: 100%;
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
 }
 
 main #info a, #info a:visited {color:#c00}
@@ -90,7 +90,6 @@ main {
     line-height: 1.5em;
     font-weight: 500;
     text-shadow:  #2e2e2e 2px 4px 5px;
-    margin: 0;
 	padding: 32px;
 	background-color: #f6fbfc;
     background-image: url(/img/messeplatz.jpg);
@@ -116,7 +115,7 @@ main {
     padding-left: 16px;
 }
 
-#bar i, .code:before {
+#bar i, .code:before, #info a:before {
     font-family: FAS;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -146,7 +145,7 @@ body > footer .code:before {
 }
 
 @media only screen and (min-width: 750px) {
-    #info li {width: 356px}
+    #info li {width: 356px; margin-bottom: 24px;}
 }
 
 #info {
@@ -158,13 +157,16 @@ body > footer .code:before {
     font-weight: bold;
 }
 
-#info li:before {
+#info a:before {
     font-family: FAS; font-size:2em;
     line-height: 1em;
     color: #22538E;
-    opacity: 0.3;
+    opacity: 0.5;
     float:left;
     text-align: center;
     padding: 0 15px 50px 0;
 }
 
+#info a:hover:before {
+    opacity: 1.0 !important;
+}
