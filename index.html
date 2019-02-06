@@ -14,40 +14,38 @@
 	<header>
 		<hgroup id="top">
 			<h1><a href="/"><img src="/img/banner.png" alt="Sqitch" title="Sqitch" /></a></h1>
-			<h2>Sane database change management</h2>
 		</hgroup>
+		<nav id="bar">
+			<menu>
+				<li class="icon"><a href="" title="About"><i class="about"></i></a></li>
+				<li class="icon"><a href="" title="Documentation"><i class="docs"></i></a></li>
+				<li class="icon"><a href="" title="Community"><i class="community"></i></a></li>
+				<li class="icon"><a href="" title="Download"><i class="download"></i></a></li>
+			</menu>
+		</nav>
 	</header>
 
 	<p><section id="hi">
-        <p>Sqitch is the the sane database change management system, emphasizing the strengths of <a href="">native database tools</a> and syntaxes, <a href="">development iteration</a>, and <a href="">deployment integrity</a>.</p>
-        <p>Inspired by <a href="https://git-scm.com">Git</a> Sqitch offers a familiar interface but <a href="">no opions</a> about languages or frameworks, with features like <a href="">dependency resolution</a>, <a href="">mulitproject management</a>, and <a href="">deployment target management</a>.</p>
+        <p>Sqitch is the developer-friendly, confidence-inducing, platform-neutral database change management system.</p>
     </section>
     <main>
         <section id="info">
             <nav>
                 <ul>
-                    <li>
-                        <a href="/about/">
-                            <h3>About</h3>
-                        </a>
+                    <li class="about">
+                        <a href="/about/"><h3>About</h3></a>
                         <p>What makes Sqitch unique among database migration frameworks.</p>
                     </li>
-                    <li>
-                        <a href="/docs/">
-                            <h3>Documentation</h3>
-                        </a>
-                        <p>Command references, tutorials, best practice guides, and more.</p>
-                    </li>
-                    <li>
-                        <a href="/download/">
-                            <h3>Download</h3>
-                        </a>
+                    <li class="download">
+                        <a href="/download/"><h3>Download</h3></a>
                         <p>Binary and source code downloads and installation instructions.</p>
                     </li>
-                    <li>
-                        <a href="/community/">
-                            <h3>Community</h3>
-                        </a>
+                    <li class="docs">
+                        <a href="/docs/"><h3>Documentation</h3></a>
+                        <p>Command references, tutorials, best practice guides, and more.</p>
+                    </li>
+                    <li class="community">
+                        <a href="/community/"><h3>Community</h3></a>
                         <p>Get help, get involved. Issues, mail list, and source repository.</p>
                     </li>
                 </ul>
@@ -56,8 +54,10 @@
     </main></p>
 
     <footer>
-        <p><a href="/about/">About this Site</a><br />
-        Patches, suggestions, and comments welcome.</p>
+        <div class="code">
+            <a href="/site/">About this Site</a><br />
+            Patches, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.</p>
+        </div>
     </footer>
 </body>
 </html>
