@@ -58,7 +58,7 @@ body > header > hgroup {
     float: left;
 }
 
-body > header img {
+body > header img, body > header object {
 	height: 50px;
 }
 
