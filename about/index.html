@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sqitch: Sane database change management</title>
+	<meta name="description" content="Sqitch is a database change management application." />
+	<link rel="stylesheet" href="/css/screen.css" />
+	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#22538e">
+	<meta name="msapplication-TileColor" content="#22538e">
+	<meta name="theme-color" content="#fcffff">
+</head>
+<body>
+	<header id=masthead>
+		<hgroup id="top">
+			<h1><a href="/"><img src="/img/masthead.png" srcset="/img/masthead.svg" alt="Sqitch" title="Sqitch"></a></h1>
+		</hgroup>
+		<nav id="bar">
+			<menu>
+				<li class="icon"><a href="/about" title="About"><i class="about"></i></a></li>
+				<li class="icon"><a href="/docs/" title="Documentation"><i class="docs"></i></a></li>
+				<li class="icon"><a href="/community/" title="Community"><i class="community"></i></a></li>
+				<li class="icon"><a href="/downloads/" title="Download"><i class="download"></i></a></li>
+			</menu>
+		</nav>
+	</header>
+
+	<header id="title">
+		<h1>About Sqitch</h1>
+	</header>
+	<main id="about">
+		
+
+<p>Sqitch is a database change management application. What makes it different from
+your typical migration-style approaches? A few things:</p>
+
+<div class="icon db"></div>
+
+<h2 id="no-opinions">No Opinions</h2>
+
+<p>Sqitch is not integrated with any framework, ORM, or platform. Rather, it is a
+standalone change management system with no opinions about your database engine,
+application framework, or development environment.</p>
+
+<div class="icon cli"></div>
+
+<h2 id="native-scripting">Native scripting</h2>
+
+<p>Changes are implemented as scripts native to your selected database engine.
+Writing a <a href="https://postgresql.org/" title="PostgreSQL: The World's Most Advanced Open Source Relational Database">PostgreSQL</a> application? Write SQL scripts for <code>psql</code>. Writing a
+<a href="https://mysql.com/" title="MySQL: The world's most popular open source database">MySQL</a>-backed app? Write SQL scripts for <code>mysql</code>.</p>
+
+<div class="icon depend"></div>
+
+<h2 id="dependency-resolution">Dependency resolution</h2>
+
+<p>Database changes may declare dependencies on other changes — even on changes
+from other Sqitch projects. This ensures proper order of execution, even when
+you’ve committed changes to your VCS out-of-order.</p>
+
+<div class="icon hash"></div>
+
+<h2 id="no-numbering">No numbering</h2>
+
+<p>Change deployment is managed by maintaining a plan file. As such, there is no
+need to number your changes, although you can if you want. Sqitch doesn’t much
+care how you name your changes.</p>
+
+<p><div class="icon dev"></div></p>
+
+<h2 id="iterative-development">Iterative development</h2>
+
+<p>Up until you tag and release your application, you can modify your change
+deployment scripts as often as you like. They’re not locked in just because
+they’ve been committed to your VCS. This allows you to take an iterative
+approach to developing your database schema. Or, better, you can do test-driven
+database development.</p>
+
+<hr />
+
+<p>Ready to give Sqitch a try? <a href="/downloads/">Download</a> it now or read <a href="/docs/">the docs</a>.</p>
+
+	</main>
+    <footer>
+        <div class="code">
+            <a href="/site/">About this Site</a><br />
+            Corrections, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.
+        </div>
+    </footer>
+</body>
+</html>
+

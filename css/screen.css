@@ -27,7 +27,7 @@ summary, time, mark, audio, video {
 html {
     height: 100%;
     background: #fcffff;
-    font-family: Helvetica,sans-serif
+    font-family: 'Alegreya Sans',Helvetica,sans-serif
 }
 
 body {
@@ -39,26 +39,70 @@ body {
     height:auto;
 }
 
-a, a:visited { color: #22538E; text-decoration: none }
+@media only screen and (max-width: 550px) {
+    body { font-size: 1.3em; }
+}
+
+a, a:visited { color: #22538e; text-decoration: none }
 a:active { color:#00bece !important }
 a:hover { color: #09c; text-decoration: underline }
 
-body > header, body > main, #hi > *, body > footer > * {
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
+    text-rendering: optimizelegibility;
+    margin-bottom: .25em;
+}
+
+#title {
+    /* margin-top: 16px; */
+    padding: 24px 0;
+    color: #fcffff;
+    /* https://stackoverflow.com/a/34556311/79202 */
+    background-color: #22538e;
+    background-image: linear-gradient(45deg, #22538e 25%, transparent 25%, transparent 75%, #22538e 75%, #22538e), linear-gradient(45deg, #22538e 25%, transparent 25%, transparent 75%, #22538e 75%, #22538e), linear-gradient(to bottom, #22538e, #3878c7);
+    background-size: 10px 10px, 10px 10px, 10px 5px;
+    background-position: 0px 0px, 5px 5px, 0px 0px;
+}
+
+#title h1 {
+    color: #fcffff;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+h1 { font-size: 1.5em; color: #22538e; }
+h2 { font-size: 1.3em; color: #22538e; }
+h3 { font-size: 1.2em }
+h4 { font-size: 1em }
+h5 { font-size: .9em }
+h6 { font-size: .8em }
+
+hr {
+    margin: 1em 0;
+    border: 0;
+    border-bottom: 2px dotted #ccc;
+}
+
+p, blockquote, ul, ol {
+    margin-bottom: 1em
+}
+
+#masthead, body > #title > *, body > main, #hi > *, body > footer > * {
 	padding: 12px;
     margin: 0 auto;
 	max-width: 720px;
 }
 
-body > header {
+#masthead {
     vertical-align: bottom;
     margin: 10px auto;
 }
 
-body > header > hgroup {
+#masthead > hgroup {
     float: left;
 }
 
-body > header img, body > header object {
+#masthead img {
 	height: 50px;
 }
 
@@ -69,19 +113,13 @@ body > footer {
     border-top: 1px solid #ddd;
     width: 100%;
     position: absolute;
-    bottom: 10px;
+    bottom: 0;
 }
-
-/*
-#info a, #info a:visited {color:#c00}
-#info a:hover, #info a:focus {color: #f00}
-#info a:active {color: #A62A17 !important}
-*/
 
 main {
     min-height:100%;
     height:auto;
-    padding-bottom: 75px !important;
+    padding: 32px 12px 75px  !important;
 }
 
 #hi {
@@ -91,7 +129,7 @@ main {
     line-height: 1.5em;
     font-weight: 500;
     text-shadow:  #2e2e2e 2px 4px 5px;
-	padding: 32px;
+    padding: 32px;
 	background-color: #f6fbfc;
     background-image: url(/img/messeplatz.jpg);
     background-repeat: no-repeat;
@@ -116,7 +154,7 @@ main {
     padding-left: 16px;
 }
 
-#bar i, .code:before, #info a:before {
+#bar i, .code:before, #info a:before, #about .icon {
     font-family: FAS;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -128,14 +166,38 @@ main {
 .community:before { content: "\f086" }
 .download:before { content: "\f019" }
 .code:before { content: "\f121" }
+.db:before { content: "\f1c0" }
+.cli:before { content: "\f120" }
+.depend:before { content: "\f126" }
+.hash:before { content: "\f292" }
+.dev:before { content: "\f2f1" }
 
-body > footer .code:before {
-    font-size: 2.5em;
+body > footer .code:before, #about .icon {
     line-height: 1em;
     float:left;
-    color: #22538E;
-    opacity: 0.2;
+    color: #22538e;
     padding: 0 10px 0 0
+ }
+
+ body > footer .code:before {
+    font-size: 2.5em;
+    opacity: 0.2;
+ }
+
+ #about .icon {
+    font-size: 2em;
+    width: 45px;
+    height: 45px;
+    background-color: #dee8f0;
+    margin-right: 16px;
+    padding: 16px;
+    text-align: center;
+    color: #817565;
+    clear:left;
+ }
+
+ #about p {
+     margin-bottom: 1.8em;
  }
 
 #info li {
@@ -146,7 +208,9 @@ body > footer .code:before {
 }
 
 @media only screen and (min-width: 750px) {
-    #info li {width: 356px; margin-bottom: 24px;}
+    #info li {width: 354px; margin-bottom: 24px;}
+    #info ul:nth-child(odd) {margin-right: 8px;}
+    #info ul:nth-child(even) {margin-left: 8x;}
 }
 
 #info {
