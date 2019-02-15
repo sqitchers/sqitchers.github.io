@@ -17,9 +17,9 @@ summary, time, mark, audio, video {
 }
 
 @font-face {
-    font-family: 'FAS';
-    src: url('/fonts/fa-solid.woff2') format('woff2'),
-         url('/fonts/fa-solid.woff') format('woff');
+    font-family: 'fawe';
+    src: url('/fonts/fontello.woff2') format('woff2'),
+         url('/fonts/fontello.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -122,6 +122,8 @@ main {
     padding: 32px 12px 75px  !important;
 }
 
+main > section { border-top: 4px double #22538e; padding: 12px 0; }
+
 #hi {
     display: block;
     color: #fff;
@@ -154,8 +156,8 @@ main {
     padding-left: 16px;
 }
 
-#bar i, .code:before, #info a:before, #about .icon {
-    font-family: FAS;
+#bar i, .code:before, #info a:before, .page section:before {
+    font-family: fawe;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     display: inline-block;
@@ -171,8 +173,21 @@ main {
 .depend:before { content: "\f126" }
 .hash:before { content: "\f292" }
 .dev:before { content: "\f2f1" }
+.brew:before { content: "\f0fc" }
+.docker:before { content: "\f395" }
+.cpan:before { content: "\e803" }
+.ubuntu:before { content: "\f7df" }
+.windows:before { content: "\f17a" }
+.apple:before { content: "\f179" }
+.centos:before { content: "\f789" }
+.video:before { content: "\f03d" }
+.mail:before { content: "\f0e0" }
+.github:before { content: "\f09b" }
+.twitter:before { content: "\f099" }
+.news:before { content: "\f1ea" }
+.feed:before { content: "\F09E" }
 
-body > footer .code:before, #about .icon {
+body > footer .code:before {
     line-height: 1em;
     float:left;
     color: #22538e;
@@ -184,23 +199,20 @@ body > footer .code:before, #about .icon {
     opacity: 0.2;
  }
 
- #about .icon {
+.page section:before {
+    float: left;
     font-size: 2em;
+    line-height: 1em;
     width: 45px;
     height: 45px;
     background-color: #dee8f0;
-    margin-right: 16px;
+    margin: 0 16px 16px 0;
     padding: 16px;
     text-align: center;
     color: #817565;
-    clear:left;
  }
 
- #about p {
-     margin-bottom: 1.8em;
- }
-
-#info li {
+ info li {
     list-style-type: none;
     width: 100%;
     display: inline-block;
@@ -223,7 +235,7 @@ body > footer .code:before, #about .icon {
 }
 
 #info a:before {
-    font-family: FAS; font-size:2em;
+    font-family: fawe; font-size:2em;
     line-height: 1em;
     color: #817565;
     opacity: 0.6;
@@ -235,3 +247,98 @@ body > footer .code:before, #about .icon {
 #info a:hover:before {
     opacity: 1.0 !important;
 }
+
+main li {
+    list-style-position: outside;
+    margin-left: 1.1em;
+}
+
+pre {
+    border: 0;
+    line-height: 1.45em;
+    margin-bottom: 2.1em;
+    padding: .8em 1em;
+    overflow: scroll;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+p code, li code {
+    display: inline-block;
+    white-space: no-wrap;
+    background-color: #eee;
+    padding: 0 .3em;
+    border: 1px dotted #ccc;
+    line-height: 1.45em;
+}
+
+p pre code, li pre code {
+    background: none;
+    border: none
+}
+
+.mono, pre, code, tt, p code, li code {
+    font-size: .9em;
+    font-family: "Source Code Pro", "Courier", monospace
+}
+
+/* hugo gen chromastyles --style=monokai >> themes/justatheory/static/css/screen.css */
+/* Background */ pre, .chroma { color: #f8f8f2; background-color: #333 } /* Modified to add pre and to lighten background */
+/* Error */ .chroma .err { color: #960050; background-color: #1e0010 }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; width: auto; overflow: auto; display: block; }
+/* LineHighlight */ .chroma .hl { display: block; width: 100%;background-color: #ffffcc }
+/* LineNumbersTable */ .chroma .lnt { margin-right: 0.4em; padding: 0 0.4em 0 0.4em; }
+/* LineNumbers */ .chroma .ln { margin-right: 0.4em; padding: 0 0.4em 0 0.4em; }
+/* Keyword */ .chroma .k { color: #66d9ef }
+/* KeywordConstant */ .chroma .kc { color: #66d9ef }
+/* KeywordDeclaration */ .chroma .kd { color: #66d9ef }
+/* KeywordNamespace */ .chroma .kn { color: #f92672 }
+/* KeywordPseudo */ .chroma .kp { color: #66d9ef }
+/* KeywordReserved */ .chroma .kr { color: #66d9ef }
+/* KeywordType */ .chroma .kt { color: #66d9ef }
+/* NameAttribute */ .chroma .na { color: #a6e22e }
+/* NameClass */ .chroma .nc { color: #a6e22e }
+/* NameConstant */ .chroma .no { color: #66d9ef }
+/* NameDecorator */ .chroma .nd { color: #a6e22e }
+/* NameException */ .chroma .ne { color: #a6e22e }
+/* NameFunction */ .chroma .nf { color: #a6e22e }
+/* NameOther */ .chroma .nx { color: #a6e22e }
+/* NameTag */ .chroma .nt { color: #f92672 }
+/* Literal */ .chroma .l { color: #ae81ff }
+/* LiteralDate */ .chroma .ld { color: #e6db74 }
+/* LiteralString */ .chroma .s { color: #e6db74 }
+/* LiteralStringAffix */ .chroma .sa { color: #e6db74 }
+/* LiteralStringBacktick */ .chroma .sb { color: #e6db74 }
+/* LiteralStringChar */ .chroma .sc { color: #e6db74 }
+/* LiteralStringDelimiter */ .chroma .dl { color: #e6db74 }
+/* LiteralStringDoc */ .chroma .sd { color: #e6db74 }
+/* LiteralStringDouble */ .chroma .s2 { color: #e6db74 }
+/* LiteralStringEscape */ .chroma .se { color: #ae81ff }
+/* LiteralStringHeredoc */ .chroma .sh { color: #e6db74 }
+/* LiteralStringInterpol */ .chroma .si { color: #e6db74 }
+/* LiteralStringOther */ .chroma .sx { color: #e6db74 }
+/* LiteralStringRegex */ .chroma .sr { color: #e6db74 }
+/* LiteralStringSingle */ .chroma .s1 { color: #e6db74 }
+/* LiteralStringSymbol */ .chroma .ss { color: #e6db74 }
+/* LiteralNumber */ .chroma .m { color: #ae81ff }
+/* LiteralNumberBin */ .chroma .mb { color: #ae81ff }
+/* LiteralNumberFloat */ .chroma .mf { color: #ae81ff }
+/* LiteralNumberHex */ .chroma .mh { color: #ae81ff }
+/* LiteralNumberInteger */ .chroma .mi { color: #ae81ff }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #ae81ff }
+/* LiteralNumberOct */ .chroma .mo { color: #ae81ff }
+/* Operator */ .chroma .o { color: #f92672 }
+/* OperatorWord */ .chroma .ow { color: #f92672 }
+/* Comment */ .chroma .c { color: #75715e }
+/* CommentHashbang */ .chroma .ch { color: #75715e }
+/* CommentMultiline */ .chroma .cm { color: #75715e }
+/* CommentSingle */ .chroma .c1 { color: #75715e }
+/* CommentSpecial */ .chroma .cs { color: #75715e }
+/* CommentPreproc */ .chroma .cp { color: #75715e }
+/* CommentPreprocFile */ .chroma .cpf { color: #75715e }
+/* GenericDeleted */ .chroma .gd { color: #f92672 }
+/* GenericEmph */ .chroma .ge { font-style: italic }
+/* GenericInserted */ .chroma .gi { color: #a6e22e }
+/* GenericStrong */ .chroma .gs { font-weight: bold }
+/* GenericSubheading */ .chroma .gu { color: #75715e }
