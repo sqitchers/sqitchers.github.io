@@ -206,6 +206,7 @@ body > footer .code:before {
     width: 45px;
     height: 45px;
     background-color: #dee8f0;
+    border-radius: 5px;
     margin: 0 16px 16px 0;
     padding: 16px;
     text-align: center;
@@ -252,6 +253,47 @@ main li {
     list-style-position: outside;
     margin-left: 1.1em;
 }
+
+.toc {
+    float: right;
+    margin: 0 0 1em 1em;
+    font-size: 95%;
+    line-height: 1.5em;
+}
+
+@media only screen and (min-width: 550px) {
+    .toc {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+    }
+}
+
+.toc details { opacity: 0.5 }
+.toc details[open] { opacity: 1 }
+
+.toc summary {
+    display: inline-block;
+    background-color:#dee8f0;
+    border-radius: 5px;
+    list-style: none;
+}
+
+.toc summary::-webkit-details-marker {
+    display: none;
+}
+
+.toc nav {
+    background-color:#dee8f0;
+    border-radius: 5px;
+    z-index: 10;
+    position: absolute;
+}
+
+.toc h4 { display: inline; padding: 1em; line-height: 2.5em; }
+.toc li, .toc ul { list-style-type: none }
+.toc ul { margin: 1em 1em 1em 0 }
+.toc li { margin-left: 1em }
 
 pre {
     border: 0;
