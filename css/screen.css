@@ -271,7 +271,7 @@ main li {
     }
 }
 
-.toc details { opacity: 0.5 }
+.toc details { opacity: 0.5; }
 .toc details[open] { opacity: 1 }
 
 .toc summary {
@@ -293,9 +293,10 @@ main li {
 }
 
 .toc h4 { display: inline; padding: 1em; line-height: 2.5em; }
-.toc li, .toc ul { list-style-type: none }
-.toc ul { margin: 1em 1em 1em 0 }
-.toc li { margin-left: 1em }
+.toc li { list-style-type: none; margin: 0 }
+.toc ul { margin: 1em;  direction: ltr; } /* Restore ltr */
+.toc ul ul { margin: 0 0 0 1em }
+/* .toc li { margin-left: 1em } */
 
 pre {
     border: 0;
