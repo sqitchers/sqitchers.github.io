@@ -259,7 +259,8 @@ main li {
     float: right;
     margin: 0 0 1em 1em;
     font-size: 95%;
-    line-height: 1.5em;
+    line-height: 1.8em;
+    direction: rtl; /* Keeps details inside parent's right border */
 }
 
 @media only screen and (min-width: 550px) {
