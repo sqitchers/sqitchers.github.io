@@ -213,11 +213,12 @@ body > footer .code:before {
     color: #817565;
  }
 
- info li {
+ #info li {
     list-style-type: none;
     width: 100%;
     display: inline-block;
     vertical-align: top;
+    margin: 0;
 }
 
 @media only screen and (min-width: 750px) {
