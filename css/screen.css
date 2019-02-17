@@ -260,6 +260,7 @@ main li {
     margin: 0 0 1em 1em;
     font-size: 95%;
     line-height: 1.8em;
+    background: transparent none repeat scroll 0 0;
     direction: rtl; /* Keeps details inside parent's right border */
 }
 
@@ -271,8 +272,9 @@ main li {
     }
 }
 
-.toc details { opacity: 0.5; }
-.toc details[open] { opacity: 1 }
+.toc details { opacity: 0.5;}
+.toc details:hover { opacity: 0.5; opacity: 1; cursor: pointer; }
+.toc details[open] { opacity: 1}
 
 .toc summary {
     display: inline-block;
@@ -286,17 +288,20 @@ main li {
 }
 
 .toc nav {
+    overflow: scroll;
     background-color:#dee8f0;
     border-radius: 5px;
     z-index: 10;
     position: absolute;
 }
 
-.toc h4 { display: inline; padding: 1em; line-height: 2.5em; }
-.toc li { list-style-type: none; margin: 0 }
-.toc ul { margin: 1em;  direction: ltr; } /* Restore ltr */
+.toc > ul { min-width:180px; max-width:300px; }
+.toc summary h4 { display: inline; padding: 1em; line-height: 2.5em; }
+.toc li { list-style-type: none; margin: 0; white-space: nowrap; overflow-x: auto}
+.toc ul { margin: 0 1em 1em 1em; }
+.toc nav h4 { margin: 1em 1em 0; }
+.toc ul, .toc nav h4 { direction: ltr; } /* Restore ltr */
 .toc ul ul { margin: 0 0 0 1em }
-/* .toc li { margin-left: 1em } */
 
 pre {
     border: 0;

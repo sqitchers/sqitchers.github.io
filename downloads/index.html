@@ -38,22 +38,21 @@
 	</header>
 	<main id="downloads" class="page">
 		
-
-
-
 <aside class="toc">
     <details>
         <summary><h4>☰</h4></summary>
-        <nav><ul class="toc-h2"><li><a href="/downloads/#docker">Docker</a></li>
-                    <li><a href="/downloads/#homebrew">Homebrew</a></li>
-                    <li><ul class="toc-h3"><li><a href="/downloads/#foo">Foo</a></li>
-                    <li><ul class="toc-h4"><li><a href="/downloads/#bar-asd-adfasld-fjaldfsdfadsf">Bar asd adfasld fjaldfsdfadsf</a></li>
-                    </ul><li><a href="/downloads/#cpan">CPAN</a></li>
-                    <li><a href="/downloads/#ubuntu-debian">Ubuntu/Debian</a></li>
-                    <li><a href="/downloads/#centos-redhat">CentOS/RedHat</a></li>
-                    <li><a href="/downloads/#windows">Windows</a></li>
-                    <li><a href="/downloads/#engines">Engines</a></li>
-                    </nav>
+        <nav>
+            <h4>Contents</h4>
+            <ul><li><a href='#docker'>Docker</a></li>
+                <li><a href='#homebrew'>Homebrew</a></li>
+                <li><a href='#cpan'>CPAN</a><ul>
+                <li><a href='#in-the-beginning-there-was-much-delight-in-things-and-it-was-good'>In the beginning there was much delight in things and it was good.</a></li></ul>
+                </li><li><a href='#ubuntu-debian'>Ubuntu/Debian</a></li>
+                <li><a href='#centos-redhat'>CentOS/RedHat</a></li>
+                <li><a href='#windows'>Windows</a></li>
+                <li><a href='#engines'>Engines</a></li>
+            </ul>
+        </nav>
     </details>
 </aside>
 		<p>There are a number of ways to install Sqitch and associated engine libraries and
@@ -75,10 +74,6 @@ curl -L https://git.io/fAX6Z -o sqitch &amp;&amp; chmod +x sqitch
 <section class="brew">
 <h2 id="homebrew">Homebrew</h2>
 
-<h3 id="foo">Foo</h3>
-
-<h4 id="bar-asd-adfasld-fjaldfsdfadsf">Bar asd adfasld fjaldfsdfadsf</h4>
-
 <p>The <a href="https://github.com/sqitchers/homebrew-sqitch/">Sqitch Homebrew Tap</a> quickly builds Sqitch on you Mac. To install from
 Homebrew, configure the tap and then install the variants you need via the
 appropriate <code>--use-$engine-support</code> options. For example, to install Sqitch with
@@ -94,6 +89,8 @@ docs</a> for build details and options.</p>
 </section>
 <section class="cpan">
 <h2 id="cpan">CPAN</h2>
+
+<h3 id="in-the-beginning-there-was-much-delight-in-things-and-it-was-good">In the beginning there was much delight in things and it was good.</h3>
 
 <p>The canonical source for Sqitch releases is <a href="https://metacpan.org/release/App-Sqitch" title="Sqitch on MetaCPAN">CPAN</a>. Use the cpan or <a href="https://cpanmin.us">cpanminus</a>
 client to download and build Sqitch and its dependencies from source, as well
