@@ -274,13 +274,27 @@ main li {
 
 .toc details { opacity: 0.5;}
 .toc details:hover { opacity: 0.5; opacity: 1; cursor: pointer; }
-.toc details[open] { opacity: 1}
+.toc details[open] { opacity: 1 }
 
 .toc summary {
     display: inline-block;
     background-color:#dee8f0;
     border-radius: 5px;
     list-style: none;
+}
+
+/* Replace the h4 text with an icon. */
+.toc summary h4 { display: none; }
+.toc summary:before {
+    font-family: 'fawe';
+    color: #22538e;
+    font-size: 1.3em;
+    line-height: 1em;
+    padding: 0.4em;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    content: "\f00b";
+    display: inline-block;
 }
 
 .toc summary::-webkit-details-marker {
@@ -292,15 +306,15 @@ main li {
     background-color:#dee8f0;
     border-radius: 5px;
     z-index: 10;
+    box-shadow:  #2e2e2e -1px 1px 3px;
     position: absolute;
 }
 
 .toc > ul { min-width:180px; max-width:300px; }
-.toc summary h4 { display: inline; padding: 1em; line-height: 2.5em; }
 .toc li { list-style-type: none; margin: 0; white-space: nowrap; overflow-x: auto}
 .toc ul { margin: 0 1em 1em 1em; }
 .toc nav h4 { margin: 1em 1em 0; }
-.toc ul, .toc nav h4 { direction: ltr; } /* Restore ltr */
+.toc ul, .toc h4 { direction: ltr; } /* Restore ltr */
 .toc ul ul { margin: 0 0 0 1em }
 
 pre {
