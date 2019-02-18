@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sqitch: sqitchtutorial-mysql documentation</title>
+	<meta name="description" content="Sqitch is a database change management application." />
+	<link rel="stylesheet" href="/css/screen.css" />
+	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#22538e">
+	<meta name="msapplication-TileColor" content="#22538e">
+	<meta name="theme-color" content="#fcffff">
+</head>
+<body>
+	<header id=masthead>
+		<hgroup id="top">
+			<h1><a href="/"><img src="/img/masthead.png" srcset="/img/masthead.svg" alt="Sqitch" title="Sqitch"></a></h1>
+		</hgroup>
+		<nav id="bar">
+			<menu>
+				<li class="icon"><a href="/about" title="About"><i class="about"></i></a></li>
+				<li class="icon"><a href="/docs/" title="Documentation"><i class="docs"></i></a></li>
+				<li class="icon"><a href="/community/" title="Community"><i class="community"></i></a></li>
+				<li class="icon"><a href="/download/" title="Download"><i class="download"></i></a></li>
+			</menu>
+		</nav>
+	</header>
+
+	<header id="title">
+		<h1>sqitchtutorial-mysql</h1>
+	</header>
+	<main id="docs" class="page">
+		
+		
+
+<h1 id="name">Name</h1>
+
+<p>sqitchtutorial-mysql - A tutorial introduction to Sqitch change management on MySQL</p>
+
+<h1 id="synopsis">Synopsis</h1>
+
+<pre><code>sqitch *
+</code></pre>
+
+<h1 id="description">Description</h1>
+
+<p>This tutorial explains how to create a sqitch-enabled MySQL project, use a VCS
+for deployment planning, and work with other developers to make sure changes
+remain in sync and in the proper order.</p>
+
+<p>We&rsquo;ll start by creating new project from scratch, a fictional antisocial
+networking site called Flipr. All examples use <a href="https://git-scm.com/">Git</a> as
+the VCS and <a href="https://dev.mysql.com/">MySQL</a> as the storage engine.</p>
+
+<p>If you&rsquo;d like to manage a PostgreSQL database, see <a href="/docs/sqitchtutorial">sqitchtutorial</a>.</p>
+
+<p>If you&rsquo;d like to manage an SQLite database, see <a href="/docs/sqitchtutorial-sqlite">sqitchtutorial-sqlite</a>.</p>
+
+<p>If you&rsquo;d like to manage an Oracle database, see <a href="/docs/sqitchtutorial-oracle">sqitchtutorial-oracle</a>.</p>
+
+<p>If you&rsquo;d like to manage a Firebird database, see <a href="/docs/sqitchtutorial-firebird">sqitchtutorial-firebird</a>.</p>
+
+<p>If you&rsquo;d like to manage a Vertica database, see <a href="/docs/sqitchtutorial-vertica">sqitchtutorial-vertica</a>.</p>
+
+<p>If you&rsquo;d like to manage an Exasol database, see <a href="/docs/sqitchtutorial-exasol">sqitchtutorial-exasol</a>.</p>
+
+<p>If you&rsquo;d like to manage a Snowflake database, see <a href="/docs/sqitchtutorial-snowflake">sqitchtutorial-snowflake</a>.</p>
+
+<h1 id="starting-a-new-project">Starting a New Project</h1>
+
+<p>Usually the first thing to do when starting a new project is to create a
+source code repository. So let&rsquo;s do that with Git:</p>
+
+<pre><code>&gt; mkdir flipr
+&gt; cd flipr
+&gt; git init .
+Initialized empty Git repository in /flipr/.git/
+&gt; touch README.md
+&gt; git add .
+&gt; git commit -am 'Initialize project, add README.'
+[master (root-commit) fdf2a40] Initialize project, add README.
+ 1 file changed, 38 insertions(+)
+ create mode 100644 README.md
+</code></pre>
+
+<p>If you&rsquo;re a Git user and want to follow along the history, the repository used
+in these examples is <a href="https://github.com/sqitchers/sqitch-mysql-intro">on GitHub</a>.</p>
+
+<p>Now that we have a repository, let&rsquo;s get started with Sqitch. Every Sqitch
+project must have a name associated with it, and, optionally, a unique URI. We
+recommend including the URI, as it increases the uniqueness of object
+identifiers internally, so let&rsquo;s specify one when we initialize Sqitch:</p>
+
+<pre><code>&gt; sqitch init flipr --uri https://github.com/sqitchers/sqitch-mysql-intro/ --engine mysql
+Created sqitch.conf
+Created sqitch.plan
+Created deploy/
+Created revert/
+Created verify/
+</code></pre>
+
+<p>Let&rsquo;s have a look at <code>sqitch.conf</code>:</p>
+
+<pre><code>&gt; cat sqitch.conf
+[core]
+      engine = mysql
+      # plan_file = sqitch.plan
+      # top_dir = .
+# [engine &quot;mysql&quot;]
+      # target = db:mysql:
+      # registry = sqitch
+      # client = mysql
+</code></pre>
+
+<p>Good, it picked up on the fact that we&rsquo;re creating changes for the MySQL
+engine, thanks to the <code>--engine mysql</code> option, and saved it to the file.
+Furthermore, it wrote a commented-out <code>[engine &quot;mysql&quot;]</code> section with all the
+available MySQL engine-specific settings commented out and ready to be edited
+as appropriate.</p>
+
+<p>By default, Sqitch will read <code>sqitch.conf</code> in the current directory for
+settings. But it will also read <code>~/.sqitch/sqitch.conf</code> for user-specific
+settings. Since MySQL&rsquo;s
+<a href="https://dev.mysql.com/doc/refman/5.6/en/mysql.html"><code>mysql</code> client</a> is not
+in the path on my system, let&rsquo;s go ahead an tell it where to find the client
+on our computer:</p>
+
+<pre><code>&gt; sqitch config --user engine.mysql.client /usr/local/mysql/bin/mysql
+</code></pre>
+
+<p>And let&rsquo;s also tell it who we are, since this data will be used in all
+of our projects:</p>
+
+<pre><code>&gt; sqitch config --user user.name 'Marge N. O’Vera'
+&gt; sqitch config --user user.email 'marge@example.com'
+</code></pre>
+
+<p>Have a look at <code>~/.sqitch/sqitch.conf</code> and you&rsquo;ll see this:</p>
+
+<pre><code>&gt; cat ~/.sqitch/sqitch.conf
+[engine &quot;mysql&quot;]
+      client = /usr/local/mysql/bin/mysql
+[user]
+      name = Marge N. O’Vera
+      email = marge@example.com
+</code></pre>
+
+<p>Which means that Sqitch should be able to find <code>mysql</code> for any project, and
+that it will always properly identify us when planning and committing changes.</p>
+
+<p>Back to the repository. Have a look at the plan file, <code>sqitch.plan</code>:</p>
+
+<pre><code>&gt; cat sqitch.plan
+%syntax-version=1.0.0
+%project=flipr
+%uri=https://github.com/sqitchers/sqitch-mysql-intro/
+</code></pre>
+
+<p>Note that it has picked up on the name and URI of the app we&rsquo;re building.
+Sqitch uses this data to manage cross-project dependencies. The
+<code>%syntax-version</code> pragma is always set by Sqitch, so that it always knows how
+to parse the plan, even if the format changes in the future.</p>
+
+<p>Let&rsquo;s commit these changes and start creating the database changes.</p>
+
+<pre><code>&gt; git add .
+&gt; git commit -am 'Initialize Sqitch configuration.'
+[master 79fe2cc] Initialize Sqitch configuration.
+ 2 files changed, 19 insertions(+)
+ create mode 100644 sqitch.conf
+ create mode 100644 sqitch.plan
+</code></pre>
+
+<h1 id="our-first-change">Our First Change</h1>
+
+<p>First, our app will need a database user, so let&rsquo;s create one. Run this
+command:</p>
+
+<pre><code>&gt; sqitch add appuser -n 'Creates a an application user.'
+Created deploy/appuser.sql
+Created revert/appuser.sql
+Created verify/appuser.sql
+Added &quot;appuser&quot; to sqitch.plan
+</code></pre>
+
+<p>The <a href="/docs/sqitch-add"><code>add</code></a> command adds a database change to the plan and writes
+deploy, revert, and verify scripts that represent the change. Now we edit
+these files. The <code>deploy</code> script&rsquo;s job is to create the table. By default,
+the <code>deploy/appuser.sql</code> file looks like this:</p>
+
+<pre><code>-- Deploy flipr:appuser to mysql
+
+BEGIN;
+
+-- XXX Add DDLs here.
+
+COMMIT;
+</code></pre>
+
+<p>What we want to do is to replace the <code>XXX</code> comment with the <code>CREATE USER</code>
+statement, like so:</p>
+
+<pre><code>-- Deploy flipr:users to mysql
+
+BEGIN;
+
+CREATE USER flipr;
+
+COMMIT;
+</code></pre>
+
+<p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
+script, so we edit this to <code>revert/appuser.sql</code> to look like this:</p>
+
+<pre><code>-- Revert flipr:users from mysql
+
+BEGIN;
+
+DROP USER flipr;
+
+COMMIT;
+</code></pre>
+
+<p>Now we can try deploying this change. First, we need to create a database
+to deploy to:</p>
+
+<pre><code>&gt; mysql -u root --execute 'CREATE DATABASE flipr_test'
+</code></pre>
+
+<p>Now we tell Sqitch where to send the change via a
+<a href="https://github.com/libwww-perl/uri-db/">database URI</a>:</p>
+
+<pre><code>&gt; sqitch deploy db:mysql://root@/flipr_test
+Deploying changes to db:mysql://root@/flipr_test
+  + appuser .. ok
+</code></pre>
+
+<p>First Sqitch created the registry database and tables used to track database
+changes. The registry database is separate from the database to which the
+<code>appuser</code> change was deployed; by default, its name is <code>sqitch</code>, and will be
+used to manage <em>all</em> projects on a single MySQL server. Ideally, only Sqitch
+data will be stored in this database, so it probably makes the most sense to
+create a superuser named <code>sqitch</code> or something similar and use it to deploy
+changes.</p>
+
+<p>If you&rsquo;d like it to use a different database as the registry database, use
+<code>sqitch engine add mysql $name</code> to configure it (or via the
+<a href="/docs/sqitch-target"><code>target</code> command</a>; more <a href="#on-target">below</a>). This will be
+useful if you don&rsquo;t want to use the same registry database to manage multiple
+databases on the same server.</p>
+
+<p>Next, Sqitch deploys changes to the target database, which we specified on the
+command-line. We only have one change so far; the <code>+</code> reinforces the idea
+that the change is being <em>added</em> to the database.</p>
+
+<p>With this change deployed, if you connect to the database, you&rsquo;ll be able to
+see the user:</p>
+
+<pre><code>&gt; mysql -u root --execute &quot;SELECT user from mysql.user WHERE user = 'flipr';&quot;
++-------+
+| User  |
++-------+
+| flipr |
++-------+
+</code></pre>
+
+<h2 id="trust-but-verify">Trust, But Verify</h2>
+
+<p>But that&rsquo;s too much work. do you really want to do something like that after
+every deploy?</p>
+
+<p>Here&rsquo;s where the <code>verify</code> script comes in. Its job is to test that the deploy
+did was it was supposed to. It should do so without regard to any data that
+might be in the database, and should throw an error if the deploy was not
+successful. The simplest way to see if a user exists is to check the
+<code>mysql.user</code> table. However, throwing an error in the event that the user
+does not exist is tricky in MySQL. To simplify things, on MySQL 5.5.0 and
+higher, Sqitch provides a custom function you can use in your tests,
+<code>checkit()</code>. It works kind of like a <code>CHECK</code> constraint in other databases:
+pass an expression as the first argument, and an error message as the second.
+If the expression evaluates to false, an exception will be thrown with the
+error message.</p>
+
+<p>Give it a try. Put this query into <code>verify/appuser.sql</code>:</p>
+
+<pre><code>SELECT sqitch.checkit(COUNT(*), 'User &quot;flipr&quot; does not exist')
+  FROM mysql.user WHERE user = 'flipr';
+</code></pre>
+
+<p>This will work well as long as we know that the registry database is named
+<code>sqitch</code>. If you&rsquo;ve set <code>engine.mysql.registry</code> to a different value, you
+will need to make sure you specify the correct database name in the script.</p>
+
+<p>Now you can run the <code>verify</code> script with the <a href="/docs/sqitch-verify"><code>verify</code></a>
+command:</p>
+
+<pre><code>&gt; sqitch verify db:mysql://root@/flipr_test
+Verifying flipr_test
+  * appuser .. ok
+Verify successful
+</code></pre>
+
+<p>Looks good! If you want to make sure that the verify script correctly dies if
+the table doesn&rsquo;t exist, temporarily change the user name in the script to
+something that doesn&rsquo;t exist, something like:</p>
+
+<pre><code>SELECT sqitch.checkit(COUNT(*), 'User &quot;flipr&quot; does not exist')
+  FROM mysql.user WHERE user = 'nonesuch';
+</code></pre>
+
+<p>Then <a href="/docs/sqitch-verify"><code>verify</code></a> again:</p>
+
+<pre><code>&gt; sqitch verify db:mysql://root@/flipr_test
+Verifying db:mysql://root@/flipr_test
+  * appuser .. ERROR 1644 (ERR0R) at line 5 in file: 'verify/appuser.sql': User &quot;flipr&quot; does not exist
+# Verify script &quot;verify/appuser.sql&quot; failed.
+not ok
+
+Verify Summary Report
+---------------------
+Changes: 1
+Errors:  1
+Verify failed
+</code></pre>
+
+<p>The <code>checkit()</code> function is kind enough to use the error message to tell us
+what the problem is. Don&rsquo;t forget to change the table name back before
+continuing!</p>
+
+<h2 id="status-revert-log-repeat">Status, Revert, Log, Repeat</h2>
+
+<p>For purely informational purposes, we can always see how a deployment was
+recorded via the <a href="/docs/sqitch-status"><code>status</code></a> command, which reads the tables
+from the registry database:</p>
+
+<pre><code>&gt; sqitch status db:mysql://root@/flipr_test
+# On database db:mysql://root@/flipr_test
+# Project:  flipr
+# Change:   f56dd1a1ab029f398cec2cebb2ecc527fa0332c2
+# Name:     appuser
+# Deployed: 2013-12-31 13:13:17 -0800
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Nothing to deploy (up-to-date)
+</code></pre>
+
+<p>Let&rsquo;s make sure that we can revert the change:</p>
+
+<pre><code>&gt; sqitch revert db:mysql://root@/flipr_test
+Revert all changes from db:mysql://root@/flipr_test? [Yes] 
+  - appuser .. ok
+</code></pre>
+
+<p>The <a href="/docs/sqitch-revert"><code>revert</code></a> command first prompts to make sure that we
+really do want to revert. This is to prevent unnecessary accidents. You can
+pass the <code>-y</code> option to disable the prompt. Also, notice the <code>-</code> before the
+change name in the output, which reinforces that the change is being
+<em>removed</em> from the database. And now the schema should be gone:</p>
+
+<pre><code>&gt; mysql -u root --execute &quot;SELECT user from mysql.user WHERE user = 'flipr';&quot;
+</code></pre>
+
+<p>And the status message should reflect as much:</p>
+
+<pre><code>&gt; sqitch status db:mysql://root@/flipr_test
+# On database db:mysql://root@/flipr_test
+No changes deployed
+</code></pre>
+
+<p>Of course, since nothing is deployed, the <a href="/docs/sqitch-verify"><code>verify</code></a> command
+has nothing to verify:</p>
+
+<pre><code>&gt; sqitch verify db:mysql://root@/flipr_test
+Verifying db:mysql://root@/flipr_test
+No changes deployed
+</code></pre>
+
+<p>However, we still have a record that the change happened, visible via the
+<a href="/docs/sqitch-log"><code>log</code></a> command:</p>
+
+<pre><code>&gt; sqitch log db:mysql://root@/flipr_test
+On database db:mysql://root@/flipr_test
+Revert f56dd1a1ab029f398cec2cebb2ecc527fa0332c2
+Name:      appuser
+Committer: Marge N. O’Vera &lt;marge@example.com&gt;
+Date:      2013-12-31 13:26:39 -0800
+
+    Creates a an application user.
+
+Deploy f56dd1a1ab029f398cec2cebb2ecc527fa0332c2
+Name:      appuser
+Committer: Marge N. O’Vera &lt;marge@example.com&gt;
+Date:      2013-12-31 13:13:17 -0800
+
+    Creates a an application user.
+</code></pre>
+
+<p>Note that the actions we took are shown in reverse chronological order, with
+the revert first and then the deploy.</p>
+
+<p>Cool. Now let&rsquo;s commit it.</p>
+
+<pre><code>&gt; git add .
+&gt; git commit -m 'Add the &quot;flipr&quot; user.'
+[master c63acb9] Add the &quot;flipr&quot; user.
+ 4 files changed, 23 insertions(+)
+ create mode 100644 deploy/appuser.sql
+ create mode 100644 revert/appuser.sql
+ create mode 100644 verify/appuser.sql
+</code></pre>
+
+<p>And then deploy again. This time, let&rsquo;s use the <code>--verify</code> option, so that
+the <code>verify</code> script is applied when the change is deployed:</p>
+
+<pre><code>&gt; sqitch deploy --verify db:mysql://root@/flipr_test
+Deploying changes to db:mysql://root@/flipr_test
+  + appuser .. ok
+</code></pre>
+
+<p>And now the <code>flipr</code> user should be back:</p>
+
+<pre><code>&gt; mysql -u root --execute &quot;SELECT user from mysql.user WHERE user = 'flipr';&quot;
++-------+
+| user  |
++-------+
+| flipr |
++-------+
+</code></pre>
+
+<p>When we look at the status, the deployment will be there:</p>
+
+<pre><code>&gt; sqitch status db:mysql://root@/flipr_test
+# On database db:mysql://root@/flipr_test
+# Project:  flipr
+# Change:   f56dd1a1ab029f398cec2cebb2ecc527fa0332c2
+# Name:     appuser
+# Deployed: 2013-12-31 13:28:23 -0800
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Nothing to deploy (up-to-date)
+</code></pre>
+
+<h1 id="on-target">On Target</h1>
+
+<p>I&rsquo;m getting a little tired of always having to type
+<code>db:mysql://root@/flipr_test</code>, aren&rsquo;t you?  This
+<a href="https://github.com/libwww-perl/uri-db/">database connection URI</a> tells Sqitch how
+to connect to the deployment target, but we don&rsquo;t have to keep using the URI.
+We can name the target:</p>
+
+<pre><code>&gt; sqitch target add flipr_test db:mysql://root@/flipr_test
+</code></pre>
+
+<p>The <a href="/docs/sqitch-target"><code>target</code></a> command, inspired by
+<a href="https://git-scm.com/docs/git-remote"><code>git-remote</code></a>, allows management of one
+or more named deployment targets. We&rsquo;ve just added a target named
+<code>flipr_test</code>, which means we can use the string <code>flipr_test</code> for the target,
+rather than the URI. But since we&rsquo;re doing so much testing, we can also tell
+Sqitch to deploy to the <code>flipr_test</code> target by default:</p>
+
+<pre><code>&gt; sqitch engine add mysql flipr_test
+</code></pre>
+
+<p>Now we can omit the target argument altogether, unless we need to deploy to
+another database. Which we will, eventually, but at least our examples will be
+simpler from here on in, e.g.:</p>
+
+<pre><code>&gt; sqitch status
+# On database flipr_test
+# Project:  flipr
+# Change:   f56dd1a1ab029f398cec2cebb2ecc527fa0332c2
+# Name:     appuser
+# Deployed: 2013-12-31 13:28:23 -0800
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Nothing to deploy (up-to-date)
+</code></pre>
+
+<p>Yay, that allows things to be a little more concise. Let&rsquo;s also make sure that
+changes are verified after deploying them:</p>
+
+<pre><code>&gt; sqitch config --bool deploy.verify true
+&gt; sqitch config --bool rebase.verify true
+</code></pre>
+
+<p>We&rsquo;ll see the <a href="/docs/sqitch-rebase"><code>rebase</code></a> command a bit later. In the meantime,
+let&rsquo;s commit the new configuration and and make some more changes!</p>
+
+<pre><code>&gt; git commit -am 'Set default target and always verify.'
+[master c793050] Set default target and always verify.
+ 1 file changed, 8 insertions(+)
+</code></pre>
+
+<h1 id="deploy-with-dependency">Deploy with Dependency</h1>
+
+<p>Let&rsquo;s add another change, this time to create a table. Our app will need
+users, of course, so we&rsquo;ll create a table for them. First, add the new change:</p>
+
+<pre><code>&gt; sqitch add users --requires appuser -n 'Creates table to track our users.'
+Created deploy/users.sql
+Created revert/users.sql
+Created verify/users.sql
+Added &quot;users [appuser]&quot; to sqitch.plan
+</code></pre>
+
+<p>Note that we&rsquo;re requiring the <code>appuser</code> change as a dependency of the new
+<code>users</code> change. Although that change has already been added to the plan and
+therefore should always be applied before the <code>users</code> change, it&rsquo;s a good
+idea to be explicit about dependencies.</p>
+
+<p>Now edit the scripts. When you&rsquo;re done, <code>deploy/users.sql</code> should look like
+this:</p>
+
+<pre><code>-- Deploy flipr:users to mysql
+-- requires: appuser
+
+BEGIN;
+
+CREATE TABLE users (
+    nickname  VARCHAR(512) PRIMARY KEY,
+    password  VARCHAR(512) NOT NULL,
+    timestamp DATETIME(6)  NOT NULL
+);
+
+GRANT SELECT ON TABLE users TO flipr;
+
+COMMIT;
+</code></pre>
+
+<p>A few things to notice here. On the second line, the dependence on the
+<code>appuser</code> change has been listed. This doesn&rsquo;t do anything, but the default
+MySQL <code>deploy</code> template lists it here for your reference while editing the
+file. Useful, right?</p>
+
+<p>The <code>flipr</code> user has been granted <code>SELECT</code> access to the table. The app
+needs to read the data, right? This is why we need to require the <code>appuser</code>
+change.</p>
+
+<p>Now for the verify script. The simplest way to check that the table was
+created and has the expected columns without touching the data? Just select
+from the table with a false <code>WHERE</code> clause. Add this to <code>verify/users.sql</code>:</p>
+
+<pre><code>SELECT nickname, password, timestamp
+  FROM users
+ WHERE 0;
+</code></pre>
+
+<p>Now for the revert script: all we have to do is drop the table. Add this to
+<code>revert/users.sql</code>:</p>
+
+<pre><code>DROP TABLE users;
+</code></pre>
+
+<p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
+
+<pre><code>&gt; sqitch deploy
+Deploying changes to flipr_test
+  + users .. ok
+</code></pre>
+
+<p>We know, since verification is enabled, that the table must have been created.
+But for the purposes of visibility, let&rsquo;s have a quick look:</p>
+
+<pre><code>&gt; mysql -u root -D flipr_test --execute 'SHOW TABLES'
++----------------------+
+| Tables_in_flipr_test |
++----------------------+
+| users                |
++----------------------+
+</code></pre>
+
+<p>We can also verify all currently deployed changes with the
+<a href="/docs/sqitch-verify"><code>verify</code></a> command:</p>
+
+<pre><code>&gt; sqitch verify
+Verifying flipr_test
+  * appuser .. ok
+  * users .... ok
+Verify successful
+</code></pre>
+
+<p>Now have a look at the status:</p>
+
+<pre><code>&gt; sqitch status
+# On database flipr_test
+# Project:  flipr
+# Change:   2bd1190fdb324c2609f0c7f0cef73d8cb434ba0e
+# Name:     users
+# Deployed: 2013-12-31 13:34:25 -0800
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Nothing to deploy (up-to-date)
+</code></pre>
+
+<p>Success! Let&rsquo;s make sure we can revert the change, as well:</p>
+
+<pre><code>&gt; sqitch revert --to @HEAD^ -y
+Reverting changes to appuser from flipr_test
+  - users .. ok
+</code></pre>
+
+<p>Note that we&rsquo;ve used the <code>--to</code> option to specify the change to revert to.
+And what do we revert to? The symbolic tag <code>@HEAD</code>, when passed to
+<a href="/docs/sqitch-revert"><code>revert</code></a>, always refers to the last change deployed to the
+database. (For other commands, it refers to the last change in the plan.)
+Appending the caret (<code>^</code>) tells Sqitch to select the change <em>prior</em> to the
+last deployed change. So we revert to <code>appuser</code>, the penultimate change. The
+other potentially useful symbolic tag is <code>@ROOT</code>, which refers to the first
+change deployed to the database (or in the plan, depending on the command).</p>
+
+<p>Back to the database. The <code>users</code> table should be gone but the <code>flipr</code> user
+should still be around:</p>
+
+<pre><code>&gt; mysql -u root -D flipr_test --execute 'SHOW TABLES'
+&gt; mysql -u root --execute &quot;SELECT user from mysql.user WHERE user = 'flipr';&quot;
++-------+
+| User  |
++-------+
+| flipr |
++-------+
+</code></pre>
+
+<p>The <a href="/docs/sqitch-status"><code>status</code></a> command politely informs us that we have
+undeployed changes:</p>
+
+<pre><code>&gt; sqitch status
+# On database flipr_test
+# Project:  flipr
+# Change:   f56dd1a1ab029f398cec2cebb2ecc527fa0332c2
+# Name:     appuser
+# Deployed: 2013-12-31 13:28:23 -0800
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Undeployed change:
+  * users
+</code></pre>
+
+<p>As does the <a href="/docs/sqitch-verify"><code>verify</code></a> command:</p>
+
+<pre><code>&gt; sqitch verify
+Verifying flipr_test
+  * appuser .. ok
+Undeployed change:
+  * users
+Verify successful
+</code></pre>
+
+<p>Note that the verify is successful, because all currently-deployed changes are
+verified. The list of undeployed changes (just &ldquo;users&rdquo; here) reminds us about
+the current state.</p>
+
+<p>Okay, let&rsquo;s commit and deploy again:</p>
+
+<pre><code>&gt; git add .
+&gt; git commit -am 'Add users table.'
+[master 7c99fb0] Add users table.
+ 4 files changed, 31 insertions(+)
+ create mode 100644 deploy/users.sql
+ create mode 100644 revert/users.sql
+ create mode 100644 verify/users.sql
+&gt; sqitch deploy
+Deploying changes to flipr_test
+  + users .. ok
+</code></pre>
+
+<p>Looks good. Check the status:</p>
+
+<pre><code>&gt; sqitch status
+# On database flipr_test
+# Project:  flipr
+# Change:   2bd1190fdb324c2609f0c7f0cef73d8cb434ba0e
+# Name:     users
+# Deployed: 2013-12-31 13:37:02 -0800
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Nothing to deploy (up-to-date)
+</code></pre>
+
+<p>Excellent. Let&rsquo;s do some more!</p>
+
+<h1 id="add-two-at-once">Add Two at Once</h1>
+
+<p>Let&rsquo;s add a couple more changes to add functions for managing users.</p>
+
+<pre><code>&gt; sqitch add insert_user --requires users --requires appuser \
+  -n 'Creates a function to insert a user.'
+Created deploy/insert_user.sql
+Created revert/insert_user.sql
+Created verify/insert_user.sql
+Added &quot;insert_user [users appuser]&quot; to sqitch.plan
+
+&gt; sqitch add change_pass --requires users --requires appuser \
+  -n 'Creates a function to change a user password.'
+Created deploy/change_pass.sql
+Created revert/change_pass.sql
+Created verify/change_pass.sql
+Added &quot;change_pass [users appuser]&quot; to sqitch.plan
+</code></pre>
+
+<p>Now might be a good time to have a look at the deployment plan:</p>
+
+<pre><code>&gt; cat sqitch.plan
+%syntax-version=1.0.0
+%project=flipr
+%uri=https://github.com/sqitchers/sqitch-mysql-intro/
+
+appuser 2013-12-31T21:04:04Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a an application user.
+users [appuser] 2013-12-31T21:32:48Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates table to track our users.
+insert_user [users appuser] 2013-12-31T21:37:29Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a user.
+change_pass [users appuser] 2013-12-31T21:37:36Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to change a user password.
+</code></pre>
+
+<p>Each change appears on a single line with the name of the change, a bracketed
+list of dependencies, a timestamp, the name and email address of the user who
+planned the change, and a note.</p>
+
+<p>Let&rsquo;s write the code for the new changes. Here&rsquo;s what
+<code>deploy/insert_user.sql</code> should look like:</p>
+
+<pre><code>-- Deploy flipr:insert_user to mysql
+-- requires: users
+-- requires: appuser
+
+BEGIN;
+
+DELIMITER //
+
+CREATE PROCEDURE insert_user(
+    nickname VARCHAR(512),
+    password VARCHAR(512)
+) SQL SECURITY DEFINER
+BEGIN
+    INSERT INTO users (nickname, password, timestamp)
+    VALUES (nickname, md5(password), UTC_TIMESTAMP(6));
+END
+//
+
+DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE insert_user to flipr;
+
+COMMIT;
+</code></pre>
+
+<p>Here&rsquo;s what <code>verify/insert_user.sql</code> might look like, using the Sqitch
+<code>checkit()</code> function again:</p>
+
+<pre><code>-- Verify flipr:insert_user on mysql
+
+BEGIN;
+
+SELECT sqitch.checkit(COUNT(*), 'Procedure &quot;insert_user&quot; does not exist')
+  FROM mysql.proc
+ WHERE db = database()
+   AND specific_name = 'insert_user';
+
+ROLLBACK;
+</code></pre>
+
+<p>We simply take advantage of the fact that the new procedure should be listed
+in the <code>mysql.proc</code> table and throw an exception if it does not exist.</p>
+
+<p>And <code>revert/insert_user.sql</code> should look something like this:</p>
+
+<pre><code>-- Revert flipr:insert_user from mysql
+BEGIN;
+DROP PROCEDURE insert_user;
+COMMIT;
+</code></pre>
+
+<p>Now for <code>change_pass</code>; <code>deploy/change_pass.sql</code> might look like this:</p>
+
+<pre><code>-- Deploy flipr:change_pass to mysql
+-- requires: users
+-- requires: appuser
+
+BEGIN;
+
+DELIMITER //
+
+CREATE FUNCTION change_pass(
+    nickname VARCHAR(512),
+    oldpass  VARCHAR(512),
+    newpass  VARCHAR(512)
+) RETURNS INTEGER SQL SECURITY DEFINER
+BEGIN
+    UPDATE users
+       SET password = md5(newpass)
+     WHERE nickname = nickname
+       AND password = md5(oldpass);
+    RETURN ROW_COUNT();
+END;
+//
+
+DELIMITER ;
+
+GRANT EXECUTE ON FUNCTION change_pass to flipr;
+
+COMMIT;
+</code></pre>
+
+<p>Use <code>checkit()</code> in <code>verify/change_pass.sql</code> again:</p>
+
+<pre><code>BEGIN;
+SELECT sqitch.checkit(COUNT(*), 'Procedure &quot;change_pass&quot; does not exist')
+  FROM mysql.proc
+ WHERE db = database()
+   AND specific_name = 'change_pass';
+COMMIT;
+</code></pre>
+
+<p>And of course, its <code>revert</code> script, <code>revert/change_pass.sql</code>, should look
+something like:</p>
+
+<pre><code>-- Revert flipr:change_pass from mysql
+BEGIN;
+DROP FUNCTION change_pass;
+COMMIT;
+</code></pre>
+
+<p>Try em out!</p>
+
+<pre><code>&gt; sqitch deploy
+Deploying changes to flipr_test
+  + insert_user .. ok
+  + change_pass .. ok
+</code></pre>
+
+<p>Do we have the functions? Of course we do, they were verified. Still, have a
+look:</p>
+
+<pre><code>&gt; mysql -u root --execute &quot;SELECT name FROM mysql.proc WHERE db = 'flipr_test'&quot;
++-------------+
+| name        |
++-------------+
+| change_pass |
+| insert_user |
++-------------+
+</code></pre>
+
+<p>And what&rsquo;s the status?</p>
+
+<pre><code>&gt; sqitch status
+# On database flipr_test
+# Project:  flipr
+# Change:   b0a598b91ce97cf1b95ded97a6452bf03231a2cd
+# Name:     change_pass
+# Deployed: 2013-12-31 13:39:49 -0800
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Nothing to deploy (up-to-date)
+</code></pre>
+
+<p>Looks good. Let&rsquo;s make sure revert works:</p>
+
+<pre><code>&gt; sqitch revert -y --to @HEAD^^
+Reverting changes to users from flipr_test
+  - change_pass .. ok
+  - insert_user .. ok
+&gt; mysql -u root --execute &quot;SELECT name FROM mysql.proc WHERE db = 'flipr_test'&quot;
+</code></pre>
+
+<p>Note the use of <code>@HEAD^^</code> to specify that the revert be to two changes prior
+the last deployed change. Looks good. Let&rsquo;s do the commit and re-deploy dance:</p>
+
+<pre><code>&gt; git add .
+&gt; git commit -m 'Add `insert_user()` and `change_pass()`.'
+[master 0f95e13] Add `insert_user()` and `change_pass()`.
+ 7 files changed, 86 insertions(+)
+ create mode 100644 deploy/change_pass.sql
+ create mode 100644 deploy/insert_user.sql
+ create mode 100644 revert/change_pass.sql
+ create mode 100644 revert/insert_user.sql
+ create mode 100644 verify/change_pass.sql
+ create mode 100644 verify/insert_user.sql
+
+&gt; sqitch deploy
+Deploying changes to flipr_test
+  + insert_user .. ok
+  + change_pass .. ok
+
+&gt; sqitch status
+# On database flipr_test
+# Project:  flipr
+# Change:   b0a598b91ce97cf1b95ded97a6452bf03231a2cd
+# Name:     change_pass
+# Deployed: 2013-12-31 13:40:40 -0800
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Nothing to deploy (up-to-date)
+
+&gt; sqitch verify
+Verifying flipr_test
+  * appuser ...... ok
+  * users ........ ok
+  * insert_user .. ok
+  * change_pass .. ok
+Verify successful
+</code></pre>
+
+<p>Great, we&rsquo;re fully up-to-date!</p>
+
+<h1 id="ship-it">Ship It!</h1>
+
+<p>Let&rsquo;s do a first release of our app. Let&rsquo;s call it <code>1.0.0-dev1</code> Since we want
+to have it go out with deployments tied to the release, let&rsquo;s tag it:</p>
+
+<pre><code>&gt; sqitch tag v1.0.0-dev1 -n 'Tag v1.0.0-dev1.'
+Tagged &quot;change_pass&quot; with @v1.0.0-dev1
+&gt; git commit -am 'Tag the database with v1.0.0-dev1.'
+[master 0595297] Tag the database with v1.0.0-dev1.
+ 1 file changed, 1 insertion(+)
+&gt; git tag v1.0.0-dev1 -am 'Tag v1.0.0-dev1'
+</code></pre>
+
+<p>Now let&rsquo;s bundle everything up for release:</p>
+
+<pre><code>&gt; sqitch bundle
+Bundling into bundle/
+Writing config
+Writing plan
+Writing scripts
+  + appuser
+  + users
+  + insert_user
+  + change_pass @v1.0.0-dev1
+</code></pre>
+
+<p>Now we can package the <code>bundle</code> directory and distribute it. When it gets
+installed somewhere, users can use Sqitch to deploy to the database. We ought
+to try deploying it, but first we&rsquo;ll need to revert our existing databases, as
+a single Sqitch project cannot be deployed to two databases on the same server
+unless it uses a different registry database and the <code>checkit()</code> function is
+not used in verify scripts. We have used <code>checkit()</code> quite a bit, so we need
+to keep the Sqitch database name just where it is. Fortunately, it&rsquo;s easy to
+build the database again, so let&rsquo;s just revert it.</p>
+
+<pre><code>&gt; sqitch revert -y
+Reverting all changes from flipr_test
+  - change_pass .. ok
+  - insert_user .. ok
+  - users ........ ok
+  - appuser ...... ok
+</code></pre>
+
+<p>Now we can try deploying the bundle:</p>
+
+<pre><code>&gt; cd bundle
+&gt; mysql -u root --execute 'CREATE DATABASE flipr_dev'
+&gt; sqitch deploy db:mysql://root@/flipr_dev
+Deploying changes to db:mysql://root@/flipr_dev
+  + appuser ................... ok
+  + users ..................... ok
+  + insert_user ............... ok
+  + change_pass @v1.0.0-dev1 .. ok
+</code></pre>
+
+<p>Great, all four changes were deployed and <code>change_pass</code> was tagged with
+<code>@v1.0.0-dev1</code>. Let&rsquo;s have a look at the status:</p>
+
+<pre><code>&gt; sqitch status db:mysql://root@/flipr_dev
+# On database db:mysql://root@/flipr_dev
+# Project:  flipr
+# Change:   b0a598b91ce97cf1b95ded97a6452bf03231a2cd
+# Name:     change_pass
+# Tag:      @v1.0.0-dev1
+# Deployed: 2013-12-31 13:44:04 -0800
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Nothing to deploy (up-to-date)
+</code></pre>
+
+<p>Looks good, eh? Go ahead and revert it:</p>
+
+<pre><code>&gt; sqitch revert -y db:mysql://root@/flipr_dev
+Reverting all changes from db:mysql://root@/flipr_dev
+  - change_pass @v1.0.0-dev1 .. ok
+  - insert_user ............... ok
+  - users ..................... ok
+  - appuser ................... ok
+</code></pre>
+
+<p>Now package it up and ship it!</p>
+
+<pre><code>&gt; cd ..
+&gt; mv bundle flipr-v1.0.0-dev1
+&gt; tar -czf flipr-v1.0.0-dev1.tgz flipr-v1.0.0-dev1
+</code></pre>
+
+<h1 id="flip-out">Flip Out</h1>
+
+<p>Now that we&rsquo;ve got the basics of user management done, let&rsquo;s get to work on
+the core of our product, the &ldquo;flip.&rdquo; Since other folks are working on other
+tasks in the repository, we&rsquo;ll work on a branch, so we can all stay out of
+each other&rsquo;s way. So let&rsquo;s branch:</p>
+
+<pre><code>&gt; git checkout -b flips
+Switched to a new branch 'flips'
+</code></pre>
+
+<p>Now we can add a new change to create a table for our flips.</p>
+
+<pre><code>&gt; sqitch add flips -r appuser -r users -n 'Adds table for storing flips.'
+Created deploy/flips.sql
+Created revert/flips.sql
+Created verify/flips.sql
+Added &quot;flips [appuser users]&quot; to sqitch.plan
+</code></pre>
+
+<p>You know the drill by now. Edit <code>deploy/flips.sql</code>:</p>
+
+<pre><code>-- Deploy flipr:flips to mysql
+-- requires: appuser
+-- requires: users
+
+BEGIN;
+
+CREATE TABLE flips (
+    id        BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    nickname  VARCHAR(512) NOT NULL REFERENCES users(nickname),
+    body      VARCHAR(180) NOT NULL,
+    timestamp DATETIME(6)  NOT NULL
+);
+
+GRANT SELECT ON TABLE flips TO flipr;
+
+COMMIT;
+</code></pre>
+
+<p>Edit <code>verify/flips.sql</code>:</p>
+
+<pre><code>-- Verify flipr:flips on mysql
+
+BEGIN;
+
+SELECT id
+     , nickname
+     , body
+     , timestamp
+  FROM flipr.flips
+ WHERE 0;
+
+ROLLBACK;
+</code></pre>
+
+<p>And edit <code>revert/flips.sql</code>:</p>
+
+<pre><code>-- Revert flipr:flips from mysql
+
+BEGIN;
+
+DROP TABLE flips;
+
+COMMIT;
+</code></pre>
+
+<p>And give it a whirl:</p>
+
+<pre><code>&gt; sqitch deploy
+Deploying changes to flipr_test
+  + appuser ................... ok
+  + users ..................... ok
+  + insert_user ............... ok
+  + change_pass @v1.0.0-dev1 .. ok
+</code></pre>
+
+<p>Look good?</p>
+
+<pre><code>&gt; sqitch status --show-tags
+# On database flipr_test
+# Project:  flipr
+# Change:   b3ccd37da58ac232c23edfa0adaf2d6f483842fd
+# Name:     flips
+# Deployed: 2013-12-31 13:55:04 -0800
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+# Tag:
+#   @v1.0.0-dev1 - 2013-12-31 13:55:04 -0800 - Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Nothing to deploy (up-to-date)
+</code></pre>
+
+<p>Note the use of <code>--show-tags</code> to show all the deployed tags. Now make it so:</p>
+
+<pre><code>&gt; git add .
+&gt; git commit -am 'Add flips table.'
+[flips ce1b53d] Add flips table.
+ 4 files changed, 37 insertions(+)
+ create mode 100644 deploy/flips.sql
+ create mode 100644 revert/flips.sql
+ create mode 100644 verify/flips.sql
+</code></pre>
+
+<h1 id="wash-rinse-repeat">Wash, Rinse, Repeat</h1>
+
+<p>Now comes the time to add functions to manage flips. I&rsquo;m sure you have things
+nailed down now. Go ahead and add <code>insert_flip</code> and <code>delete_flip</code> changes
+and commit them. The <code>insert_flip</code> deploy script might look something like:</p>
+
+<pre><code>-- Deploy flipr:insert_flip to mysql
+-- requires: flips
+-- requires: appuser
+
+BEGIN;
+
+DELIMITER //
+
+CREATE FUNCTION insert_flip(
+    nickname VARCHAR(512),
+    body     VARCHAR(180)
+) RETURNS BIGINT SQL SECURITY DEFINER
+BEGIN
+    INSERT INTO flips (nickname, body)
+    VALUES (nickname, body);
+    RETURN LAST_INSERT_ID();
+END;
+//
+
+DELIMITER ;
+
+GRANT EXECUTE ON FUNCTION insert_flip to flipr;
+
+COMMIT;
+</code></pre>
+
+<p>And the <code>delete_flip</code> deploy script might look something like:</p>
+
+<pre><code>-- Deploy flipr:delete_flip to mysql
+-- requires: flips
+-- requires: appuser
+
+BEGIN;
+
+DELIMITER //
+
+CREATE FUNCTION delete_flip(
+    flip_id BIGINT
+) RETURNS INTEGER SQL SECURITY DEFINER
+BEGIN
+    DELETE FROM flips WHERE id = flip_id;
+    RETURN ROW_COUNT();
+END;
+//
+
+DELIMITER ;
+
+GRANT EXECUTE ON FUNCTION delete_flip to flipr;
+
+COMMIT;
+</code></pre>
+
+<p>The <code>verify</code> scripts are:</p>
+
+<pre><code>-- Verify flipr:insert_flip on mysql
+
+BEGIN;
+
+SELECT sqitch.checkit(COUNT(*), 'Function &quot;insert_flip&quot; does not exist')
+  FROM mysql.proc
+ WHERE db = database()
+   AND specific_name = 'insert_flip';
+
+ROLLBACK;
+</code></pre>
+
+<p>And:</p>
+
+<pre><code>-- Verify flipr:delete_flip on mysql
+
+BEGIN;
+
+SELECT sqitch.checkit(COUNT(*), 'Function &quot;delete_flip&quot; does not exist')
+  FROM mysql.proc
+ WHERE db = database()
+   AND specific_name = 'delete_flip';
+
+ROLLBACK;
+</code></pre>
+
+<p>The <code>revert</code> scripts are:</p>
+
+<pre><code>-- Revert flipr:insert_flip from mysql
+
+BEGIN;
+
+DROP FUNCTION insert_flip;
+
+COMMIT;
+</code></pre>
+
+<p>And:</p>
+
+<pre><code>-- Revert flipr:delete_flip from mysql
+
+BEGIN;
+
+DROP FUNCTION delete_flip;
+
+COMMIT;
+</code></pre>
+
+<p>Check the <a href="https://github.com/sqitchers/sqitch-intro">example git repository</a> for
+the complete details. Test <a href="/docs/sqitch-deploy"><code>deploy</code></a> and
+<a href="/docs/sqitch-revert"><code>revert</code></a>, then commit it to the repository. The status
+should end up looking something like this:</p>
+
+<pre><code>&gt; sqitch status --show-tags
+# On database flipr_test
+# Project:  flipr
+# Change:   7bf30e6b7b0a4e61f30dd4148f5b837bdddae086
+# Name:     delete_flip
+# Deployed: 2013-12-31 13:58:54 -0800
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+# Tag:
+#   @v1.0.0-dev1 - 2013-12-31 13:55:04 -0800 - Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Nothing to deploy (up-to-date)
+</code></pre>
+
+<p>Good, we&rsquo;ve finished this feature. Time to merge back into <code>master</code>.</p>
+
+<h2 id="emergency">Emergency</h2>
+
+<p>Let&rsquo;s do it:</p>
+
+<pre><code>&gt; git checkout master
+Switched to branch 'master'
+&gt; git pull
+Updating 0595297..5a58089
+Fast-forward
+ deploy/delete_list.sql | 22 ++++++++++++++++++++++
+ deploy/insert_list.sql | 25 +++++++++++++++++++++++++
+ deploy/lists.sql       | 17 +++++++++++++++++
+ revert/delete_list.sql |  7 +++++++
+ revert/insert_list.sql |  7 +++++++
+ revert/lists.sql       |  7 +++++++
+ sqitch.plan            |  4 ++++
+ verify/delete_list.sql | 10 ++++++++++
+ verify/insert_list.sql | 10 ++++++++++
+ verify/lists.sql       |  8 ++++++++
+ 10 files changed, 117 insertions(+)
+ create mode 100644 deploy/delete_list.sql
+ create mode 100644 deploy/insert_list.sql
+ create mode 100644 deploy/lists.sql
+ create mode 100644 revert/delete_list.sql
+ create mode 100644 revert/insert_list.sql
+ create mode 100644 revert/lists.sql
+ create mode 100644 verify/delete_list.sql
+ create mode 100644 verify/insert_list.sql
+ create mode 100644 verify/lists.sql
+</code></pre>
+
+<p>Hrm, that&rsquo;s interesting. Looks like someone made some changes to <code>master</code>.
+They added list support. Well, let&rsquo;s see what happens when we merge our
+changes.</p>
+
+<pre><code>&gt; git merge --no-ff flips
+Auto-merging sqitch.plan
+CONFLICT (content): Merge conflict in sqitch.plan
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre>
+
+<p>Oh, a conflict in <code>sqitch.plan</code>. Not too surprising, since both the merged
+<code>lists</code> branch and our <code>flips</code> branch added changes to the plan. Let&rsquo;s try a
+different approach.</p>
+
+<p>The truth is, we got lazy. Those changes when we pulled master from the origin
+should have raised a red flag. It&rsquo;s considered a bad practice not to look at
+what&rsquo;s changed in <code>master</code> before merging in a branch. What one <em>should</em> do
+is either:</p>
+
+<ul>
+<li>Rebase the <code>flips</code> branch from master before merging. This &ldquo;rewinds&rdquo; the
+branch changes, pulls from <code>master</code>, and then replays the changes back on top
+of the pulled changes.</li>
+<li>Create a patch and apply <em>that</em> to master. This is the sort of thing you
+might have to do if you&rsquo;re sending changes to another user, especially if the
+VCS is not Git.</li>
+</ul>
+
+<p>So let&rsquo;s restore things to how they were at master:</p>
+
+<pre><code>&gt; git reset --hard HEAD
+HEAD is now at 5a58089 Merge branch 'lists'
+</code></pre>
+
+<p>That throws out our botched merge. Now let&rsquo;s go back to our branch and rebase
+it on <code>master</code>:</p>
+
+<pre><code>&gt; git checkout flips
+Switched to branch 'flips'
+&gt; git rebase master
+First, rewinding head to replay your work on top of it...
+Applying: Add flips table.
+Using index info to reconstruct a base tree...
+M     sqitch.plan
+Falling back to patching base and 3-way merge...
+Auto-merging sqitch.plan
+CONFLICT (content): Merge conflict in sqitch.plan
+Failed to merge in the changes.
+Patch failed at 0001 Add flips table.
+The copy of the patch that failed is found in:
+   .git/rebase-apply/patch
+
+When you have resolved this problem, run &quot;git rebase --continue&quot;.
+If you prefer to skip this patch, run &quot;git rebase --skip&quot; instead.
+To check out the original branch and stop rebasing, run &quot;git rebase --abort&quot;.
+</code></pre>
+
+<p>Oy, that&rsquo;s kind of a pain. It seems like no matter what we do, we&rsquo;ll need to
+resolve conflicts in that file. Except in Git. Fortunately for us, we can tell
+Git to resolve conflicts in <code>sqitch.plan</code> differently. Because we only ever
+append lines to the file, we can have it use the &ldquo;union&rdquo; merge driver, which,
+according to <a href="https://git-scm.com/docs/gitattributes#_built-in_merge_drivers">its
+docs</a>:</p>
+
+<blockquote>
+<p>Run 3-way file level merge for text files, but take lines from both versions,
+instead of leaving conflict markers. This tends to leave the added lines in
+the resulting file in random order and the user should verify the result. Do
+not use this if you do not understand the implications.</p>
+</blockquote>
+
+<p>This has the effect of appending lines from all the merging files, which is
+exactly what we need. So let&rsquo;s give it a try. First, back out the botched
+rebase:</p>
+
+<pre><code>&gt; git rebase --abort
+</code></pre>
+
+<p>Now add the union merge driver to <code>.gitattributes</code> for <code>sqitch.plan</code>
+and rebase again:</p>
+
+<pre><code>&gt; echo sqitch.plan merge=union &gt; .gitattributes
+&gt; git rebase master
+First, rewinding head to replay your work on top of it...
+Applying: Add flips table.
+Using index info to reconstruct a base tree...
+M     sqitch.plan
+Falling back to patching base and 3-way merge...
+Auto-merging sqitch.plan
+Applying: Add functions to insert and delete flips.
+Using index info to reconstruct a base tree...
+M     sqitch.plan
+Falling back to patching base and 3-way merge...
+Auto-merging sqitch.plan
+</code></pre>
+
+<p>Ah, that looks a bit better. Let&rsquo;s have a look at the plan:</p>
+
+<pre><code>&gt; cat sqitch.plan
+%syntax-version=1.0.0
+%project=flipr
+%uri=https://github.com/sqitchers/sqitch-mysql-intro/
+
+appuser 2013-12-31T21:04:04Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a an application user.
+users [appuser] 2013-12-31T21:32:48Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates table to track our users.
+insert_user [users appuser] 2013-12-31T21:37:29Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a user.
+change_pass [users appuser] 2013-12-31T21:37:36Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to change a user password.
+@v1.0.0-dev1 2013-12-31T21:41:08Z Marge N. O’Vera &lt;marge@example.com&gt; # Tag v1.0.0-dev1.
+
+lists [appuser users] 2013-12-31T21:46:22Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing lists.
+insert_list [lists appuser] 2013-12-31T21:48:14Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a list.
+delete_list [lists appuser] 2013-12-31T21:49:41Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a list.
+flips [appuser users] 2013-12-31T21:53:03Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing flips.
+insert_flip [flips appuser] 2013-12-31T21:56:12Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a flip.
+delete_flip [flips appuser] 2013-12-31T21:56:22Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to delete a flip.
+</code></pre>
+
+<p>Note that it has appended the changes from the merged &ldquo;lists&rdquo; branch, and then
+merged the changes from our &ldquo;flips&rdquo; branch. Test it to make sure it works as
+expected:</p>
+
+<pre><code>&gt; sqitch rebase -y
+Reverting all changes from flipr_test
+  - delete_flip ............... ok
+  - insert_flip ............... ok
+  - flips ..................... ok
+  - change_pass @v1.0.0-dev1 .. ok
+  - insert_user ............... ok
+  - users ..................... ok
+  - appuser ................... ok
+Deploying changes to flipr_test
+  + appuser ................... ok
+  + users ..................... ok
+  + insert_user ............... ok
+  + change_pass @v1.0.0-dev1 .. ok
+  + lists ..................... ok
+  + insert_list ............... ok
+  + delete_list ............... ok
+  + flips ..................... ok
+  + insert_flip ............... ok
+  + delete_flip ............... ok
+</code></pre>
+
+<p>Note the use of <a href="/docs/sqitch-rebase"><code>rebase</code></a>, which combines a
+<a href="/docs/sqitch-revert"><code>revert</code></a> and a <a href="/docs/sqitch-deploy"><code>deploy</code></a> into a single
+command. Handy, right? It correctly reverted our changes, and then deployed
+them all again in the proper order. So let&rsquo;s commit <code>.gitattributes</code>; seems
+worthwhile to keep that change:</p>
+
+<pre><code>&gt; git add .
+&gt; git commit -m 'Add `.gitattributes` with union merge for `sqitch.plan`.'
+[flips d813f7c] Add `.gitattributes` with union merge for `sqitch.plan`.
+ 1 file changed, 1 insertion(+)
+ create mode 100644 .gitattributes
+</code></pre>
+
+<h2 id="merges-mastered">Merges Mastered</h2>
+
+<p>And now, finally, we can merge into <code>master</code>:</p>
+
+<pre><code>&gt; git checkout master
+Switched to branch 'master'
+&gt; git merge --no-ff flips -m &quot;Merge branch 'flips'&quot;
+Merge made by the 'recursive' strategy.
+ .gitattributes         |  1 +
+ deploy/delete_flip.sql | 22 ++++++++++++++++++++++
+ deploy/flips.sql       | 16 ++++++++++++++++
+ deploy/insert_flip.sql | 24 ++++++++++++++++++++++++
+ revert/delete_flip.sql |  7 +++++++
+ revert/flips.sql       |  7 +++++++
+ revert/insert_flip.sql |  7 +++++++
+ sqitch.plan            |  3 +++
+ verify/delete_flip.sql | 10 ++++++++++
+ verify/flips.sql       | 12 ++++++++++++
+ verify/insert_flip.sql | 10 ++++++++++
+ 11 files changed, 119 insertions(+)
+ create mode 100644 .gitattributes
+ create mode 100644 deploy/delete_flip.sql
+ create mode 100644 deploy/flips.sql
+ create mode 100644 deploy/insert_flip.sql
+ create mode 100644 revert/delete_flip.sql
+ create mode 100644 revert/flips.sql
+ create mode 100644 revert/insert_flip.sql
+ create mode 100644 verify/delete_flip.sql
+ create mode 100644 verify/flips.sql
+ create mode 100644 verify/insert_flip.sql
+</code></pre>
+
+<p>And double-check our work:</p>
+
+<pre><code>&gt; cat sqitch.plan
+%syntax-version=1.0.0
+%project=flipr
+%uri=https://github.com/sqitchers/sqitch-mysql-intro/
+
+appuser 2013-12-31T21:04:04Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a an application user.
+users [appuser] 2013-12-31T21:32:48Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates table to track our users.
+insert_user [users appuser] 2013-12-31T21:37:29Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a user.
+change_pass [users appuser] 2013-12-31T21:37:36Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to change a user password.
+@v1.0.0-dev1 2013-12-31T21:41:08Z Marge N. O’Vera &lt;marge@example.com&gt; # Tag v1.0.0-dev1.
+
+lists [appuser users] 2013-12-31T21:46:22Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing lists.
+insert_list [lists appuser] 2013-12-31T21:48:14Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a list.
+delete_list [lists appuser] 2013-12-31T21:49:41Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a list.
+flips [appuser users] 2013-12-31T21:53:03Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing flips.
+insert_flip [flips appuser] 2013-12-31T21:56:12Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a flip.
+delete_flip [flips appuser] 2013-12-31T21:56:22Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to delete a flip.
+</code></pre>
+
+<p>Much much better, a nice clean master now. And because it is now identical to
+the &ldquo;flips&rdquo; branch, we can just carry on. Go ahead and tag it, bundle, and
+release:</p>
+
+<pre><code>&gt; sqitch tag v1.0.0-dev2 -n 'Tag v1.0.0-dev2.'
+Tagged &quot;delete_flip&quot; with @v1.0.0-dev2
+&gt; git commit -am 'Tag the database with v1.0.0-dev2.'
+[master 76d6e15] Tag the database with v1.0.0-dev2.
+ 1 file changed, 1 insertion(+)
+&gt; git tag v1.0.0-dev2 -am 'Tag v1.0.0-dev2'
+&gt; sqitch bundle --dest-dir flipr-1.0.0-dev2
+Bundling into flipr-1.0.0-dev2
+Writing config
+Writing plan
+Writing scripts
+  + appuser
+  + users
+  + insert_user
+  + change_pass @v1.0.0-dev1
+  + lists
+  + insert_list
+  + delete_list
+  + flips
+  + insert_flip
+  + delete_flip @v1.0.0-dev2
+</code></pre>
+
+<p>Note the use of the <code>--dest-dir</code> option to <code>sqitch bundle</code>. Just a nicer way
+to create the top-level directory name so we don&rsquo;t have to rename it from
+<code>bundle</code>.</p>
+
+<h1 id="in-place-changes">In Place Changes</h1>
+
+<p>Uh-oh, someone just noticed that MD5 hashing is not particularly secure. Why?
+Have a look at this:</p>
+
+<pre><code>&gt; mysql -u root -D flipr_test --execute &quot;
+    CALL insert_user('foo', 'secr3t');
+    CALL insert_user('bar', 'secr3t');
+    SELECT * FROM users;
+&quot;
++----------+----------------------------------+----------------------------+
+| nickname | password                         | timestamp                  |
++----------+----------------------------------+----------------------------+
+| bar      | 9695da4dd567a19f9b92065f240c6725 | 2013-12-31 22:06:28.359118 |
+| foo      | 9695da4dd567a19f9b92065f240c6725 | 2013-12-31 22:06:28.358789 |
++----------+----------------------------------+----------------------------+
+</code></pre>
+
+<p>If user &ldquo;foo&rdquo; ever got access to the database, she could quickly discover that
+user &ldquo;bar&rdquo; has the same password and thus be able to exploit the account. Not
+a great idea. So we need to modify the <code>insert_user()</code> and <code>change_pass()</code>
+functions to fix that. How?</p>
+
+<p>We can use MySQL&rsquo;s
+<a href="https://dev.mysql.com/doc/refman/5.5/en/encryption-functions.html#function_encrypt"><code>ENCRYPT()</code></a>
+function to encrypt passwords with a salt, so that they&rsquo;re all unique. But how
+to deploy the changes to <code>insert_user()</code> and <code>change_pass()</code>?</p>
+
+<p>Normally, modifying functions in database changes is a
+<a href="https://www.urbandictionary.com/define.php?term=pita">PITA</a>. You have to make
+changes like these:</p>
+
+<ol>
+<li>Copy <code>deploy/insert_user.sql</code> to <code>deploy/insert_user_encrypt.sql</code>.</li>
+<li>Edit <code>deploy/insert_user_encrypt.sql</code> to switch from <code>MD5()</code> to <code>ENCRYPT()</code>.</li>
+<li>Copy <code>deploy/insert_user.sql</code> to <code>revert/insert_user_encrypt.sql</code>.
+Yes, copy the original change script to the new revert change.</li>
+<li>Copy <code>verify/insert_user.sql</code> to <code>verify/insert_user_encrypt.sql</code>.</li>
+<li>Edit <code>verify/insert_user_encrypt.sql</code> to test that the function now properly
+uses <code>ENCRYPT()</code>.</li>
+<li>Test the changes to make sure you can deploy and revert the
+<code>insert_user_encrypt</code> change.</li>
+<li>Now do the same for the <code>change_pass</code> scripts.</li>
+</ol>
+
+<p>But you can have Sqitch do it for you. The only requirement is that a tag
+appear between the two instances of a change we want to modify. In general,
+you&rsquo;re going to make a change like this after a release, which you&rsquo;ve tagged
+anyway, right? Well we have, with <code>@v1.0.0-dev2</code> added in the previous
+section. With that, we can let Sqitch do most of the hard work for us, thanks
+to the <a href="/docs/sqitch-rework"><code>rework</code></a> command, which is similar to
+<a href="/docs/sqitch-add"><code>add</code></a>:</p>
+
+<pre><code>&gt; sqitch rework insert_user -n 'Change insert_user to use encyrpt().'
+Added &quot;insert_user [insert_user@v1.0.0-dev2]&quot; to sqitch.plan.
+Modify these files as appropriate:
+  * deploy/insert_user.sql
+  * revert/insert_user.sql
+  * verify/insert_user.sql
+</code></pre>
+
+<p>Oh, so we can edit those files in place. Nice! How does Sqitch do it? Well, in
+point of fact, it has copied the files to stand in for the previous instance
+of the <code>insert_user</code> change, which we can see via <code>git status</code>:</p>
+
+<pre><code>&gt; git status
+# On branch master
+# Your branch is ahead of 'origin/master' by 5 commits.
+#   (use &quot;git push&quot; to publish your local commits)
+#
+# Changes not staged for commit:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#     modified:   revert/insert_user.sql
+#     modified:   sqitch.plan
+#
+# Untracked files:
+#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+#
+#     deploy/insert_user@v1.0.0-dev2.sql
+#     revert/insert_user@v1.0.0-dev2.sql
+#     verify/insert_user@v1.0.0-dev2.sql
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</code></pre>
+
+<p>The &ldquo;untracked files&rdquo; part of the output is the first thing to notice. They
+are all named <code>insert_user@v1.0.0-dev2.sql</code>. What that means is: &ldquo;the
+<code>insert_user</code> change as it was implemented as of the <code>@v1.0.0-dev2</code> tag.&rdquo;
+These are copies of the original scripts, and thereafter Sqitch will find them
+when it needs to run scripts for the first instance of the <code>insert_user</code>
+change. As such, it&rsquo;s important not to change them again. But hey, if you&rsquo;re
+reworking the change, you shouldn&rsquo;t need to.</p>
+
+<p>The other thing to notice is that <code>revert/insert_user.sql</code> has changed.
+Sqitch replaced it with the original deploy script. As of now,
+<code>deploy/insert_user.sql</code> and <code>revert/insert_user.sql</code> are identical. This is
+on the assumption that the deploy script will be changed (we&rsquo;re reworking it,
+remember?), and that the revert script should actually change things back to
+how they were before. Of course, the original deploy script may not be
+<a href="https://en.wikipedia.org/wiki/Idempotence">idempotent</a> &ndash; that is, able to be
+applied multiple times without changing the result beyond the initial
+application. If it&rsquo;s not, you will likely need to modify it so that it
+properly restores things to how they were after the original deploy script was
+deployed. Or, more simply, it should revert changes back to how they were
+as-of the deployment of <code>deploy/insert_user@v1.0.0-dev2.sql</code>.</p>
+
+<p>Had MySQL supported an <code>OR REPLACE</code> expression on <code>CREATE FUNCTION</code> and we
+had used it, our function deploy scripts would already idempotent. No matter
+how many times they were run, the end results would be the same instance of
+the function, with no duplicates or errors.</p>
+
+<p>Alas, such is not the case for MySQL, so we will have to modify the scripts to
+drop the function before re-creating it. So let&rsquo;s do it. We&rsquo;ll modify the
+scripts drop and re-create the functions with to use <code>ENCRYPT()</code>. Make this
+change to <code>deploy/insert_user.sql</code>:</p>
+
+<pre><code> @@ -6,13 +6,14 @@ BEGIN;
+
+  DELIMITER //
+
+ +DROP PROCEDURE insert_user;
+  CREATE PROCEDURE insert_user(
+      nickname VARCHAR(512),
+      password VARCHAR(512)
+  ) SQL SECURITY DEFINER
+  BEGIN
+      INSERT INTO users (nickname, password, timestamp)
+ -    VALUES (nickname, md5(password), UTC_TIMESTAMP(6));
+ +    VALUES (nickname, ENCRYPT(md5(password), md5(FLOOR(RAND() * 0xFFFFFFFF))), UTC_TIMESTAMP(6));
+  END
+  //
+</code></pre>
+
+<p>We just need to add the <code>DROP</code> statement to the revert script,
+<code>revert/insert_user.sql</code>:</p>
+
+<pre><code> @@ -6,6 +6,7 @@ BEGIN;
+
+  DELIMITER //
+
+ +DROP PROCEDURE insert_user;
+  CREATE PROCEDURE insert_user(
+      nickname VARCHAR(512),
+      password VARCHAR(512)
+</code></pre>
+
+<p>Go ahead and rework the <code>change_pass</code> change, too:</p>
+
+<pre><code>&gt; sqitch rework change_pass -n 'Change change_pass to use encyrpt().'
+Added &quot;change_pass [change_pass@v1.0.0-dev2]&quot; to sqitch.plan.
+Modify these files as appropriate:
+  * deploy/change_pass.sql
+  * revert/change_pass.sql
+  * verify/change_pass.sql
+</code></pre>
+
+<p>And make this change to <code>deploy/change_pass.sql</code>:</p>
+
+<pre><code> @@ -6,6 +6,7 @@ BEGIN;
+
+  DELIMITER //
+
+ +DROP FUNCTION change_pass;
+  CREATE FUNCTION change_pass(
+      nickname VARCHAR(512),
+      oldpass  VARCHAR(512),
+ @@ -13,9 +14,9 @@ CREATE FUNCTION change_pass(
+  ) RETURNS INTEGER SQL SECURITY DEFINER
+  BEGIN
+      UPDATE users
+ -       SET password = md5(newpass)
+ +       SET password = ENCRYPT(md5(newpass), md5(FLOOR(RAND() * 0xFFFFFFFF)))
+       WHERE nickname = nickname
+ -       AND password = md5(oldpass);
+ +       AND password = ENCRYPT(md5(oldpass), password);
+      RETURN ROW_COUNT();
+  END;
+  //
+</code></pre>
+
+<p>And add the <code>DROP FUNCTION</code> statement to its revert script, too:</p>
+
+<pre><code> @@ -6,6 +6,7 @@ BEGIN;
+
+  DELIMITER //
+
+ +DROP FUNCTION change_pass;
+  CREATE FUNCTION change_pass(
+      nickname VARCHAR(512),
+      oldpass  VARCHAR(512),
+</code></pre>
+
+<p>And now we&rsquo;re ready to try a deployment:</p>
+
+<pre><code>&gt;     sqitch deploy
+Deploying changes to flipr_test
+  + insert_user .. ok
+  + change_pass .. ok
+</code></pre>
+
+<p>So, are the changes deployed?</p>
+
+<pre><code>&gt; mysql -u root -D flipr_test --execute &quot;
+    DELETE FROM users;
+    CALL insert_user('foo', 'secr3t');
+    CALL insert_user('bar', 'secr3t');
+    SELECT * FROM users;
+&quot;
++----------+---------------+----------------------------+
+| nickname | password      | timestamp                  |
++----------+---------------+----------------------------+
+| bar      | 0aasvM1.AzY0Y | 2013-12-31 22:14:45.554942 |
+| foo      | 80v1DpnRrqbwo | 2013-12-31 22:14:45.554457 |
++----------+---------------+----------------------------+
+</code></pre>
+
+<p>Awesome, the stored passwords are different now. But can we revert, even
+though we haven&rsquo;t written any reversion scripts?</p>
+
+<pre><code>&gt; sqitch revert --to @HEAD^^ -y
+Reverting changes to delete_flip @v1.0.0-dev2 from flipr_test
+  - change_pass .. ok
+  - insert_user .. ok
+</code></pre>
+
+<p>Did that work, are the <code>MD5()</code> passwords back?</p>
+
+<pre><code>&gt; mysql -u root -D flipr_test --execute &quot;
+    DELETE FROM users;
+    CALL insert_user('foo', 'secr3t');
+    CALL insert_user('bar', 'secr3t');
+    SELECT * FROM users;
+&quot;
++----------+----------------------------------+----------------------------+
+| nickname | password                         | timestamp                  |
++----------+----------------------------------+----------------------------+
+| bar      | 9695da4dd567a19f9b92065f240c6725 | 2013-12-31 22:15:29.843140 |
+| foo      | 9695da4dd567a19f9b92065f240c6725 | 2013-12-31 22:15:29.842700 |
++----------+----------------------------------+----------------------------+
+</code></pre>
+
+<p>Yes, it works! Sqitch properly finds the original instances of these changes
+in the new script files that include tags.</p>
+
+<p>But what about the verify script? How can we verify that the functions have
+been modified to use <code>ENCRYPT()</code>? I think the simplest thing to do is to
+examine the body of the function as returned by
+<a href="https://dev.mysql.com/doc/refman/5.6/en/routines-table.html"><code>INFORMATION_SCHEMA.ROUTINES</code></a>
+So the <code>insert_user</code> verify script looks like this:</p>
+
+<pre><code>-- Verify flipr:insert_user on mysql
+
+BEGIN;
+
+SELECT sqitch.checkit(COUNT(*), 'Procedure &quot;insert_user&quot; does not exist or is not up-to-date')
+  FROM mysql.proc
+ WHERE db = database()
+   AND specific_name = 'insert_user'
+   AND body_utf8 LIKE '%ENCRYPT(md5(password), md5(FLOOR(RAND() * 0xFFFFFFFF))%';
+
+ROLLBACK;
+</code></pre>
+
+<p>And the <code>change_pass</code> verify script looks like this:</p>
+
+<pre><code>-- Verify flipr:change_pass on mysql
+
+BEGIN;
+
+SELECT sqitch.checkit(COUNT(*), 'Procedure &quot;change_pass&quot; does not exist or is not up-to-date')
+  FROM mysql.proc
+ WHERE db = database()
+   AND specific_name = 'change_pass'
+   AND body_utf8 LIKE '%ENCRYPT(md5(oldpass), password)%';
+
+ROLLBACK;
+</code></pre>
+
+<p>Make sure these pass by re-deploying:</p>
+
+<pre><code>&gt; sqitch deploy
+Deploying changes to flipr_test
+  + insert_user .. ok
+  + change_pass .. ok
+</code></pre>
+
+<p>Excellent. Let&rsquo;s go ahead and commit these changes:</p>
+
+<pre><code>&gt; git add .
+&gt; git commit -m 'Use encrypt() to encrypt passwords.'
+[master abcce73] Use encrypt() to encrypt passwords.
+ 13 files changed, 137 insertions(+), 9 deletions(-)
+ create mode 100644 deploy/change_pass@v1.0.0-dev2.sql
+ create mode 100644 deploy/insert_user@v1.0.0-dev2.sql
+ create mode 100644 revert/change_pass@v1.0.0-dev2.sql
+ create mode 100644 revert/insert_user@v1.0.0-dev2.sql
+ create mode 100644 verify/change_pass@v1.0.0-dev2.sql
+ create mode 100644 verify/insert_user@v1.0.0-dev2.sql
+
+&gt; sqitch status
+# On database flipr_test
+# Project:  flipr
+# Change:   6f2e1cd4b1c031a66930811328cfcdb0389d8320
+# Name:     change_pass
+# Deployed: 2013-12-31 14:16:45 -0800
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Nothing to deploy (up-to-date)
+</code></pre>
+
+<h1 id="more-to-come">More to Come</h1>
+
+<p>Sqitch is a work in progress. Better integration with version control systems
+is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
+
+<h1 id="author">Author</h1>
+
+<p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
+
+<h1 id="license">License</h1>
+
+<p>Copyright &copy; 2012-2018 iovation Inc.</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED &ldquo;AS IS&rdquo;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+
+	</main>
+	    <footer>
+        <div class="code">
+            <a href="/site/">About this Site</a><br />
+            Corrections, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.
+        </div>
+    </footer>
+</body>
+</html>
+

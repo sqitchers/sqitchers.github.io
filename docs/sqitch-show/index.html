@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sqitch: sqitch-show documentation</title>
+	<meta name="description" content="Sqitch is a database change management application." />
+	<link rel="stylesheet" href="/css/screen.css" />
+	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#22538e">
+	<meta name="msapplication-TileColor" content="#22538e">
+	<meta name="theme-color" content="#fcffff">
+</head>
+<body>
+	<header id=masthead>
+		<hgroup id="top">
+			<h1><a href="/"><img src="/img/masthead.png" srcset="/img/masthead.svg" alt="Sqitch" title="Sqitch"></a></h1>
+		</hgroup>
+		<nav id="bar">
+			<menu>
+				<li class="icon"><a href="/about" title="About"><i class="about"></i></a></li>
+				<li class="icon"><a href="/docs/" title="Documentation"><i class="docs"></i></a></li>
+				<li class="icon"><a href="/community/" title="Community"><i class="community"></i></a></li>
+				<li class="icon"><a href="/download/" title="Download"><i class="download"></i></a></li>
+			</menu>
+		</nav>
+	</header>
+
+	<header id="title">
+		<h1>sqitch-show</h1>
+	</header>
+	<main id="docs" class="page">
+		
+		
+
+<h1 id="name">Name</h1>
+
+<p>sqitch-show - Show object information or change file contents</p>
+
+<h1 id="synopsis">Synopsis</h1>
+
+<pre><code>sqitch show [options] &lt;type&gt; &lt;object&gt;
+</code></pre>
+
+<h1 id="description">Description</h1>
+
+<p>Shows information about Sqitch objects. The first argument must be the type of
+object to show, and the second must be a key identifier for the object in the
+plan. The second argument must be a a change name or tag as specified in
+<a href="/docs/sqitchchanges">sqitchchanges</a>. The supported types include:</p>
+
+<ul>
+<li><p><code>change</code></p>
+
+<p>A change object. Outputs the text used to generate the change SHA1 ID.</p></li>
+
+<li><p><code>tag</code></p>
+
+<p>A tag. Outputs the text used to generate the tag SHA1 ID.</p></li>
+
+<li><p><code>deploy</code></p>
+
+<p>A change deploy script.</p></li>
+
+<li><p><code>revert</code></p>
+
+<p>A change revert script.</p></li>
+
+<li><p><code>verify</code></p>
+
+<p>A change verify script.</p></li>
+</ul>
+
+<h1 id="options">Options</h1>
+
+<ul>
+<li><code>-t</code></li>
+
+<li><p><code>--target</code></p>
+
+<p>The target database, the plan for which should be read before deciding what
+object to show. This option should be the name of a target in the
+configuration.</p></li>
+
+<li><p><code>-e</code></p></li>
+
+<li><p><code>--exists</code></p>
+
+<p>Suppress all output; instead exit with zero status if <code>&lt;object&gt;</code> exists
+and is a valid object.</p></li>
+
+<li><p><code>--plan-file</code></p></li>
+
+<li><p><code>-f</code></p>
+
+<p>Path to the deployment plan file. Overrides target, engine, and core
+configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
+</ul>
+
+<h2 id="examples">Examples</h2>
+
+<ul>
+<li><p>Show information about a specific change:</p>
+
+<pre><code>sqitch show change add_users_table
+</code></pre></li>
+
+<li><p>Show information about a change by ID:</p>
+
+<pre><code>sqitch show change be7cd00571d7151eacb0691e825dfc8980cc14ff
+</code></pre></li>
+
+<li><p>Show the most recent change info:</p>
+
+<pre><code>sqitch show change @HEAD
+</code></pre></li>
+
+<li><p>Show information about a tag:</p>
+
+<pre><code>sqitch show tag @beta1
+</code></pre></li>
+
+<li><p>Show the contents of a deploy file:</p>
+
+<pre><code>sqitch show deploy add_users_table@HEAD
+</code></pre></li>
+</ul>
+
+<h1 id="sqitch">Sqitch</h1>
+
+<p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
+
+	</main>
+	    <footer>
+        <div class="code">
+            <a href="/site/">About this Site</a><br />
+            Corrections, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.
+        </div>
+    </footer>
+</body>
+</html>
+

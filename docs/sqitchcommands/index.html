@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.55.0-DEV" />
     <meta charset="utf-8" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta name="mobile-web-app-capable" content="yes" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Sqitch: Sane database change management</title>
+	<title>Sqitch: sqitchcommands documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
 	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -34,35 +33,51 @@
 		</nav>
 	</header>
 
-	<p><section id="hi">
-        <p>Sqitch is the developer-friendly, confidence-inducing, platform-neutral database change management system.</p>
-    </section>
-    <main>
-        <section id="info">
-            <nav>
-                <ul>
-                    <li>
-                        <a class="about" href="/about/"><h3>About</h3></a>
-                        <p>What makes Sqitch unique among database migration frameworks.</p>
-                    </li>
-                    <li>
-                        <a class="download" href="/download/"><h3>Download</h3></a>
-                        <p>Binary and source code downloads and installation instructions.</p>
-                    </li>
-                    <li>
-                        <a class="docs" href="/docs/"><h3>Documentation</h3></a>
-                        <p>Command references, tutorials, best practice guides, and more.</p>
-                    </li>
-                    <li>
-                        <a class="community" href="/community/"><h3>Community</h3></a>
-                        <p>Get help, get involved. Issues, mail list, and source repository.</p>
-                    </li>
-                </ul>
-            </nav>
-        </section>
-    </main></p>
+	<header id="title">
+		<h1>sqitchcommands</h1>
+	</header>
+	<main id="docs" class="page">
+		
+		
 
-    <footer>
+<h1 id="usage">Usage</h1>
+
+<pre><code>sqitch [--etc-path | --help | --man | --version]
+sqitch &lt;command&gt; [--chdir &lt;path&gt;] [--no-pager] [--quiet] [--verbose]
+       [&lt;command-options&gt;] [&lt;args&gt;]
+</code></pre>
+
+<h1 id="common-commands">Common Commands</h1>
+
+<p>The most commonly used sqitch commands are:</p>
+
+<pre><code>add        Add a new change to the plan
+bundle     Bundle a Sqitch project for distribution
+checkout   Revert, checkout another VCS branch, and re-deploy changes
+config     Get and set local, user, or system options
+deploy     Deploy changes to a database
+engine     Manage database engine configuration
+help       Display help information about Sqitch commands
+init       Initialize a project
+log        Show change logs for a database
+plan       Show the contents of a plan
+rebase     Revert and redeploy database changes
+revert     Revert changes from a database
+rework     Duplicate a change in the plan and revise its scripts
+show       Show information about changes and tags, or change script contents
+status     Show the current deployment status of a database
+tag        Add or list tags in the plan
+target     Manage target database configuration
+upgrade    Upgrade the registry to the current version
+verify     Verify changes to a database
+</code></pre>
+
+<p>See <code>sqitch help &lt;command&gt;</code> or <code>sqitch help &lt;concept&gt;</code> to read about
+a specific command or concept. See <code>sqitch help --guide</code> for a list of
+conceptual guides.</p>
+
+	</main>
+	    <footer>
         <div class="code">
             <a href="/site/">About this Site</a><br />
             Corrections, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.

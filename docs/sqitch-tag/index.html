@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sqitch: sqitch-tag documentation</title>
+	<meta name="description" content="Sqitch is a database change management application." />
+	<link rel="stylesheet" href="/css/screen.css" />
+	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#22538e">
+	<meta name="msapplication-TileColor" content="#22538e">
+	<meta name="theme-color" content="#fcffff">
+</head>
+<body>
+	<header id=masthead>
+		<hgroup id="top">
+			<h1><a href="/"><img src="/img/masthead.png" srcset="/img/masthead.svg" alt="Sqitch" title="Sqitch"></a></h1>
+		</hgroup>
+		<nav id="bar">
+			<menu>
+				<li class="icon"><a href="/about" title="About"><i class="about"></i></a></li>
+				<li class="icon"><a href="/docs/" title="Documentation"><i class="docs"></i></a></li>
+				<li class="icon"><a href="/community/" title="Community"><i class="community"></i></a></li>
+				<li class="icon"><a href="/download/" title="Download"><i class="download"></i></a></li>
+			</menu>
+		</nav>
+	</header>
+
+	<header id="title">
+		<h1>sqitch-tag</h1>
+	</header>
+	<main id="docs" class="page">
+		
+		
+
+<h1 id="name">Name</h1>
+
+<p>sqitch-tag - Create or list tag objects</p>
+
+<h1 id="synopsis">Synopsis</h1>
+
+<pre><code>sqitch tag [options]
+sqitch tag &lt;name&gt;
+sqitch tag &lt;name&gt; change --note &lt;note&gt;
+sqitch tag --tag &lt;name&gt; --change &lt;change&gt;
+sqitch tag &lt;name&gt; --all
+</code></pre>
+
+<h1 id="description">Description</h1>
+
+<p>Tags a change or outputs a list of existing tags in one or more project plans.
+Tagging is useful for preparing for a release. Tags are also required in order
+to rework a change.</p>
+
+<p>To specify a change, use a change specification as documented in
+<a href="/docs/sqitchchanges">sqitchchanges</a>. If called with a tag name but no change, the most recent
+change in each plan will be tagged. If called with no name specified, a list
+of the current tags will be output.</p>
+
+<p>Note that the name of the new tag must adhere to the rules as defined in
+<a href="/docs/sqitchchanges">sqitchchanges</a>.</p>
+
+<p>By default, the <code>tag</code> command will add a new tag to the project&rsquo;s default
+plan, as defined by the core configuration and command-line options. Pass the
+<code>--all</code> option to have it iterate over all known targets and list tags or add
+a tag to all the plans. This works well to keep tags in sync in all plan
+files.</p>
+
+<p>To specify which plans to tag, pass the target, engine, or plan file names to
+tag as arguments. Use <code>--tag</code> and <code>--change</code> to disambiguate the tag and
+change names from the other parameters if necessary (or preferable). See
+<a href="#examples">&ldquo;Examples&rdquo;</a> for examples.</p>
+
+<h1 id="options">Options</h1>
+
+<ul>
+<li><code>-t</code></li>
+<li><code>--tag</code></li>
+
+<li><p><code>--tag-name</code></p>
+
+<p>The name of the tag to add. The name can be specified with or without this
+option, but the option can be useful for disambiguating the tag name from
+other arguments.</p></li>
+
+<li><p><code>-c</code></p></li>
+
+<li><p><code>--change</code></p></li>
+
+<li><p><code>--change-name</code></p>
+
+<p>The name of the change to tag. The name can be specified with or without this
+option, but the option can be useful for disambiguating the change name from
+other arguments.</p></li>
+
+<li><p><code>-a</code></p></li>
+
+<li><p><code>--all</code></p>
+
+<p>List the tags or add the new tag to all the plans in a project. Cannot be
+mixed with target, engine, or plan file name arguments; doing so will result
+in an error. Useful for multi-plan projects in which tags should be kept in
+sync. Overrides the value of the <code>tag.all</code> configuration; use <code>--no-all</code> to
+override a true <code>tag.all</code> configuration.</p></li>
+
+<li><p><code>-n</code></p></li>
+
+<li><p><code>--note</code></p>
+
+<p>A brief note describing the tag. The note will be attached to the tag as a
+comment. Multiple invocations will be concatenated together as separate
+paragraphs.</p>
+
+<p>For you Git folks out there, <code>-m</code> also works.</p></li>
+
+<li><p><code>--plan-file</code></p></li>
+
+<li><p><code>-f</code></p>
+
+<p>Path to the deployment plan file. Overrides target, engine, and core
+configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
+</ul>
+
+<h1 id="configuration-variables">Configuration Variables</h1>
+
+<ul>
+<li><p><code>tag.all</code></p>
+
+<p>List the tags or add the new tag to all the plans in a project. Useful for
+multi-plan projects in which tags should be kept in sync. May be overridden by
+<code>--all</code>, <code>--no-all</code>, or target, engine, and plan file name arguments.</p></li>
+</ul>
+
+<h1 id="examples">Examples</h1>
+
+<p>Get a list of tags in the default project plan:</p>
+
+<pre><code>sqitch tag
+</code></pre>
+
+<p>Get a list of all tags in the project:</p>
+
+<pre><code>sqitch tag --all
+</code></pre>
+
+<p>Get a list of the tags in the plan used by the <code>pg</code> engine:</p>
+
+<pre><code>sqitch tag pg
+</code></pre>
+
+<p>Get a list of the tags in two specific plans:</p>
+
+<pre><code>sqitch tag sqlite.plan pg.plan
+</code></pre>
+
+<p>Tag the latest change in the default project plan and be prompted for a note.</p>
+
+<pre><code>sqitch tag alpha1
+</code></pre>
+
+<p>Tag the latest change in all project plans and be prompted for a note.</p>
+
+<pre><code>sqitch tag alpha1 --all
+</code></pre>
+
+<p>Tag the latest change in the default project plan and and specify the note.</p>
+
+<pre><code>sqitch tag alpha2 -n 'Tag @alpha2.'
+</code></pre>
+
+<p>Tag change <code>users</code> in the default plan:</p>
+
+<pre><code>sqitch tag --tag alpha3 --change users
+</code></pre>
+
+<p>Tag the latest change change in the project plan used by the <code>vertica</code>
+engine:</p>
+
+<pre><code>sqitch tag --tag beta1 vertica -n 'Tag the Vertica with @beta1.'
+</code></pre>
+
+<p>Tag the latest change in two plans in a project:</p>
+
+<pre><code>sqitch tag -t v1.0.1 sqlite.plan pg.plan -n 'Tag @v1.0.1.'
+</code></pre>
+
+<h1 id="configuration-variables-1">Configuration Variables</h1>
+
+<p>None currently.</p>
+
+<h1 id="sqitch">Sqitch</h1>
+
+<p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
+
+	</main>
+	    <footer>
+        <div class="code">
+            <a href="/site/">About this Site</a><br />
+            Corrections, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.
+        </div>
+    </footer>
+</body>
+</html>
+

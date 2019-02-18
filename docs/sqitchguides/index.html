@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.55.0-DEV" />
     <meta charset="utf-8" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta name="mobile-web-app-capable" content="yes" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Sqitch: Sane database change management</title>
+	<title>Sqitch: sqitchguides documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
 	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -34,35 +33,32 @@
 		</nav>
 	</header>
 
-	<p><section id="hi">
-        <p>Sqitch is the developer-friendly, confidence-inducing, platform-neutral database change management system.</p>
-    </section>
-    <main>
-        <section id="info">
-            <nav>
-                <ul>
-                    <li>
-                        <a class="about" href="/about/"><h3>About</h3></a>
-                        <p>What makes Sqitch unique among database migration frameworks.</p>
-                    </li>
-                    <li>
-                        <a class="download" href="/download/"><h3>Download</h3></a>
-                        <p>Binary and source code downloads and installation instructions.</p>
-                    </li>
-                    <li>
-                        <a class="docs" href="/docs/"><h3>Documentation</h3></a>
-                        <p>Command references, tutorials, best practice guides, and more.</p>
-                    </li>
-                    <li>
-                        <a class="community" href="/community/"><h3>Community</h3></a>
-                        <p>Get help, get involved. Issues, mail list, and source repository.</p>
-                    </li>
-                </ul>
-            </nav>
-        </section>
-    </main></p>
+	<header id="title">
+		<h1>sqitchguides</h1>
+	</header>
+	<main id="docs" class="page">
+		
+		<p>The common Sqitch guides are:</p>
 
-    <footer>
+<pre><code>changes             Specifying changes for Sqitch
+configuration       Hierarchical engine and target configuration
+environment         Environment variables
+authentication      Specifying target authentication credentials
+tutorial            PostgreSQL Tutorial
+tutorial-firebird   Firebird Tutorial
+tutorial-mysql      MySQL Tutorial
+tutorial-oracle     Oracle Tutorial
+tutorial-sqlite     SQLite Tutorial
+tutorial-vertica    Vertica Tutorial
+tutorial-exasol     Exasol Tutorial
+tutorial-snowflake  Snowflake Tutorial
+</code></pre>
+
+<p>See <code>sqitch help &lt;command&gt;</code> or <code>sqitch help &lt;concept&gt;</code> to read about
+a specific command or concept.</p>
+
+	</main>
+	    <footer>
         <div class="code">
             <a href="/site/">About this Site</a><br />
             Corrections, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.

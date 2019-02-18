@@ -123,6 +123,7 @@ main {
 }
 
 main > section { border-top: 4px double #22538e; padding: 12px 0; }
+main > section:first-of-type { border: none !important; }
 
 #hi {
     display: block;
@@ -185,7 +186,9 @@ main > section { border-top: 4px double #22538e; padding: 12px 0; }
 .github:before { content: "\f09b" }
 .twitter:before { content: "\f099" }
 .news:before { content: "\f1ea" }
-.feed:before { content: "\F09E" }
+.feed:before { content: "\f09e" }
+.zip:before { content: "\f1c6" }
+.bug:before { content: "\f188" }
 
 body > footer .code:before {
     line-height: 1em;
@@ -201,8 +204,8 @@ body > footer .code:before {
 
 .page section:before {
     float: left;
-    font-size: 2em;
-    line-height: 1em;
+    font-size: 2.2em;
+    line-height: 1.2em;
     width: 45px;
     height: 45px;
     background-color: #dee8f0;
@@ -211,6 +214,7 @@ body > footer .code:before {
     padding: 16px;
     text-align: center;
     color: #817565;
+    display: inline-block;
  }
 
  #info li {
@@ -306,15 +310,16 @@ main li {
     background-color:#dee8f0;
     border-radius: 5px;
     z-index: 10;
-    box-shadow:  #2e2e2e -1px 1px 3px;
+    box-shadow:  #889 -1px 1px 3px;
     position: absolute;
+    max-height: 600px;
 }
 
-.toc > ul { min-width:180px; max-width:300px; }
+.toc > ul { min-width:180px; max-width:300px;  }
 .toc li { list-style-type: none; margin: 0; white-space: nowrap; overflow-x: auto}
-.toc ul { margin: 0 1em 1em 1em; }
-.toc nav h4 { margin: 1em 1em 0; }
-.toc ul, .toc h4 { direction: ltr; } /* Restore ltr */
+.toc ul { margin: 0 16px 16px 16px; }
+.toc nav h3 { margin: 16px 16px 0; }
+.toc ul, .toc h3 { direction: ltr; } /* Restore ltr */
 .toc ul ul { margin: 0 0 0 1em }
 
 pre {

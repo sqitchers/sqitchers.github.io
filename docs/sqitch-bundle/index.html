@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sqitch: sqitch-bundle documentation</title>
+	<meta name="description" content="Sqitch is a database change management application." />
+	<link rel="stylesheet" href="/css/screen.css" />
+	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#22538e">
+	<meta name="msapplication-TileColor" content="#22538e">
+	<meta name="theme-color" content="#fcffff">
+</head>
+<body>
+	<header id=masthead>
+		<hgroup id="top">
+			<h1><a href="/"><img src="/img/masthead.png" srcset="/img/masthead.svg" alt="Sqitch" title="Sqitch"></a></h1>
+		</hgroup>
+		<nav id="bar">
+			<menu>
+				<li class="icon"><a href="/about" title="About"><i class="about"></i></a></li>
+				<li class="icon"><a href="/docs/" title="Documentation"><i class="docs"></i></a></li>
+				<li class="icon"><a href="/community/" title="Community"><i class="community"></i></a></li>
+				<li class="icon"><a href="/download/" title="Download"><i class="download"></i></a></li>
+			</menu>
+		</nav>
+	</header>
+
+	<header id="title">
+		<h1>sqitch-bundle</h1>
+	</header>
+	<main id="docs" class="page">
+		
+		
+
+<h1 id="name">Name</h1>
+
+<p>sqitch-bundle - Bundle a Sqitch project for distribution</p>
+
+<h1 id="synopsis">Synopsis</h1>
+
+<pre><code>sqitch bundle [options
+sqitch bundle --dest-dir widgets-1.0.0
+sqitch bundle --all
+sqitch bundle pg mysql
+</code></pre>
+
+<h1 id="description">Description</h1>
+
+<p>This command bundles up a sqitch project for distribution. At its simplest, it
+copies the project configuration file, plan files, and all of the change
+scripts to a directory. This directory can then be packaged up for
+distribution (as a tarball, RPM, etc.).</p>
+
+<p>By default, the <code>bundle</code> command will bundle the plan and scripts for the
+default plan and top directory, as defined by the core configuration and
+command-line options. Pass the <code>--all</code> option to have it iterate over all
+known plans and top directories (as specified for engines and targets) and
+bundle them all. This works well for creating a a single bundle with all
+plans and scripts.</p>
+
+<p>To specify which plans an top directories to bundle, pass the target, engine,
+or plan file names as arguments. See <a href="#examples">&ldquo;Examples&rdquo;</a> for examples.</p>
+
+<ul>
+<li>Engine names</li>
+<li>Target names</li>
+<li>Plan file names</li>
+</ul>
+
+<p>The bundle command also allows you to limit bundled changes to a subset of
+those in a plan. When bundling a single plan, use the <code>--from</code> and/or <code>--to</code>
+options to do the limiting. When using multiple plans, specify the changes
+after each target argument. In either case, the changes can be specified in
+any way documented on <a href="/docs/sqitchchanges">sqitchchanges</a>. See <a href="#examples">&ldquo;Examples&rdquo;</a> for examples.</p>
+
+<h1 id="options">Options</h1>
+
+<ul>
+<li><code>--dest-dir</code></li>
+
+<li><p><code>--dir</code></p>
+
+<p>The name of the directory in which to bundle the project. The configuration
+file will be created in this directory, and all top, deploy, revert, and
+verify directories will be created relative to it. Defaults to <code>bundle</code>.</p></li>
+
+<li><p><code>--from</code></p>
+
+<p>The change from which to start bundling. If you need to bundle up only a subset
+of a plan, specify a change (using a supported <a href="/docs/sqitchchanges">change specification</a>
+from which to start the bundling via this option. This option is probably only
+useful when bundling a single plan.</p></li>
+
+<li><p><code>--to</code></p>
+
+<p>The change to which to end bundling. If you need to bundle up only a subset
+of a plan, specify a change (using a supported <a href="/docs/sqitchchanges">change specification</a>
+that should be the last change to be included in the bundle. This option is
+probably only useful when bundling a single plan.</p></li>
+
+<li><p><code>-a</code></p></li>
+
+<li><p><code>--all</code></p>
+
+<p>Bundle all the project plans and their associated scripts. Cannot be mixed
+with target, engine, or plan file name arguments; doing so will result in an
+error. Useful for multi-plan projects that should have all the plans bundled
+together. Overrides the value of the <code>bundle.all</code> configuration; use
+<code>--no-all</code> to override a true <code>bundle.all</code> configuration.</p></li>
+
+<li><p><code>--plan-file</code></p></li>
+
+<li><p><code>-f</code></p>
+
+<p>Path to the deployment plan file. Overrides target, engine, and core
+configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
+</ul>
+
+<h1 id="configuration-variables">Configuration Variables</h1>
+
+<ul>
+<li><p><code>bundle.dest_dir</code></p>
+
+<p>The name of the directory in which to bundle the project.</p></li>
+</ul>
+
+<h1 id="examples">Examples</h1>
+
+<p>Bundle a Sqitch project with the default plan and scripts into <code>bundle</code>:</p>
+
+<pre><code>sqitch bundle
+</code></pre>
+
+<p>Bundle a Sqitch project with all plans and scripts into <code>bundle</code>:</p>
+
+<pre><code>sqitch bundle --all
+</code></pre>
+
+<p>Bundle a Sqitch project into <code>BUILDROOT/MyProj</code>:</p>
+
+<pre><code>sqitch bundle --dest-dir BUILDROOT/MyProj
+</code></pre>
+
+<p>Bundle a project including changes <code>adduser</code> through <code>@v1.0</code>:</p>
+
+<pre><code>sqitch bundle --from adduser --to @v1.0
+</code></pre>
+
+<p>Bundle a the <code>pg</code> engine plans with changes <code>adduser</code> through <code>@v1.0</code>, and
+the <code>sqlite</code> engine with changes from the start of the plan up to <code>widgets</code>:</p>
+
+<pre><code>sqitch bundle pg adduser @v1.0 sqlite @ROOT wigets
+</code></pre>
+
+<p>Bundle just the files necessary to execute the plan for the <code>pg</code> engine:</p>
+
+<pre><code>sqitch bundle pg
+</code></pre>
+
+<p>Bundle the files necessary for two plan files:</p>
+
+<pre><code>sqitch bundle sqlite/sqitch.plan mysql/sqitch.plan
+</code></pre>
+
+<h1 id="sqitch">Sqitch</h1>
+
+<p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
+
+	</main>
+	    <footer>
+        <div class="code">
+            <a href="/site/">About this Site</a><br />
+            Corrections, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.
+        </div>
+    </footer>
+</body>
+</html>
+
