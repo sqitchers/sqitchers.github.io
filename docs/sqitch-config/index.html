@@ -5,8 +5,8 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta name="mobile-web-app-capable" content="yes" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Sqitch: sqitch-config documentation</title>
-	<meta name="description" content="Sqitch is a database change management application." />
+	<title>Sqitch: sqitch-config Documentation</title>
+	<meta name="description" content="Get and set local, user, or system Sqitch options" />
 	<link rel="stylesheet" href="/css/screen.css" />
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -15,6 +15,7 @@
 	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#22538e">
 	<meta name="msapplication-TileColor" content="#22538e">
 	<meta name="theme-color" content="#fcffff">
+	<meta name="generator" content="Hugo 0.55.0-DEV" />
 </head>
 <body>
 	<header id=masthead>
@@ -95,7 +96,7 @@ want to update or unset an option which can occur on multiple lines, a Perl
 regular expression <code>value_regex</code> needs to be given. Only the existing values
 that match the regex will be updated or unset. If you want to handle lines
 that do not match the regex, just prepend a single <code>!</code> (exclamation point) in
-front (see <a href="/docs/Examples">Examples</a>).</p>
+front (see <a href="https://metacpan.org/pod/Examples">Examples</a>).</p>
 
 <p>The <code>type</code> specifier can be <code>--int</code>, <code>--num</code>, or <code>--bool</code>, to ensure that
 the variable(s) are of the given type and convert the value to the canonical

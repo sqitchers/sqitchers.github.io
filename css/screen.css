@@ -199,6 +199,31 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: .25em;
 }
 
+em, dfn {
+    font-style: italic
+}
+
+strong, dfn {
+    font-weight: bold
+}
+
+del, s {
+    text-decoration: line-through
+}
+
+abbr, acronym {
+    border-bottom: 1px dotted;
+    cursor: help
+}
+
+small {
+    font-size: .8em
+}
+
+big {
+    font-size: 1.2em
+}
+
 #title {
     /* margin-top: 16px; */
     padding: 24px 0;
@@ -335,6 +360,9 @@ main > section:first-of-type { border: none !important; }
 .feed:before { content: "\f09e" }
 .zip:before { content: "\f1c6" }
 .bug:before { content: "\f188" }
+.upload:before { content: "\f093" }
+.cog:before { content: "\f013" }
+.teach:before { content: "\f51c" }
 
 body > footer .code:before {
     line-height: 1em;
@@ -496,6 +524,16 @@ p pre code, li pre code {
     font-size: .9em;
     font-family: "Source Code Pro", "Courier", monospace
 }
+
+#doclist h2 { color: #817565; font-weight: 500; }
+#doclist i.i:before { font-family: fawe; font-size: .8em; width: 40px; display: inline-block; text-align: center;}
+#doclist li {
+    list-style-position: inside;
+    margin-left: 0;
+    list-style-position: outside;
+    margin-left: 35px;
+}
+#doclist li a { font-weight: 500;}
 
 /* hugo gen chromastyles --style=monokai >> themes/justatheory/static/css/screen.css */
 /* Background */ pre, .chroma { color: #f8f8f2; background-color: #333 } /* Modified to add pre and to lighten background */
