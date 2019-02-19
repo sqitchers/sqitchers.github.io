@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-plan documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,18 +36,34 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#configuration-variables'>Configuration Variables</a></li>
+                <li><a href='#formats'>Formats</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-plan - Show planned database changes</p>
 
-<h1 id="synopsis">Synopsis</h1>
+<h2 id="synopsis">Synopsis</h2>
 
 <pre><code>sqitch plan [options] [&lt;database&gt;]
 </code></pre>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>The <code>plan</code> command displays information about planned changes for a database
 target. By default, it will show all the changes for the plan, but you can
@@ -60,7 +74,7 @@ Of course you could just <code>cat</code> your plan file, but this is more fun.<
 should be read, and may also be specified as the <code>--target</code> option. It can be
 target name, a URI, an engine name, or plan file path.</p>
 
-<h1 id="options">Options</h1>
+<h2 id="options">Options</h2>
 
 <ul>
 <li><code>-t</code></li>
@@ -206,7 +220,7 @@ prefix the specified number of characters long.</p></li>
 <p>Shorthand for <code>--format oneline --abbrev 6</code>.</p></li>
 </ul>
 
-<h1 id="configuration-variables">Configuration Variables</h1>
+<h2 id="configuration-variables">Configuration Variables</h2>
 
 <ul>
 <li><p><code>plan.format</code></p>
@@ -223,7 +237,7 @@ option.</p></li>
 <p>Output colors. Supports the same values as the <code>--color</code> option.</p></li>
 </ul>
 
-<h1 id="formats">Formats</h1>
+<h2 id="formats">Formats</h2>
 
 <p>There are several built-in formats, and you can emit data in a custom format
 <code>format:&lt;string&gt;</code> format. Here are the details of the built-in formats:</p>
@@ -368,7 +382,7 @@ The title was &gt;&gt;We really need to get this right.&lt;&lt;
 </ul></li>
 </ul>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

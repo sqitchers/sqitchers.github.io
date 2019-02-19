@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-deploy documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,20 +36,35 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#configuration-variables'>Configuration Variables</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-deploy - Deploy changes to a database</p>
 
-<h1 id="synopsis">Synopsis</h1>
+<h2 id="synopsis">Synopsis</h2>
 
 <pre><code>sqitch deploy [options] [&lt;database&gt;]
 sqitch deploy [options] [&lt;database&gt;] &lt;change&gt;
 sqitch deploy [options] [&lt;database&gt;] --to-change &lt;change&gt;
 </code></pre>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>Deploy changes to the database. Changes will begin from the current deployment
 state. They will run to the latest change, unless a change is specified,
@@ -67,7 +80,7 @@ to instead use <a href="/docs/sqitch-revert">sqitch-revert</a>.</p>
 and may also be specified as the <code>--target</code> option. It can be target name,
 a URI, an engine name, or plan file path.</p>
 
-<h1 id="options">Options</h1>
+<h2 id="options">Options</h2>
 
 <ul>
 <li><code>-t</code></li>
@@ -219,7 +232,7 @@ to override the port in a target.</p></li>
 configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
 </ul>
 
-<h1 id="configuration-variables">Configuration Variables</h1>
+<h2 id="configuration-variables">Configuration Variables</h2>
 
 <ul>
 <li><p><code>deploy.mode</code></p>
@@ -256,7 +269,7 @@ are merged in the following priority order:</p>
 </ul></li>
 </ul>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

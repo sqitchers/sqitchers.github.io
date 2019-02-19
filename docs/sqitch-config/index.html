@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-config documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,13 +36,39 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#files'>Files</a></li>
+                <li><a href='#environment'>Environment</a></li>
+                <li><a href='#examples'>Examples</a></li>
+                <li><a href='#configuration-file'>Configuration File</a><ul>
+                <li><a href='#syntax'>Syntax</a></li>
+                <li><a href='#example'>Example</a></li>
+                <li><a href='#variables'>Variables</a><ul>
+                <li><a href='#user'>user</a></li>
+                <li><a href='#engine-engine'>engine.$engine</a></li>
+                <li><a href='#core-vcs'>core.vcs</a></li>
+                <li><a href='#user'>user</a></li></ul>
+                </li></ul>
+                </li><li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-config - Get and set local, user, or system Sqitch options</p>
 
-<h1 id="synopsis">Synopsis</h1>
+<h2 id="synopsis">Synopsis</h2>
 
 <pre><code>sqitch config [&lt;file-option&gt;] [type] name [value [value_regex]]
 sqitch config [&lt;file-option&gt;] [type] --add name value
@@ -60,7 +84,7 @@ sqitch config [&lt;file-option&gt;] -l | --list
 sqitch config [&lt;file-option&gt;] -e | --edit
 </code></pre>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>You can query/set/replace/unset Sqitch options with this command. The name is
 actually the section and the key separated by a dot, and the value will be
@@ -86,7 +110,7 @@ for editing, and the all files merged for fetching (see <a href="#files">&ldquo;
 
 <p>On success, the command returns the exit code 0.</p>
 
-<h1 id="options">Options</h1>
+<h2 id="options">Options</h2>
 
 <ul>
 <li><p><code>--replace-all</code></p>
@@ -200,7 +224,7 @@ file lives (e.g., <code>$(sqitch --etc-path)/sqitch.conf</code>).</p>
 the local file will be opened.</p></li>
 </ul>
 
-<h1 id="files">Files</h1>
+<h2 id="files">Files</h2>
 
 <p>If not set explicitly with <code>--file</code>, there are three files in which
 <code>sqitch config</code> will search for configuration options:</p>
@@ -219,7 +243,7 @@ the local file will be opened.</p></li>
 <p>System-wide configuration file.</p></li>
 </ul>
 
-<h1 id="environment">Environment</h1>
+<h2 id="environment">Environment</h2>
 
 <ul>
 <li><p><code>SQITCH_CONFIG</code></p>
@@ -237,7 +261,7 @@ the local file will be opened.</p></li>
 <code>$($etc_prefix)/sqitch.conf</code>.</p></li>
 </ul>
 
-<h1 id="examples">Examples</h1>
+<h2 id="examples">Examples</h2>
 
 <p>Given a <code>./sqitch.conf</code> like this:</p>
 
@@ -332,7 +356,7 @@ the matching regular expression with an exclamation point (<code>!</code>), like
 <pre><code>% sqitch config --add core.fuzzle.set widget=fred
 </code></pre>
 
-<h1 id="configuration-file">Configuration File</h1>
+<h2 id="configuration-file">Configuration File</h2>
 
 <p>The sqitch configuration file contains a number of variables that affect the
 sqitch command&rsquo;s behavior. The <code>./sqitch.conf</code> file local to each project is
@@ -348,7 +372,7 @@ name is everything before the last dot. The variable names are
 case-insensitive, allow only alphanumeric characters and -, and must start
 with an alphabetic character. Some variables may appear multiple times.</p>
 
-<h2 id="syntax">Syntax</h2>
+<h3 id="syntax">Syntax</h3>
 
 <p>The syntax is fairly flexible and permissive; white space is mostly ignored.
 The <code>#</code> and <code>;</code> characters begin comments to the end of line, blank lines
@@ -407,7 +431,7 @@ customary UNIX fashion.</p>
 
 <p>Some variables may require a special value format.</p>
 
-<h2 id="example">Example</h2>
+<h3 id="example">Example</h3>
 
 <pre><code># Core variables
 [core]
@@ -427,7 +451,7 @@ customary UNIX fashion.</p>
     dest_dir  = _build/sql
 </code></pre>
 
-<h2 id="variables">Variables</h2>
+<h3 id="variables">Variables</h3>
 
 <p>Note that this list is not comprehensive and not necessarily complete. For
 command-specific variables, you will find a more detailed description in the
@@ -502,7 +526,7 @@ the <code>$SQITCH_EDITOR</code> environment variable. If none of these variables
 set, Sqitch defaults to <code>notepad.exe</code> on Windows and <code>vi</code> elsewhere.</p></li>
 </ul>
 
-<h3 id="user"><code>user</code></h3>
+<h4 id="user"><code>user</code></h4>
 
 <p>Configuration properties that identify the user.</p>
 
@@ -518,7 +542,7 @@ and to commits to the database.</p></li>
 to commits to the database.</p></li>
 </ul>
 
-<h3 id="engine-engine"><code>engine.$engine</code></h3>
+<h4 id="engine-engine"><code>engine.$engine</code></h4>
 
 <p>Each supported engine offers a set of configuration variables, falling under
 the key <code>engine.$engine</code> where <code>$engine</code> may be any value accepted for
@@ -603,7 +627,7 @@ Sqitch to use for its own data. No other data should be stored there. Defaults
 to <code>sqitch</code>.</p></li>
 </ul>
 
-<h3 id="core-vcs"><code>core.vcs</code></h3>
+<h4 id="core-vcs"><code>core.vcs</code></h4>
 
 <p>Configuration properties for the version control system. Currently, only Git
 is supported.</p>
@@ -615,7 +639,7 @@ is supported.</p>
 <code>git</code> found in the path.</p></li>
 </ul>
 
-<h3 id="user-1"><code>user</code></h3>
+<h4 id="user-1"><code>user</code></h4>
 
 <ul>
 <li><p><code>user.email</code></p>
@@ -627,7 +651,7 @@ is supported.</p>
 <p>Your full name to be recorded in any newly planned changes.</p></li>
 </ul>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

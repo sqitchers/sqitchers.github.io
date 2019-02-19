@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-add documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,13 +36,33 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#examples'>Examples</a></li>
+                <li><a href='#templates'>Templates</a><ul>
+                <li><a href='#directory-layout'>Directory Layout</a></li>
+                <li><a href='#syntax'>Syntax</a></li>
+                <li><a href='#variables'>Variables</a></li></ul>
+                </li><li><a href='#configuration-variables'>Configuration Variables</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-add - Add a database change to plans</p>
 
-<h1 id="synopsis">Synopsis</h1>
+<h2 id="synopsis">Synopsis</h2>
 
 <pre><code>sqitch add widgets [options
 sqitch add blankets --all
@@ -52,7 +70,7 @@ sqitch add --change sprockets pg sql
 sqitch add slinkies --require sprockets --set schema=industry
 </code></pre>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>This command adds a database change to one or more plans. This will result in
 the creation of script files in the deploy, revert, and verify directories,
@@ -82,7 +100,7 @@ will be added, pass the target, engine, or plan file names as arguments. Use
 <code>--change</code> to disambiguate the tag and change names from the other parameters
 if necessary (or preferable). See <a href="#examples">&ldquo;Examples&rdquo;</a> for examples.</p>
 
-<h1 id="options">Options</h1>
+<h2 id="options">Options</h2>
 
 <ul>
 <li><code>-c</code></li>
@@ -202,7 +220,7 @@ is true.</p></li>
 configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
 </ul>
 
-<h1 id="examples">Examples</h1>
+<h2 id="examples">Examples</h2>
 
 <p>Add a change to a project and be prompted for a note.</p>
 
@@ -249,7 +267,7 @@ those plans:</p>
 <pre><code>sqitch add -a coolfunctions sqlite.plan pg.plan -n 'Adds functions.'
 </code></pre>
 
-<h1 id="templates">Templates</h1>
+<h2 id="templates">Templates</h2>
 
 <p>Sqitch contains a very simple set of templates for generating the deploy,
 revert, and verify scripts, and you can create more of your own. By default,
@@ -261,7 +279,7 @@ may be overridden on a user basis by copying templates to
 by using the <code>--template-directory</code> or <code>--template-name</code> options, as well as
 the template-specific options.</p>
 
-<h2 id="directory-layout">Directory Layout</h2>
+<h3 id="directory-layout">Directory Layout</h3>
 
 <p>Sqitch looks for templates in the following directories, and in this order:</p>
 
@@ -326,7 +344,7 @@ verify/user_table.sql
 <p>Note that the <code>test</code> file was not created, because no
 <code>test/create_table.tmpl</code> template file exists.</p>
 
-<h2 id="syntax">Syntax</h2>
+<h3 id="syntax">Syntax</h3>
 
 <p>The syntax of Sqitch templates is the very simple language provided by
 <a href="/docs/Template::Tiny">Template::Tiny</a>, which is limited to:</p>
@@ -378,7 +396,7 @@ and all templates will be processed by its more comprehensive features. See
 the <a href="http://tt2.org/docs/manual/">complete Template Toolkit documentation</a> for
 details, especially the <a href="http://tt2.org/docs/manual/Syntax.html">syntax docs</a></p>
 
-<h2 id="variables">Variables</h2>
+<h3 id="variables">Variables</h3>
 
 <p>Sqitch defines five variables for all templates. Any number of additional
 variables can be added via the <code>--set</code> option, like so:</p>
@@ -423,7 +441,7 @@ is set in the plan by the <a href="#init-command">&ldquo;<code>init</code> comma
 <code>--conflicts</code> option.</p></li>
 </ul>
 
-<h1 id="configuration-variables">Configuration Variables</h1>
+<h2 id="configuration-variables">Configuration Variables</h2>
 
 <ul>
 <li><p><code>add.all</code></p>
@@ -469,7 +487,7 @@ for them.</p></li>
 change scripts.  When true, equivalent to passing <code>--edit</code>.  Defaults off.</p></li>
 </ul>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

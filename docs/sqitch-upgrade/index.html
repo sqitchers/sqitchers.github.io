@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-upgrade documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,18 +36,32 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-upgrade - Upgrade the registry to the current version</p>
 
-<h1 id="synopsis">Synopsis</h1>
+<h2 id="synopsis">Synopsis</h2>
 
 <pre><code>sqitch upgrade [options] [&lt;database&gt;]
 </code></pre>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>Upgrades the Sqitch registry for a database. That is, it makes sure that the
 schema the Sqitch uses for its registry is up-to-date. This will occasionally
@@ -60,7 +72,7 @@ schema changes.</p>
 and may also be specified as the <code>--target</code> option. It can be target name,
 a URI, an engine name, or plan file path.</p>
 
-<h1 id="options">Options</h1>
+<h2 id="options">Options</h2>
 
 <ul>
 <li><code>-t</code></li>
@@ -140,7 +152,7 @@ sqitch upgrade -p 5431
 to override the port in a target.</p></li>
 </ul>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

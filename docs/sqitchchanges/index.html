@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitchchanges documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,13 +36,27 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#description'>Description</a><ul>
+                <li><a href='#change-names'>Change Names</a></li></ul>
+                </li><li><a href='#specifying-changes'>Specifying Changes</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitchchanges - Specifying changes for Sqitch</p>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>Many Sqitch commands take change parameters as arguments. Depending on the
 command, they denote a specific change or, for commands which walk change
@@ -53,7 +65,7 @@ which can be reached from that change. Most commands search the plan for the
 relevant change, though some, such as <a href="/docs/sqitch-revert"><code>sqitch revert</code></a> and
 <a href="/docs/sqitch-log"><code>sqitch log</code></a>, search the database for the change.</p>
 
-<h2 id="change-names">Change Names</h2>
+<h3 id="change-names">Change Names</h3>
 
 <p>A change name, such as that passed to <a href="/docs/sqitch-add"><code>sqitch add</code></a> and written
 to the plan file has a few limitations on the characters it may contain. The
@@ -104,7 +116,7 @@ valid names:</p>
 <li><code>@foo</code></li>
 </ul>
 
-<h1 id="specifying-changes">Specifying Changes</h1>
+<h2 id="specifying-changes">Specifying Changes</h2>
 
 <p>A change parameter names a change object. It uses what is called an extended
 SHA1 syntax. Here are various ways to spell change names:</p>
@@ -184,7 +196,7 @@ changes can be specified as <code>~&lt;n&gt;</code>, where <code>&lt;n&gt;</code
 number of changes to go forward.</p></li>
 </ul>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

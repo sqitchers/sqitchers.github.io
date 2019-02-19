@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-bundle documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,13 +36,29 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#configuration-variables'>Configuration Variables</a></li>
+                <li><a href='#examples'>Examples</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-bundle - Bundle a Sqitch project for distribution</p>
 
-<h1 id="synopsis">Synopsis</h1>
+<h2 id="synopsis">Synopsis</h2>
 
 <pre><code>sqitch bundle [options
 sqitch bundle --dest-dir widgets-1.0.0
@@ -52,7 +66,7 @@ sqitch bundle --all
 sqitch bundle pg mysql
 </code></pre>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>This command bundles up a sqitch project for distribution. At its simplest, it
 copies the project configuration file, plan files, and all of the change
@@ -81,7 +95,7 @@ options to do the limiting. When using multiple plans, specify the changes
 after each target argument. In either case, the changes can be specified in
 any way documented on <a href="/docs/sqitchchanges">sqitchchanges</a>. See <a href="#examples">&ldquo;Examples&rdquo;</a> for examples.</p>
 
-<h1 id="options">Options</h1>
+<h2 id="options">Options</h2>
 
 <ul>
 <li><code>--dest-dir</code></li>
@@ -124,7 +138,7 @@ together. Overrides the value of the <code>bundle.all</code> configuration; use
 configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
 </ul>
 
-<h1 id="configuration-variables">Configuration Variables</h1>
+<h2 id="configuration-variables">Configuration Variables</h2>
 
 <ul>
 <li><p><code>bundle.dest_dir</code></p>
@@ -132,7 +146,7 @@ configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
 <p>The name of the directory in which to bundle the project.</p></li>
 </ul>
 
-<h1 id="examples">Examples</h1>
+<h2 id="examples">Examples</h2>
 
 <p>Bundle a Sqitch project with the default plan and scripts into <code>bundle</code>:</p>
 
@@ -170,7 +184,7 @@ the <code>sqlite</code> engine with changes from the start of the plan up to <co
 <pre><code>sqitch bundle sqlite/sqitch.plan mysql/sqitch.plan
 </code></pre>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

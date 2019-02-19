@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-rework documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,18 +36,34 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#examples'>Examples</a></li>
+                <li><a href='#configuration-variables'>Configuration Variables</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-rework - Rework a database change</p>
 
-<h1 id="synopsis">Synopsis</h1>
+<h2 id="synopsis">Synopsis</h2>
 
 <pre><code>sqitch  rework [options] [&lt;dependency-options&gt;] name
 </code></pre>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>This command allows for the reworking of an existing database change. It is
 best used only under the following circumstances:</p>
@@ -92,7 +106,7 @@ engine, or plan file names to tag as arguments. Use <code>--change</code> to
 disambiguate the and change name from the other parameters if necessary (or
 preferable). See <a href="#examples">&ldquo;Examples&rdquo;</a> for examples.</p>
 
-<h1 id="options">Options</h1>
+<h2 id="options">Options</h2>
 
 <ul>
 <li><code>-c</code></li>
@@ -163,7 +177,7 @@ is true.</p></li>
 configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
 </ul>
 
-<h1 id="examples">Examples</h1>
+<h2 id="examples">Examples</h2>
 
 <p>Rework a change in a project and be prompted for a note.</p>
 
@@ -197,7 +211,7 @@ those plans:</p>
 <pre><code>sqitch rework -a coolfunctions sqlite.plan pg.plan -n 'Reworks functions.'
 </code></pre>
 
-<h1 id="configuration-variables">Configuration Variables</h1>
+<h2 id="configuration-variables">Configuration Variables</h2>
 
 <ul>
 <li><p><code>rework.all</code></p>
@@ -213,7 +227,7 @@ generating change scripts.  When true, equivalent to passing <code>--edit</code>
 Defaults off.</p></li>
 </ul>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

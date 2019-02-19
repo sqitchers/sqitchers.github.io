@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,18 +36,38 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a><ul>
+                <li><a href='#terminology'>Terminology</a></li></ul>
+                </li><li><a href='#options'>Options</a></li>
+                <li><a href='#options-details'>Options Details</a></li>
+                <li><a href='#sqitch-commands'>Sqitch Commands</a></li>
+                <li><a href='#configuration'>Configuration</a></li>
+                <li><a href='#see-also'>See Also</a></li>
+                <li><a href='#author'>Author</a></li>
+                <li><a href='#license'>License</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch - Sane database change management</p>
 
-<h1 id="synopsis">Synopsis</h1>
+<h2 id="synopsis">Synopsis</h2>
 
 <pre><code>sqitch &lt;command&gt; [options] [command-options] [args]
 </code></pre>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>Sqitch is a database change management application. What makes it different
 from your typical <a href="/docs/Module::Build::DB">migration</a>-<a href="/docs/DBIx::Migration">style</a>
@@ -126,7 +144,7 @@ PostgreSQL Users Group in September, 2012.</p></li>
 development with <a href="https://pgtap.org">pgTAP</a>, and change management with Sqitch.</p></li>
 </ul>
 
-<h2 id="terminology">Terminology</h2>
+<h3 id="terminology">Terminology</h3>
 
 <ul>
 <li><p><code>change</code></p>
@@ -195,7 +213,7 @@ name or tag).</p></li>
 <p>User who adds a change to the plan.</p></li>
 </ul>
 
-<h1 id="options">Options</h1>
+<h2 id="options">Options</h2>
 
 <pre><code>-C --chdir --cd DIR       Change to directory before performing any actions.
    --etc-path             Print path to etc directory and exit.
@@ -207,7 +225,7 @@ name or tag).</p></li>
    --man                  Print introductory documentation and exit.
 </code></pre>
 
-<h1 id="options-details">Options Details</h1>
+<h2 id="options-details">Options Details</h2>
 
 <ul>
 <li><code>--chdir</code></li>
@@ -289,7 +307,7 @@ specified.</p></li>
 <p>Outputs the program name and version and exits.</p></li>
 </ul>
 
-<h1 id="sqitch-commands">Sqitch Commands</h1>
+<h2 id="sqitch-commands">Sqitch Commands</h2>
 
 <ul>
 <li><p><a href="/docs/sqitch-init"><code>init</code></a></p>
@@ -355,7 +373,7 @@ that it can be packaged up for distribution, such as in an RPM or tarball.</p></
 documentation as <code>--help</code>.</p></li>
 </ul>
 
-<h1 id="configuration">Configuration</h1>
+<h2 id="configuration">Configuration</h2>
 
 <p>Sqitch configuration can be set up on a project, user, or system-wide basis.
 The format of the configuration file, named <code>sqitch.conf</code>, is the same as for
@@ -410,7 +428,7 @@ point to system-specific engine information:</p>
 <p>Various commands read from the configuration file and adjust their operation
 accordingly. See <a href="/docs/sqitch-config">sqitch-config</a> for a list.</p>
 
-<h1 id="see-also">See Also</h1>
+<h2 id="see-also">See Also</h2>
 
 <p>The original design for Sqitch was sketched out in a number of blog posts:</p>
 
@@ -442,11 +460,11 @@ system. Does not support reversion.</p></li>
 <a href="https://www.depesz.com/">depesz</a>.</p></li>
 </ul>
 
-<h1 id="author">Author</h1>
+<h2 id="author">Author</h2>
 
 <p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
 
-<h1 id="license">License</h1>
+<h2 id="license">License</h2>
 
 <p>Copyright &copy; 2012-2018 iovation Inc.</p>
 

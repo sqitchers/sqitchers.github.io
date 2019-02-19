@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-configuration documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,13 +36,37 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#project-initialization'>Project Initialization</a></li>
+                <li><a href='#global-configuration'>Global Configuration</a></li>
+                <li><a href='#engine-configuration'>Engine Configuration</a><ul>
+                <li><a href='#separate-plans'>Separate Plans</a></li>
+                <li><a href='#shared-plan'>Shared Plan</a></li>
+                <li><a href='#database-interactions'>Database Interactions</a></li></ul>
+                </li><li><a href='#target-configuration'>Target Configuration</a><ul>
+                <li><a href='#different-target-different-plan'>Different Target, Different Plan</a></li></ul>
+                </li></ul>
+                </li><li><a href='#overworked'>Overworked</a></li>
+                <li><a href='#other-options'>Other Options</a></li>
+                <li><a href='#see-also'>See Also</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-configuration - Hierarchical engine and target configuration</p>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>The specification of database targets is core to Sqitch database change
 management. A target consists of a
@@ -67,7 +89,7 @@ examining and selecting from these values:</p>
 <a href="/docs/sqitch-engine"><code>engine</code></a>, and <a href="/docs/sqitch-target"><code>target</code></a> commands to
 configure these values for various deployment scenarios.</p>
 
-<h1 id="project-initialization">Project Initialization</h1>
+<h2 id="project-initialization">Project Initialization</h2>
 
 <p>Typically, the first thing you do with Sqitch is use the
 <a href="/docs/sqitch-init"><code>init</code></a> command to start a new project. Now, the most important
@@ -121,7 +143,7 @@ generally the default, &ldquo;sqitch&rdquo;, is fine.</p>
 appropriate engine-specific client name appropriate for your OS. In this
 example, sqitch will assume it can find <code>psql</code> in your path.</p>
 
-<h1 id="global-configuration">Global Configuration</h1>
+<h2 id="global-configuration">Global Configuration</h2>
 
 <p>But sometimes that&rsquo;s not the case. Let&rsquo;s say that the <code>psql</code> client on your
 system is not in the path, but instead in <code>/usr/local/pgsql/bin/psql</code>. You
@@ -161,7 +183,7 @@ use the <code>--system</code> option, instead:</p>
 <p>That will put the values into the global Sqitch configuration file, which is
 in <code>`sqitch --etc-path`/sqitch.conf</code>.</p>
 
-<h1 id="engine-configuration">Engine Configuration</h1>
+<h2 id="engine-configuration">Engine Configuration</h2>
 
 <p>So you&rsquo;ve got the widgets project well developed, and now you&rsquo;ve been asked to
 port it to SQLite. Fundamentally, that means porting all of your deploy,
@@ -222,7 +244,7 @@ Nice, right?</p>
 <p>Now, to add the SQLite support. There are two basic ways to go about it. We&rsquo;ll
 start with the more obvious one.</p>
 
-<h2 id="separate-plans">Separate Plans</h2>
+<h3 id="separate-plans">Separate Plans</h3>
 
 <p>The first approach is to create an entirely independent SQLite project with
 its own plan and scripts. This is <em>almost</em> like starting from scratch: just
@@ -289,7 +311,7 @@ Created sqlite/verify/users.sql
 Added &quot;users&quot; to sqlite/sqitch.plan
 </code></pre>
 
-<h2 id="shared-plan">Shared Plan</h2>
+<h3 id="shared-plan">Shared Plan</h3>
 
 <p>The other approach is to have both the PostgreSQL and the SQLite projects
 share the same plan. In that case, we should move the plan file out of the
@@ -370,7 +392,7 @@ sqitch config --bool rework.all 1
 sqitch config --bool bundle.all 1
 </code></pre>
 
-<h2 id="database-interactions">Database Interactions</h2>
+<h3 id="database-interactions">Database Interactions</h3>
 
 <p>With either of these two approaches, you can manage database interactions by
 passing an engine name or a <a href="https://github.com/libwww-perl/uri-db">database URI</a>
@@ -407,7 +429,7 @@ changes. Use a <code>db:sqlite:</code> URI to interact with an SQLite database:<
 <li><a href="/docs/sqitch-upgrade"><code>verify</code></a></li>
 </ul>
 
-<h1 id="target-configuration">Target Configuration</h1>
+<h2 id="target-configuration">Target Configuration</h2>
 
 <p>Great, now we can easily manage changes for multiple database engines. But
 what about multiple databases for the same engine? For example, you might want
@@ -502,7 +524,7 @@ done
 <p>The commands that accept a target name are identical to those that take
 an engine name or target URI, as described in <a href="#database-interactions">&ldquo;Database Interactions&rdquo;</a>.</p>
 
-<h3 id="different-target-different-plan">Different Target, Different Plan</h3>
+<h4 id="different-target-different-plan">Different Target, Different Plan</h4>
 
 <p>What about a project that manages different &ndash; but related &ndash; schemas on the
 same engine? For example, say you have two plans for PostgreSQL, one for a
@@ -549,7 +571,7 @@ Skipped pg/verify/users.sql: already exists
 Added &quot;users&quot; to target.plan
 </code></pre>
 
-<h1 id="overworked">Overworked</h1>
+<h2 id="overworked">Overworked</h2>
 
 <p>Say you&rsquo;ve been working on your project for some time, and now you have a slew
 of changes you&rsquo;ve <a href="/docs/sqitch-rework">reworked</a>. (You really only do that with
@@ -629,7 +651,7 @@ knows to find the reworked scripts when doing a <a href="/docs/sqitch-deploy">de
 <a href="/docs/sqitch-revert">revert</a>, or <a href="/docs/sqitch-bundle">bundle</a>. And meanwhile, they&rsquo;re
 tucked out of the way, less likely to break your brain or your IDE.</p>
 
-<h1 id="other-options">Other Options</h1>
+<h2 id="other-options">Other Options</h2>
 
 <p>You can see by the output of the <a href="/docs/sqitch-init"><code>init</code></a>,
 <a href="/docs/sqitch-engine"><code>engine</code></a>, and <a href="/docs/sqitch-target"><code>target</code></a> commands that there
@@ -1085,7 +1107,7 @@ sqitch config core.reworked_verify_dir $reworked_verify_dir
 </ul></li>
 </ul>
 
-<h1 id="see-also">See Also</h1>
+<h2 id="see-also">See Also</h2>
 
 <ul>
 <li><a href="/docs/sqitch-init">sqitch-init</a></li>
@@ -1094,7 +1116,7 @@ sqitch config core.reworked_verify_dir $reworked_verify_dir
 <li><a href="/docs/sqitch-config">sqitch-config</a></li>
 </ul>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

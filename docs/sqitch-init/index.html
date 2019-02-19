@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-init documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,19 +36,36 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#configuration'>Configuration</a></li>
+                <li><a href='#examples'>Examples</a></li>
+                <li><a href='#see-also'>See Also</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-init - Create a new Sqitch project</p>
 
-<h1 id="synopsis">Synopsis</h1>
+<h2 id="synopsis">Synopsis</h2>
 
 <pre><code>sqitch init &lt;project&gt;
 sqitch init &lt;project&gt; --uri &lt;uri&gt;
 </code></pre>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>This command creates an new Sqitch project &ndash; basically a <code>sqitch.conf</code> file,
 a <code>sqitch.plan</code> file, and <code>deploy</code>, <code>revert</code>, and <code>verify</code> subdirectories.</p>
@@ -58,7 +73,7 @@ a <code>sqitch.plan</code> file, and <code>deploy</code>, <code>revert</code>, a
 <p>Running sqitch init in an existing project is safe. It will not overwrite
 things that are already there.</p>
 
-<h1 id="options">Options</h1>
+<h2 id="options">Options</h2>
 
 <ul>
 <li><p><code>--uri</code></p>
@@ -161,7 +176,7 @@ Defaults to a client in the current path named appropriately for the specified
 engine.</p></li>
 </ul>
 
-<h1 id="configuration">Configuration</h1>
+<h2 id="configuration">Configuration</h2>
 
 <p>The most important thing <code>sqitch init</code> does is create the project plan file,
 <code>sqitch.conf</code>. The options determine what gets written to the file:</p>
@@ -234,7 +249,7 @@ their default values. If no defaults are specified, they will still be
 written, commented out, with a bar <code>=</code> and no value. This allows one to know
 what sorts of things are available to edit.</p>
 
-<h1 id="examples">Examples</h1>
+<h2 id="examples">Examples</h2>
 
 <p>Start a new Sqitch project using the SQLite engine, setting the top directory
 for the project to <code>sqlite</code>:</p>
@@ -252,7 +267,7 @@ directory to <code>postgres</code>, script extension to <code>ddl</code>, rework
             --extension ddl --dir reworked=reworked
 </code></pre>
 
-<h1 id="see-also">See Also</h1>
+<h2 id="see-also">See Also</h2>
 
 <ul>
 <li><p><a href="/docs/sqitch-configuration">sqitch-configuration</a></p>
@@ -272,7 +287,7 @@ directory to <code>postgres</code>, script extension to <code>ddl</code>, rework
 <p>Command to manage all Sqitch configuration.</p></li>
 </ul>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

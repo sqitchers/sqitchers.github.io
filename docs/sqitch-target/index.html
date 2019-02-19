@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-target documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,13 +36,34 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#actions'>Actions</a><ul>
+                <li><a href='#add'>add</a></li>
+                <li><a href='#alter'>alter</a></li>
+                <li><a href='#remove-rm'>remove, rm</a></li>
+                <li><a href='#rename'>rename</a></li>
+                <li><a href='#show'>show</a></li></ul>
+                </li><li><a href='#configuration-variables'>Configuration Variables</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-target - Manage target database configuration</p>
 
-<h1 id="synopsis">Synopsis</h1>
+<h2 id="synopsis">Synopsis</h2>
 
 <pre><code>sqitch target
 sqitch target [-v | --verbose]
@@ -55,7 +74,7 @@ sqitch target rename &lt;old&gt; &lt;new&gt;
 sqitch target show &lt;name&gt; [...]
 </code></pre>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>Manage the set of databases (&ldquo;targets&rdquo;) you deploy to. Each target may have a
 number of properties:</p>
@@ -151,7 +170,7 @@ The default is <code>sql</code>.</p></li>
 <p>Each of these overrides the corresponding engine-specific configuration
 managed by <a href="/docs/sqitch-engine">engine</a>.</p>
 
-<h1 id="options">Options</h1>
+<h2 id="options">Options</h2>
 
 <ul>
 <li><p>List Option</p>
@@ -249,44 +268,44 @@ supports variables. The format must be <code>name=value</code>, e.g.,
 </ul></li>
 </ul>
 
-<h1 id="actions">Actions</h1>
+<h2 id="actions">Actions</h2>
 
 <p>With no arguments, shows a list of existing targets. Several actions are
 available to perform operations on the targets.</p>
 
-<h2 id="add"><code>add</code></h2>
+<h3 id="add"><code>add</code></h3>
 
 <p>Add a target named <code>&lt;name&gt;</code> for the database at <code>&lt;uri&gt;</code>. The
 <code>--set</code> option specifies target-specific properties. A new plan file and new
 script script directories will be created if they don&rsquo;t already exist.</p>
 
-<h2 id="alter"><code>alter</code></h2>
+<h3 id="alter"><code>alter</code></h3>
 
 <p>Alter target named <code>&lt;name&gt;</code>. The <code>--set</code> option specifies
 engine-specific properties to set. New script script directories will be
 created if they don&rsquo;t already exist.</p>
 
-<h2 id="remove-rm"><code>remove</code>, <code>rm</code></h2>
+<h3 id="remove-rm"><code>remove</code>, <code>rm</code></h3>
 
 <p>Remove the target named <code>&lt;name&gt;</code>. The plan file and script directories
 will not be affected.</p>
 
-<h2 id="rename"><code>rename</code></h2>
+<h3 id="rename"><code>rename</code></h3>
 
 <p>Rename the target named <code>&lt;old&gt;</code> to <code>&lt;new&gt;</code>.</p>
 
-<h2 id="show"><code>show</code></h2>
+<h3 id="show"><code>show</code></h3>
 
 <p>Gives some information about the target <code>&lt;name&gt;</code>, including the
 associated properties. Specify multiple target names to see information for
 each.</p>
 
-<h1 id="configuration-variables">Configuration Variables</h1>
+<h2 id="configuration-variables">Configuration Variables</h2>
 
 <p>The targets are stored in the configuration file, but the command itself
 currently relies on no configuration variables.</p>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

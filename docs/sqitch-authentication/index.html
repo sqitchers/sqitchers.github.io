@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-authentication documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,20 +36,39 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#usernames'>Usernames</a></li>
+                <li><a href='#passwords'>Passwords</a><ul>
+                <li><a href='#don-t-use-passwords'>Don’t use Passwords</a></li>
+                <li><a href='#use-a-password-file'>Use a Password File</a></li>
+                <li><a href='#use-sqitch-password'>Use $SQITCH_PASSWORD</a></li>
+                <li><a href='#use-target-uris'>Use Target URIs</a></li></ul>
+                </li><li><a href='#see-also'>See Also</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-authentication - Guide to using database authentication credentials with Sqitch</p>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>For database engines that require authentication, Sqitch supports a number
 of credential-specification options, and searches for them in a specific
 sequence. These searches are performed in two parts: a search for a username
 and a search for a password.</p>
 
-<h1 id="usernames">Usernames</h1>
+<h2 id="usernames">Usernames</h2>
 
 <p>Sqitch searches for usernames sequentially, using the first value it finds.
 Any of these approaches may be used to specify a username, in this order:</p>
@@ -107,7 +124,7 @@ and use the default <code>connections.username</code> value. Otherwise, it uses 
 system username.</p></li>
 </ul>
 
-<h1 id="passwords">Passwords</h1>
+<h2 id="passwords">Passwords</h2>
 
 <p>You may have noticed that Sqitch has no <code>--password</code> option. This is
 intentional. It&rsquo;s generally not a great idea to specify a password on the
@@ -126,7 +143,7 @@ least-recommended:</p>
 
 <p>Each is covered in detail in the sections below.</p>
 
-<h2 id="don-t-use-passwords">Don&rsquo;t use Passwords</h2>
+<h3 id="don-t-use-passwords">Don&rsquo;t use Passwords</h3>
 
 <p>Of course, the best way to protect your passwords is not to use them at all.
 If your database engine is able to do passwordless authentication, it&rsquo;s worth
@@ -182,7 +199,7 @@ other options, see the <a href="https://www.exasol.com/portal/display/DOC/Databa
 <p>Snowflake does not support password-less authentication.</p></li>
 </ul>
 
-<h2 id="use-a-password-file">Use a Password File</h2>
+<h3 id="use-a-password-file">Use a Password File</h3>
 
 <p>If you must use password authentication with your database server, you may be
 able to use a protected password file. This is file with access limited only
@@ -305,7 +322,7 @@ dbname = reporting
 </ul></li>
 </ul>
 
-<h2 id="use-sqitch-password">Use <code>$SQITCH_PASSWORD</code></h2>
+<h3 id="use-sqitch-password">Use <code>$SQITCH_PASSWORD</code></h3>
 
 <p>The <code>$SQITCH_PASSWORD</code> environment variable can be used to specify the
 password for any supported database engine. However use of this environment
@@ -339,7 +356,7 @@ you may wish to use instead. However, their behaviors may not be consistent:</p>
 <p><code>$SNOWSQL_PWD</code></p></li>
 </ul>
 
-<h2 id="use-target-uris">Use Target URIs</h2>
+<h3 id="use-target-uris">Use Target URIs</h3>
 
 <p>Passwords may also be specified in <a href="/docs/sqitch-target#Description">target URIs</a>.
 This is not generally recommended, since such URIs are either specified via
@@ -367,7 +384,7 @@ heavily frowned upon there, too).</p>
 <p>See <a href="/docs/sqitch-targets">sqitch-targets</a> and <code>sqitch-configuration</code> for details  on target
 configuration.</p>
 
-<h1 id="see-also">See Also</h1>
+<h2 id="see-also">See Also</h2>
 
 <ul>
 <li><a href="/docs/sqitch-environment">sqitch-environment</a></li>
@@ -375,7 +392,7 @@ configuration.</p>
 <li><a href="/docs/sqitch-target">sqitch-target</a></li>
 </ul>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitchtutorial-vertica documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,18 +36,47 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a><ul>
+                <li><a href='#connection-configuration'>Connection Configuration</a></li></ul>
+                </li><li><a href='#starting-a-new-project'>Starting a New Project</a></li>
+                <li><a href='#our-first-change'>Our First Change</a><ul>
+                <li><a href='#trust-but-verify'>Trust, But Verify</a></li>
+                <li><a href='#status-revert-log-repeat'>Status, Revert, Log, Repeat</a></li></ul>
+                </li><li><a href='#on-target'>On Target</a></li>
+                <li><a href='#deploy-with-dependency'>Deploy with Dependency</a></li>
+                <li><a href='#add-two-at-once'>Add Two at Once</a></li>
+                <li><a href='#ship-it'>Ship It!</a></li>
+                <li><a href='#making-a-hash-of-things'>Making a Hash of Things</a></li>
+                <li><a href='#making-a-hash-of-things'>Making a Hash of Things</a><ul>
+                <li><a href='#emergency'>Emergency</a></li>
+                <li><a href='#merges-mastered'>Merges Mastered</a></li></ul>
+                </li><li><a href='#in-place-changes'>In Place Changes</a></li>
+                <li><a href='#more-to-come'>More to Come</a></li>
+                <li><a href='#author'>Author</a></li>
+                <li><a href='#license'>License</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitchtutorial-vertica - A tutorial introduction to Sqitch change management on Vertica</p>
 
-<h1 id="synopsis">Synopsis</h1>
+<h2 id="synopsis">Synopsis</h2>
 
 <pre><code>sqitch *
 </code></pre>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>This tutorial explains how to create a sqitch-enabled Vertica project, use a
 VCS for deployment planning, and work with other developers to make sure
@@ -75,7 +102,7 @@ examples as appropriate.</p>
 
 <p>If you&rsquo;d like to manage a Snowflake database, see <a href="/docs/sqitchtutorial-snowflake">sqitchtutorial-snowflake</a>.</p>
 
-<h2 id="connection-configuration">Connection Configuration</h2>
+<h3 id="connection-configuration">Connection Configuration</h3>
 
 <p>Sqitch requires ODBC to connect to the Vertica database. As such, you&rsquo;ll need
 to make sure that the Vertica ODBC driver is properly configured. At its
@@ -122,7 +149,7 @@ for details. Specific links:</p>
 <li><a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/ConnectingToHPVertica/InstallingDrivers/CreatingAnODBCDSNForMacintoshOSXClients.htm">Mac OS X ODBC Configuration</a></li>
 </ul>
 
-<h1 id="starting-a-new-project">Starting a New Project</h1>
+<h2 id="starting-a-new-project">Starting a New Project</h2>
 
 <p>Usually the first thing to do when starting a new project is to create a
 source code repository. So let&rsquo;s do that with Git:</p>
@@ -223,7 +250,7 @@ to parse the plan, even if the format changes in the future.</p>
  create mode 100644 sqitch.plan
 </code></pre>
 
-<h1 id="our-first-change">Our First Change</h1>
+<h2 id="our-first-change">Our First Change</h2>
 
 <p>First, our project will need a schema. This creates a nice namespace for all
 of the objects that will be part of the flipr app. Run this command:</p>
@@ -278,7 +305,7 @@ see the schema:</p>
  flipr | dbadmin | 
 </code></pre>
 
-<h2 id="trust-but-verify">Trust, But Verify</h2>
+<h3 id="trust-but-verify">Trust, But Verify</h3>
 
 <p>But that&rsquo;s too much work. Do you really want to do something like that after
 every deploy?</p>
@@ -359,7 +386,7 @@ wrong.</p>
 
 <p>Don&rsquo;t forget to change the schema name back before continuing!</p>
 
-<h2 id="status-revert-log-repeat">Status, Revert, Log, Repeat</h2>
+<h3 id="status-revert-log-repeat">Status, Revert, Log, Repeat</h3>
 
 <p>For purely informational purposes, we can always see how a deployment was
 recorded via the <a href="/docs/sqitch-status"><code>status</code></a> command, which reads the registry
@@ -476,7 +503,7 @@ Deploying changes to db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
 Nothing to deploy (up-to-date)
 </code></pre>
 
-<h1 id="on-target">On Target</h1>
+<h2 id="on-target">On Target</h2>
 
 <p>I&rsquo;m getting a little tired of always having to type
 <code>'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'</code>, aren&rsquo;t
@@ -527,7 +554,7 @@ let&rsquo;s commit the new configuration and and make some more changes!</p>
  1 files changed, 8 insertions(+), 0 deletions(-)
 </code></pre>
 
-<h1 id="deploy-with-dependency">Deploy with Dependency</h1>
+<h2 id="deploy-with-dependency">Deploy with Dependency</h2>
 
 <p>Let&rsquo;s add another change, this time to create a table. Our app will need
 users, of course, so we&rsquo;ll create a table for them. First, add the new change:</p>
@@ -705,7 +732,7 @@ Nothing to deploy (up-to-date)
 
 <p>Excellent. Let&rsquo;s do some more!</p>
 
-<h1 id="add-two-at-once">Add Two at Once</h1>
+<h2 id="add-two-at-once">Add Two at Once</h2>
 
 <p>Let&rsquo;s add a couple more changes. Our app will need to store status messages
 from users. Let&rsquo;s call them &ndash; and the table to store them &ndash; &ldquo;flips&rdquo;. And
@@ -896,7 +923,7 @@ the last deployed change. Looks good. Let&rsquo;s do the commit and re-deploy da
 
 <p>Great, we&rsquo;re fully up-to-date!</p>
 
-<h1 id="ship-it">Ship It!</h1>
+<h2 id="ship-it">Ship It!</h2>
 
 <p>Let&rsquo;s do a first release of our app. Let&rsquo;s call it <code>1.0.0-dev1</code> Since we want
 to have it go out with deployments tied to the release, let&rsquo;s tag it:</p>
@@ -962,14 +989,14 @@ Now, package it up and ship it!</p>
 &gt; tar -czf flipr-v1.0.0-dev1.tgz flipr-v1.0.0-dev1
 </code></pre>
 
-<h1 id="making-a-hash-of-things">Making a Hash of Things</h1>
+<h2 id="making-a-hash-of-things">Making a Hash of Things</h2>
 
 <p>Now that we&rsquo;ve got the basics of the app done, let&rsquo;s add a feature. Gotta
 track the hashtags associated with flips, right? Let&rsquo;s add a table for them.
 But since other folks are working on other tasks in the repository, we&rsquo;ll work
 on a branch, so we can all stay out of each other&rsquo;s way. So let&rsquo;s branch:</p>
 
-<h1 id="making-a-hash-of-things-1">Making a Hash of Things</h1>
+<h2 id="making-a-hash-of-things-1">Making a Hash of Things</h2>
 
 <p>Now that we&rsquo;ve got the basics of the app done, let&rsquo;s add a feature. Gotta
 track the hashtags associated with flips, right? Let&rsquo;s add a table for them.
@@ -1055,7 +1082,7 @@ Deploying changes to flipr_test
 
 <p>Good, we&rsquo;ve finished this feature. Time to merge back into <code>master</code>.</p>
 
-<h2 id="emergency">Emergency</h2>
+<h3 id="emergency">Emergency</h3>
 
 <p>Let&rsquo;s do it:</p>
 
@@ -1218,7 +1245,7 @@ worthwhile to keep that change:</p>
  create mode 100644 .gitattributes
 </code></pre>
 
-<h2 id="merges-mastered">Merges Mastered</h2>
+<h3 id="merges-mastered">Merges Mastered</h3>
 
 <p>And now, finally, we can merge into <code>master</code>:</p>
 
@@ -1282,7 +1309,7 @@ Writing scripts
 to create the top-level directory name so we don&rsquo;t have to rename it from
 <code>bundle</code>.</p>
 
-<h1 id="in-place-changes">In Place Changes</h1>
+<h2 id="in-place-changes">In Place Changes</h2>
 
 <p>Well, some folks have been testing the <code>1.0.0-dev2</code> release and have demanded
 that Twitter user links be added to Flipr pages. Why anyone would want to
@@ -1459,16 +1486,16 @@ in the new script files that include tags.</p>
  create mode 100644 verify/userflips@v1.0.0-dev2.sql
 </code></pre>
 
-<h1 id="more-to-come">More to Come</h1>
+<h2 id="more-to-come">More to Come</h2>
 
 <p>Sqitch is a work in progress. Better integration with version control systems
 is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 
-<h1 id="author">Author</h1>
+<h2 id="author">Author</h2>
 
 <p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
 
-<h1 id="license">License</h1>
+<h2 id="license">License</h2>
 
 <p>Copyright &copy; 2012-2018 iovation Inc.</p>
 

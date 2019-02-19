@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-environment documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,19 +36,43 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#description'>Description</a><ul>
+                <li><a href='#sqitch-environment'>Sqitch Environment</a></li>
+                <li><a href='#engine-environments'>Engine Environments</a><ul>
+                <li><a href='#postgresql'>PostgreSQL</a></li>
+                <li><a href='#sqlite'>SQLite</a></li>
+                <li><a href='#mysql'>MySQL</a></li>
+                <li><a href='#oracle'>Oracle</a></li>
+                <li><a href='#firebird'>Firebird</a></li>
+                <li><a href='#vertica'>Vertica</a></li>
+                <li><a href='#exasol'>Exasol</a></li>
+                <li><a href='#snowflake'>Snowflake</a></li></ul>
+                </li></ul>
+                </li><li><a href='#see-also'>See Also</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-environment - Environment variables recognized by Sqitch</p>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>Sqitch supports a number of environment variables that affect its
 functionality. This document lists them all, along with brief descriptions of
 their purposes and pointers to relevant documentation.</p>
 
-<h2 id="sqitch-environment">Sqitch Environment</h2>
+<h3 id="sqitch-environment">Sqitch Environment</h3>
 
 <ul>
 <li><p><code>SQITCH_CONFIG</code></p>
@@ -141,14 +163,14 @@ to find and use one of the commonly used pager programs like <code>less</code> a
 <code>more</code>.</p></li>
 </ul>
 
-<h2 id="engine-environments">Engine Environments</h2>
+<h3 id="engine-environments">Engine Environments</h3>
 
 <p>In addition to Sqitch&rsquo;s environment variables, some of the database engines
 support environment variables of their own. These are not comprehensive for
 all variables supported by a database engine, but document those supported by
 Sqitch&rsquo;s implementation for each engine.</p>
 
-<h3 id="postgresql">PostgreSQL</h3>
+<h4 id="postgresql">PostgreSQL</h4>
 
 <p>All the usual
 <a href="https://www.postgresql.org/docs/current/static/libpq-envars.html">PostgreSQL environment variables</a>
@@ -181,11 +203,11 @@ name.</p></li>
 name.</p></li>
 </ul>
 
-<h3 id="sqlite">SQLite</h3>
+<h4 id="sqlite">SQLite</h4>
 
 <p>SQLite provides no environment variable support.</p>
 
-<h3 id="mysql">MySQL</h3>
+<h4 id="mysql">MySQL</h4>
 
 <p>Sqitch recognizes and takes advantage of the following
 <a href="https://dev.mysql.com/doc/refman/5.7/en/environment-variables.html">MySQL environment variables</a>:</p>
@@ -206,7 +228,7 @@ name.</p></li>
 <p>The MySQL server port to connect to. Superseded by the target URI port.</p></li>
 </ul>
 
-<h3 id="oracle">Oracle</h3>
+<h4 id="oracle">Oracle</h4>
 
 <p>Sqitch&rsquo;s Oracle engine supports a few environment variables:</p>
 
@@ -244,7 +266,7 @@ and <code>SQLPATH</code> environment variables. The former is set to
 UTF-8 encoding. The latter is set to an empty string, to prevent SQL*Plus
 executing SQL scripts unexpectedly.</p>
 
-<h3 id="firebird">Firebird</h3>
+<h4 id="firebird">Firebird</h4>
 
 <p>The Sqitch Firebird engine supports the following environment variables:</p>
 
@@ -260,7 +282,7 @@ executing SQL scripts unexpectedly.</p>
 and the target URI password.</p></li>
 </ul>
 
-<h3 id="vertica">Vertica</h3>
+<h4 id="vertica">Vertica</h4>
 
 <p>Sqitch provides explicit support for the following
 <a href="https://www.vertica.com/docs/8.1.x/HTML/index.htm#Authoring/ConnectingToVertica/vsql/vsqlEnvironmentVariables.htm">Vertica environment variables</a>:</p>
@@ -291,13 +313,13 @@ name.</p></li>
 name.</p></li>
 </ul>
 
-<h3 id="exasol">Exasol</h3>
+<h4 id="exasol">Exasol</h4>
 
 <p>The Sqitch Exasol engine supports no special environment variables. It does,
 however, override THE <code>SQLPATH</code> environment variable, to prevent EXAplus
 executing SQL scripts unexpectedly.</p>
 
-<h3 id="snowflake">Snowflake</h3>
+<h4 id="snowflake">Snowflake</h4>
 
 <p>Sqitch provides explicit support for the following
 <a href="https://docs.snowflake.net/manuals/user-guide/snowsql-start.html#connection-syntax">Snowflake environment variables</a>:</p>
@@ -347,7 +369,7 @@ name.</p></li>
 parameter.</p></li>
 </ul>
 
-<h1 id="see-also">See Also</h1>
+<h2 id="see-also">See Also</h2>
 
 <ul>
 <li><a href="/docs/sqitch-configuration">sqitch-configuration</a></li>
@@ -355,7 +377,7 @@ parameter.</p></li>
 <li><a href="/docs/sqitch-authentication">sqitch-authentication</a></li>
 </ul>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 

@@ -8,8 +8,6 @@
 	<title>Sqitch: sqitch-tag documentation</title>
 	<meta name="description" content="Sqitch is a database change management application." />
 	<link rel="stylesheet" href="/css/screen.css" />
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,300i,400,400i,500,500i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,13 +36,30 @@
 	</header>
 	<main id="docs" class="page">
 		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#configuration-variables'>Configuration Variables</a></li>
+                <li><a href='#examples'>Examples</a></li>
+                <li><a href='#configuration-variables'>Configuration Variables</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
 		
 
-<h1 id="name">Name</h1>
+<h2 id="name">Name</h2>
 
 <p>sqitch-tag - Create or list tag objects</p>
 
-<h1 id="synopsis">Synopsis</h1>
+<h2 id="synopsis">Synopsis</h2>
 
 <pre><code>sqitch tag [options]
 sqitch tag &lt;name&gt;
@@ -53,7 +68,7 @@ sqitch tag --tag &lt;name&gt; --change &lt;change&gt;
 sqitch tag &lt;name&gt; --all
 </code></pre>
 
-<h1 id="description">Description</h1>
+<h2 id="description">Description</h2>
 
 <p>Tags a change or outputs a list of existing tags in one or more project plans.
 Tagging is useful for preparing for a release. Tags are also required in order
@@ -78,7 +93,7 @@ tag as arguments. Use <code>--tag</code> and <code>--change</code> to disambigua
 change names from the other parameters if necessary (or preferable). See
 <a href="#examples">&ldquo;Examples&rdquo;</a> for examples.</p>
 
-<h1 id="options">Options</h1>
+<h2 id="options">Options</h2>
 
 <ul>
 <li><code>-t</code></li>
@@ -128,7 +143,7 @@ paragraphs.</p>
 configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
 </ul>
 
-<h1 id="configuration-variables">Configuration Variables</h1>
+<h2 id="configuration-variables">Configuration Variables</h2>
 
 <ul>
 <li><p><code>tag.all</code></p>
@@ -138,7 +153,7 @@ multi-plan projects in which tags should be kept in sync. May be overridden by
 <code>--all</code>, <code>--no-all</code>, or target, engine, and plan file name arguments.</p></li>
 </ul>
 
-<h1 id="examples">Examples</h1>
+<h2 id="examples">Examples</h2>
 
 <p>Get a list of tags in the default project plan:</p>
 
@@ -191,11 +206,11 @@ engine:</p>
 <pre><code>sqitch tag -t v1.0.1 sqlite.plan pg.plan -n 'Tag @v1.0.1.'
 </code></pre>
 
-<h1 id="configuration-variables-1">Configuration Variables</h1>
+<h2 id="configuration-variables-1">Configuration Variables</h2>
 
 <p>None currently.</p>
 
-<h1 id="sqitch">Sqitch</h1>
+<h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/sqitch">sqitch</a> suite.</p>
 
