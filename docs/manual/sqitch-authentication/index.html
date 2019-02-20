@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sqitch: sqitch-authentication Documentation</title>
+	<meta name="description" content="Guide to using database authentication credentials with Sqitch" />
+	<link rel="stylesheet" href="/css/screen.css" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#22538e">
+	<meta name="msapplication-TileColor" content="#22538e">
+	<meta name="theme-color" content="#fcffff">
+	<meta name="generator" content="Hugo 0.55.0-DEV" />
+</head>
+<body>
+	<header id=masthead>
+		<hgroup id="top">
+			<h1><a href="/"><img src="/img/masthead.png" srcset="/img/masthead.svg" alt="Sqitch" title="Sqitch"></a></h1>
+		</hgroup>
+		<nav id="bar">
+			<menu>
+				<li class="icon"><a href="/about" title="About"><i class="about"></i></a></li>
+				<li class="icon"><a href="/docs/" title="Documentation"><i class="docs"></i></a></li>
+				<li class="icon"><a href="/community/" title="Community"><i class="community"></i></a></li>
+				<li class="icon"><a href="/download/" title="Download"><i class="download"></i></a></li>
+			</menu>
+		</nav>
+	</header>
+
+	<header id="title">
+		<h1>sqitch-authentication</h1>
+	</header>
+	<main id="docs" class="page">
+		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#usernames'>Usernames</a></li>
+                <li><a href='#passwords'>Passwords</a><ul>
+                <li><a href='#don-t-use-passwords'>Don’t use Passwords</a></li>
+                <li><a href='#use-a-password-file'>Use a Password File</a></li>
+                <li><a href='#use-sqitch-password'>Use $SQITCH_PASSWORD</a></li>
+                <li><a href='#use-target-uris'>Use Target URIs</a></li></ul>
+                </li><li><a href='#see-also'>See Also</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
+		
+
+<h2 id="name">Name</h2>
+
+<p>sqitch-authentication - Guide to using database authentication credentials with Sqitch</p>
+
+<h2 id="description">Description</h2>
+
+<p>For database engines that require authentication, Sqitch supports a number
+of credential-specification options, and searches for them in a specific
+sequence. These searches are performed in two parts: a search for a username
+and a search for a password.</p>
+
+<h2 id="usernames">Usernames</h2>
+
+<p>Sqitch searches for usernames sequentially, using the first value it finds.
+Any of these approaches may be used to specify a username, in this order:</p>
+
+<ul>
+<li>1. In the <code>$SQITCH_USERNAME</code> environment variable</li>
+<li>2. Via the <code>--db-username</code> option</li>
+<li>3. In the deploy target URI; this is the preferred option</li>
+<li>4. In an engine-specific environment variable or configuration</li>
+</ul>
+
+<p>Naturally, this last option varies by database engine. The details are as
+follows:</p>
+
+<ul>
+<li><p>PostgreSQL</p>
+
+<p>The Postgres engine uses the <code>PGUSER</code> environment variable, if set.
+Otherwise, it uses the system username.</p></li>
+
+<li><p>MySQL</p>
+
+<p>For MySQL, if the <a href="https://metacpan.org/pod/MySQL::Config">MySQL::Config</a> module is installed, usernames and
+passwords can be specified in the
+<a href="https://dev.mysql.com/doc/refman/5.7/en/password-security-user.html"><code>/etc/my.cnf</code> and <code>~/.my.cnf</code> files</a>.
+These files must limit access only to the current user (<code>0600</code>). Sqitch will
+look for a username and password under the <code>[client]</code> and <code>[mysql]</code>
+sections, in that order.</p></li>
+
+<li><p>Oracle</p>
+
+<p>Oracle provides no default to search for a username.</p></li>
+
+<li><p>Vertica</p>
+
+<p>The Vertica engine uses the <code>VSQL_USER</code> environment variable, if set.
+Otherwise, it uses the system username.</p></li>
+
+<li><p>Firebird</p>
+
+<p>The Firebird engine uses the <code>ISC_USER</code> environment variable, if set.</p></li>
+
+<li><p>Exasol</p>
+
+<p>Exasol provides no default to search for a username.</p></li>
+
+<li><p>Snowflake</p>
+
+<p>The Snowflake engine uses the <code>SNOWSQL_USER</code> environment variable, if set.
+Next, it looks in the
+<a href="https://docs.snowflake.net/manuals/user-guide/snowsql-start.html#snowsql-config-file"><code>~/.snowsql/config</code> file</a>
+and use the default <code>connections.username</code> value. Otherwise, it uses the
+system username.</p></li>
+</ul>
+
+<h2 id="passwords">Passwords</h2>
+
+<p>You may have noticed that Sqitch has no <code>--password</code> option. This is
+intentional. It&rsquo;s generally not a great idea to specify a password on the
+command-line: from there, it gets logged to your command history and is easy
+to extract by anyone with access to your system. So you might wonder how to
+specify passwords so that Sqitch an successfully deploy to databases that
+require passwords. There are four approaches, in order from most- to
+least-recommended:</p>
+
+<ul>
+<li>1. Avoid using a password at all</li>
+<li>2. Use a database engine-specific password file</li>
+<li>3. Use the <code>$SQITCH_PASSWORD</code> environment variable</li>
+<li>4. Include the password in the deploy target URI</li>
+</ul>
+
+<p>Each is covered in detail in the sections below.</p>
+
+<h3 id="don-t-use-passwords">Don&rsquo;t use Passwords</h3>
+
+<p>Of course, the best way to protect your passwords is not to use them at all.
+If your database engine is able to do passwordless authentication, it&rsquo;s worth
+taking the time to make it work, especially on your production database
+systems. Some examples:</p>
+
+<ul>
+<li><p>PostgreSQL</p>
+
+<p>PostgreSQL supports a number of
+<a href="https://www.postgresql.org/docs/current/static/auth-methods.html">authentication methods</a>,
+including the passwordless <a href="https://www.postgresql.org/docs/current/static/auth-methods.html#AUTH-CERT">SSL certificate</a>, <a href="https://www.postgresql.org/docs/current/static/auth-methods.html#GSSAPI-AUTH">GSSAPI</a>, and, for local connections,
+<a href="https://www.postgresql.org/docs/current/static/auth-methods.html#AUTH-PEER">peer authentication</a>.</p></li>
+
+<li><p>MySQL</p>
+
+<p>MySQL supports a number of
+<a href="https://dev.mysql.com/doc/internals/en/authentication-method.html">authentication methods</a>,
+plus <a href="https://dev.mysql.com/doc/internals/en/ssl.html">SSL authentication</a>.</p></li>
+
+<li><p>Oracle</p>
+
+<p>Oracle supports a number of
+<a href="https://docs.oracle.com/cd/B19306_01/network.102/b14266/authmeth.htm#BABCGGEB">authentication methods</a>,
+including
+<a href="https://docs.oracle.com/cd/B19306_01/network.102/b14266/authmeth.htm#i1009722">SSL authentication</a>,
+<a href="https://docs.oracle.com/cd/B19306_01/network.102/b14266/authmeth.htm#i1009853">third-party authentication</a>,
+and, for local connections,
+<a href="https://docs.oracle.com/cd/B19306_01/network.102/b14266/authmeth.htm#i1007520">OS authentication</a>.</p></li>
+
+<li><p>Vertica</p>
+
+<p>Vertica supports a number of
+<a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/AdministratorsGuide/Security/ClientAuth/SupportedClientAuthenticationMethods.htm">authentication methods</a>
+including the passwordless <a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/AdministratorsGuide/Security/ClientAuth/ConfiguringTLSAuthentication.htm">TLS authentication</a>,
+<a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/AdministratorsGuide/Security/ClientAuth/Kerberos/ImplementingKerberosAuthentication.htm">GSS authentication</a>,
+and, for local connections,
+<a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/AdministratorsGuide/Security/ClientAuth/ConfiguringIdentAuthentication.htm">ident authentication</a>.</p></li>
+
+<li><p>Firebird</p>
+
+<p>Firebird supports passwordless authentication only via
+<a href="https://www.firebirdsql.org/manual/qsg2-config.html">trusted authentication</a>
+for local connections.</p></li>
+
+<li><p>Exasol</p>
+
+<p>Exasol doesn&rsquo;t seem to support password-less authentication at this time; for
+other options, see the <a href="https://www.exasol.com/portal/display/DOC/Database+User+Manual">documentation</a>.</p></li>
+
+<li><p>Snowflake</p>
+
+<p>Snowflake does not support password-less authentication.</p></li>
+</ul>
+
+<h3 id="use-a-password-file">Use a Password File</h3>
+
+<p>If you must use password authentication with your database server, you may be
+able to use a protected password file. This is file with access limited only
+to the current user that the server client library can read in. As such, the
+format is specified by the database vendor, and not all database servers offer
+the feature. Here&rsquo;s how the database engines supported by Sqitch shake out:</p>
+
+<ul>
+<li><p>PostgreSQL</p>
+
+<p>PostgreSQL will use a
+<a href="https://www.postgresql.org/docs/current/static/libpq-pgpass.html"><code>.pgpass</code> file</a> in the
+user&rsquo;s home directory to or referenced by the <code>$PGPASSFILE</code> environment
+variable. This file must limit access only to the current user (<code>0600</code>) and
+contains lines specify authentication rules as follows:</p>
+
+<pre><code>hostname:port:database:username:password
+</code></pre></li>
+
+<li><p>MySQL</p>
+
+<p>For MySQL, if the <a href="https://metacpan.org/pod/MySQL::Config">MySQL::Config</a> module is installed, usernames and
+passwords can be specified in the
+<a href="https://dev.mysql.com/doc/refman/5.7/en/password-security-user.html"><code>/etc/my.cnf</code> and <code>~/.my.cnf</code> files</a>.
+These files must limit access only to the current user (<code>0600</code>). Sqitch will
+look for a username and password under the <code>[client]</code> and <code>[mysql]</code>
+sections, in that order.</p></li>
+
+<li><p>Oracle</p>
+
+<p>Oracle supports
+<a href="https://docs.oracle.com/cd/B28359_01/server.111/b28310/dba007.htm#ADMIN10241">password file</a>
+created with the <code>ORAPWD</code> utility to authenticate <code>SYSDBA</code> and <code>SYSOPER</code>
+users, but <strong>Sqitch is unable to take advantage of this functionality.</strong> Neither can
+one <a href="https://stackoverflow.com/q/7183513/79202">embed a username and password</a>
+into a
+<a href="https://docs.oracle.com/cd/B28359_01/network.111/b28317/tnsnames.htm#NETRF007"><code>tnsnames.ora</code></a>
+file.</p></li>
+
+<li><p>Vertica</p>
+
+<p>Vertica does not currently support a password file.</p></li>
+
+<li><p>Firebird</p>
+
+<p>Firebird does not currently support a password file.</p></li>
+
+<li><p>Exasol</p>
+
+<p>Exasol allows configuring connection profiles for the &lsquo;exaplus&rsquo; client:</p>
+
+<pre><code>&gt; exaplus -u sys -p exasol -c localhost:8563 -wp flipr_test
+EXAplus 6.0.4 (c) EXASOL AG
+
+Profile flipr_test is saved.
+&gt; exaplus -profile flipr_test -q -sql &quot;select current_timestamp;&quot;
+
+CURRENT_TIMESTAMP
+--------------------------
+2017-11-02 13:35:48.360000
+</code></pre>
+
+<p>These profiles are stored in <code>~/.exasol/profiles.xml</code>, readable only to the user
+by default. See the <a href="https://www.exasol.com/portal/display/DOC/Database+User+Manual">documentation</a>
+for more information on connection profiles, specifically the EXAplus section in
+the chapter on &ldquo;Clients and interfaces&rdquo;.</p>
+
+<p>For ODBC connections from Sqitch, we can use connection settings in <code>~/.odbc.ini</code>:</p>
+
+<pre><code>[flipr_test]
+DRIVER = Exasol
+EXAHOST = localhost:8563
+EXAUID = sys
+EXAPWD = exasol
+</code></pre>
+
+<p>When combining the above, Sqitch doesn&rsquo;t need to know any credentials; they are
+stored somewhat safely in <code>~/.exasol/profiles.xml</code> and <code>~/.odbc.ini</code>:</p>
+
+<pre><code>&gt; sqitch status db:exasol:flipr_test
+# On database db:exasol:flipr_test
+# Project:  flipr
+# ...
+#
+Nothing to deploy (up-to-date)
+&gt; sqitch rebase --onto '@HEAD^' -y db:exasol:flipr_test
+Reverting changes to hashtags @v1.0.0-dev2 from db:exasol:flipr_test
+  - userflips .. ok
+Deploying changes to db:exasol:flipr_test
+  + userflips .. ok
+</code></pre></li>
+
+<li><p>Snowflake</p>
+
+<p>For Snowflake, Sqitch will read the
+<a href="https://docs.snowflake.net/manuals/user-guide/snowsql-start.html#snowsql-config-file"><code>~/.snowsql/config</code> file</a>
+and use the default connections settings; named connections are not supported.
+An example:</p>
+
+<pre><code>[connections]
+accountname = myaccount
+region = us-east-1
+warehousename = compute
+username = frank
+password = fistula postmark bag
+rolename = ACCOUNTADMIN
+dbname = reporting
+</code></pre>
+
+<p>The variables that Sqitch currently reads are:</p>
+
+<ul>
+<li><code>connections.accountname</code></li>
+<li><code>connections.username</code></li>
+<li><code>connections.password</code></li>
+<li><code>connections.rolename</code></li>
+<li><code>connections.region</code></li>
+<li><code>connections.warehousename</code></li>
+<li><code>connections.dbname</code></li>
+</ul></li>
+</ul>
+
+<h3 id="use-sqitch-password">Use <code>$SQITCH_PASSWORD</code></h3>
+
+<p>The <code>$SQITCH_PASSWORD</code> environment variable can be used to specify the
+password for any supported database engine. However use of this environment
+variable is not recommended for security reasons, as some operating systems
+allow non-root users to see process environment variables via <code>ps</code>.</p>
+
+<p>The behavior of <code>$SQITCH_PASSWORD</code> is consistent across all supported
+engines, as is the complementary <code>$SQITCH_USERNAME</code> environment variable.
+Some database engines support their own password environment variables, which
+you may wish to use instead. However, their behaviors may not be consistent:</p>
+
+<ul>
+<li><p>PostgreSQL</p>
+
+<p><code>$PGPASSWORD</code></p></li>
+
+<li><p>MySQL</p>
+
+<p><code>$MYSQL_PWD</code></p></li>
+
+<li><p>Vertica</p>
+
+<p><code>$VSQL_PASSWORD</code></p></li>
+
+<li><p>Firebird</p>
+
+<p><code>$ISC_PASSWORD</code></p></li>
+
+<li><p>Snowflake</p>
+
+<p><code>$SNOWSQL_PWD</code></p></li>
+</ul>
+
+<h3 id="use-target-uris">Use Target URIs</h3>
+
+<p>Passwords may also be specified in <a href="/docs/manual/sqitch-target#Description">target URIs</a>.
+This is not generally recommended, since such URIs are either specified via
+the command-line (and therefore visible in <code>ps</code> and your shell history) or
+stored in the <a href="/docs/manual/sqitch-configuration">configuration</a>, the project instance of
+which is generally pushed to your source code repository. But it&rsquo;s provided
+here as an absolute last resort (and because web URLs support it, though it&rsquo;s
+heavily frowned upon there, too).</p>
+
+<p>Such URIs can either be specified on the command-line:</p>
+
+<pre><code>sqitch deploy db:pg://fred:s3cr3t@db.example.com/widgets
+</code></pre>
+
+<p>Or stored as named targets in the project configuration file:</p>
+
+<pre><code>sqitch target add wigets db:pg://fred:s3cr3t@db.example.com/widgets
+</code></pre>
+
+<p>After which the target is available by its name:</p>
+
+<pre><code>sqitch deploy widgets
+</code></pre>
+
+<p>See <a href="/docs/manual/sqitch-targets">sqitch-targets</a> and <code>sqitch-configuration</code> for details  on target
+configuration.</p>
+
+<h2 id="see-also">See Also</h2>
+
+<ul>
+<li><a href="/docs/manual/sqitch-environment">sqitch-environment</a></li>
+<li><a href="/docs/manual/sqitch-configuration">sqitch-configuration</a></li>
+<li><a href="/docs/manual/sqitch-target">sqitch-target</a></li>
+</ul>
+
+<h2 id="sqitch">Sqitch</h2>
+
+<p>Part of the <a href="/docs/manual/sqitch">sqitch</a> suite.</p>
+
+	</main>
+	    <footer>
+        <div class="code">
+            <a href="/site/">About this Site</a><br />
+            Corrections, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.
+        </div>
+    </footer>
+</body>
+</html>
+

@@ -6,8 +6,8 @@
 	<meta name="mobile-web-app-capable" content="yes" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Sqitch Documentation</title>
-	<meta name="description" content="The official and comprehensive man pages included the Sqitch package itself.
-Setup and Configuration  sqitch - Add a database change to plans config - Get and set local, user, or system Sqitch options init - Create a new Sqitch project engine - Manage database engine configuration target - Manage target database configuration help - Display help for Sqitch and Sqitch commands  Development  add - Sane database change management bundle - Bundle a Sqitch project for distribution checkout - Revert, checkout another VCS branch, and re-deploy changes plan - Show planned database changes rebase - Revert and redeploy database changes rework - Rework a database change show - Show object information or change file contents tag - Create or list tag objects  Deployment  deploy - Deploy changes to a database log - Show Sqitch change logs revert - Revert changes to a database status - Show the current deployment status of a database upgrade - Upgrade the registry to the current version verify - Verify deployed database changes  Guides  authentication - Guide to using database authentication credentials with Sqitch configuration - Hierarchical engine and target configuration changes - Specifying changes for Sqitch environment - Environment variables recognized by Sqitch  Tutorials  🐘 Postgres - A tutorial introduction to Sqitch change management on PostgreSQL 💡 SQLite - A tutorial introduction to Sqitch change management on SQLite 🐬 MySQL - A tutorial introduction to Sqitch change management on MySQL 🔥 Firebird - A tutorial introduction to Sqitch change management on Firebird ☀️ Exasol - A tutorial introduction to Sqitch change management on Exasol 🔮 Oracle - A tutorial introduction to Sqitch change management on Oracle ❄️ Snowflake - A tutorial introduction to Sqitch change management on Snowflake 🔺 Vertica - A tutorial introduction to Sqitch change management on Vertica" />
+	<meta name="description" content="Reference Manual The official and comprehensive man pages included the Sqitch package itself. Tutorials New to Sqitch? Start with the tutorial for your preferred database engine to learn how to create, develop, and maintain a database with Sqitch. 🐘 Postgres Tutorial 💡 SQLite Tutorial 🐬 MySQL Tutorial 🔥 Firebird Tutorial ☀️ Exasol Tutorial 🔮 Oracle Tutorial ❄️ Snowflake Tutorial 🔺 Vertica Tutorial
+Presentations Videos and slides from conference and user group presentations." />
 	<link rel="stylesheet" href="/css/screen.css" />
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -36,67 +36,60 @@ Setup and Configuration  sqitch - Add a database change to plans config - Get an
 	<header id="title">
 		<h1>Sqitch Documentation</h1>
 	</header>
-	<main id="doclist" class="section">
-		
+	<main id="docidx" class="section">
+		<p><section class="docs">
+<h2 id="reference-manual"><a href="/docs/manual/">Reference Manual</a></h2>
 
-<p>The official and comprehensive <strong>man pages</strong> included the Sqitch package itself.</p>
+<p>The official and comprehensive <strong>man pages</strong> included the Sqitch package itself.
+</section>
+<section class="teach">
+<h2 id="tutorials">Tutorials</h2>
 
-<h2 id="i-class-i-cog-i-setup-and-configuration"><i class="i cog"></i>Setup and Configuration</h2>
-
-<ul>
-<li><a href="/docs/sqitch/">sqitch</a> - Add a database change to plans</li>
-<li><a href="/docs/sqitch-config/">config</a> - Get and set local, user, or system Sqitch options</li>
-<li><a href="/docs/sqitch-init/">init</a> - Create a new Sqitch project</li>
-<li><a href="/docs/sqitch-engine/">engine</a> - Manage database engine configuration</li>
-<li><a href="/docs/sqitch-target/">target</a> - Manage target database configuration</li>
-<li><a href="/docs/sqitch-help/">help</a> - Display help for Sqitch and Sqitch commands</li>
-</ul>
-
-<h2 id="i-class-i-dev-i-development"><i class="i dev"></i>Development</h2>
+<p>New to Sqitch? Start with the tutorial for your preferred database engine to
+learn how to create, develop, and maintain a database with Sqitch.</p>
 
 <ul>
-<li><a href="/docs/sqitch-add/">add</a> - Sane database change management</li>
-<li><a href="/docs/sqitch-bundle/">bundle</a> - Bundle a Sqitch project for distribution</li>
-<li><a href="/docs/sqitch-checkout/">checkout</a> - Revert, checkout another VCS branch, and re-deploy changes</li>
-<li><a href="/docs/sqitch-plan/">plan</a> - Show planned database changes</li>
-<li><a href="/docs/sqitch-rebase/">rebase</a> - Revert and redeploy database changes</li>
-<li><a href="/docs/sqitch-rework/">rework</a> - Rework a database change</li>
-<li><a href="/docs/sqitch-show/">show</a> - Show object information or change file contents</li>
-<li><a href="/docs/sqitch-tag/">tag</a> - Create or list tag objects</li>
+<li><a href="/docs/manual/sqitchtutorial/">🐘 Postgres Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-sqlite/">💡 SQLite Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-mysql/">🐬 MySQL Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-firebird/">🔥 Firebird Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-exasol/">☀️ Exasol Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-oracle/">🔮 Oracle Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-snowflake/">❄️ Snowflake Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-vertica/">🔺 Vertica Tutorial</a></li>
 </ul>
 
-<h2 id="i-class-i-upload-i-deployment"><i class="i upload"></i>Deployment</h2>
+</section></p>
+
+<section class="video">
+<h2 id="presentations">Presentations</h2>
+
+<p>Videos and slides from conference and user group presentations.</p>
+
+<h3 id="sane-database-change-management-with-sqitch">Sane Database Change Management with Sqitch</h3>
+
+<p>A one hour technical introduction to Sqitch, with detailed usage examples to
+help get you started.</p>
 
 <ul>
-<li><a href="/docs/sqitch-deploy/">deploy</a> - Deploy changes to a database</li>
-<li><a href="/docs/sqitch-log/">log</a> - Show Sqitch change logs</li>
-<li><a href="/docs/sqitch-revert/">revert</a> - Revert changes to a database</li>
-<li><a href="/docs/sqitch-status/">status</a> - Show the current deployment status of a database</li>
-<li><a href="/docs/sqitch-upgrade/">upgrade</a> - Upgrade the registry to the current version</li>
-<li><a href="/docs/sqitch-verify/">verify</a> - Verify deployed database changes</li>
+<li><a href="https://vimeo.com/50104469">Video</a></li>
+<li><a href="https://speakerd.s3.amazonaws.com/presentations/5e9bcbd0430a0130009a123139173c61/sqitch-pdxpm-2013.pdf">PDF</a></li>
+<li><a href="https://speakerdeck.com/theory/sane-database-change-management-with-sqitch">Speaker Deck</a></li>
 </ul>
 
-<h2 id="i-class-i-docs-i-guides"><i class="i docs"></i>Guides</h2>
+<h3 id="agile-database-development">Agile Database Development</h3>
+
+<p>Three hour technical tutorial <a href="https://www.pgcon.org/2013/schedule/events/615.en.html">originally presented at PGCon 2013</a> and updated in
+January 2014, covering source code control with Git, database change control
+with Sqitch, and test-driven database development with <a href="https://pgtap.org/">pgTAP</a>.</p>
 
 <ul>
-<li><a href="/docs/sqitch-authentication/">authentication</a> - Guide to using database authentication credentials with Sqitch</li>
-<li><a href="/docs/sqitch-configuration/">configuration</a> - Hierarchical engine and target configuration</li>
-<li><a href="/docs/sqitchchanges/">changes</a> - Specifying changes for Sqitch</li>
-<li><a href="/docs/sqitch-environment/">environment</a> - Environment variables recognized by Sqitch</li>
+<li><a href="https://speakerdeck.com/theory/agile-database-development-2ed">Speaker Deck</a></li>
+<li><a href="https://www.icloud.com/iw/#keynote/BAJN1kHfLmpMcwXIXOqByV75FvbX6AgfEbWE/agile_database_development_iovation.key">Kenote</a></li>
+<li><a href="https://speakerd.s3.amazonaws.com/presentations/460b5b905af60131df53620ea5c6d896/agile_database_development_iovation.pdf">PDF</a></li>
 </ul>
 
-<h2 id="i-class-i-teach-i-tutorials"><i class="i teach"></i>Tutorials</h2>
-
-<ul>
-<li><a href="/docs/sqitch-tutorial/">🐘 Postgres</a> - A tutorial introduction to Sqitch change management on PostgreSQL</li>
-<li><a href="/docs/sqitchtutorial-sqlite/">💡 SQLite</a> - A tutorial introduction to Sqitch change management on SQLite</li>
-<li><a href="/docs/sqitchtutorial-mysql/">🐬 MySQL</a> - A tutorial introduction to Sqitch change management on MySQL</li>
-<li><a href="/docs/sqitchtutorial-firebird/">🔥 Firebird</a> - A tutorial introduction to Sqitch change management on Firebird</li>
-<li><a href="/docs/sqitchtutorial-exasol/">☀️ Exasol</a> - A tutorial introduction to Sqitch change management on Exasol</li>
-<li><a href="/docs/sqitchtutorial-oracle/">🔮 Oracle</a> - A tutorial introduction to Sqitch change management on Oracle</li>
-<li><a href="/docs/sqitchtutorial-snowflake/">❄️ Snowflake</a> - A tutorial introduction to Sqitch change management on Snowflake</li>
-<li><a href="/docs/sqitchtutorial-vertica/">🔺 Vertica</a> - A tutorial introduction to Sqitch change management on Vertica</li>
-</ul>
+</section>
 
 	</main>
 	    <footer>

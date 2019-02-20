@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sqitch: sqitch-rebase Documentation</title>
+	<meta name="description" content="Revert and redeploy database changes" />
+	<link rel="stylesheet" href="/css/screen.css" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#22538e">
+	<meta name="msapplication-TileColor" content="#22538e">
+	<meta name="theme-color" content="#fcffff">
+	<meta name="generator" content="Hugo 0.55.0-DEV" />
+</head>
+<body>
+	<header id=masthead>
+		<hgroup id="top">
+			<h1><a href="/"><img src="/img/masthead.png" srcset="/img/masthead.svg" alt="Sqitch" title="Sqitch"></a></h1>
+		</hgroup>
+		<nav id="bar">
+			<menu>
+				<li class="icon"><a href="/about" title="About"><i class="about"></i></a></li>
+				<li class="icon"><a href="/docs/" title="Documentation"><i class="docs"></i></a></li>
+				<li class="icon"><a href="/community/" title="Community"><i class="community"></i></a></li>
+				<li class="icon"><a href="/download/" title="Download"><i class="download"></i></a></li>
+			</menu>
+		</nav>
+	</header>
+
+	<header id="title">
+		<h1>sqitch-rebase</h1>
+	</header>
+	<main id="docs" class="page">
+		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#configuration-variables'>Configuration Variables</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
+		
+
+<h2 id="name">Name</h2>
+
+<p>sqitch-rebase - Revert and redeploy database changes</p>
+
+<h2 id="synopsis">Synopsis</h2>
+
+<pre><code>sqitch rebase [options] [&lt;database&gt;]
+sqitch rebase [options] [&lt;database&gt;] --onto-change &lt;change&gt;
+sqitch rebase [options] [&lt;database&gt;] --onto-change &lt;change&gt; --upto-change &lt;change&gt;
+sqitch rebase [options] [&lt;database&gt;] &lt;change&gt;
+sqitch rebase [options] [&lt;database&gt;] &lt;change&gt; --upto-change &lt;change&gt;
+sqitch rebase [options] [&lt;database&gt;] &lt;change&gt; &lt;change&gt;
+</code></pre>
+
+<h2 id="description">Description</h2>
+
+<p>Revert and redeploy changes to the database. It&rsquo;s effectively a shortcut for
+running <a href="/docs/manual/sqitch-revert"><code>sqitch revert</code></a> and <a href="/docs/manual/sqitch-deploy"><code>sqitch deploy</code></a>
+in succession.</p>
+
+<p>More specifically, starting from the current deployment state, changes will be
+reverted in reverse the order of application. All changes will be reverted
+unless a change is specified, either via <code>--onto</code> or with no option flag, in
+which case changes will be reverted back to that change. If nothing needs to
+be reverted, a message will be emitted explaining why and nothing will be
+reverted.</p>
+
+<p>Once the revert finishes, changes will be deployed starting from the deployed
+state through the rest of the deployment plan. They will run to the latest
+change in the plan, unless a change is specified, either via <code>--upto</code> or with
+no option flag, in which case changes will be deployed up-to and including
+that change.</p>
+
+<p>If the database has not been deployed to, or its state already matches the
+specified change, no reverts will be run. And if, at that point, the database
+is up-to-date, no deploys will be run.</p>
+
+<p>The <code>&lt;database&gt;</code> parameter specifies the database to which to connect,
+and may also be specified as the <code>--target</code> option. It can be target name,
+a URI, an engine name, or plan file path.</p>
+
+<h2 id="options">Options</h2>
+
+<ul>
+<li><code>-t</code></li>
+
+<li><p><code>--target</code></p>
+
+<p>The target database to which to connect. This option can be either a URI or
+the name of a target in the configuration.</p></li>
+
+<li><p><code>--onto-change</code></p></li>
+
+<li><p><code>--onto</code></p>
+
+<p>Specify the reversion change. Defaults to reverting all changes. See
+<a href="/docs/manual/sqitchchanges">sqitchchanges</a> for the various ways in which changes can be specified.</p></li>
+
+<li><p><code>--upto-change</code></p></li>
+
+<li><p><code>--upto</code></p>
+
+<p>Specify the deployment change. Defaults to the last point in the plan. See
+<a href="/docs/manual/sqitchchanges">sqitchchanges</a> for the various ways in which changes can be specified.</p></li>
+
+<li><p><code>--mode</code></p>
+
+<p>Specify the reversion mode to use in case of deploy failure. Possible values
+are:</p>
+
+<ul>
+<li><p><code>all</code></p>
+
+<p>In the event of failure, revert all deployed changes, back to
+<code>--onto-change</code>. This is the default.</p></li>
+
+<li><p><code>tag</code></p>
+
+<p>In the event of failure, revert all deployed changes to the last
+successfully-applied tag. If no tags were applied, all changes will be
+reverted to <code>--onto-change</code>.</p></li>
+
+<li><p><code>change</code></p>
+
+<p>In the event of failure, no changes will be reverted. This is on the
+assumption that a change is atomic, and thus may may be deployed again.</p></li>
+</ul></li>
+
+<li><p><code>--verify</code></p>
+
+<p>Verify each change by running its verify script, if there is one, immediate
+after deploying it. If a verify test fails, the deploy will be considered to
+have failed and the appropriate reversion will be carried out, depending on
+the value of <code>--mode</code>.</p></li>
+
+<li><p><code>--no-verify</code></p>
+
+<p>Don&rsquo;t verify each change. This is the default.</p></li>
+
+<li><p><code>-s</code></p></li>
+
+<li><p><code>--set</code></p>
+
+<p>Set a variable name and value for use by the database engine client, if it
+supports variables. The format must be <code>name=value</code>, e.g.,
+<code>--set defuser='Homer Simpson'</code>. Overrides any values loaded from
+<a href="#configuration-variables">&ldquo;configuration Variables&rdquo;</a>.</p></li>
+
+<li><p><code>-e</code></p></li>
+
+<li><p><code>--set-deploy</code></p>
+
+<p>Set a variable name and value for use by the database engine client when
+deploying, if it supports variables. The format must be <code>name=value</code>, e.g.,
+<code>--set defuser='Homer Simpson'</code>. Overrides any values from <code>--set</code> or values
+loaded from <a href="#configuration-variables">&ldquo;configuration Variables&rdquo;</a>.</p></li>
+
+<li><p><code>-r</code></p></li>
+
+<li><p><code>--set-revert</code></p>
+
+<p>Sets a variable name to be used by the database engine client during when
+reverting, if it supports variables. The format must be <code>name=value</code>, e.g.,
+<code>--set defuser='Homer Simpson'</code>. Overrides any values from <code>--set</code> or values
+loaded from <a href="#configuration-variables">&ldquo;configuration Variables&rdquo;</a>.</p></li>
+
+<li><p><code>--log-only</code></p>
+
+<p>Log the changes as if they were deployed and reverted, but without actually
+running the deploy and revert scripts.</p></li>
+
+<li><p><code>-y</code></p>
+
+<p>Disable the prompt that normally asks whether or not to execute the revert.</p></li>
+
+<li><p><code>--registry</code></p>
+
+<pre><code>sqitch rebase --registry registry
+</code></pre>
+
+<p>The name of the Sqitch registry schema or database in which sqitch stores its
+own data.</p></li>
+
+<li><p><code>--db-client</code></p></li>
+
+<li><p><code>--client</code></p>
+
+<pre><code>sqitch rebase --client /usr/local/pgsql/bin/psql
+</code></pre>
+
+<p>Path to the command-line client for the database engine. Defaults to a client
+in the current path named appropriately for the database engine.</p></li>
+
+<li><p><code>-d</code></p></li>
+
+<li><p><code>--db-name</code></p>
+
+<pre><code>sqitch rebase --db-name widgets
+sqitch rebase -d bricolage
+</code></pre>
+
+<p>Name of the database. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are
+preferred, but this option can be used to override the database name in a
+target.</p></li>
+
+<li><p><code>-u</code></p></li>
+
+<li><p><code>--db-user</code></p></li>
+
+<li><p><code>--db-username</code></p>
+
+<pre><code>sqitch rebase --db-username root
+sqitch rebase --db-user postgres
+sqitch rebase -u Mom
+</code></pre>
+
+<p>User name to use when connecting to the database. Does not apply to all
+engines. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this
+option can be used to override the user name in a target.</p></li>
+
+<li><p><code>-h</code></p></li>
+
+<li><p><code>--db-host</code></p>
+
+<pre><code>sqitch rebase --db-host db.example.com
+sqitch rebase -h appdb.example.net
+</code></pre>
+
+<p>Host name to use when connecting to the database. Does not apply to all
+engines. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this
+option can be used to override the host name in a target.</p></li>
+
+<li><p><code>-p</code></p></li>
+
+<li><p><code>--db-port</code></p>
+
+<pre><code>sqitch rebase --db-port 7654
+sqitch rebase -p 5431
+</code></pre>
+
+<p>Port number to connect to. Does not apply to all engines. In general,
+<a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this option can be used
+to override the port in a target.</p></li>
+
+<li><p><code>--plan-file</code></p></li>
+
+<li><p><code>-f</code></p>
+
+<pre><code>sqitch rebase --plan-file my.plan
+</code></pre>
+
+<p>Path to the deployment plan file. Overrides target, engine, and core
+configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
+</ul>
+
+<h2 id="configuration-variables">Configuration Variables</h2>
+
+<ul>
+<li><code>[deploy.variables]</code></li>
+
+<li><p><code>[revert.variables]</code></p>
+
+<p>A section defining database client variables. These variables are useful if
+your database engine supports variables in scripts, such as PostgreSQL&rsquo;s
+<a href="https://www.postgresql.org/docs/current/static/app-psql.html#APP-PSQL-INTERPOLATION"><code>psql</code>
+variables</a>,
+Vertica&rsquo;s <a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/ConnectingToHPVertica/vsql/Variables.htm"><code>vsql</code>
+variables</a>,
+MySQL&rsquo;s <a href="https://dev.mysql.com/doc/refman/5.6/en/user-variables.html">user
+variables</a>,
+SQL*Plus&rsquo;s <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14357/ch12017.htm"><code>DEFINE</code>
+variables</a>,
+and Snowflake&rsquo;s <a href="https://docs.snowflake.net/manuals/user-guide/snowsql-use.html#using-variables">SnowSQL
+variables</a>.</p>
+
+<p>May be overridden by <code>--set</code>, <code>--set-deploy</code>, <code>--set-revert</code>, or target and
+engine configuration. Variables are merged in the following priority order:</p>
+
+<ul>
+<li><p><code>--set-revert</code></p>
+
+<p>Used only while reverting changes.</p></li>
+
+<li><p><code>--set-deploy</code></p>
+
+<p>Used only while deploying changes.</p></li>
+
+<li><p><code>--set</code></p>
+
+<p>Used while reverting and deploying changes.</p></li>
+
+<li><p><code>target.$target.variables</code></p>
+
+<p>Used while reverting and deploying changes.</p></li>
+
+<li><p><code>engine.$engine.variables</code></p>
+
+<p>Used while reverting and deploying changes.</p></li>
+
+<li><p><code>revert.variables</code></p>
+
+<p>Used only while reverting changes.</p></li>
+
+<li><p><code>deploy.variables</code></p>
+
+<p>Used while reverting and deploying changes.</p></li>
+
+<li><p><code>core.variables</code></p>
+
+<p>Used while reverting and deploying changes.</p></li>
+</ul></li>
+
+<li><p><code>rebase.verify</code></p></li>
+
+<li><p><code>deploy.verify</code></p>
+
+<p>Boolean indicating whether or not to verify each change after deploying it.</p></li>
+
+<li><p><code>rebase.mode</code></p></li>
+
+<li><p><code>deploy.mode</code></p>
+
+<p>Deploy mode. The supported values are the same as for the <code>--mode</code> option.</p></li>
+
+<li><p><code>[rebase.no_prompt]</code></p></li>
+
+<li><p><code>[revert.no_prompt]</code></p>
+
+<p>A boolean value indicating whether or not to disable the prompt before
+executing the revert. The <code>rebase.no_prompt</code> variable takes precedence over
+<code>revert.no_prompt</code>, and both may of course be overridden by <code>-y</code>.</p></li>
+
+<li><p><code>[rebase.prompt_accept]</code></p></li>
+
+<li><p><code>[revert.prompt_accept]</code></p>
+
+<p>A boolean value indicating whether default reply to the prompt before
+executing the revert should be &ldquo;yes&rdquo; or &ldquo;no&rdquo;. The <code>rebase.prompt_accept</code>
+variable takes precedence over <code>revert.prompt_accept</code>, and both default to
+true, meaning to accept the revert by default.</p></li>
+</ul>
+
+<h2 id="sqitch">Sqitch</h2>
+
+<p>Part of the <a href="/docs/manual/sqitch">sqitch</a> suite.</p>
+
+	</main>
+	    <footer>
+        <div class="code">
+            <a href="/site/">About this Site</a><br />
+            Corrections, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.
+        </div>
+    </footer>
+</body>
+</html>
+

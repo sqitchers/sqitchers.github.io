@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sqitch: sqitch-upgrade Documentation</title>
+	<meta name="description" content="Upgrade the registry to the current version" />
+	<link rel="stylesheet" href="/css/screen.css" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#22538e">
+	<meta name="msapplication-TileColor" content="#22538e">
+	<meta name="theme-color" content="#fcffff">
+	<meta name="generator" content="Hugo 0.55.0-DEV" />
+</head>
+<body>
+	<header id=masthead>
+		<hgroup id="top">
+			<h1><a href="/"><img src="/img/masthead.png" srcset="/img/masthead.svg" alt="Sqitch" title="Sqitch"></a></h1>
+		</hgroup>
+		<nav id="bar">
+			<menu>
+				<li class="icon"><a href="/about" title="About"><i class="about"></i></a></li>
+				<li class="icon"><a href="/docs/" title="Documentation"><i class="docs"></i></a></li>
+				<li class="icon"><a href="/community/" title="Community"><i class="community"></i></a></li>
+				<li class="icon"><a href="/download/" title="Download"><i class="download"></i></a></li>
+			</menu>
+		</nav>
+	</header>
+
+	<header id="title">
+		<h1>sqitch-upgrade</h1>
+	</header>
+	<main id="docs" class="page">
+		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
+		
+
+<h2 id="name">Name</h2>
+
+<p>sqitch-upgrade - Upgrade the registry to the current version</p>
+
+<h2 id="synopsis">Synopsis</h2>
+
+<pre><code>sqitch upgrade [options] [&lt;database&gt;]
+</code></pre>
+
+<h2 id="description">Description</h2>
+
+<p>Upgrades the Sqitch registry for a database. That is, it makes sure that the
+schema the Sqitch uses for its registry is up-to-date. This will occasionally
+be necessary when new features are added to Sqitch that require registry
+schema changes.</p>
+
+<p>The <code>&lt;database&gt;</code> parameter specifies the database to which to connect,
+and may also be specified as the <code>--target</code> option. It can be target name,
+a URI, an engine name, or plan file path.</p>
+
+<h2 id="options">Options</h2>
+
+<ul>
+<li><code>-t</code></li>
+
+<li><p><code>--target</code></p>
+
+<p>The target database to which to connect. This option can be either a URI or
+the name of a target in the configuration.</p></li>
+
+<li><p><code>--registry</code></p>
+
+<pre><code>sqitch upgrade --registry registry
+</code></pre>
+
+<p>The name of the Sqitch registry schema or database in which sqitch stores its
+own data.</p></li>
+
+<li><p><code>--db-client</code></p></li>
+
+<li><p><code>--client</code></p>
+
+<pre><code>sqitch upgrade --client /usr/local/pgsql/bin/psql
+</code></pre>
+
+<p>Path to the command-line client for the database engine. Defaults to a client
+in the current path named appropriately for the database engine.</p></li>
+
+<li><p><code>-d</code></p></li>
+
+<li><p><code>--db-name</code></p>
+
+<pre><code>sqitch upgrade --db-name widgets
+sqitch upgrade -d bricolage
+</code></pre>
+
+<p>Name of the database. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are
+preferred, but this option can be used to override the database name in a
+target.</p></li>
+
+<li><p><code>-u</code></p></li>
+
+<li><p><code>--db-user</code></p></li>
+
+<li><p><code>--db-username</code></p>
+
+<pre><code>sqitch upgrade --db-username root
+sqitch upgrade --db-user postgres
+sqitch upgrade -u Mom
+</code></pre>
+
+<p>User name to use when connecting to the database. Does not apply to all
+engines. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this
+option can be used to override the user name in a target.</p></li>
+
+<li><p><code>-h</code></p></li>
+
+<li><p><code>--db-host</code></p>
+
+<pre><code>sqitch upgrade --db-host db.example.com
+sqitch upgrade -h appdb.example.net
+</code></pre>
+
+<p>Host name to use when connecting to the database. Does not apply to all
+engines. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this
+option can be used to override the host name in a target.</p></li>
+
+<li><p><code>-p</code></p></li>
+
+<li><p><code>--db-port</code></p>
+
+<pre><code>sqitch upgrade --db-port 7654
+sqitch upgrade -p 5431
+</code></pre>
+
+<p>Port number to connect to. Does not apply to all engines. In general,
+<a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this option can be used
+to override the port in a target.</p></li>
+</ul>
+
+<h2 id="sqitch">Sqitch</h2>
+
+<p>Part of the <a href="/docs/manual/sqitch">sqitch</a> suite.</p>
+
+	</main>
+	    <footer>
+        <div class="code">
+            <a href="/site/">About this Site</a><br />
+            Corrections, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.
+        </div>
+    </footer>
+</body>
+</html>
+

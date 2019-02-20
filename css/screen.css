@@ -442,6 +442,7 @@ body > footer .code:before {
 main li {
     list-style-position: outside;
     margin-left: 1.1em;
+    line-height: 1.6em;
 }
 
 .toc {
@@ -536,15 +537,44 @@ p pre code, li pre code {
     font-family: "Source Code Pro", "Courier", monospace
 }
 
-#doclist h2 { color: #817565; font-weight: 500; }
-#doclist i.i:before { font-family: fawe; font-size: .8em; width: 40px; display: inline-block; text-align: center;}
-#doclist li {
+#docidx section {
+    background-color: #dee8f0;
+    border-top: none;
+    padding: 24px;
+    margin-bottom: 32px;
+    border-radius: 5px;
+}
+
+#docidx section:before {
+    font-family: 'fawe';
+    float: left;
+    font-size: 3.5em;
+    padding: 24px 16px 16px 0;
+    text-align: center;
+    color: #817565;
+    width: 1.2em;
+}
+
+#docidx section.video:before {
+     padding-top: 14px !important;
+}
+
+#docidx h3 {
+    clear:both;
+    margin-top: 1em;
+    color: #22538e;
+}
+#docidx section ul { margin-bottom: 0; }
+
+#manlist h2 { color: #817565; font-weight: 500; }
+#manlist i.i:before { font-family: fawe; font-size: .8em; width: 40px; display: inline-block; text-align: center;}
+#manlist li, #docidx li {
     list-style-position: inside;
     margin-left: 0;
     list-style-position: outside;
     margin-left: 35px;
 }
-#doclist li a { font-weight: 500;}
+#manlist li a { font-weight: 500 }
 
 /* hugo gen chromastyles --style=monokai >> themes/justatheory/static/css/screen.css */
 /* Background */ pre, .chroma { color: #f8f8f2; background-color: #333 } /* Modified to add pre and to lighten background */

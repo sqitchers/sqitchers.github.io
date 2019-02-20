@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sqitch: sqitch-status Documentation</title>
+	<meta name="description" content="Show the current deployment status of a database" />
+	<link rel="stylesheet" href="/css/screen.css" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#22538e">
+	<meta name="msapplication-TileColor" content="#22538e">
+	<meta name="theme-color" content="#fcffff">
+	<meta name="generator" content="Hugo 0.55.0-DEV" />
+</head>
+<body>
+	<header id=masthead>
+		<hgroup id="top">
+			<h1><a href="/"><img src="/img/masthead.png" srcset="/img/masthead.svg" alt="Sqitch" title="Sqitch"></a></h1>
+		</hgroup>
+		<nav id="bar">
+			<menu>
+				<li class="icon"><a href="/about" title="About"><i class="about"></i></a></li>
+				<li class="icon"><a href="/docs/" title="Documentation"><i class="docs"></i></a></li>
+				<li class="icon"><a href="/community/" title="Community"><i class="community"></i></a></li>
+				<li class="icon"><a href="/download/" title="Download"><i class="download"></i></a></li>
+			</menu>
+		</nav>
+	</header>
+
+	<header id="title">
+		<h1>sqitch-status</h1>
+	</header>
+	<main id="docs" class="page">
+		
+<aside class="toc" title="Table of Contents">
+    <details>
+        <summary><h4>Contents</h4></summary>
+        <nav>
+            <h3>Contents</h3>
+            <ul><li><a href='#name'>Name</a></li>
+                <li><a href='#synopsis'>Synopsis</a></li>
+                <li><a href='#description'>Description</a></li>
+                <li><a href='#options'>Options</a></li>
+                <li><a href='#configuration-variables'>Configuration Variables</a></li>
+                <li><a href='#sqitch'>Sqitch</a></li>
+            </ul>
+        </nav>
+    </details>
+</aside>
+		
+
+<h2 id="name">Name</h2>
+
+<p>sqitch-status - Show the current deployment status of a database</p>
+
+<h2 id="synopsis">Synopsis</h2>
+
+<pre><code>sqitch status [options] [&lt;database&gt;]
+</code></pre>
+
+<h2 id="description">Description</h2>
+
+<p>Displays information about the current deployment status of a database. The
+most recently deployed change information is displayed, as well as any related
+tags. If there are undeployed changes in the plan, they will be listed.
+Otherwise, a message will indicate that the database is up-to-date.</p>
+
+<p>The <code>&lt;database&gt;</code> parameter specifies the database to which to connect,
+and may also be specified as the <code>--target</code> option. It can be target name,
+a URI, an engine name, or plan file path.</p>
+
+<h2 id="options">Options</h2>
+
+<ul>
+<li><code>-t</code></li>
+
+<li><p><code>--target</code></p>
+
+<p>The target database to which to connect. This option can be either a URI or
+the name of a target in the configuration.</p></li>
+
+<li><p><code>--project</code></p>
+
+<p>Project for which to retrieve the status. Defaults to the status of the
+current project, if a plan can be found.</p></li>
+
+<li><p><code>--show-changes</code></p>
+
+<p>Also display a list of deployed changes.</p></li>
+
+<li><p><code>--show-tags</code></p>
+
+<p>Also display a list of applied tags.</p></li>
+
+<li><p><code>--date-format</code></p></li>
+
+<li><p><code>--date</code></p>
+
+<p>Format to use for timestamps. Defaults to <code>iso</code>. Allowed values:</p>
+
+<ul>
+<li><code>iso</code></li>
+
+<li><p><code>iso8601</code></p>
+
+<p>Shows timestamps in ISO-8601 format.</p></li>
+
+<li><p><code>rfc</code></p></li>
+
+<li><p><code>rfc2822</code></p>
+
+<p>Show timestamps in RFC-2822 format.</p></li>
+
+<li><p><code>full</code></p></li>
+
+<li><p><code>long</code></p></li>
+
+<li><p><code>medium</code></p></li>
+
+<li><p><code>short</code></p>
+
+<p>Show timestamps in the specified format length, using the system locale&rsquo;s
+<code>LC_TIME</code> category.</p></li>
+
+<li><p><code>raw</code></p>
+
+<p>Show timestamps in raw format, which is strict ISO-8601 in the UTC time zone.</p></li>
+
+<li><p><code>strftime:$string</code></p>
+
+<p>Show timestamps using an arbitrary <code>strftime</code> pattern. See
+<a href="https://metacpan.org/pod/DateTime#strftime-Paterns">&ldquo;strftime Paterns&rdquo; in DateTime</a> for comprehensive documentation of supported
+patterns.</p></li>
+
+<li><p><code>cldr:$string</code></p>
+
+<p>Show timestamps using an arbitrary <code>cldr</code> pattern. See <a href="https://metacpan.org/pod/DateTime#CLDR-Paterns">&ldquo;CLDR
+Paterns&rdquo; in DateTime</a> for comprehensive documentation of supported patterns.</p></li>
+</ul></li>
+
+<li><p><code>--registry</code></p>
+
+<pre><code>sqitch status --registry registry
+</code></pre>
+
+<p>The name of the Sqitch registry schema or database in which sqitch stores its
+own data.</p></li>
+
+<li><p><code>--db-client</code></p></li>
+
+<li><p><code>--client</code></p>
+
+<pre><code>sqitch status --client /usr/local/pgsql/bin/psql
+</code></pre>
+
+<p>Path to the command-line client for the database engine. Defaults to a client
+in the current path named appropriately for the database engine.</p></li>
+
+<li><p><code>-d</code></p></li>
+
+<li><p><code>--db-name</code></p>
+
+<pre><code>sqitch status --db-name widgets
+sqitch status -d bricolage
+</code></pre>
+
+<p>Name of the database. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are
+preferred, but this option can be used to override the database name in a
+target.</p></li>
+
+<li><p><code>-u</code></p></li>
+
+<li><p><code>--db-user</code></p></li>
+
+<li><p><code>--db-username</code></p>
+
+<pre><code>sqitch status --db-username root
+sqitch status --db-user postgres
+sqitch status -u Mom
+</code></pre>
+
+<p>User name to use when connecting to the database. Does not apply to all
+engines. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this
+option can be used to override the user name in a target.</p></li>
+
+<li><p><code>-h</code></p></li>
+
+<li><p><code>--db-host</code></p>
+
+<pre><code>sqitch status --db-host db.example.com
+sqitch status -h appdb.example.net
+</code></pre>
+
+<p>Host name to use when connecting to the database. Does not apply to all
+engines. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this
+option can be used to override the host name in a target.</p></li>
+
+<li><p><code>-p</code></p></li>
+
+<li><p><code>--db-port</code></p>
+
+<pre><code>sqitch status --db-port 7654
+sqitch status -p 5431
+</code></pre>
+
+<p>Port number to connect to. Does not apply to all engines. In general,
+<a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this option can be used
+to override the port in a target.</p></li>
+
+<li><p><code>--plan-file</code></p></li>
+
+<li><p><code>-f</code></p>
+
+<pre><code>sqitch status --plan-file my.plan
+</code></pre>
+
+<p>Path to the deployment plan file. Overrides target, engine, and core
+configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
+</ul>
+
+<h2 id="configuration-variables">Configuration Variables</h2>
+
+<ul>
+<li><p><code>status.show_changes</code></p>
+
+<p>Boolean value indicates whether or not to display changes in the output.
+Defaults to false.</p></li>
+
+<li><p><code>status.show_tags</code></p>
+
+<p>Boolean value indicates whether or not to display tags in the output. Defaults
+to false.</p></li>
+
+<li><p><code>status.date_format</code></p>
+
+<p>Format to use for timestamps. Supports the same values as the <code>--date-format</code>
+option.</p></li>
+</ul>
+
+<h2 id="sqitch">Sqitch</h2>
+
+<p>Part of the <a href="/docs/manual/sqitch">sqitch</a> suite.</p>
+
+	</main>
+	    <footer>
+        <div class="code">
+            <a href="/site/">About this Site</a><br />
+            Corrections, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.
+        </div>
+    </footer>
+</body>
+</html>
+
