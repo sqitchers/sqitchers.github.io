@@ -186,7 +186,7 @@ body {
 }
 
 @media only screen and (max-width: 550px) {
-    body { font-size: 1.3em; }
+    main { font-size: 1.3em; line-height: 1.4em }
 }
 
 a, a:visited { color: #22538e; text-decoration: none }
@@ -269,14 +269,38 @@ p, blockquote, ul, ol {
     margin: 10px auto;
 }
 
-#masthead > hgroup {
-    float: left;
-}
-
 #masthead img {
 	height: 50px;
 }
 
+#bar {
+    padding: 30px 12px 0;
+    white-space: nowrap;
+    list-style-type: none;
+    text-align: right;
+    font-size: .8em;
+}
+
+#bar li {
+    display: inline;
+    padding-right: 16px;
+}
+
+#bar a:before { margin: 0 3px; font-size: 1.2em;}
+#bar a:hover { text-decoration: none }
+#bar a, .code:before, #info a:before, .page section:before {
+    font-family: fawe;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+}
+
+#masthead > hgroup { float: left }
+@media only screen and (max-width: 600px) {
+    #masthead > hgroup { float: none }
+    #bar { font-size: .85em; padding: 12px 12px 0 !important }
+    #bar li { padding-right: 8px; }
+}
 body > footer {
     font-size: 60%;
 	line-height: 1.4;
@@ -315,36 +339,18 @@ main > section:first-of-type { border: none !important; }
 
 @media only screen and (max-width: 550px) {
     #hi { font-size: 1.5em; padding: 20px;}
+    #hi a { font-size: .8em !important }
 }
 
 #hi a, #hi a:visited {
     background-color: #fcffff;
-    padding: .2em 1em;
+    padding: .3em 1em;
     font-size: .6em;
     text-shadow: none;
     border-radius: 5px;
 }
 #hi a:before { font-family: 'fawe' }
 #hi a:hover, #hi a:active { text-decoration: none; background-color: #dee8f0; color:#22538e !important }
-
-#bar {
-    padding: 24px 0 0;
-    white-space: nowrap;
-    list-style-type: none;
-    text-align: right;
-}
-
-#bar li {
-    display: inline;
-    padding-left: 16px;
-}
-
-#bar i, .code:before, #info a:before, .page section:before {
-    font-family: fawe;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    display: inline-block;
-}
 
 .about:before { content: "\f05a" }
 .docs:before { content: "\f02d" }
@@ -402,6 +408,11 @@ body > footer .code:before {
     display: inline-block;
  }
 
+ @media only screen and (max-width: 550px) {
+    .page section:before { font-size: 1.8em };
+}
+
+
  #info li {
     list-style-type: none;
     width: 100%;
@@ -432,7 +443,7 @@ body > footer .code:before {
     opacity: 0.6;
     float:left;
     text-align: center;
-    padding: 0 15px 50px 0;
+    padding: 0 15px 80px 0;
 }
 
 #info a:hover:before {
@@ -533,7 +544,7 @@ p pre code, li pre code {
 }
 
 .mono, pre, code, tt, p code, li code {
-    font-size: .9em;
+    font-size: .85em;
     font-family: "Source Code Pro", "Courier", monospace
 }
 
@@ -553,6 +564,10 @@ p pre code, li pre code {
     text-align: center;
     color: #817565;
     width: 1.2em;
+}
+
+@media only screen and (max-width: 550px) {
+    #docidx section:before { font-size: 2.5em; padding: 16px 12px 16px 0; }
 }
 
 #docidx section.video:before {
