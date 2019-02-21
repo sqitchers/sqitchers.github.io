@@ -335,11 +335,17 @@ main > section:first-of-type { border: none !important; }
     background-size: cover;
 }
 
-#hi > * {max-width: 650px;}
+#hi > * {max-width: 600px;}
 
+@media only screen and (max-width: 1000px) {
+    #hi { font-size: 2em;}
+    #hi a { font-size: .8em }
+    #hi > * {max-width: 400px}
+}
 @media only screen and (max-width: 550px) {
-    #hi { font-size: 1.5em; padding: 20px;}
-    #hi a { font-size: .8em !important }
+    #hi { font-size: 1.5em; padding: 32px 20px;}
+    #hi a { font-size: .75em !important }
+    #hi > * {max-width: 300px}
 }
 
 #hi a, #hi a:visited {
@@ -411,7 +417,6 @@ body > footer .code:before {
  @media only screen and (max-width: 550px) {
     .page section:before { font-size: 1.8em };
 }
-
 
  #info li {
     list-style-type: none;
