@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sqitch Source Code</title>
+	<meta name="description" content="Download and install the Sqitch source from CPAN or GitHub." />
+	<link rel="stylesheet" href="/css/screen.css" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#22538e">
+	<meta name="msapplication-TileColor" content="#22538e">
+	<meta name="theme-color" content="#fcffff">
+	<meta name="generator" content="Hugo 0.55.0-DEV" />
+</head>
+<body>
+	<header id=masthead>
+		<hgroup id="top">
+			<h1><a href="/"><img src="/img/masthead.png" srcset="/img/masthead.svg" alt="Sqitch" title="Sqitch"></a></h1>
+		</hgroup>
+		<nav id="bar">
+			<menu>
+				<li><a href="/about" title="About" class="about">About</a></li>
+				<li><a href="/docs/" title="Documentation" class="docs">Docs</a></li>
+				<li><a href="/community/" title="Community" class="community">Community</a></li>
+				<li><a href="/download/" title="Download" class="download">Download</a></li>
+			</menu>
+		</nav>
+	</header>
+
+	<header id="title">
+		<h1>Sqitch Source Code</h1>
+	</header>
+	<main id="install" class="page">
+		
+		<section class="code">
+<p>The canonical source for Sqitch releases is <a href="https://metacpan.org/release/App-Sqitch" title="Sqitch on MetaCPAN">CPAN</a>. Use the cpan or <a href="https://cpanmin.us">cpanminus</a>
+client to download and build Sqitch and its dependencies from source, as well as
+the appropriate database drivers. For example, to install Sqitch with PostgreSQL
+and SQLite support:</p>
+
+<pre><code>cpan install App::Sqitch DBD::Pg DBD::SQLite
+</code></pre>
+
+<p>The database drivers for each engine are:</p>
+
+<ul>
+<li>PostgreSQL: <code>DBD::Pg</code></li>
+<li>SQLite: <code>DBD::SQLite</code></li>
+<li>Oracle: <code>DBD::Oracle</code></li>
+<li>MySQL: <code>DBD::mysql</code></li>
+<li>Firebird: <code>DBD::Firebird</code></li>
+<li>Vertica, Exasol, Snowflake: <code>DBD::ODBC</code></li>
+</ul>
+
+<p>The current version of Sqitch is <code>v0.9999</code>. Download the source from these
+location <a href="https://github.com/sqitchers/sqitch/releases/">GitHub</a> or
+<a href="https://metacpan.org/release/App-Sqitch">CPAN</a>.</p>
+
+</section>
+
+	</main>
+	    <footer>
+        <div class="code">
+            <a href="/site/">About this Site</a><br />
+            Corrections, suggestions, and comments <a href="https://github.com/sqitchers/sqitch.org">welcome</a>.
+        </div>
+    </footer>
+</body>
+</html>
+

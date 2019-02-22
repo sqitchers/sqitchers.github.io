@@ -35,166 +35,29 @@
 	<header id="title">
 		<h1>Download Sqitch</h1>
 	</header>
-	<main id="downloads" class="page">
-		
-<aside class="toc" title="Table of Contents">
-    <details>
-        <summary><h4>Contents</h4></summary>
-        <nav>
-            <h3>Contents</h3>
-            <ul><li><a href='#docker'>Docker</a></li>
-                <li><a href='#homebrew'>Homebrew</a></li>
-                <li><a href='#cpan'>CPAN</a></li>
-                <li><a href='#ubuntu-debian'>Ubuntu/Debian</a></li>
-                <li><a href='#centos-redhat'>CentOS/RedHat</a></li>
-                <li><a href='#windows'>Windows</a></li>
-                <li><a href='#source-code'>Source Code</a></li>
-                <li><a href='#github'>GitHub</a></li>
-                <li><a href='#engines'>Engines</a></li>
-            </ul>
-        </nav>
-    </details>
-</aside>
-		<p><section class="docker">
-<h2 id="docker">Docker</h2>
+	<main id="download" class="section">
+		<p><section class="download">
+<h2 id="distributions">Distributions</h2>
 
-<p>The Sqitch Docker image shell script is by far the quickest and easiest way to
-get started with Sqitch. It supports PostgreSQL, SQLite, MySQL, and Firebird.
-Simply pull the image, download the shell script, make it executable, and go:</p>
-
-<pre><code>docker pull sqitch/sqitch
-curl -L https://git.io/fAX6Z -o sqitch &amp;&amp; chmod +x sqitch
-./sqitch help
-</code></pre>
-
-</section>
-<section class="brew">
-<h2 id="homebrew">Homebrew</h2>
-
-<p>The <a href="https://github.com/sqitchers/homebrew-sqitch/">Sqitch Homebrew Tap</a> quickly builds Sqitch on you Mac. To install from
-Homebrew, configure the tap and then install the variants you need via the
-appropriate <code>--use-$engine-support</code> options. For example, to install Sqitch with
-PostgreSQL and SQLite support:</p>
-
-<pre><code>brew tap sqitchers/sqitch
-brew install sqitch \--with-postgres-support \--with-sqlite-support
-</code></pre>
-
-<p>Some engines require the installation of dependencies in advance; consult <a href="https://github.com/sqitchers/homebrew-sqitch/#readme">the
-docs</a> for build details and options.</p>
-
-</section>
-<section class="cpan">
-<h2 id="cpan">CPAN</h2>
-
-<p>The canonical source for Sqitch releases is <a href="https://metacpan.org/release/App-Sqitch" title="Sqitch on MetaCPAN">CPAN</a>. Use the cpan or <a href="https://cpanmin.us">cpanminus</a>
-client to download and build Sqitch and its dependencies from source, as well
-as the appropriate database drivers. For example, to install Sqitch with
-PostgreSQL and SQLite support:</p>
-
-<pre><code>cpan install App::Sqitch DBD::Pg DBD::SQLite
-</code></pre>
-
-<p>The database drivers for each engine are:</p>
+<p>Download an install Sqitch from the most appropriate source for your system.
+The Docker image is the quickest way to get started.</p>
 
 <ul>
-<li>PostgreSQL: <code>DBD::Pg</code></li>
-<li>SQLite: <code>DBD::SQLite</code></li>
-<li>Oracle: <code>DBD::Oracle</code></li>
-<li>MySQL: <code>DBD::mysql</code></li>
-<li>Firebird: <code>DBD::Firebird</code></li>
-<li>Vertica, Exasol, Snowflake: <code>DBD::ODBC</code></li>
+<li><a href="source">Source</a> - Install from CPAN or GitHub</li>
+<li><a href="docker">Docker</a> - Run a container like a local install</li>
+<li><a href="redhat">Red Hat</a> - RPM-based Linux distributions</li>
+<li><a href="debian">Ubuntu/Debian</a> - Apt-based Linux distributions</li>
+<li><a href="macos">macOS</a> - Install from Homebrew</li>
+<li><a href="windows">Windows</a> - Install on Strawberry Perl</li>
 </ul>
-
-</section>
-<section class="ubuntu">
-<h2 id="ubuntu-debian">Ubuntu/Debian</h2>
-
-<p>The <a href="https://packages.debian.org/stretch/sqitch">Debian Sqitch Apt</a> package tends to lag behind several versions, but provides
-easy access to Debian and Ubuntu users. For example, to install Sqitch with
-PostgreSQL and SQLite support:</p>
-
-<pre><code>apg-get install sqitch libdbd-pg-perl postgresql-client libdbd-sqlite3-perl sqlite3
-</code></pre>
-
-<p>An alternative that gets you the latest version of Sqitch is to just <code>apt-get</code>
-the external dependencies, and then build Sqitch itself via cpanminus. To
-install Sqitch with MySQL support, for example:</p>
-
-<pre><code>apt-get install build-essential cpanminus perl perl-doc mysql libdbd-mysql-perl
-cpanm --quiet --notest App::Sqitch
-</code></pre>
-
-<p>The client and connection libraries for each engine are:</p>
-
-<ul>
-<li>PostgreSQL: <code>libdbd-pg-perl postgresql-client</code></li>
-<li>SQLite: <code>libdbd-sqlite3-perl sqlite3</code></li>
-<li>Oracle: <code>libdbd-oracle-perl</code></li>
-<li>MySQL: <code>libdbd-mysql-perl mysql-client</code></li>
-<li>Firebird 3.0 (Debian 9 and later): <code>libdbd-firebird-perl firebird3.0-utils</code></li>
-<li>Firebird Classic (Debian 8 and earlier): <code>libdbd-firebird-perl firebird2.5-classic</code></li>
-<li>Firebird Super (Debian 8 and earlier): <code>libdbd-firebird-perl firebird2.5-super</code></li>
-<li>Vertica, Exasol, Snowflake: <code>libdbd-odbc-perl</code></li>
-</ul>
-
-</section>
-<section class="centos">
-<h2 id="centos-redhat">CentOS/RedHat</h2>
-
-<p>The same basic pattern on Red Hat-derived systems calls for eternal dependencies
-to be yum-installed, and for Sqitch itself to be built and installed by
-cpanminus. For example, to install Sqitch with support for PostgreSQL:</p>
-
-<pre><code>sudo yum install perl-devel perl-CPAN postgresql perl-DBD-Pg
-curl -L https://cpanmin.us | perl - --sudo App::cpanminus
-cpanm --quiet --notest App::Sqitch
-</code></pre>
-
-<p>The client and connection libraries for each engine are:</p>
-
-<ul>
-<li>PostgreSQL: <code>postgresql perl-DBD-Pg</code></li>
-<li>SQLite: <code>install sqlite perl-DBD-SQLite</code></li>
-<li>Oracle: <code>perl-DBD-Oracle</code></li>
-<li>MySQL: <code>mysql perl-DBD-mysql</code></li>
-<li>Firebird: <code>firebird-classic perl-DBD-Firebird perl-Time-HiRes</code></li>
-<li>Vertica, Exasol, Snowflake: <code>perl-DBD-ODBC</code></li>
-</ul>
-
-</section>
-<section class="windows">
-<h2 id="windows">Windows</h2>
-
-<p>The most reliable way to run Sqitch on Windows, aside from the Docker image, is
-to install <a href="http://strawberryperl.com/">Strawberry Perl</a> (also available from
-<a href="https://chocolatey.org/packages/StrawberryPerl">Chocolatey</a>) and then follow
-the steps for installing from <a href="#cpan">CPAN</a>.
-</section>
-<section class="zip">
-<h2 id="source-code">Source Code</h2>
-
-<p>The current version of Sqitch is <code>v0.9999</code>. Download the source from these
-location <a href="https://github.com/sqitchers/sqitch/releases/">GitHub</a> or
-<a href="https://metacpan.org/release/App-Sqitch">CPAN</a>.
-</section>
-<section class="github">
-<h2 id="github">GitHub</h2>
-
-<p>If you&rsquo;d like to contribute to the development of Sqitch, fork the project
-on <a href="https://github.com/sqitchers/sqitch">GitHub</a> or clone the repository
-directly:</p>
-
-<pre><code>git clone https://github.com/sqitchers/sqitch
-</code></pre>
 
 </section>
 <section class="db">
-<h2 id="engines">Engines</h2>
+<h2 id="database-dependencies">Database Dependencies</h2>
 
-<p>Each engine also requires a database-native command-line client to execute
-change scripts, as well as connector libraries to allow Sqitch itself to connect
-to the database.</p>
+<p>Sqitch also requires a database-native command-line client to execute change
+scripts, as well as connector libraries to allow Sqitch itself to connect to the
+database.</p>
 
 <ul>
 <li>PostgreSQL requires <a href="https://postgresql.org/" title="PostgreSQL: The World's Most Advanced Open Source Relational Database">PostgreSQL</a></li>
