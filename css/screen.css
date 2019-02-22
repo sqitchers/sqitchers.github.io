@@ -17,7 +17,7 @@ summary, time, mark, audio, video {
 }
 
 @font-face {
-    font-family: 'fawe';
+    font-family: fawe;
     font-weight: normal;
     font-style: normal;
     src: url('/fonts/fontello.woff2') format('woff2'),
@@ -288,7 +288,7 @@ p, blockquote, ul, ol {
 
 #bar a:before { margin: 0 3px; font-size: 1.2em;}
 #bar a:hover { text-decoration: none }
-#bar a, .code:before, #info a:before, .page section:before {
+#bar a::before, .code:before, #info a:before, .page section:before {
     font-family: fawe;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -356,7 +356,7 @@ main > section:first-of-type { border: none !important; }
     text-shadow: none;
     border-radius: 5px;
 }
-#hi a:before, #download a:before { font-family: 'fawe'; margin-right: 7px; }
+#hi a:before, #download a:before { font-family: fawe; margin-right: 7px; }
 #hi a:hover, #hi a:active { text-decoration: none; background-color: #dee8f0; color:#22538e !important }
 
 .about:before { content: "\f05a" }
@@ -494,7 +494,7 @@ main li {
 /* Replace the h4 text with an icon. */
 .toc summary h4 { display: none; }
 .toc summary:before {
-    font-family: 'fawe';
+    font-family: fawe;
     color: #22538e;
     font-size: 1.3em;
     line-height: 1em;
@@ -570,7 +570,7 @@ p pre code, li pre code {
 }
 
 #docidx section:before, #download section:before {
-    font-family: 'fawe';
+    font-family: fawe;
     float: left;
     font-size: 3.5em;
     padding: 24px 16px 16px 0;
