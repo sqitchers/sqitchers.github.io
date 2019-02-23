@@ -278,7 +278,7 @@ p, blockquote, ul, ol {
     white-space: nowrap;
     list-style-type: none;
     text-align: right;
-    font-size: .8em;
+    font-size: .9em;
 }
 
 #bar li {
@@ -298,7 +298,7 @@ p, blockquote, ul, ol {
 #masthead > hgroup { float: left }
 @media only screen and (max-width: 600px) {
     #masthead > hgroup { float: none }
-    #bar { font-size: .85em; padding: 12px 12px 0 !important }
+    #bar { padding: 12px 12px 0 !important }
     #bar li { padding-right: 8px; }
 }
 body > footer {
