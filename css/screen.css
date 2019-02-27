@@ -190,8 +190,8 @@ body {
 }
 
 a, a:visited { color: #22538e; text-decoration: none }
-a:active { color:#00bece !important }
-a:hover { color: #09c; text-decoration: underline }
+a:active { color:#88b1e3 !important }
+a:hover { color: #367bcf; text-decoration: underline }
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 300;
@@ -239,10 +239,11 @@ big {
     color: #fcffff;
     font-size: 1.8em;
     font-weight: bold;
+    text-shadow: #000 0px 0px 4px;
 }
 
-h1 { font-size: 1.5em; color: #22538e; }
-h2 { font-size: 1.3em; color: #22538e; }
+h1 { font-size: 1.5em; }
+h2 { font-size: 1.3em; }
 h3 { font-size: 1.2em }
 h4 { font-size: 1em }
 h5 { font-size: .9em }
@@ -330,7 +331,7 @@ main > section:first-of-type { border: none !important; }
     text-align: center;
     text-shadow:  #2e2e2e 2px 4px 5px;
     padding: 64px 32px;
-	background-color: #f6fbfc;
+	background-color: #22538e;
     background-image: url(/img/messeplatz.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -357,7 +358,7 @@ main > section:first-of-type { border: none !important; }
     border-radius: 5px;
 }
 #hi a:before, #download a:before { font-family: fawe; margin-right: 7px; }
-#hi a:hover, #hi a:active { text-decoration: none; background-color: #dee8f0; color:#22538e !important }
+#hi a:hover, #hi a:active { text-decoration: none; background-color: #e8f0fa; color:#22538e !important }
 
 .about:before { content: "\f05a" }
 .docs:before { content: "\f02d" }
@@ -403,16 +404,16 @@ body > footer .code:before {
 
 .page section:before {
     float: left;
-    font-size: 2.2em;
+    font-size: 2.5em;
     line-height: 1.2em;
-    width: 45px;
-    height: 45px;
-    background-color: #dee8f0;
+    width: 50px;
+    height: 50px;
+    background-color: #dae7f6;
     border-radius: 5px;
     margin: 0 16px 16px 0;
     padding: 16px;
     text-align: center;
-    color: #817565;
+    color: #776c5e;
     display: inline-block;
  }
 
@@ -446,7 +447,7 @@ body > footer .code:before {
 #info a:before {
     font-family: fawe; font-size:2em;
     line-height: 1em;
-    color: #817565;
+    color: #776c5e;
     opacity: 0.6;
     float:left;
     text-align: center;
@@ -486,7 +487,7 @@ main li {
 
 .toc summary {
     display: inline-block;
-    background-color:#dee8f0;
+    background-color:#e8f0fa;
     border-radius: 5px;
     list-style: none;
 }
@@ -511,7 +512,7 @@ main li {
 
 .toc nav {
     overflow: scroll;
-    background-color:#dee8f0;
+    background-color:#e8f0fa;
     border-radius: 5px;
     z-index: 10;
     box-shadow:  #889 -1px 1px 3px;
@@ -556,7 +557,7 @@ p pre code, li pre code {
 }
 
 #docidx section, #download section {
-    background-color: #dee8f0;
+    background-color: #e8f0fa;
     border-top: none;
     padding: 24px;
     margin-bottom: 32px;
@@ -572,10 +573,10 @@ p pre code, li pre code {
 #docidx section:before, #download section:before {
     font-family: fawe;
     float: left;
-    font-size: 3.5em;
-    padding: 24px 16px 16px 0;
+    font-size: 2.5em;
+    padding: 14px 16px 24px 0;
     text-align: center;
-    color: #817565;
+    color: #776c5e;
     width: 1.2em;
 }
 
@@ -594,7 +595,7 @@ p pre code, li pre code {
 }
 #docidx section ul, #download section ul { margin-bottom: 0; }
 
-#manlist h2 { color: #817565; font-weight: 500; }
+#manlist h2 { color: #776c5e; font-weight: 500; }
 #manlist i.i:before { font-family: fawe; font-size: .8em; width: 40px; display: inline-block; text-align: center;}
 #manlist li, #docidx li, #download section li {
     margin-left: 0;
