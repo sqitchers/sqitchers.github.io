@@ -230,7 +230,7 @@ big {
     color: #fcffff;
     /* https://stackoverflow.com/a/34556311/79202 */
     background-color: #22538e;
-    background-image: linear-gradient(45deg, #22538e 25%, transparent 25%, transparent 75%, #22538e 75%, #22538e), linear-gradient(45deg, #22538e 25%, transparent 25%, transparent 75%, #22538e 75%, #22538e), linear-gradient(to bottom, #22538e, #3878c7);
+    background-image: linear-gradient(45deg, #22538e 25%, transparent 25%, transparent 75%, #22538e 75%, #22538e), linear-gradient(45deg, #22538e 25%, transparent 25%, transparent 75%, #22538e 75%, #22538e), linear-gradient(to bottom, #22538e, #367bcf);
     background-size: 10px 10px, 10px 10px, 10px 5px;
     background-position: 0px 0px, 5px 5px, 0px 0px;
 }
@@ -239,7 +239,7 @@ big {
     color: #fcffff;
     font-size: 1.8em;
     font-weight: bold;
-    text-shadow: #000 0px 0px 4px;
+    text-shadow: #081320 0px 0px 4px;
 }
 
 h1 { font-size: 1.5em; }
@@ -318,7 +318,7 @@ main {
     padding: 32px 12px 75px  !important;
 }
 
-main > section { border-top: 4px double #22538e; padding: 12px 0; }
+main > section { border-top: 4px solid #cec9c1; padding: 12px 0; }
 main > section:first-of-type { border: none !important; }
 #install section pre { clear: both;}
 
@@ -329,7 +329,7 @@ main > section:first-of-type { border: none !important; }
     line-height: 1.5em;
     font-weight: 500;
     text-align: center;
-    text-shadow:  #2e2e2e 2px 4px 5px;
+    text-shadow:  #081320 0px 0px 4px;
     padding: 64px 32px;
 	background-color: #22538e;
     background-image: url(/img/messeplatz.jpg);
