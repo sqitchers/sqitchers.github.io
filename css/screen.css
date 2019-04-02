@@ -262,6 +262,7 @@ p, blockquote, ul, ol {
 #masthead, body > #title > *, body > main, #hi > *, body > footer > * {
 	padding: 12px;
     margin: 0 auto;
+    display: block; /* required for IE */
 	max-width: 720px;
 }
 
