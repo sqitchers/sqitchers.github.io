@@ -1,5 +1,6 @@
 // Simple JavaScript to polyfill TOC details/summary support when the browser
-// doesn't support it. https://github.com/rstacruz/details-polyfill (MIT)
+// doesn't support it, and to close the TOC on any click. Based on
+// https://github.com/rstacruz/details-polyfill (MIT)
 void (function (root, factory) {
 	if (typeof define === 'function' && define.amd) define(factory)
 	else if (typeof exports === 'object') module.exports = factory()
@@ -19,19 +20,19 @@ void (function (root, factory) {
 		document.documentElement.className += ' no-details'
 		window.addEventListener('click', clickHandler)
 		injectStyle('details-polyfill-style',
-			'html.no-details details:not([open]) > :not(summary) { display: none; }\n' +
+			'html.no-details details:not([open]) > :not(summary) { display: none }\n' +
 			'html.no-details details[open] > summary:before {}')
 	}
 
-	// Click handler to close TOC details.
+	// Sets up click handler to close TOC details.
 	function setupUnfocus(deets) {
 		var unfocus = function (e) {
-			removeEventListener('click', unfocus);
+			window.removeEventListener('click', unfocus)
 			if (!deets.open || e.target.nodeName.toLowerCase() === 'summary') return
 			deets.open = false
 			deets.removeAttribute('open')
 		}
-		addEventListener('click', unfocus)
+		window.addEventListener('click', unfocus)
 	}
 
 	// Click handler for `<summary>` tags
@@ -47,30 +48,30 @@ void (function (root, factory) {
 				details.setAttribute('open', 'open')
 				setupUnfocus(details)
 			}
-	  	}
+		}
 	}
-  
+
 	// https://mathiasbynens.be/notes/html5-details-jquery (MIT)
 	function supportsDetails () {
-		var el = document.createElement('details');
-		var fake;
+		var el = document.createElement('details')
+		var fake
 		if (!('open' in el)) return false
 		var root = document.body || (function() {
-			var de = document.documentElement;
-			fake = true;
-			return de.insertBefore(document.createElement('body'), de.firstElementChild || de.firstChild);
-		}());
-		el.innerHTML = '<summary>a</summary>b';
-		el.style.display = 'block';
-		root.appendChild(el);
-		var diff = el.offsetHeight;
-		el.open = true;
-		diff = diff != el.offsetHeight;
-		root.removeChild(el);
+			var de = document.documentElement
+			fake = true
+			return de.insertBefore(document.createElement('body'), de.firstElementChild || de.firstChild)
+		}())
+		el.innerHTML = '<summary>a</summary>b'
+		el.style.display = 'block'
+		root.appendChild(el)
+		var diff = el.offsetHeight
+		el.open = true
+		diff = diff != el.offsetHeight
+		root.removeChild(el)
 		if (fake) root.parentNode.removeChild(root)
-		return diff;    
+		return diff
 	}
-  
+
 	// Injects styles (idempotent)
 	function injectStyle (id, style) {
 		if (document.getElementById(id)) return
@@ -79,4 +80,4 @@ void (function (root, factory) {
 		el.innerHTML = style
 		document.getElementsByTagName('head')[0].appendChild(el)
 	}
-}));
+}))
