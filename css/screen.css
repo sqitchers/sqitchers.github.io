@@ -637,7 +637,7 @@ p pre code, li pre code {
      padding-top: 14px !important;
 }
 
-#docidx section ul, #download section ul { margin-bottom: 0; }
+#docidx section ul:last-child, #download section ul:last-child { margin-bottom: 0; }
 
 #manlist h2 { color: #776c5e; font-weight: 500; }
 #manlist i.i:before { font-family: fawe; font-size: .8em; width: 40px; display: inline-block; text-align: center;}
