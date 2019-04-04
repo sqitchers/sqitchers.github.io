@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Sqitch Manual</title>
 	<meta name="description" content="The official and comprehensive manual included the Sqitch package itself.
-Setup and Configuration  sqitch - Add a database change to plans config - Get and set local, user, or system Sqitch options init - Create a new Sqitch project engine - Manage database engine configuration target - Manage target database configuration help - Display help for Sqitch and Sqitch commands  Development  add - Sane database change management bundle - Bundle a Sqitch project for distribution checkout - Revert, checkout another VCS branch, and re-deploy changes plan - Show planned database changes rebase - Revert and redeploy database changes rework - Rework a database change show - Show object information or change file contents tag - Create or list tag objects  Deployment  deploy - Deploy changes to a database log - Show Sqitch change logs revert - Revert changes to a database status - Show the current deployment status of a database upgrade - Upgrade the registry to the current version verify - Verify deployed database changes  Guides  authentication - Guide to using database authentication credentials with Sqitch configuration - Hierarchical engine and target configuration changes - Specifying changes for Sqitch environment - Environment variables recognized by Sqitch  Tutorials  🐘 Postgres - A tutorial introduction to Sqitch change management on PostgreSQL 💡 SQLite - A tutorial introduction to Sqitch change management on SQLite 🐬 MySQL - A tutorial introduction to Sqitch change management on MySQL 🔥 Firebird - A tutorial introduction to Sqitch change management on Firebird ☀️ Exasol - A tutorial introduction to Sqitch change management on Exasol 🔮 Oracle - A tutorial introduction to Sqitch change management on Oracle ❄️ Snowflake - A tutorial introduction to Sqitch change management on Snowflake 🔺 Vertica - A tutorial introduction to Sqitch change management on Vertica" />
+Setup and Configuration  sqitch - Sensible database change management config - Get and set local, user, or system Sqitch options init - Create a new Sqitch project engine - Manage database engine configuration target - Manage target database configuration help - Display help for Sqitch and Sqitch commands  Development  add - Add a database change to plans bundle - Bundle a Sqitch project for distribution checkout - Revert, checkout another VCS branch, and re-deploy changes plan - Show planned database changes rebase - Revert and redeploy database changes rework - Rework a database change show - Show object information or script contents tag - Create or list tag objects  Deployment  deploy - Deploy changes to a database log - Show Sqitch change deployment logs revert - Revert changes to a database status - Show the current deployment status of a database upgrade - Upgrade the registry to the current version verify - Verify deployed database changes  Guides  authentication - Guide to using database authentication credentials with Sqitch configuration - Hierarchical engine and target configuration changes - Specifying changes for Sqitch environment - Environment variables recognized by Sqitch  Tutorials  🐘 Postgres - A tutorial introduction to Sqitch change management on PostgreSQL 💡 SQLite - A tutorial introduction to Sqitch change management on SQLite 🐬 MySQL - A tutorial introduction to Sqitch change management on MySQL 🔥 Firebird - A tutorial introduction to Sqitch change management on Firebird ☀️ Exasol - A tutorial introduction to Sqitch change management on Exasol 🔮 Oracle - A tutorial introduction to Sqitch change management on Oracle ❄️ Snowflake - A tutorial introduction to Sqitch change management on Snowflake 🔺 Vertica - A tutorial introduction to Sqitch change management on Vertica" />
 	<link rel="stylesheet" href="/css/screen.css" />
 	<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch.png" />
 	<link rel="icon" type="image/png" sizes="32x32" href="/img/icon-32.png" />
@@ -25,10 +25,10 @@ Setup and Configuration  sqitch - Add a database change to plans config - Get an
 		</hgroup>
 		<nav id="bar">
 			<menu>
-				<li><a href="/about" title="About" class="about">About</a></li>
-				<li><a href="/docs/" title="Documentation" class="docs">Docs</a></li>
-				<li><a href="/community/" title="Community" class="community">Community</a></li>
-				<li><a href="/download/" title="Download" class="download">Download</a></li>
+				<li><a href="/about" title="About Sqitch" class="about">About</a></li>
+				<li><a href="/docs/" title="Sqitch Manual, tutorials, and presentations" class="docs">Docs</a></li>
+				<li><a href="/community/" title="Join the Sqitch community" class="community">Community</a></li>
+				<li><a href="/download/" title="Download and install Sqitch" class="download">Download</a></li>
 			</menu>
 		</nav>
 	</header>
@@ -36,8 +36,7 @@ Setup and Configuration  sqitch - Add a database change to plans config - Get an
 	<header id="title">
 		<h1>Sqitch Manual</h1>
 	</header>
-	<main id="manlist" class="page">
-		
+	<main id="manlist" class="section">
 		
 
 <p>The official and comprehensive <strong>manual</strong> included the Sqitch package itself.</p>
@@ -45,7 +44,7 @@ Setup and Configuration  sqitch - Add a database change to plans config - Get an
 <h2 id="i-class-i-cog-i-setup-and-configuration"><i class="i cog"></i>Setup and Configuration</h2>
 
 <ul>
-<li><a href="/docs/manual/sqitch/">sqitch</a> - Add a database change to plans</li>
+<li><a href="/docs/manual/sqitch/">sqitch</a> - Sensible database change management</li>
 <li><a href="/docs/manual/sqitch-config/">config</a> - Get and set local, user, or system Sqitch options</li>
 <li><a href="/docs/manual/sqitch-init/">init</a> - Create a new Sqitch project</li>
 <li><a href="/docs/manual/sqitch-engine/">engine</a> - Manage database engine configuration</li>
@@ -56,13 +55,13 @@ Setup and Configuration  sqitch - Add a database change to plans config - Get an
 <h2 id="i-class-i-dev-i-development"><i class="i dev"></i>Development</h2>
 
 <ul>
-<li><a href="/docs/manual/sqitch-add/">add</a> - Sane database change management</li>
+<li><a href="/docs/manual/sqitch-add/">add</a> - Add a database change to plans</li>
 <li><a href="/docs/manual/sqitch-bundle/">bundle</a> - Bundle a Sqitch project for distribution</li>
 <li><a href="/docs/manual/sqitch-checkout/">checkout</a> - Revert, checkout another VCS branch, and re-deploy changes</li>
 <li><a href="/docs/manual/sqitch-plan/">plan</a> - Show planned database changes</li>
 <li><a href="/docs/manual/sqitch-rebase/">rebase</a> - Revert and redeploy database changes</li>
 <li><a href="/docs/manual/sqitch-rework/">rework</a> - Rework a database change</li>
-<li><a href="/docs/manual/sqitch-show/">show</a> - Show object information or change file contents</li>
+<li><a href="/docs/manual/sqitch-show/">show</a> - Show object information or script contents</li>
 <li><a href="/docs/manual/sqitch-tag/">tag</a> - Create or list tag objects</li>
 </ul>
 
@@ -70,7 +69,7 @@ Setup and Configuration  sqitch - Add a database change to plans config - Get an
 
 <ul>
 <li><a href="/docs/manual/sqitch-deploy/">deploy</a> - Deploy changes to a database</li>
-<li><a href="/docs/manual/sqitch-log/">log</a> - Show Sqitch change logs</li>
+<li><a href="/docs/manual/sqitch-log/">log</a> - Show Sqitch change deployment logs</li>
 <li><a href="/docs/manual/sqitch-revert/">revert</a> - Revert changes to a database</li>
 <li><a href="/docs/manual/sqitch-status/">status</a> - Show the current deployment status of a database</li>
 <li><a href="/docs/manual/sqitch-upgrade/">upgrade</a> - Upgrade the registry to the current version</li>

@@ -364,6 +364,7 @@ main > section:first-of-type { border: none !important; }
 .about:before { content: "\f05a" }
 .docs:before { content: "\f02d" }
 .community:before { content: "\f086" }
+.forum:before { content: "\f086" }
 .download:before { content: "\f019" }
 .code:before { content: "\f121" }
 .db:before { content: "\f1c0" }
@@ -392,6 +393,7 @@ main > section:first-of-type { border: none !important; }
 .teach:before { content: "\f51c" }
 .cc:before { content: "\f25e" }
 .sqitch:before { content: "\e80c" }
+.so:before { content: "\f16c" }
 
 body > footer .code:before {
     line-height: 1em;
