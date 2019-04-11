@@ -302,13 +302,13 @@ p, blockquote, ul, ol {
     #bar li { padding-right: 8px; }
 }
 body > footer {
-    font-size: 60%;
+    font-size: 80%;
 	line-height: 1.4;
-    font-weight: 200;
+    font-weight: 300;
     border-top: 1px solid #ddd;
     width: 100%;
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
 }
 
 main {
