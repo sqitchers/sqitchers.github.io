@@ -6,7 +6,7 @@
 	<meta name="mobile-web-app-capable" content="yes" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Sqitch: sqitch Documentation</title>
-	<meta name="description" content="Sane database change management" />
+	<meta name="description" content="Sensible database change management" />
 	<link rel="stylesheet" href="/css/screen.css" />
 	<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch.png" />
 	<link rel="icon" type="image/png" sizes="32x32" href="/img/icon-32.png" />
@@ -62,7 +62,7 @@
 
 <h2 id="name">Name</h2>
 
-<p>sqitch - Sane database change management</p>
+<p>sqitch - Sensible database change management</p>
 
 <h2 id="synopsis">Synopsis</h2>
 
@@ -78,9 +78,9 @@ approaches? A few things:</p>
 <ul>
 <li><p>No opinions</p>
 
-<p>Sqitch is not integrated with any framework, ORM, or platform. Rather, it is a
+<p>Sqitch is not tied to any framework, ORM, or platform. Rather, it is a
 standalone change management system with no opinions about your database
-engine, application framework, or your development environment.</p></li>
+engine, application framework, or development environment.</p></li>
 
 <li><p>Native scripting</p>
 
@@ -96,19 +96,23 @@ Write SQL scripts for <a href="https://www.orafaq.com/wiki/SQL*Plus">SQL*Plus</a
 from other Sqitch projects. This ensures proper order of execution, even when
 you&rsquo;ve committed changes to your VCS out-of-order.</p></li>
 
-<li><p>No numbering</p>
+<li><p>Deployment integrity</p>
 
-<p>Change deployment is managed by maintaining a plan file. As such, there is no
-need to number your changes, although you can if you want. Sqitch doesn&rsquo;t much
-care how you name your changes.</p></li>
+<p>Sqitch manages changes and dependencies via a plan file, and employs a
+<a href="https://en.wikipedia.org/wiki/Merkle_tree">Merkle tree</a> pattern similar to
+<a href="https://stackoverflow.com/a/18589734/">Git</a> and
+<a href="https://medium.com/byzantine-studio/blockchain-fundamentals-what-is-a-merkle-tree-d44c529391d7">Blockchain</a>
+to ensure deployment integrity. As such, there is no need to number your
+changes, although you can if you want. Sqitch doesn&rsquo;t much care how you name
+your changes.</p></li>
 
 <li><p>Iterative Development</p>
 
-<p>Up until you tag and release your project, you can modify your change
-deployment scripts as often as you like. They&rsquo;re not locked in just because
-they&rsquo;ve been committed to your VCS. This allows you to take an iterative
-approach to developing your database schema. Or, better, you can do
-test-driven database development.</p></li>
+<p>Up until you <a href="/docs/manual/sqitch-tag">tag</a> and <a href="/docs/manual/sqitch-bundle">release</a> your project, you
+can modify your change deployment scripts as often as you like. They&rsquo;re not
+locked in just because they&rsquo;ve been committed to your VCS. This allows you to
+take an iterative approach to developing your database schema. Or, better, you
+can do test-driven database development.</p></li>
 </ul>
 
 <p>Ready to get started? Here&rsquo;s where:</p>

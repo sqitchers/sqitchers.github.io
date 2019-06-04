@@ -85,7 +85,8 @@ things that are already there.</p>
 
 <p>Optional URI to associate with the project. If present, the URI will be
 written to the project plan and used for added uniqueness in hashed object
-IDs.</p></li>
+IDs, as well as to prevent the deployment of another project with the same
+name but different URI.</p></li>
 
 <li><p><code>--engine</code></p>
 
@@ -253,20 +254,21 @@ what sorts of things are available to edit.</p>
 
 <h2 id="examples">Examples</h2>
 
-<p>Start a new Sqitch project using the SQLite engine, setting the top directory
-for the project to <code>sqlite</code>:</p>
+<p>Start a new Sqitch project named &ldquo;quack&rdquo; using the SQLite engine, setting the
+top directory for the project to <code>sqlite</code>:</p>
 
-<pre><code>sqitch init --engine sqlite --top-dir sqlite
+<pre><code>sqitch init --engine sqlite --top-dir sqlite quack
 </code></pre>
 
-<p>Start a new Sqitch project using the PostgreSQL engine, setting the top
-directory to <code>postgres</code>, script extension to <code>ddl</code>, reworked directory to
-<code>reworked</code> and a version-specific client:</p>
+<p>Start a new Sqitch project named &ldquo;bey&rdquo; using the PostgreSQL engine, setting
+the top directory to <code>postgres</code>, script extension to <code>ddl</code>, reworked
+directory to <code>reworked</code> and a version-specific client:</p>
 
 <pre><code>sqitch init --engine  pg \
             --top-dir postgres \
             --client  /opt/pgsql-9.1/bin/psql \
-            --extension ddl --dir reworked=reworked
+            --extension ddl --dir reworked=reworked \
+            bey
 </code></pre>
 
 <h2 id="see-also">See Also</h2>

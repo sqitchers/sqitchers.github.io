@@ -198,7 +198,31 @@ other options, see the <a href="https://www.exasol.com/portal/display/DOC/Databa
 
 <li><p>Snowflake</p>
 
-<p>Snowflake does not support password-less authentication.</p></li>
+<p>Snowflake does not support password-less authentication, but does support
+key-pair authentication. Follow
+<a href="https://docs.snowflake.net/manuals/user-guide/snowsql-start.html#using-key-pair-authentication">the instructions</a>
+to create a key pair, then set the following variables in the <code>~/.snowsql/config</code>
+file:</p>
+
+<pre><code>authenticator = SNOWFLAKE_JWT
+private_key_path = &quot;path/to/privatekey.p8&quot;
+</code></pre>
+
+<p>To connect, set the <code>$SNOWSQL_PRIVATE_KEY_PASSPHRASE</code> environment variable to
+the passphrase for the private key, and add these parameters to the query part
+of your connection URI:</p>
+
+<ul>
+<li><code>authenticator=SNOWFLAKE_JWT</code></li>
+<li><code>uid=$username</code></li>
+<li><code>priv_key_file=path/to/privatekey.p8</code></li>
+<li><code>priv_key_file_pwd=$private_key_password</code></li>
+</ul>
+
+<p>For example:</p>
+
+<pre><code>db:snowflake://movera@example.snowflakecomputing.com/flipr?Driver=Snowflake;warehouse=sqitch;authenticator=SNOWFLAKE_JWT;uid=movera;priv_key_file=path/to/privatekey.p8;priv_key_file_pwd=s0up3rs3cre7
+</code></pre></li>
 </ul>
 
 <h3 id="use-a-password-file">Use a Password File</h3>
