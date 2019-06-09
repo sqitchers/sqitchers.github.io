@@ -360,6 +360,10 @@ main > section:first-of-type { border: none !important; }
 #hi a:before, #download a:before { font-family: fawe; margin-right: 7px; }
 #hi a:hover, #hi a:active { text-decoration: none; background-color: #e8f0fa; color:#22538e !important }
 
+#hi a {
+    white-space: nowrap;
+}
+
 .about:before { content: "\f05a" }
 .docs:before { content: "\f02d" }
 .community:before { content: "\f086" }
