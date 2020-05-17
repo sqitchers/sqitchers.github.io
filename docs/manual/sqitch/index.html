@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.55.0-DEV" />
+	<meta name="generator" content="Hugo 0.70.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -65,14 +65,11 @@
 <p>sqitch - Sensible database change management</p>
 
 <h2 id="synopsis">Synopsis</h2>
-
-<pre><code>sqitch &lt;command&gt; [options] [command-options] [args]
-</code></pre>
-
+<pre><code>sqitch &lt;command&gt; [options] [command-options] [args]</code></pre>
 <h2 id="description">Description</h2>
 
 <p>Sqitch is a database change management application. What makes it different
-from your typical <a href="https://metacpan.org/pod/Module::Build::DB">migration</a>-<a href="https://metacpan.org/pod/DBIx::Migration">style</a>
+from your typical <a href="https://metacpan.org/pod/Module%3A%3ABuild%3A%3ADB">migration</a>-<a href="https://metacpan.org/pod/DBIx%3A%3AMigration">style</a>
 approaches? A few things:</p>
 
 <ul>
@@ -220,7 +217,6 @@ name or tag).</p></li>
 </ul>
 
 <h2 id="options">Options</h2>
-
 <pre><code>-C --chdir --cd DIR       Change to directory before performing any actions.
    --etc-path             Print path to etc directory and exit.
    --no-pager             Do not pipe output into a pager.
@@ -228,9 +224,7 @@ name or tag).</p></li>
 -V --verbose              Increment verbosity.
    --version              Print version number and exit.
    --help                 Show a list of commands and exit.
-   --man                  Print introductory documentation and exit.
-</code></pre>
-
+   --man                  Print introductory documentation and exit.</code></pre>
 <h2 id="options-details">Options Details</h2>
 
 <ul>
@@ -238,53 +232,35 @@ name or tag).</p></li>
 <li><code>--cd</code></li>
 
 <li><p><code>-C</code></p>
-
 <pre><code>sqitch --chdir dbproject
 sqitch --cd /usr/local/somedb
-sqitch -C dbcheckout
-</code></pre>
-
+sqitch -C dbcheckout</code></pre>
 <p>Change to the specified directory before performing any actions. Effectively the
 same as:</p>
-
-<pre><code>(cd somedir &amp;&amp; sqitch ...)
-</code></pre>
-
+<pre><code>(cd somedir &amp;&amp; sqitch ...)</code></pre>
 <p>But a bit friendlier when managing multiple projects.</p></li>
 
 <li><p><code>--etc-path</code></p>
-
-<pre><code>sqitch --etc-path
-</code></pre>
-
+<pre><code>sqitch --etc-path</code></pre>
 <p>Print out the path to the Sqitch <code>etc</code> directory and exit. This is the
 directory where the system-wide configuration file lives, as well as change
 script templates.</p></li>
 
 <li><p><code>--no-pager</code></p>
-
-<pre><code>sqitch --no-pager
-</code></pre>
-
+<pre><code>sqitch --no-pager</code></pre>
 <p>Do not pipe Sqitch output into a pager. Currently limited to the <code>log</code> and
 <code>plan</code> commands.</p></li>
 
 <li><p><code>--quiet</code></p>
-
-<pre><code>sqitch --quiet
-</code></pre>
-
+<pre><code>sqitch --quiet</code></pre>
 <p>Suppress normal output messages. Error messages will still be emitted to
 <code>STDERR</code>. Overrides any value specified by <code>--verbose</code>.</p></li>
 
 <li><p><code>-V</code></p></li>
 
 <li><p><code>--verbose</code></p>
-
 <pre><code>sqitch --verbose
-sqitch -VVV
-</code></pre>
-
+sqitch -VVV</code></pre>
 <p>Pass multiple times to specify a value between 0 and 3 to determine how
 verbose Sqitch should be. Unless <code>--quiet</code> is specified, the default is 1,
 meaning that Sqitch will output basic status messages as it does its thing.
@@ -292,24 +268,15 @@ Values of 2 and 3 each cause greater verbosity. Ignored if <code>--quiet</code> 
 specified.</p></li>
 
 <li><p><code>--help</code></p>
-
-<pre><code>sqitch --help
-</code></pre>
-
+<pre><code>sqitch --help</code></pre>
 <p>Outputs a brief description all known Sqitch commands and exits.</p></li>
 
 <li><p><code>--man</code></p>
-
-<pre><code>sqitch --man
-</code></pre>
-
+<pre><code>sqitch --man</code></pre>
 <p>Outputs this documentation and exits.</p></li>
 
 <li><p><code>--version</code></p>
-
-<pre><code>sqitch --version
-</code></pre>
-
+<pre><code>sqitch --version</code></pre>
 <p>Outputs the program name and version and exits.</p></li>
 </ul>
 
@@ -390,13 +357,12 @@ VCS for a project that deploys to PostgreSQL and stores its deployment scripts
 with the extension <code>ddl</code> under the <code>migrations</code> directory. It also wants
 bundle to be created in the <code>_build/sql</code> directory, and to deploy starting
 with the &ldquo;gamma&rdquo; tag:</p>
-
 <pre><code>[core]
     engine    = pg
     top_dir   = migrations
     extension = ddl
 
-[engine &quot;pg&quot;]
+[engine &#34;pg&#34;]
     target    = widgetopolis
 
 [revert]
@@ -407,30 +373,25 @@ with the &ldquo;gamma&rdquo; tag:</p>
     tags_only = yes
     dest_dir  = _build/sql
 
-[target &quot;widgetopolis&quot;]
-    uri       = db:pg:widgetopolis
-</code></pre>
-
+[target &#34;widgetopolis&#34;]
+    uri       = db:pg:widgetopolis</code></pre>
 <p>And here&rsquo;s an example of useful configuration in <code>~/.sqitch/sqitch.conf</code>, to
 point to system-specific engine information:</p>
-
 <pre><code>[user]
     name      = Marge N. O’Vera
     email     = marge@example.com
 
-[engine &quot;pg&quot;]
+[engine &#34;pg&#34;]
     client    = /usr/local/pgsql/bin/psql
 
-[engine &quot;mysql&quot;]
+[engine &#34;mysql&#34;]
     client    = /usr/local/mysql/bin/mysql
 
-[engine &quot;oracle&quot;]
+[engine &#34;oracle&#34;]
     client    = /usr/local/instantclient_11_2/sqlplus
 
-[engine &quot;sqlite&quot;]
-    client    = /usr/local/bin/sqlite3
-</code></pre>
-
+[engine &#34;sqlite&#34;]
+    client    = /usr/local/bin/sqlite3</code></pre>
 <p>Various commands read from the configuration file and adjust their operation
 accordingly. See <a href="/docs/manual/sqitch-config">sqitch-config</a> for a list.</p>
 
@@ -451,12 +412,12 @@ accordingly. See <a href="/docs/manual/sqitch-config">sqitch-config</a> for a li
 
 <p>Numbered migrations for <a href="https://rubyonrails.org/">Ruby on Rails</a>.</p></li>
 
-<li><p><a href="https://metacpan.org/pod/Module::Build::DB">Module::Build::DB</a></p>
+<li><p><a href="https://metacpan.org/pod/Module%3A%3ABuild%3A%3ADB">Module::Build::DB</a></p>
 
-<p>Numbered changes in pure SQL, integrated with Perl&rsquo;s <a href="https://metacpan.org/pod/Module::Build">Module::Build</a> build
+<p>Numbered changes in pure SQL, integrated with Perl&rsquo;s <a href="https://metacpan.org/pod/Module%3A%3ABuild">Module::Build</a> build
 system. Does not support reversion.</p></li>
 
-<li><p><a href="https://metacpan.org/pod/DBIx::Migration">DBIx::Migration</a></p>
+<li><p><a href="https://metacpan.org/pod/DBIx%3A%3AMigration">DBIx::Migration</a></p>
 
 <p>Numbered migrations in pure SQL.</p></li>
 
@@ -472,7 +433,7 @@ system. Does not support reversion.</p></li>
 
 <h2 id="license">License</h2>
 
-<p>Copyright &copy; 2012-2018 iovation Inc.</p>
+<p>Copyright &copy; 2012-2020 iovation Inc.</p>
 
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal

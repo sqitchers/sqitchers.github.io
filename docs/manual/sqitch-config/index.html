@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.55.0-DEV" />
+	<meta name="generator" content="Hugo 0.70.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -71,7 +71,6 @@
 <p>sqitch-config - Get and set local, user, or system Sqitch options</p>
 
 <h2 id="synopsis">Synopsis</h2>
-
 <pre><code>sqitch config [&lt;file-option&gt;] [type] name [value [value_regex]]
 sqitch config [&lt;file-option&gt;] [type] --add name value
 sqitch config [&lt;file-option&gt;] [type] --replace-all name value [value_regex]
@@ -83,9 +82,7 @@ sqitch config [&lt;file-option&gt;] --unset-all name [value_regex]
 sqitch config [&lt;file-option&gt;] --rename-section old_name new_name
 sqitch config [&lt;file-option&gt;] --remove-section name
 sqitch config [&lt;file-option&gt;] -l | --list
-sqitch config [&lt;file-option&gt;] -e | --edit
-</code></pre>
-
+sqitch config [&lt;file-option&gt;] -e | --edit</code></pre>
 <h2 id="description">Description</h2>
 
 <p>You can query/set/replace/unset Sqitch options with this command. The name is
@@ -266,10 +263,9 @@ the local file will be opened.</p></li>
 <h2 id="examples">Examples</h2>
 
 <p>Given a <code>./sqitch.conf</code> like this:</p>
-
 <pre><code>#
 # This is the config file, and
-# a '#' or ';' character indicates
+# a &#39;#&#39; or &#39;;&#39; character indicates
 # a comment
 #
 
@@ -285,79 +281,41 @@ the local file will be opened.</p></li>
         dest_dir  = _build/sql
 
 ; Fuzzle command settings
-[core &quot;fuzzle&quot;]
+[core &#34;fuzzle&#34;]
         clack        = foo
         clack        = bar
-        clack        = barzlewidth
-</code></pre>
-
+        clack        = barzlewidth</code></pre>
 <p>You can set the <code>tags_only</code> setting to true with</p>
-
-<pre><code>% sqitch config bundle.tags_only true
-</code></pre>
-
+<pre><code>% sqitch config bundle.tags_only true</code></pre>
 <p>The hypothetical <code>clack</code> key in the <code>core.fuzzle</code> section might need to set
 <code>foo</code> to &ldquo;hi&rdquo; instead of &ldquo;foo&rdquo;. You can make the replacement by passing an
 additional argument to match the old value, which will be evaluated as a
 regular expression. Here&rsquo;s one way to make that change:</p>
-
-<pre><code>% sqitch config core.fuzzle.clack hi '^foo$'
-</code></pre>
-
+<pre><code>% sqitch config core.fuzzle.clack hi &#39;^foo$&#39;</code></pre>
 <p>To delete the entry for <code>bundle.from</code>, do</p>
-
-<pre><code>% sqitch config --unset bundle.from
-</code></pre>
-
+<pre><code>% sqitch config --unset bundle.from</code></pre>
 <p>If you want to delete an entry for a multivalue setting (like
 <code>core.fuzzle.clack</code>), provide a regex matching the value of exactly one line.
 This example deletes the &ldquo;bar&rdquo; value:</p>
-
-<pre><code>% sqitch config --unset core.fuzzle.clack '^bar$'
-</code></pre>
-
+<pre><code>% sqitch config --unset core.fuzzle.clack &#39;^bar$&#39;</code></pre>
 <p>To query the value for a given key, do:</p>
-
-<pre><code>% sqitch config --get core.engine
-</code></pre>
-
+<pre><code>% sqitch config --get core.engine</code></pre>
 <p>Or:</p>
-
-<pre><code>% sqitch config core.engine
-</code></pre>
-
+<pre><code>% sqitch config core.engine</code></pre>
 <p>Or, to query a multivalue setting for only those values that match <code>/ba/</code>:</p>
-
-<pre><code>% sqitch config --get core.fuzzle.clack ba
-</code></pre>
-
+<pre><code>% sqitch config --get core.fuzzle.clack ba</code></pre>
 <p>If you want to know all the values for a multivalue setting, do:</p>
-
-<pre><code>% sqitch config --get-all core.fuzzle.clack
-</code></pre>
-
+<pre><code>% sqitch config --get-all core.fuzzle.clack</code></pre>
 <p>If you like to live dangerously, you can replace all <code>core.fuzzle.clack</code> with a
 new one with</p>
-
-<pre><code>% sqitch config --replace-all core.fuzzle.clack funk
-</code></pre>
-
+<pre><code>% sqitch config --replace-all core.fuzzle.clack funk</code></pre>
 <p>However, if you only want to replace lines that don&rsquo;t match <code>bar</code>, prepend
 the matching regular expression with an exclamation point (<code>!</code>), like so:</p>
-
-<pre><code>% sqitch config --replace-all core.fuzzle.clack yow '!bar'
-</code></pre>
-
+<pre><code>% sqitch config --replace-all core.fuzzle.clack yow &#39;!bar&#39;</code></pre>
 <p>To match only values with an exclamation mark, you have to escape it:</p>
-
-<pre><code>% sqitch config section.key '[!]'
-</code></pre>
-
+<pre><code>% sqitch config section.key &#39;[!]&#39;</code></pre>
 <p>To add a new setting without altering any of the existing ones, use:</p>
-
-<pre><code>% sqitch config --add core.fuzzle.set widget=fred
-</code></pre>
-
+<pre><code>% sqitch config --add core.fuzzle.set widget=fred</code></pre>
 <h2 id="configuration-file">Configuration File</h2>
 
 <p>The sqitch configuration file contains a number of variables that affect the
@@ -390,10 +348,7 @@ variable.</p>
 <p>Sections can be further divided into subsections. To begin a subsection put
 its name in double quotes, separated by space from the section name, in the
 section header, like in the example below:</p>
-
-<pre><code> [section &quot;subsection&quot;]
-</code></pre>
-
+<pre><code> [section &#34;subsection&#34;]</code></pre>
 <p>Subsection names are case sensitive and can contain any characters except
 newline (double quote and backslash have to be escaped as <code>\&quot;</code> and <code>\\</code>,
 respectively). Section headers cannot span multiple lines. Variables may
@@ -434,14 +389,13 @@ customary UNIX fashion.</p>
 <p>Some variables may require a special value format.</p>
 
 <h3 id="example">Example</h3>
-
 <pre><code># Core variables
 [core]
     engine    = pg
     top_dir   = migrations
     extension = ddl
 
-[engine &quot;pg&quot;]
+[engine &#34;pg&#34;]
     registry  = widgetopolis
 
 [revert]
@@ -450,9 +404,7 @@ customary UNIX fashion.</p>
 [bundle]
     from      = gamma
     tags_only = yes
-    dest_dir  = _build/sql
-</code></pre>
-
+    dest_dir  = _build/sql</code></pre>
 <h3 id="variables">Variables</h3>
 
 <p>Note that this list is not comprehensive and not necessarily complete. For

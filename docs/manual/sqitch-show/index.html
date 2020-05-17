@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.55.0-DEV" />
+	<meta name="generator" content="Hugo 0.70.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -60,10 +60,7 @@
 <p>sqitch-show - Show object information or script contents</p>
 
 <h2 id="synopsis">Synopsis</h2>
-
-<pre><code>sqitch show [options] &lt;type&gt; &lt;object&gt;
-</code></pre>
-
+<pre><code>sqitch show [options] &lt;type&gt; &lt;object&gt;</code></pre>
 <h2 id="description">Description</h2>
 
 <p>Shows information about Sqitch objects. The first argument must be the type of
@@ -123,29 +120,19 @@ configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
 
 <ul>
 <li><p>Show information about a specific change:</p>
-
-<pre><code>sqitch show change add_users_table
-</code></pre></li>
+<pre><code>sqitch show change add_users_table</code></pre></li>
 
 <li><p>Show information about a change by ID:</p>
-
-<pre><code>sqitch show change be7cd00571d7151eacb0691e825dfc8980cc14ff
-</code></pre></li>
+<pre><code>sqitch show change be7cd00571d7151eacb0691e825dfc8980cc14ff</code></pre></li>
 
 <li><p>Show the most recent change info:</p>
-
-<pre><code>sqitch show change @HEAD
-</code></pre></li>
+<pre><code>sqitch show change @HEAD</code></pre></li>
 
 <li><p>Show information about a tag:</p>
-
-<pre><code>sqitch show tag @beta1
-</code></pre></li>
+<pre><code>sqitch show tag @beta1</code></pre></li>
 
 <li><p>Show the contents of a deploy file:</p>
-
-<pre><code>sqitch show deploy add_users_table@HEAD
-</code></pre></li>
+<pre><code>sqitch show deploy add_users_table@HEAD</code></pre></li>
 </ul>
 
 <h2 id="sqitch">Sqitch</h2>

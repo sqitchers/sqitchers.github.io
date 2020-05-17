@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.55.0-DEV" />
+	<meta name="generator" content="Hugo 0.70.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -65,13 +65,10 @@
 <p>sqitch-add - Add a database change to plans</p>
 
 <h2 id="synopsis">Synopsis</h2>
-
 <pre><code>sqitch add widgets [options
 sqitch add blankets --all
 sqitch add --change sprockets pg sql
-sqitch add slinkies --require sprockets --set schema=industry
-</code></pre>
-
+sqitch add slinkies --require sprockets --set schema=industry</code></pre>
 <h2 id="description">Description</h2>
 
 <p>This command adds a database change to one or more plans. This will result in
@@ -225,50 +222,29 @@ configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
 <h2 id="examples">Examples</h2>
 
 <p>Add a change to a project and be prompted for a note.</p>
-
-<pre><code>sqitch add widgets
-</code></pre>
-
+<pre><code>sqitch add widgets</code></pre>
 <p>Add a change and specify the note.</p>
-
-<pre><code>sqitch add sprockets --note 'Adds the sprockets table.'
-</code></pre>
-
+<pre><code>sqitch add sprockets --note &#39;Adds the sprockets table.&#39;</code></pre>
 <p>Add a change that requires the <code>users</code> change from earlier in the plan.</p>
-
-<pre><code>sqitch add contacts --requires users -n 'Adds the contacts table'
-</code></pre>
-
+<pre><code>sqitch add contacts --requires users -n &#39;Adds the contacts table&#39;</code></pre>
 <p>Add a change that requires multiple changes, including the change named
 <code>extract</code> from a completely different Sqitch project named <code>utilities</code>:</p>
-
-<pre><code>sqitch add coffee -r users -r utilities:extract -n 'Mmmmm...coffee!'
-</code></pre>
-
+<pre><code>sqitch add coffee -r users -r utilities:extract -n &#39;Mmmmm...coffee!&#39;</code></pre>
 <p>Add a change that uses the <code>createtable</code> templates to generate the scripts,
 as well as variables to be used in that template (See
 <a href="https://justatheory.com/2013/09/sqitch-templating/">https://justatheory.com/2013/09/sqitch-templating/</a> for a custom template
 tutorial):</p>
-
 <pre><code>sqitch add corp_widgets --template createtable \
   -s schema=corp -s table=widgets \
   -s column=id -s type=SERIAL \
   -s column=name -s type=TEXT \
   -s column=quantity -s type=INTEGER \
-  -n 'Add corp.widgets table.'
-</code></pre>
-
+  -n &#39;Add corp.widgets table.&#39;</code></pre>
 <p>Add a change only to the plan used by the <code>vertica</code> engine in a project:</p>
-
-<pre><code>sqitch add --change logs vertica -n 'Adds the logs table to Vertica.'
-</code></pre>
-
+<pre><code>sqitch add --change logs vertica -n &#39;Adds the logs table to Vertica.&#39;</code></pre>
 <p>Add a change to just two plans in a project, and generate the scripts only for
 those plans:</p>
-
-<pre><code>sqitch add -a coolfunctions sqlite.plan pg.plan -n 'Adds functions.'
-</code></pre>
-
+<pre><code>sqitch add -a coolfunctions sqlite.plan pg.plan -n &#39;Adds functions.&#39;</code></pre>
 <h2 id="templates">Templates</h2>
 
 <p>Sqitch contains a very simple set of templates for generating the deploy,
@@ -302,71 +278,51 @@ look for a file named for the database engine. Use the <code>--template</code> o
 to have Sqitch use a different file.</p>
 
 <p>For example, say you have this directory structure:</p>
-
 <pre><code>templates/deploy/pg.tmpl
 templates/deploy/create_table.tmpl
 templates/revert/pg.tmpl
 templates/revert/create_table.tmpl
 templates/test/pg.tmpl
 templates/verify/pg.tmpl
-templates/verify/create_table.tmpl
-</code></pre>
-
+templates/verify/create_table.tmpl</code></pre>
 <p>Assuming that you&rsquo;re using the PostgreSQL engine, the code for which is <code>pg</code>,
 when you add a new change like so:</p>
-
-<pre><code>sqitch add schema -n 'Creates schema'
-</code></pre>
-
+<pre><code>sqitch add schema -n &#39;Creates schema&#39;</code></pre>
 <p>Sqitch will use the <code>pg.tmpl</code> files to create the following files in the
 top directory configured for the project (See <a href="/docs/manual/sqitch-configuration">sqitch-configuration</a> for
 details).</p>
-
 <pre><code>deploy/schema.sql
 revert/schema.sql
 test/schema.sql
-verify/schema.sql
-</code></pre>
-
+verify/schema.sql</code></pre>
 <p>If you want to use the <code>create_table</code> templates, instead, use the
 <code>--template</code> option, like so:</p>
-
-<pre><code>sqitch add user_table --template create_table -n 'Create user table'
-</code></pre>
-
+<pre><code>sqitch add user_table --template create_table -n &#39;Create user table&#39;</code></pre>
 <p>Sqitch will use the <code>create_table.tmpl</code> files to create the following files
 in the top directory configured for the project (See <a href="/docs/manual/sqitch-configuration">sqitch-configuration</a>
 for details).</p>
-
 <pre><code>deploy/user_table.sql
 revert/user_table.sql
-verify/user_table.sql
-</code></pre>
-
+verify/user_table.sql</code></pre>
 <p>Note that the <code>test</code> file was not created, because no
 <code>test/create_table.tmpl</code> template file exists.</p>
 
 <h3 id="syntax">Syntax</h3>
 
 <p>The syntax of Sqitch templates is the very simple language provided by
-<a href="https://metacpan.org/pod/Template::Tiny">Template::Tiny</a>, which is limited to:</p>
+<a href="https://metacpan.org/pod/Template%3A%3ATiny">Template::Tiny</a>, which is limited to:</p>
 
 <ul>
 <li><p><code>[% %]</code></p>
 
 <p>This is the directive syntax. By default, the return value of the expression
 is output:</p>
-
-<pre><code>-- Deploy [% project %]:[% change %] to [% engine %]
-</code></pre>
-
+<pre><code>-- Deploy [% project %]:[% change %] to [% engine %]</code></pre>
 <p>You can add <code>-</code> to the immediate start or end of a directive tag to control
 the whitespace chomping options:</p>
-
 <pre><code>[% IF foo -%]    # remove trailing newline
 We have foo!
-[%- END %]       # remove leading newline
-</code></pre></li>
+[%- END %]       # remove leading newline</code></pre></li>
 
 <li><p><code>[% IF %]</code></p></li>
 
@@ -375,25 +331,21 @@ We have foo!
 <li><p><code>[% UNLESS %]</code></p>
 
 <p>Conditional blocks:</p>
-
 <pre><code>[% IF transactions  %]
 BEGIN;
 [% ELSE %]
 -- No transaction, beware!
-[% END %]
-</code></pre></li>
+[% END %]</code></pre></li>
 
 <li><p><code>[% FOREACH item IN list %]</code></p>
 
 <p>Loop over a list of values:</p>
-
 <pre><code>[% FOREACH item IN requires -%]
 -- requires: [% item %]
-[% END -%]
-</code></pre></li>
+[% END -%]</code></pre></li>
 </ul>
 
-<p>If this is not sufficient for your needs, simply install <a href="https://metacpan.org/pod/Template::Toolkit">Template::Toolkit</a>
+<p>If this is not sufficient for your needs, simply install <a href="https://metacpan.org/pod/Template%3A%3AToolkit">Template::Toolkit</a>
 and all templates will be processed by its more comprehensive features. See
 the <a href="http://tt2.org/docs/manual/">complete Template Toolkit documentation</a> for
 details, especially the <a href="http://tt2.org/docs/manual/Syntax.html">syntax docs</a></p>
@@ -402,10 +354,7 @@ details, especially the <a href="http://tt2.org/docs/manual/Syntax.html">syntax 
 
 <p>Sqitch defines five variables for all templates. Any number of additional
 variables can be added via the <code>--set</code> option, like so:</p>
-
-<pre><code>sqitch add --set transactions=1 --set schema=foo
-</code></pre>
-
+<pre><code>sqitch add --set transactions=1 --set schema=foo</code></pre>
 <p>Any number of variables may be specified in this manner. You may then use
 those variables in custom templates. Variables that appear multiple times will
 be passed to the templates as lists of values for which you will likely want

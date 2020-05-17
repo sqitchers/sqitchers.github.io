@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.55.0-DEV" />
+	<meta name="generator" content="Hugo 0.70.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -61,13 +61,10 @@
 <p>sqitch-bundle - Bundle a Sqitch project for distribution</p>
 
 <h2 id="synopsis">Synopsis</h2>
-
 <pre><code>sqitch bundle [options
 sqitch bundle --dest-dir widgets-1.0.0
 sqitch bundle --all
-sqitch bundle pg mysql
-</code></pre>
-
+sqitch bundle pg mysql</code></pre>
 <h2 id="description">Description</h2>
 
 <p>This command bundles up a sqitch project for distribution. At its simplest, it
@@ -151,41 +148,20 @@ configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
 <h2 id="examples">Examples</h2>
 
 <p>Bundle a Sqitch project with the default plan and scripts into <code>bundle</code>:</p>
-
-<pre><code>sqitch bundle
-</code></pre>
-
+<pre><code>sqitch bundle</code></pre>
 <p>Bundle a Sqitch project with all plans and scripts into <code>bundle</code>:</p>
-
-<pre><code>sqitch bundle --all
-</code></pre>
-
+<pre><code>sqitch bundle --all</code></pre>
 <p>Bundle a Sqitch project into <code>BUILDROOT/MyProj</code>:</p>
-
-<pre><code>sqitch bundle --dest-dir BUILDROOT/MyProj
-</code></pre>
-
+<pre><code>sqitch bundle --dest-dir BUILDROOT/MyProj</code></pre>
 <p>Bundle a project including changes <code>adduser</code> through <code>@v1.0</code>:</p>
-
-<pre><code>sqitch bundle --from adduser --to @v1.0
-</code></pre>
-
+<pre><code>sqitch bundle --from adduser --to @v1.0</code></pre>
 <p>Bundle a the <code>pg</code> engine plans with changes <code>adduser</code> through <code>@v1.0</code>, and
 the <code>sqlite</code> engine with changes from the start of the plan up to <code>widgets</code>:</p>
-
-<pre><code>sqitch bundle pg adduser @v1.0 sqlite @ROOT wigets
-</code></pre>
-
+<pre><code>sqitch bundle pg adduser @v1.0 sqlite @ROOT wigets</code></pre>
 <p>Bundle just the files necessary to execute the plan for the <code>pg</code> engine:</p>
-
-<pre><code>sqitch bundle pg
-</code></pre>
-
+<pre><code>sqitch bundle pg</code></pre>
 <p>Bundle the files necessary for two plan files:</p>
-
-<pre><code>sqitch bundle sqlite/sqitch.plan mysql/sqitch.plan
-</code></pre>
-
+<pre><code>sqitch bundle sqlite/sqitch.plan mysql/sqitch.plan</code></pre>
 <h2 id="sqitch">Sqitch</h2>
 
 <p>Part of the <a href="/docs/manual/sqitch">sqitch</a> suite.</p>

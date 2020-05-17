@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.55.0-DEV" />
+	<meta name="generator" content="Hugo 0.70.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -74,10 +74,7 @@
 <p>sqitchtutorial-oracle - A tutorial introduction to Sqitch change management on Oracle</p>
 
 <h2 id="synopsis">Synopsis</h2>
-
-<pre><code>sqitch *
-</code></pre>
-
+<pre><code>sqitch *</code></pre>
 <h2 id="description">Description</h2>
 
 <p>This tutorial explains how to create a sqitch-enabled Oracle project, use a
@@ -114,18 +111,13 @@ database connections will work.</p>
 the Oracle developer days VM.</li>
 
 <li><p>Connect as the DBA via SQL*Plus:</p>
-
-<pre><code>sqlplus sys/oracle@localhost/ORCL as sysdba
-</code></pre></li>
+<pre><code>sqlplus sys/oracle@localhost/ORCL as sysdba</code></pre></li>
 
 <li><p>Give user <code>scott</code> the access it needs:</p>
-
 <pre><code>ALTER USER scott IDENTIFIED BY tiger;
-GRANT ALL PRIVILEGES TO scott;
-</code></pre></li>
+GRANT ALL PRIVILEGES TO scott;</code></pre></li>
 
 <li><p>Add this entry to <code>tnsnames.ora</code>:</p>
-
 <pre><code>FLIPR_TEST =
   (DESCRIPTION =
     (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
@@ -133,27 +125,23 @@ GRANT ALL PRIVILEGES TO scott;
       (SERVER = DEDICATED)
       (SERVICE_NAME = orcl)
     )
-  )
-</code></pre></li>
+  )</code></pre></li>
 </ul>
 
 <h2 id="starting-a-new-project">Starting a New Project</h2>
 
 <p>Usually the first thing to do when starting a new project is to create a
 source code repository. So let&rsquo;s do that with Git:</p>
-
 <pre><code>&gt; mkdir flipr
 &gt; cd flipr 
 &gt; git init .
 Initialized empty Git repository in /flipr/.git/
 &gt; touch README.md
 &gt; git add .
-&gt; git commit -am 'Initialize project, add README.'
+&gt; git commit -am &#39;Initialize project, add README.&#39;
 [master (root-commit) 1bd134b] Initialize project, add README.
  1 file changed, 38 insertions(+)
- create mode 100644 README.md
-</code></pre>
-
+ create mode 100644 README.md</code></pre>
 <p>If you&rsquo;re a Git user and want to follow along the history, the repository used
 in these examples is <a href="https://github.com/sqitchers/sqitch-oracle-intro">on GitHub</a>.</p>
 
@@ -163,27 +151,21 @@ recommend including the URI, as it increases the uniqueness of object
 identifiers internally, so let&rsquo;s specify one when we initialize Sqitch:
 identifiers internally, and will prevent the deployment of a different project
 with the same name. So let&rsquo;s specify one when we initialize Sqitch:</p>
-
 <pre><code>Created sqitch.conf
 Created sqitch.plan
 Created deploy/
 Created revert/
-Created verify/
-</code></pre>
-
+Created verify/</code></pre>
 <p>Let&rsquo;s have a look at <code>sqitch.conf</code>:</p>
-
 <pre><code>&gt; cat sqitch.conf 
 [core]
       engine = oracle
       # plan_file = sqitch.plan
       # top_dir = .
-# [engine &quot;oracle&quot;]
+# [engine &#34;oracle&#34;]
       # target = db:oracle:
       # registry = 
-      # client = sqlplus
-</code></pre>
-
+      # client = sqlplus</code></pre>
 <p>Good, it picked up on the fact that we&rsquo;re creating changes for the Oracle
 engine, thanks to the <code>--engine oracle</code> option, and saved it to the file.
 Furthermore, it wrote a commented-out <code>[engine &quot;oracle&quot;]</code> section with all
@@ -195,71 +177,50 @@ edited as appropriate. This includes the path to
 settings. But it will also read <code>~/.sqitch/sqitch.conf</code> for user-specific
 settings. Let&rsquo;s tell it who we are, since this data will be used in all of our
 projects:</p>
-
-<pre><code>&gt; sqitch config --user user.name 'Marge N. O’Vera'
-&gt; sqitch config --user user.email 'marge@example.com'
-</code></pre>
-
+<pre><code>&gt; sqitch config --user user.name &#39;Marge N. O’Vera&#39;
+&gt; sqitch config --user user.email &#39;marge@example.com&#39;</code></pre>
 <p>Have a look at <code>~/.sqitch/sqitch.conf</code> and you&rsquo;ll see this:</p>
-
 <pre><code>&gt; cat ~/.sqitch/sqitch.conf
 [user]
       name = Marge N. O’Vera
-      email = marge@example.com
-</code></pre>
-
+      email = marge@example.com</code></pre>
 <p>Which means that Sqitch will always properly identify us when planning and
 committing changes. Back to the repository. Have a look at the plan file,
 <code>sqitch.plan</code>:</p>
-
 <pre><code>&gt; cat sqitch.plan
 %syntax-version=1.0.0
 %project=flipr
-%uri=https://github.com/sqitchers/sqitch-oracle-intro/
-</code></pre>
-
+%uri=https://github.com/sqitchers/sqitch-oracle-intro/</code></pre>
 <p>Note that it has picked up on the name and URI of the app we&rsquo;re building.
 Sqitch uses this data to manage cross-project dependencies. The
 <code>%syntax-version</code> pragma is always set by Sqitch, so that it always knows how
 to parse the plan, even if the format changes in the future.</p>
 
 <p>Let&rsquo;s commit these changes and start creating the database changes.</p>
-
 <pre><code>&gt; git add .
-&gt; git commit -am 'Initialize Sqitch configuration.'
+&gt; git commit -am &#39;Initialize Sqitch configuration.&#39;
 [master bd82f41] Initialize Sqitch configuration.
  2 files changed, 19 insertions(+)
  create mode 100644 sqitch.conf
- create mode 100644 sqitch.plan
-</code></pre>
-
+ create mode 100644 sqitch.plan</code></pre>
 <h2 id="our-first-change">Our First Change</h2>
 
 <p>First, our project will need an Oracle user and accompanying schema. This
 creates a nice namespace for all of the objects that will be part of the flipr
 app. Run this command:</p>
-
-<pre><code>&gt; sqitch add appschema -n 'App user and schema for all flipr objects.'
+<pre><code>&gt; sqitch add appschema -n &#39;App user and schema for all flipr objects.&#39;
 Created deploy/appschema.sql
 Created revert/appschema.sql
 Created verify/appschema.sql
-Added &quot;appschema&quot; to sqitch.plan
-</code></pre>
-
+Added &#34;appschema&#34; to sqitch.plan</code></pre>
 <p>The <a href="/docs/manual/sqitch-add"><code>add</code></a> command adds a database change to the plan and writes
 deploy, revert, and verify scripts that represent the change. Now we edit
 these files. The <code>deploy</code> script&rsquo;s job is to create the user. So we add
 this to <code>deploy/appschema.sql</code>:</p>
-
-<pre><code>CREATE USER flipr IDENTIFIED BY whatever;
-</code></pre>
-
+<pre><code>CREATE USER flipr IDENTIFIED BY whatever;</code></pre>
 <p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
 script, so we add this to <code>revert/appschema.sql</code>:</p>
-
-<pre><code>DROP USER flipr;
-</code></pre>
-
+<pre><code>DROP USER flipr;</code></pre>
 <p>Now we can try deploying this change. Before going any further, you might
 need to
 <a href="https://docs.oracle.com/cd/B28359_01/server.111/b28310/create001.htm#ADMIN11068">create the database</a>
@@ -267,13 +228,10 @@ and configure the SID. Assuming you have an Oracle SID named <code>flipr_test</c
 up in your <code>`TNSNAMES.ORA`|https://www.orafaq.com/wiki/Tnsnames.ora</code> file,
 tell Sqitch where to send the change via a
 <a href="https://github.com/libwww-perl/uri-db/">database URI</a>:</p>
-
 <pre><code>&gt; sqitch deploy db:oracle://scott:tiger@/flipr_test
 Adding registry tables to db:oracle://scott:@/flipr_test
 Deploying changes to db:oracle://scott:@/flipr_test
-  + appschema .. ok
-</code></pre>
-
+  + appschema .. ok</code></pre>
 <p>First Sqitch created the registry tables used to track database changes. The
 structure and name of the registry varies between databases, but in Oracle
 they are simply stored in the current schema &ndash; that is, the schema with the
@@ -294,14 +252,11 @@ that the change is being <em>added</em> to the database.</p>
 
 <p>With this change deployed, if you connect to the database, you&rsquo;ll be able to
 see the schema:</p>
-
-<pre><code>&gt; echo &quot;SELECT username FROM all_users WHERE username = 'FLIPR';&quot; \
+<pre><code>&gt; echo &#34;SELECT username FROM all_users WHERE username = &#39;FLIPR&#39;;&#34; \
 | sqlplus -S scott/tiger@flipr_test
 USERNAME
 ------------------------------
-FLIPR
-</code></pre>
-
+FLIPR</code></pre>
 <h3 id="trust-but-verify">Trust, But Verify</h3>
 
 <p>But that&rsquo;s too much work. Do you really want to do something like that after
@@ -313,85 +268,64 @@ might be in the database, and should throw an error if the deploy was not
 successful. In Oracle, the simplest way to do so for schema is probably to
 simply create an object in the schema. Put this SQL into
 <code>verify/appschema.sql</code>:</p>
-
 <pre><code>CREATE TABLE flipr.verify__ (id int);
-DROP   TABLE flipr.verify__;
-</code></pre>
-
+DROP   TABLE flipr.verify__;</code></pre>
 <p>In truth, you can use <em>any</em> query that generates an SQL error if the schema
 doesn&rsquo;t exist. This works because Sqitch configures SQL*Plus so that SQL
 errors cause it to exit with the error code (more on that below). Another
 handy way to do that is to divide by zero if an object doesn&rsquo;t exist. For
 example, to throw an error when the <code>flipr</code> schema does not exist, you could
 do something like this:</p>
-
-<pre><code>SELECT 1/COUNT(*) FROM sys.all_users WHERE username = 'FLIPR';
-</code></pre>
-
+<pre><code>SELECT 1/COUNT(*) FROM sys.all_users WHERE username = &#39;FLIPR&#39;;</code></pre>
 <p>Either way, run the <code>verify</code> script with the <a href="/docs/manual/sqitch-verify"><code>verify</code></a>
 command:</p>
-
 <pre><code>&gt; sqitch verify db:oracle://scott:tiger@/flipr_test
 Verifying db:oracle://scott:@/flipr_test
   * appschema .. ok
-Verify successful
-</code></pre>
-
+Verify successful</code></pre>
 <p>Looks good! If you want to make sure that the verify script correctly dies if
 the schema doesn&rsquo;t exist, temporarily change the schema name in the script to
 something that doesn&rsquo;t exist, something like:</p>
-
-<pre><code>CREATE TABLE nonesuch.verify__ (id int);
-</code></pre>
-
+<pre><code>CREATE TABLE nonesuch.verify__ (id int);</code></pre>
 <p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
-
 <pre><code>&gt; sqitch verify db:oracle://scott:tiger@/flipr_test
 Verifying db:oracle://scott:@/flipr_test
   * appschema .. CREATE TABLE nonesuch.verify__ (id int)
 *
 ERROR at line 1:
-ORA-01918: user 'NONESUCH' does not exist
+ORA-01918: user &#39;NONESUCH&#39; does not exist
 
 
 
-# Verify script &quot;verify/appschema.sql&quot; failed.
+# Verify script &#34;verify/appschema.sql&#34; failed.
 not ok
 
 Verify Summary Report
 ---------------------
 Changes: 1
 Errors:  1
-Verify failed
-</code></pre>
-
+Verify failed</code></pre>
 <p>It&rsquo;s even nice enough to tell us what the problem is. Or, for the
 divide-by-zero example, change the schema name:</p>
-
-<pre><code>SELECT 1/COUNT(*) FROM sys.all_users WHERE username = 'NONESUCH';
-</code></pre>
-
+<pre><code>SELECT 1/COUNT(*) FROM sys.all_users WHERE username = &#39;NONESUCH&#39;;</code></pre>
 <p>Then the verify will look something like:</p>
-
 <pre><code>&gt; sqitch verify db:oracle://scott:tiger@/flipr_test
 Verifying db:oracle://scott:@/flipr_test
-  * appschema ..   SELECT 1/COUNT(*) FROM sys.all_users WHERE username = 'NONESUCH'
+  * appschema ..   SELECT 1/COUNT(*) FROM sys.all_users WHERE username = &#39;NONESUCH&#39;
           *
 ERROR at line 1:
 ORA-01476: divisor is equal to zero
 
 
 
-# Verify script &quot;verify/appschema.sql&quot; failed.
+# Verify script &#34;verify/appschema.sql&#34; failed.
 not ok
 
 Verify Summary Report
 ---------------------
 Changes: 1
 Errors:  1
-Verify failed
-</code></pre>
-
+Verify failed</code></pre>
 <p>Less useful error output, but enough to alert us that something has gone
 wrong.</p>
 
@@ -402,7 +336,6 @@ wrong.</p>
 <p>For purely informational purposes, we can always see how a deployment was
 recorded via the <a href="/docs/manual/sqitch-status"><code>status</code></a> command, which reads the registry
 tables from the database:</p>
-
 <pre><code>&gt; sqitch status db:oracle://scott:tiger@/flipr_test
 # On database db:oracle://scott:@/flipr_test
 # Project:  flipr
@@ -411,45 +344,30 @@ tables from the database:</p>
 # Deployed: 2013-12-31 15:25:23 -0800
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
-Nothing to deploy (up-to-date)
-</code></pre>
-
+Nothing to deploy (up-to-date)</code></pre>
 <p>Let&rsquo;s make sure that we can revert the change:</p>
-
 <pre><code>&gt; sqitch revert db:oracle://scott:tiger@/flipr_test 
 Revert all changes from db:oracle://scott:@/flipr_test? [Yes] 
-  - appschema .. ok
-</code></pre>
-
+  - appschema .. ok</code></pre>
 <p>The <a href="/docs/manual/sqitch-revert"><code>revert</code></a> command first prompts to make sure that we
 really do want to revert. This is to prevent unnecessary accidents. You can
 pass the <code>-y</code> option to disable the prompt. Also, notice the <code>-</code> before the
 change name in the output, which reinforces that the change is being
 <em>removed</em> from the database. And now the schema should be gone:</p>
-
-<pre><code>&gt; echo &quot;SELECT username FROM all_users WHERE username = 'FLIPR';&quot; \
+<pre><code>&gt; echo &#34;SELECT username FROM all_users WHERE username = &#39;FLIPR&#39;;&#34; \
 | sqlplus -S scott/tiger@flipr_test
-no rows selected
-</code></pre>
-
+no rows selected</code></pre>
 <p>And the status message should reflect as much:</p>
-
 <pre><code>&gt; sqitch status db:oracle://scott:tiger@/flipr_test
 # On database db:oracle://scott:@/flipr_test
-No changes deployed
-</code></pre>
-
+No changes deployed</code></pre>
 <p>Of course, since nothing is deployed, the <a href="/docs/manual/sqitch-verify"><code>verify</code></a> command
 has nothing to verify:</p>
-
 <pre><code>&gt; sqitch verify db:oracle://scott:tiger@/flipr_test
 Verifying db:oracle://scott:@/flipr_test
-No changes deployed
-</code></pre>
-
+No changes deployed</code></pre>
 <p>However, we still have a record that the change happened, visible via the
 <a href="/docs/manual/sqitch-log"><code>log</code></a> command:</p>
-
 <pre><code>&gt; sqitch log db:oracle://scott:tiger@/flipr_test
 On database db:oracle://scott:@/flipr_test
 Revert c59e700589fc03568e8f35f592c0d9b7c638cbdd
@@ -464,42 +382,30 @@ Name:      appschema
 Committer: Marge N. O’Vera &lt;marge@example.com&gt;
 Date:      2013-12-31 15:25:23 -0800
 
-    App user and schema for all flipr objects.
-</code></pre>
-
+    App user and schema for all flipr objects.</code></pre>
 <p>Note that the actions we took are shown in reverse chronological order, with
 the revert first and then the deploy.</p>
 
 <p>Cool. Now let&rsquo;s commit it.</p>
-
 <pre><code>&gt; git add .
-&gt; git commit -m 'Add flipr schema.'
+&gt; git commit -m &#39;Add flipr schema.&#39;
 [master e0e0b11] Add flipr schema.
  4 files changed, 11 insertions(+)
  create mode 100644 deploy/appschema.sql
  create mode 100644 revert/appschema.sql
- create mode 100644 verify/appschema.sql
-</code></pre>
-
+ create mode 100644 verify/appschema.sql</code></pre>
 <p>And then deploy again. This time, let&rsquo;s use the <code>--verify</code> option, so that
 the <code>verify</code> script is applied when the change is deployed:</p>
-
 <pre><code>&gt; sqitch deploy --verify db:oracle://scott:tiger@/flipr_test
 Deploying changes to db:oracle://scott:@/flipr_test
-  + appschema .. ok
-</code></pre>
-
+  + appschema .. ok</code></pre>
 <p>And now the schema should be back:</p>
-
-<pre><code>&gt; echo &quot;SELECT username FROM all_users WHERE username = 'FLIPR';&quot; \
+<pre><code>&gt; echo &#34;SELECT username FROM all_users WHERE username = &#39;FLIPR&#39;;&#34; \
 | sqlplus -S scott/tiger@flipr_test
 USERNAME
 ------------------------------
-FLIPR
-</code></pre>
-
+FLIPR</code></pre>
 <p>When we look at the status, the deployment will be there:</p>
-
 <pre><code>&gt; sqitch status db:oracle://scott:tiger@/flipr_test
 # On database db:oracle://scott:@/flipr_test
 # Project:  flipr
@@ -508,9 +414,7 @@ FLIPR
 # Deployed: 2013-12-31 16:22:01 -0800
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
-Nothing to deploy (up-to-date)
-</code></pre>
-
+Nothing to deploy (up-to-date)</code></pre>
 <h2 id="on-target">On Target</h2>
 
 <p>I&rsquo;m getting a little tired of always having to type
@@ -518,24 +422,17 @@ Nothing to deploy (up-to-date)
 <a href="https://github.com/libwww-perl/uri-db/">database connection URI</a> tells Sqitch how
 to connect to the deployment target, but we don&rsquo;t have to keep using the URI.
 We can name the target:</p>
-
-<pre><code>&gt; sqitch target add flipr_test db:oracle://scott:tiger@/flipr_test
-</code></pre>
-
+<pre><code>&gt; sqitch target add flipr_test db:oracle://scott:tiger@/flipr_test</code></pre>
 <p>The <a href="/docs/manual/sqitch-target"><code>target</code></a> command, inspired by
 <a href="https://git-scm.com/docs/git-remote"><code>git-remote</code></a>, allows management of one
 or more named deployment targets. We&rsquo;ve just added a target named
 <code>flipr_test</code>, which means we can use the string <code>flipr_test</code> for the target,
 rather than the URI. But since we&rsquo;re doing so much testing, we can also tell
 Sqitch to deploy to the <code>flipr_test</code> target by default:</p>
-
-<pre><code>&gt; sqitch engine add oracle flipr_test
-</code></pre>
-
+<pre><code>&gt; sqitch engine add oracle flipr_test</code></pre>
 <p>Now we can omit the target argument altogether, unless we need to deploy to
 another database. Which we will, eventually, but at least our examples will be
 simpler from here on in, e.g.:</p>
-
 <pre><code>&gt; sqitch status
 # On database flipr_test
 # Project:  flipr
@@ -544,36 +441,25 @@ simpler from here on in, e.g.:</p>
 # Deployed: 2013-12-31 16:22:01 -0800
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
-Nothing to deploy (up-to-date)
-</code></pre>
-
+Nothing to deploy (up-to-date)</code></pre>
 <p>Yay, that allows things to be a little more concise. Let&rsquo;s also make sure that
 changes are verified after deploying them:</p>
-
 <pre><code>&gt; sqitch config --bool deploy.verify true
-&gt; sqitch config --bool rebase.verify true
-</code></pre>
-
+&gt; sqitch config --bool rebase.verify true</code></pre>
 <p>We&rsquo;ll see the <a href="/docs/manual/sqitch-rebase"><code>rebase</code></a> command a bit later. In the meantime,
 let&rsquo;s commit the new configuration and make some more changes!</p>
-
-<pre><code>&gt; git commit -am 'Set default target and always verify.'
+<pre><code>&gt; git commit -am &#39;Set default target and always verify.&#39;
 [master c4a308a] Set default target and always verify.
- 1 file changed, 8 insertions(+)
-</code></pre>
-
+ 1 file changed, 8 insertions(+)</code></pre>
 <h2 id="deploy-with-dependency">Deploy with Dependency</h2>
 
 <p>Let&rsquo;s add another change, this time to create a table. Our app will need
 users, of course, so we&rsquo;ll create a table for them. First, add the new change:</p>
-
-<pre><code>&gt; sqitch add users --requires appschema -n 'Creates table to track our users.'
+<pre><code>&gt; sqitch add users --requires appschema -n &#39;Creates table to track our users.&#39;
 Created deploy/users.sql
 Created revert/users.sql
 Created verify/users.sql
-Added &quot;users [appschema]&quot; to sqitch.plan
-</code></pre>
-
+Added &#34;users [appschema]&#34; to sqitch.plan</code></pre>
 <p>Note that we&rsquo;re requiring the <code>appschema</code> change as a dependency of the new
 <code>users</code> change. Although that change has already been added to the plan and
 therefore should always be applied before the <code>users</code> change, it&rsquo;s a good
@@ -581,7 +467,6 @@ idea to be explicit about dependencies.</p>
 
 <p>Now edit the scripts. When you&rsquo;re done, <code>deploy/users.sql</code> should look like
 this:</p>
-
 <pre><code>-- Deploy flipr:users to oracle
 -- requires: appschema
 
@@ -589,9 +474,7 @@ CREATE TABLE flipr.users (
     nickname  VARCHAR2(512 CHAR) PRIMARY KEY,
     password  VARCHAR2(512 CHAR) NOT NULL,
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
-);
-</code></pre>
-
+);</code></pre>
 <p>A few things to notice here. On the second line, the dependence on the
 <code>appschema</code> change has been listed in a comment. This doesn&rsquo;t do anything,
 but the default Oracle <code>deploy</code> template lists it here for your reference
@@ -603,60 +486,41 @@ to require the <code>appschema</code> change.</p>
 <p>Notice that we&rsquo;ve done nothing about error handling. Sqitch needs SQL*Plus
 to return failure when a script experiences an error, so one might expect that
 each script would need to start with lines like these:</p>
-
 <pre><code>WHENEVER OSERROR EXIT 9
-WHENEVER SQLERROR EXIT SQL.SQLCODE
-</code></pre>
-
+WHENEVER SQLERROR EXIT SQL.SQLCODE</code></pre>
 <p>However, Sqitch always sets these error handling parameters before it executes
 your scripts, so you don&rsquo;t have to.</p>
 
 <p>Now for the verify script. The simplest way to check that the table was
 created and has the expected columns without touching the data? Just select
 from the table with a false <code>WHERE</code> clause. Add this to <code>verify/users.sql</code>:</p>
-
 <pre><code>SELECT nickname, password, timestamp
   FROM flipr.users
- WHERE 0 = 1;
-</code></pre>
-
+ WHERE 0 = 1;</code></pre>
 <p>Now for the revert script: all we have to do is drop the table. Add this to
 <code>revert/users.sql</code>:</p>
-
-<pre><code>DROP TABLE flipr.users;
-</code></pre>
-
+<pre><code>DROP TABLE flipr.users;</code></pre>
 <p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
-
 <pre><code>&gt; sqitch deploy
 Deploying changes to flipr_test
-  + users .. ok
-</code></pre>
-
+  + users .. ok</code></pre>
 <p>We know, since verification is enabled, that the table must have been created.
 But for the purposes of visibility, let&rsquo;s have a quick look:</p>
-
-<pre><code>&gt; echo &quot;DESCRIBE flipr.users;&quot; | sqlplus -S scott/tiger@flipr_test
+<pre><code>&gt; echo &#34;DESCRIBE flipr.users;&#34; | sqlplus -S scott/tiger@flipr_test
 
  Name                                    Null?    Type
  ----------------------------------------- -------- ----------------------------
  NICKNAME                                NOT NULL VARCHAR2(512 CHAR)
  PASSWORD                                NOT NULL VARCHAR2(512 CHAR)
- TIMESTAMP                               NOT NULL TIMESTAMP(6) WITH TIME ZONE
-</code></pre>
-
+ TIMESTAMP                               NOT NULL TIMESTAMP(6) WITH TIME ZONE</code></pre>
 <p>We can also verify all currently deployed changes with the
 <a href="/docs/manual/sqitch-verify"><code>verify</code></a> command:</p>
-
 <pre><code>&gt; sqitch verify
 Verifying flipr_test
   * appschema .. ok
   * users ...... ok
-Verify successful
-</code></pre>
-
+Verify successful</code></pre>
 <p>Now have a look at the status:</p>
-
 <pre><code>&gt; sqitch status
 # On database flipr_test
 # Project:  flipr
@@ -665,16 +529,11 @@ Verify successful
 # Deployed: 2013-12-31 16:32:31 -0800
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
-Nothing to deploy (up-to-date)
-</code></pre>
-
+Nothing to deploy (up-to-date)</code></pre>
 <p>Success! Let&rsquo;s make sure we can revert the change, as well:</p>
-
 <pre><code>&gt; sqitch revert --to @HEAD^ -y
 Reverting changes to appschema from flipr_test
-  - users .. ok
-</code></pre>
-
+  - users .. ok</code></pre>
 <p>Note that we&rsquo;ve used the <code>--to</code> option to specify the change to revert to.
 And what do we revert to? The symbolic tag <code>@HEAD</code>, when passed to
 <a href="/docs/manual/sqitch-revert"><code>revert</code></a>, always refers to the last change deployed to the
@@ -687,16 +546,12 @@ command).</p>
 
 <p>Back to the database. The <code>users</code> table should be gone but the <code>flipr</code> schema
 should still be around:</p>
-
-<pre><code>&gt; echo &quot;DESCRIBE flipr.users;&quot; | sqlplus -S scott/tiger@flipr_test
+<pre><code>&gt; echo &#34;DESCRIBE flipr.users;&#34; | sqlplus -S scott/tiger@flipr_test
 
 ERROR:
-ORA-04043: object flipr.users does not exist
-</code></pre>
-
+ORA-04043: object flipr.users does not exist</code></pre>
 <p>The <a href="/docs/manual/sqitch-status"><code>status</code></a> command politely informs us that we have
 undeployed changes:</p>
-
 <pre><code>&gt; sqitch status
 # On database flipr_test
 # Project:  flipr
@@ -706,27 +561,21 @@ undeployed changes:</p>
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
 Undeployed change:
-  * users
-</code></pre>
-
+  * users</code></pre>
 <p>As does the <a href="/docs/manual/sqitch-verify"><code>verify</code></a> command:</p>
-
 <pre><code>&gt; sqitch verify
 Verifying flipr_test
   * appschema .. ok
 Undeployed change:
   * users
-Verify successful
-</code></pre>
-
+Verify successful</code></pre>
 <p>Note that the verify is successful, because all currently-deployed changes are
 verified. The list of undeployed changes (just &ldquo;users&rdquo; here) reminds us about
 the current state.</p>
 
 <p>Okay, let&rsquo;s commit and deploy again:</p>
-
 <pre><code>&gt; git add .
-&gt; git commit -am 'Add users table.'
+&gt; git commit -am &#39;Add users table.&#39;
 [master 2506312] Add users table.
  4 files changed, 17 insertions(+)
  create mode 100644 deploy/users.sql
@@ -734,11 +583,8 @@ the current state.</p>
  create mode 100644 verify/users.sql
 &gt; sqitch deploy
 Deploying changes to flipr_test
-  + users .. ok
-</code></pre>
-
+  + users .. ok</code></pre>
 <p>Looks good. Check the status:</p>
-
 <pre><code>&gt; sqitch status
 # On database flipr_test
 # Project:  flipr
@@ -747,32 +593,26 @@ Deploying changes to flipr_test
 # Deployed: 2013-12-31 16:34:28 -0800
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
-Nothing to deploy (up-to-date)
-</code></pre>
-
+Nothing to deploy (up-to-date)</code></pre>
 <p>Excellent. Let&rsquo;s do some more!</p>
 
 <h2 id="add-two-at-once">Add Two at Once</h2>
 
 <p>Let&rsquo;s add a couple more changes to add functions for managing users.</p>
-
 <pre><code>&gt; sqitch add insert_user --requires users --requires appschema \
-  -n 'Creates a function to insert a user.'
+  -n &#39;Creates a function to insert a user.&#39;
 Created deploy/insert_user.sql
 Created revert/insert_user.sql
 Created verify/insert_user.sql
-Added &quot;insert_user [users appschema]&quot; to sqitch.plan
+Added &#34;insert_user [users appschema]&#34; to sqitch.plan
 
 &gt; sqitch add change_pass --requires users --requires appschema \
-  -n 'Creates a function to change a user password.'
+  -n &#39;Creates a function to change a user password.&#39;
 Created deploy/change_pass.sql
 Created revert/change_pass.sql
 Created verify/change_pass.sql
-Added &quot;change_pass [users appschema]&quot; to sqitch.plan
-</code></pre>
-
+Added &#34;change_pass [users appschema]&#34; to sqitch.plan</code></pre>
 <p>Now might be a good time to have a look at the deployment plan:</p>
-
 <pre><code>&gt; cat sqitch.plan
 %syntax-version=1.0.0
 %project=flipr
@@ -781,16 +621,13 @@ Added &quot;change_pass [users appschema]&quot; to sqitch.plan
 appschema 2013-12-31T22:34:42Z Marge N. O’Vera &lt;marge@example.com&gt; # App user and schema for all flipr objects.
 users [appschema] 2014-01-01T00:31:20Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates table to track our users.
 insert_user [users appschema] 2014-01-01T00:35:21Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a user.
-change_pass [users appschema] 2014-01-01T00:35:28Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to change a user password.
-</code></pre>
-
+change_pass [users appschema] 2014-01-01T00:35:28Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to change a user password.</code></pre>
 <p>Each change appears on a single line with the name of the change, a bracketed
 list of dependencies, a timestamp, the name and email address of the user who
 planned the change, and a note.</p>
 
 <p>Let&rsquo;s write the code for the new changes. Here&rsquo;s what
 <code>deploy/insert_user.sql</code> should look like:</p>
-
 <pre><code>-- Deploy flipr:insert_user to oracle
 -- requires: users
 -- requires: appschema
@@ -819,39 +656,30 @@ BEGIN
     SELECT COUNT(*)
       INTO l_err_count
       FROM all_errors
-     WHERE owner = 'FLIPR'
-       AND name  = 'INSERT_USER';
+     WHERE owner = &#39;FLIPR&#39;
+       AND name  = &#39;INSERT_USER&#39;;
 
     IF l_err_count &gt; 0 THEN
-        EXECUTE IMMEDIATE 'DROP PROCEDURE flipr.insert_user';
-        raise_application_error(-20001, 'Errors in FLIPR.INSERT_USER');
+        EXECUTE IMMEDIATE &#39;DROP PROCEDURE flipr.insert_user&#39;;
+        raise_application_error(-20001, &#39;Errors in FLIPR.INSERT_USER&#39;);
     END IF;
 END;
-/
-</code></pre>
-
+/</code></pre>
 <p>The <code>DECLARE</code> PL/SQL block is to catch compilation warnings, which are not
 normally fatal. It&rsquo;s admittedly
 <a href="https://stackoverflow.com/a/16429231/79202">a bit convoluted</a>, but ensures that
 errors propagate and a broken function get dropped.</p>
 
 <p>Here&rsquo;s what <code>verify/insert_user.sql</code> might look like:</p>
-
 <pre><code>-- Verify flipr:insert_user on oracle
-DESCRIBE flipr.insert_user;
-</code></pre>
-
+DESCRIBE flipr.insert_user;</code></pre>
 <p>We simply take advantage of the fact that <code>DESCRIBE</code> throws an exception if
 the specified function does not exist.</p>
 
 <p>And <code>revert/insert_user.sql</code> should look something like this:</p>
-
 <pre><code>-- Revert flipr:insert_user from oracle
-DROP PROCEDURE flipr.insert_user;
-</code></pre>
-
+DROP PROCEDURE flipr.insert_user;</code></pre>
 <p>Now for <code>change_pass</code>; <code>deploy/change_pass.sql</code> might look like this:</p>
-
 <pre><code>-- Deploy flipr:change_pass to oracle
 -- requires: users
 -- requires: appschema
@@ -884,41 +712,30 @@ BEGIN
     SELECT COUNT(*)
       INTO l_err_count
       FROM all_errors
-     WHERE owner = 'FLIPR'
-       AND name  = 'CHANGE_PASS';
+     WHERE owner = &#39;FLIPR&#39;
+       AND name  = &#39;CHANGE_PASS&#39;;
 
     IF l_err_count &gt; 0 THEN
-        EXECUTE IMMEDIATE 'DROP PROCEDURE flipr.CHANGE_PASS';
-        raise_application_error(-20001, 'Errors in FLIPR.CHANGE_PASS');
+        EXECUTE IMMEDIATE &#39;DROP PROCEDURE flipr.CHANGE_PASS&#39;;
+        raise_application_error(-20001, &#39;Errors in FLIPR.CHANGE_PASS&#39;);
     END IF;
 END;
-/
-</code></pre>
-
+/</code></pre>
 <p>We again need the <code>DECLARE</code> PL/SQL block to detect compilation warnings and
 make the script die. Use <code>DESCRIBE</code> in <code>verify/change_pass.sql</code> again:</p>
-
 <pre><code>-- Verify flipr:change_pass on oracle
-DESCRIBE flipr.change_pass;
-</code></pre>
-
+DESCRIBE flipr.change_pass;</code></pre>
 <p>And of course, its <code>revert</code> script, <code>revert/change_pass.sql</code>, should look
 something like:</p>
-
 <pre><code>-- Revert flipr:change_pass from oracle
-DROP PROCEDURE flipr.change_pass;
-</code></pre>
-
+DROP PROCEDURE flipr.change_pass;</code></pre>
 <p>Try em out!</p>
-
 <pre><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + insert_user .. No errors.
 ok
   + change_pass .. No errors.
-ok
-</code></pre>
-
+ok</code></pre>
 <p>Looks good. The &ldquo;No errors&rdquo; notices come from the <code>SHOW ERRORS</code> SQL*Plus
 command. It&rsquo;s not very useful here, but very useful if there are compilation
 errors. If it bothers you, you can drop the <code>SHOW ERRORS</code> line and select the
@@ -926,8 +743,7 @@ error for display in the <code>DECLARE</code> block, instead.</p>
 
 <p>Now, do we have the functions? Of course we do, they were verified. Still,
 have a look:</p>
-
-<pre><code>&gt; echo &quot;DESCRIBE flipr.insert_user;\nDESCRIBE flipr.change_pass;&quot; \
+<pre><code>&gt; echo &#34;DESCRIBE flipr.insert_user;\nDESCRIBE flipr.change_pass;&#34; \
 | sqlplus -S scott/tiger@flipr_test
 
 PROCEDURE flipr.insert_user
@@ -941,11 +757,8 @@ PROCEDURE flipr.change_pass
  ------------------------------ ----------------------- ------ --------
  NICK                         VARCHAR2                IN
  OLDPASS                      VARCHAR2                IN
- NEWPASS                      VARCHAR2                IN
-</code></pre>
-
+ NEWPASS                      VARCHAR2                IN</code></pre>
 <p>And what&rsquo;s the status?</p>
-
 <pre><code>&gt; sqitch status 
 # On database flipr_test
 # Project:  flipr
@@ -954,29 +767,23 @@ PROCEDURE flipr.change_pass
 # Deployed: 2013-12-31 16:37:22 -0800
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
-Nothing to deploy (up-to-date)
-</code></pre>
-
+Nothing to deploy (up-to-date)</code></pre>
 <p>Looks good. Let&rsquo;s make sure revert works:</p>
-
 <pre><code>&gt; sqitch revert -y --to @HEAD^^
 Reverting changes to users from flipr_test
   - change_pass .. ok
   - insert_user .. ok
-&gt; echo &quot;DESCRIBE flipr.insert_user;\nDESCRIBE flipr.change_pass;&quot; \
+&gt; echo &#34;DESCRIBE flipr.insert_user;\nDESCRIBE flipr.change_pass;&#34; \
 | sqlplus -S dwheeler/dwheeler@flipr_test
 ERROR:
 ORA-04043: object flipr.insert_user does not exist
 
 ERROR:
-ORA-04043: object flipr.change_pass does not exist
-</code></pre>
-
+ORA-04043: object flipr.change_pass does not exist</code></pre>
 <p>Note the use of <code>@HEAD^^</code> to specify that the revert be to two changes prior
 the last deployed change. Looks good. Let&rsquo;s do the commit and re-deploy dance:</p>
-
 <pre><code> &gt; git add .
- &gt; git commit -m 'Add `insert_user()` and `change_pass()`.'
+ &gt; git commit -m &#39;Add `insert_user()` and `change_pass()`.&#39;
  [master 6b6797e] Add `insert_user()` and `change_pass()`.
   7 files changed, 92 insertions(+)
   create mode 100644 deploy/change_pass.sql
@@ -1009,28 +816,22 @@ the last deployed change. Looks good. Let&rsquo;s do the commit and re-deploy da
    * users ........ ok
    * insert_user .. ok
    * change_pass .. ok
- Verify successful
-</code></pre>
-
+ Verify successful</code></pre>
 <p>Great, we&rsquo;re fully up-to-date!</p>
 
 <h2 id="ship-it">Ship It!</h2>
 
 <p>Let&rsquo;s do a first release of our app. Let&rsquo;s call it <code>1.0.0-dev1</code> Since we want
 to have it go out with deployments tied to the release, let&rsquo;s tag it:</p>
-
-<pre><code>&gt; sqitch tag v1.0.0-dev1 -n 'Tag v1.0.0-dev1.'
-Tagged &quot;change_pass&quot; with @v1.0.0-dev1
-&gt; git commit -am 'Tag the database with v1.0.0-dev1.'
+<pre><code>&gt; sqitch tag v1.0.0-dev1 -n &#39;Tag v1.0.0-dev1.&#39;
+Tagged &#34;change_pass&#34; with @v1.0.0-dev1
+&gt; git commit -am &#39;Tag the database with v1.0.0-dev1.&#39;
 [master eae5f71] Tag the database with v1.0.0-dev1.
  1 file changed, 1 insertion(+)
-&gt; git tag v1.0.0-dev1 -am 'Tag v1.0.0-dev1'
-</code></pre>
-
+&gt; git tag v1.0.0-dev1 -am &#39;Tag v1.0.0-dev1&#39;</code></pre>
 <p>We can try deploying to make sure the tag gets picked up by deploying to a new
 database, like so (assuming you have an Oracle SID named <code>flipr_dev</code> that
 points to a different database):</p>
-
 <pre><code>&gt; sqitch deploy db:oracle://scott:tiger@/flipr_dev
 Adding registry tables to db:oracle://scott:@/flipr_dev
 Deploying changes to db:oracle://scott:@/flipr_dev
@@ -1039,12 +840,9 @@ Deploying changes to db:oracle://scott:@/flipr_dev
   + insert_user ............... No errors.
 ok
   + change_pass @v1.0.0-dev1 .. No errors.
-ok
-</code></pre>
-
+ok</code></pre>
 <p>Great, all four changes were deployed and <code>change_pass</code> was tagged with
 <code>@v1.0.0-dev1</code>. Let&rsquo;s have a look at the status:</p>
-
 <pre><code>&gt; sqitch status db:oracle://scott:tiger@/flipr_dev
 # On database db:oracle://scott:tiger@/flipr_dev
 # Project:  flipr
@@ -1054,12 +852,9 @@ ok
 # Deployed: 2013-12-31 16:40:02 -0800
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
-Nothing to deploy (up-to-date)
-</code></pre>
-
+Nothing to deploy (up-to-date)</code></pre>
 <p>Note the listing of the tag as part of the status message. Now let&rsquo;s bundle
 everything up for release:</p>
-
 <pre><code>&gt; sqitch bundle
 Bundling into bundle/
 Writing config
@@ -1068,14 +863,11 @@ Writing scripts
   + appschema
   + users
   + insert_user
-  + change_pass @v1.0.0-dev1
-</code></pre>
-
+  + change_pass @v1.0.0-dev1</code></pre>
 <p>Now we can package the <code>bundle</code> directory and distribute it. When it gets
 installed somewhere, users can use Sqitch to deploy to the database. Let&rsquo;s try
 deploying it to yet another database (again, assuming you have a SID named
 <code>flipr_prod</code>:</p>
-
 <pre><code>&gt; cd bundle
 &gt; sqitch deploy db:oracle://scott:tiger@/flipr_prod
 Adding registry tables to db:oracle://scott:@/flipr_prod
@@ -1083,38 +875,26 @@ Deploying changes to flipr_prod
   + appschema ................. ok
   + users ..................... ok
   + insert_user ............... ok
-  + change_pass @v1.0.0-dev1 .. ok
-</code></pre>
-
+  + change_pass @v1.0.0-dev1 .. ok</code></pre>
 <p>Looks much the same as before, eh? Package it up and ship it!</p>
-
 <pre><code>&gt; cd ..
 &gt; mv bundle flipr-v1.0.0-dev1
-&gt; tar -czf flipr-v1.0.0-dev1.tgz flipr-v1.0.0-dev1
-</code></pre>
-
+&gt; tar -czf flipr-v1.0.0-dev1.tgz flipr-v1.0.0-dev1</code></pre>
 <h2 id="flip-out">Flip Out</h2>
 
 <p>Now that we&rsquo;ve got the basics of user management done, let&rsquo;s get to work on
 the core of our product, the &ldquo;flip.&rdquo; Since other folks are working on other
 tasks in the repository, we&rsquo;ll work on a branch, so we can all stay out of
 each other&rsquo;s way. So let&rsquo;s branch:</p>
-
 <pre><code>&gt; git checkout -b flips
-Switched to a new branch 'flips'
-</code></pre>
-
+Switched to a new branch &#39;flips&#39;</code></pre>
 <p>Now we can add a new change to create a table for our flips.</p>
-
-<pre><code>&gt; sqitch add flips -r appschema -r users -n 'Adds table for storing flips.'
+<pre><code>&gt; sqitch add flips -r appschema -r users -n &#39;Adds table for storing flips.&#39;
 Created deploy/flips.sql
 Created revert/flips.sql
 Created verify/flips.sql
-Added &quot;flips [appschema users]&quot; to sqitch.plan
-</code></pre>
-
+Added &#34;flips [appschema users]&#34; to sqitch.plan</code></pre>
 <p>You know the drill by now. Edit <code>deploy/flips.sql</code>:</p>
-
 <pre><code>-- Deploy flipr:flips to oracle
 -- requires: appschema
 -- requires: users
@@ -1136,32 +916,20 @@ BEGIN
     SELECT flipr.flip_id_seq.nextval INTO v_id FROM DUAL;
     :new.id := v_id;
 END;
-/
-</code></pre>
-
+/</code></pre>
 <p>Edit <code>verify/flips.sql</code>:</p>
-
 <pre><code>-- Verify flipr:flips on oracle
-DESCRIBE flipr.flips;
-</code></pre>
-
+DESCRIBE flipr.flips;</code></pre>
 <p>And edit <code>revert/flips.sql</code>:</p>
-
 <pre><code>-- Revert flipr:flips from oracle
 DROP TRIGGER  flipr.flip_pk;
 DROP SEQUENCE flipr.flip_id_seq;
-DROP TABLE    flipr.flips;
-</code></pre>
-
+DROP TABLE    flipr.flips;</code></pre>
 <p>And give it a whirl:</p>
-
 <pre><code>&gt; sqitch deploy
 Deploying changes to flipr_test
-  + flips .. ok
-</code></pre>
-
+  + flips .. ok</code></pre>
 <p>Look good?</p>
-
 <pre><code>&gt; sqitch status --show-tags
 # On database flipr_test
 # Project:  flipr
@@ -1173,26 +941,20 @@ Deploying changes to flipr_test
 # Tag:
 #   @v1.0.0-dev1 - 2013-12-31 16:44:00 -0800 - Marge N. O’Vera &lt;marge@example.com&gt;
 # 
-Nothing to deploy (up-to-date)
-</code></pre>
-
+Nothing to deploy (up-to-date)</code></pre>
 <p>Note the use of <code>--show-tags</code> to show all the deployed tags. Now make it so:</p>
-
 <pre><code>&gt; git add .
-&gt; git commit -am 'Add flips table.'
+&gt; git commit -am &#39;Add flips table.&#39;
 [flips bbea131] Add flips table.
  4 files changed, 32 insertions(+)
  create mode 100644 deploy/flips.sql
  create mode 100644 revert/flips.sql
- create mode 100644 verify/flips.sql
-</code></pre>
-
+ create mode 100644 verify/flips.sql</code></pre>
 <h2 id="wash-rinse-repeat">Wash, Rinse, Repeat</h2>
 
 <p>Now comes the time to add functions to manage flips. I&rsquo;m sure you have things
 nailed down now. Go ahead and add <code>insert_flip</code> and <code>delete_flip</code> changes
 and commit them. The <code>insert_flip</code> deploy script might look something like:</p>
-
 <pre><code>-- Deploy flipr:insert_flip to oracle
 -- requires: flips
 -- requires: appschema
@@ -1216,19 +978,16 @@ BEGIN
     SELECT COUNT(*)
       INTO l_err_count
       FROM all_errors
-     WHERE owner = 'FLIPR'
-       AND name  = 'INSERT_FLIP';
+     WHERE owner = &#39;FLIPR&#39;
+       AND name  = &#39;INSERT_FLIP&#39;;
 
     IF l_err_count &gt; 0 THEN
-        EXECUTE IMMEDIATE 'DROP PROCEDURE flipr.insert_flip';
-        raise_application_error(-20001, 'Errors in FLIPR.INSERT_FLIP');
+        EXECUTE IMMEDIATE &#39;DROP PROCEDURE flipr.insert_flip&#39;;
+        raise_application_error(-20001, &#39;Errors in FLIPR.INSERT_FLIP&#39;);
     END IF;
 END;
-/
-</code></pre>
-
+/</code></pre>
 <p>And the <code>delete_flip</code> deploy script might look something like:</p>
-
 <pre><code>-- Deploy flipr:delete_flip to oracle
 -- requires: flips
 -- requires: appschema
@@ -1252,46 +1011,31 @@ BEGIN
     SELECT COUNT(*)
       INTO l_err_count
       FROM all_errors
-     WHERE owner = 'FLIPR'
-       AND name  = 'DELETE_FLIP';
+     WHERE owner = &#39;FLIPR&#39;
+       AND name  = &#39;DELETE_FLIP&#39;;
 
     IF l_err_count &gt; 0 THEN
-        EXECUTE IMMEDIATE 'DROP PROCEDURE flipr.delete_flip';
-        raise_application_error(-20001, 'Errors in FLIPR.DELETE_FLIP');
+        EXECUTE IMMEDIATE &#39;DROP PROCEDURE flipr.delete_flip&#39;;
+        raise_application_error(-20001, &#39;Errors in FLIPR.DELETE_FLIP&#39;);
     END IF;
 END;
-/
-</code></pre>
-
+/</code></pre>
 <p>The <code>verify</code> scripts are:</p>
-
 <pre><code>-- Verify flipr:insert_flip on oracle
-DESCRIBE flipr.insert_flip;
-</code></pre>
-
+DESCRIBE flipr.insert_flip;</code></pre>
 <p>And:</p>
-
 <pre><code>-- Verify flipr:delete_flip on oracle
-DESCRIBE flipr.delete_flip;
-</code></pre>
-
+DESCRIBE flipr.delete_flip;</code></pre>
 <p>The <code>revert</code> scripts are:</p>
-
 <pre><code>-- Revert flipr:insert_flip from oracle
-DROP PROCEDURE flipr.insert_flip;
-</code></pre>
-
+DROP PROCEDURE flipr.insert_flip;</code></pre>
 <p>And:</p>
-
 <pre><code>-- Revert flipr:delete_flip from oracle
-DROP PROCEDURE flipr.delete_flip;
-</code></pre>
-
+DROP PROCEDURE flipr.delete_flip;</code></pre>
 <p>Check the <a href="https://github.com/sqitchers/sqitch-oracle-intro">example git repository</a> for
 the complete details. Test <a href="/docs/manual/sqitch-deploy"><code>deploy</code></a> and
 <a href="/docs/manual/sqitch-revert"><code>revert</code></a>, then commit it to the repository. The status
 should end up looking something like this:</p>
-
 <pre><code>&gt; sqitch status --show-tags
 # On database flipr_test
 # Project:  flipr
@@ -1303,17 +1047,14 @@ should end up looking something like this:</p>
 # Tag:
 #   @v1.0.0-dev1 - 2013-12-31 16:44:00 -0800 - Marge N. O’Vera &lt;marge@example.com&gt;
 # 
-Nothing to deploy (up-to-date)
-</code></pre>
-
+Nothing to deploy (up-to-date)</code></pre>
 <p>Good, we&rsquo;ve finished this feature. Time to merge back into <code>master</code>.</p>
 
 <h3 id="emergency">Emergency</h3>
 
 <p>Let&rsquo;s do it:</p>
-
 <pre><code>&gt; git checkout master
-Switched to branch 'master'
+Switched to branch &#39;master&#39;
 &gt; git pull
 Updating eae5f71..a16f97c
 Fast-forward
@@ -1336,19 +1077,14 @@ Fast-forward
  create mode 100644 revert/lists.sql
  create mode 100644 verify/delete_list.sql
  create mode 100644 verify/insert_list.sql
- create mode 100644 verify/lists.sql
-</code></pre>
-
+ create mode 100644 verify/lists.sql</code></pre>
 <p>Hrm, that&rsquo;s interesting. Looks like someone made some changes to <code>master</code>.
 They added list support. Well, let&rsquo;s see what happens when we merge our
 changes.</p>
-
 <pre><code>&gt; git merge --no-ff flips
 Auto-merging sqitch.plan
 CONFLICT (content): Merge conflict in sqitch.plan
-Automatic merge failed; fix conflicts and then commit the result.
-</code></pre>
-
+Automatic merge failed; fix conflicts and then commit the result.</code></pre>
 <p>Oh, a conflict in <code>sqitch.plan</code>. Not too surprising, since both the merged
 <code>lists</code> branch and our <code>flips</code> branch added changes to the plan. Let&rsquo;s try a
 different approach.</p>
@@ -1368,16 +1104,12 @@ VCS is not Git.</li>
 </ul>
 
 <p>So let&rsquo;s restore things to how they were at master:</p>
-
 <pre><code>&gt; git reset --hard HEAD
-HEAD is now at a16f97c Merge branch 'lists'
-</code></pre>
-
+HEAD is now at a16f97c Merge branch &#39;lists&#39;</code></pre>
 <p>That throws out our botched merge. Now let&rsquo;s go back to our branch and rebase
 it on <code>master</code>:</p>
-
 <pre><code>&gt; git checkout flips
-Switched to branch 'flips'
+Switched to branch &#39;flips&#39;
 &gt; git rebase master
 First, rewinding head to replay your work on top of it...
 Applying: Add flips table.
@@ -1391,11 +1123,9 @@ Patch failed at 0001 Add flips table.
 The copy of the patch that failed is found in:
    .git/rebase-apply/patch
 
-When you have resolved this problem, run &quot;git rebase --continue&quot;.
-If you prefer to skip this patch, run &quot;git rebase --skip&quot; instead.
-To check out the original branch and stop rebasing, run &quot;git rebase --abort&quot;.
-</code></pre>
-
+When you have resolved this problem, run &#34;git rebase --continue&#34;.
+If you prefer to skip this patch, run &#34;git rebase --skip&#34; instead.
+To check out the original branch and stop rebasing, run &#34;git rebase --abort&#34;.</code></pre>
 <p>Oy, that&rsquo;s kind of a pain. It seems like no matter what we do, we&rsquo;ll need to
 resolve conflicts in that file. Except in Git. Fortunately for us, we can tell
 Git to resolve conflicts in <code>sqitch.plan</code> differently. Because we only ever
@@ -1413,13 +1143,9 @@ not use this if you do not understand the implications.</p>
 <p>This has the effect of appending lines from all the merging files, which is
 exactly what we need. So let&rsquo;s give it a try. First, back out the botched
 rebase:</p>
-
-<pre><code>&gt; git rebase --abort
-</code></pre>
-
+<pre><code>&gt; git rebase --abort</code></pre>
 <p>Now add the union merge driver to <code>.gitattributes</code> for <code>sqitch.plan</code>
 and rebase again:</p>
-
 <pre><code>&gt; echo sqitch.plan merge=union &gt; .gitattributes
 &gt; git rebase master
 First, rewinding head to replay your work on top of it...
@@ -1432,11 +1158,8 @@ Applying: Add functions to insert and delete flips.
 Using index info to reconstruct a base tree...
 M     sqitch.plan
 Falling back to patching base and 3-way merge...
-Auto-merging sqitch.plan
-</code></pre>
-
+Auto-merging sqitch.plan</code></pre>
 <p>Ah, that looks a bit better. Let&rsquo;s have a look at the plan:</p>
-
 <pre><code>&gt; cat sqitch.plan 
 %syntax-version=1.0.0
 %project=flipr
@@ -1453,13 +1176,10 @@ insert_list [lists appschema] 2014-01-01T00:45:24Z Marge N. O’Vera &lt;marge@e
 delete_list [lists appschema] 2014-01-01T00:45:43Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to delete a list.
 flips [appschema users] 2014-01-01T00:51:15Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing flips.
 insert_flip [flips appschema] 2014-01-01T00:53:00Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a flip.
-delete_flip [flips appschema] 2014-01-01T00:53:16Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to delete a flip.
-</code></pre>
-
+delete_flip [flips appschema] 2014-01-01T00:53:16Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to delete a flip.</code></pre>
 <p>Note that it has appended the changes from the merged &ldquo;lists&rdquo; branch, and then
 merged the changes from our &ldquo;flips&rdquo; branch. Test it to make sure it works as
 expected:</p>
-
 <pre><code>&gt; sqitch rebase -y
 Reverting all changes from flipr_test
   - delete_flip ............... ok
@@ -1485,30 +1205,24 @@ ok
   + insert_flip ............... No errors.
 ok
   + delete_flip ............... No errors.
-ok
-</code></pre>
-
+ok</code></pre>
 <p>Note the use of <a href="/docs/manual/sqitch-rebase"><code>rebase</code></a>, which combines a
 <a href="/docs/manual/sqitch-revert"><code>revert</code></a> and a <a href="/docs/manual/sqitch-deploy"><code>deploy</code></a> into a single
 command. Handy, right? It correctly reverted our changes, and then deployed
 them all again in the proper order. So let&rsquo;s commit <code>.gitattributes</code>; seems
 worthwhile to keep that change:</p>
-
 <pre><code>&gt; git add .
-&gt; git commit -m 'Add `.gitattributes` with union merge for `sqitch.plan`.'
+&gt; git commit -m &#39;Add `.gitattributes` with union merge for `sqitch.plan`.&#39;
 [flips 383691f] Add `.gitattributes` with union merge for `sqitch.plan`.
  1 file changed, 1 insertion(+)
- create mode 100644 .gitattributes
-</code></pre>
-
+ create mode 100644 .gitattributes</code></pre>
 <h3 id="merges-mastered">Merges Mastered</h3>
 
 <p>And now, finally, we can merge into <code>master</code>:</p>
-
 <pre><code>&gt; git checkout master
-Switched to branch 'master'
-&gt; git merge --no-ff flips -m &quot;Merge branch 'flips'&quot;
-Merge made by the 'recursive' strategy.
+Switched to branch &#39;master&#39;
+&gt; git merge --no-ff flips -m &#34;Merge branch &#39;flips&#39;&#34;
+Merge made by the &#39;recursive&#39; strategy.
  .gitattributes         |  1 +
  deploy/delete_flip.sql | 32 ++++++++++++++++++++++++++++++++
  deploy/flips.sql       | 22 ++++++++++++++++++++++
@@ -1530,11 +1244,8 @@ Merge made by the 'recursive' strategy.
  create mode 100644 revert/insert_flip.sql
  create mode 100644 verify/delete_flip.sql
  create mode 100644 verify/flips.sql
- create mode 100644 verify/insert_flip.sql
-</code></pre>
-
+ create mode 100644 verify/insert_flip.sql</code></pre>
 <p>And double-check our work:</p>
-
 <pre><code>&gt; cat sqitch.plan 
 %syntax-version=1.0.0
 %project=flipr
@@ -1551,19 +1262,16 @@ insert_list [lists appschema] 2014-01-01T00:45:24Z Marge N. O’Vera &lt;marge@e
 delete_list [lists appschema] 2014-01-01T00:45:43Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to delete a list.
 flips [appschema users] 2014-01-01T00:51:15Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing flips.
 insert_flip [flips appschema] 2014-01-01T00:53:00Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a flip.
-delete_flip [flips appschema] 2014-01-01T00:53:16Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to delete a flip.
-</code></pre>
-
+delete_flip [flips appschema] 2014-01-01T00:53:16Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to delete a flip.</code></pre>
 <p>Much much better, a nice clean master now. And because it is now identical to
 the &ldquo;flips&rdquo; branch, we can just carry on. Go ahead and tag it, bundle, and
 release:</p>
-
-<pre><code>&gt; sqitch tag v1.0.0-dev2 -n 'Tag v1.0.0-dev2.'
-Tagged &quot;delete_flip&quot; with @v1.0.0-dev2
-&gt; git commit -am 'Tag the database with v1.0.0-dev2.'
+<pre><code>&gt; sqitch tag v1.0.0-dev2 -n &#39;Tag v1.0.0-dev2.&#39;
+Tagged &#34;delete_flip&#34; with @v1.0.0-dev2
+&gt; git commit -am &#39;Tag the database with v1.0.0-dev2.&#39;
 [master 5427456] Tag the database with v1.0.0-dev2.
  1 file changed, 1 insertion(+)
-&gt; git tag v1.0.0-dev2 -am 'Tag v1.0.0-dev2'
+&gt; git tag v1.0.0-dev2 -am &#39;Tag v1.0.0-dev2&#39;
 &gt; sqitch bundle --dest-dir flipr-1.0.0-dev2 
 Bundling into flipr-1.0.0-dev2
 Writing config
@@ -1578,9 +1286,7 @@ Writing scripts
   + delete_list
   + flips
   + insert_flip
-  + delete_flip @v1.0.0-dev2
-</code></pre>
-
+  + delete_flip @v1.0.0-dev2</code></pre>
 <p>Note the use of the <code>--dest-dir</code> option to <code>sqitch bundle</code>. Just a nicer way
 to create the top-level directory name so we don&rsquo;t have to rename it from
 <code>bundle</code>.</p>
@@ -1589,13 +1295,12 @@ to create the top-level directory name so we don&rsquo;t have to rename it from
 
 <p>Uh-oh, someone just noticed that MD5 hashing is not particularly secure. Why?
 Have a look at this:</p>
-
-<pre><code>&gt; echo &quot;
+<pre><code>&gt; echo &#34;
     DELETE FROM flipr.users;
-    EXECUTE flipr.insert_user('foo', 's3cr3t');
-    EXECUTE flipr.insert_user('bar', 's3cr3t');
+    EXECUTE flipr.insert_user(&#39;foo&#39;, &#39;s3cr3t&#39;);
+    EXECUTE flipr.insert_user(&#39;bar&#39;, &#39;s3cr3t&#39;);
     SELECT nickname, password FROM flipr.users;
-&quot; | sqlplus -S scott/tiger@flipr_test
+&#34; | sqlplus -S scott/tiger@flipr_test
 
 PL/SQL procedure successfully completed.
 
@@ -1611,9 +1316,7 @@ foo
 a4d80eac9ab26a4a2da04125bc2c096a
 
 bar
-a4d80eac9ab26a4a2da04125bc2c096a
-</code></pre>
-
+a4d80eac9ab26a4a2da04125bc2c096a</code></pre>
 <p>If user &ldquo;foo&rdquo; ever got access to the database, she could quickly discover that
 user &ldquo;bar&rdquo; has the same password and thus be able to exploit the account. Not
 a great idea. So we need to modify the <code>insert_user()</code> and <code>change_pass()</code>
@@ -1623,7 +1326,6 @@ functions to fix that. How?</p>
 <a href="https://en.wikipedia.org/wiki/Salt_(cryptography)">cryptographic salt</a>. This
 will allow the password hashes to be stored with random hashing. So we&rsquo;ll need
 to add the function. The deploy script should be:</p>
-
 <pre><code>-- Deploy flipr:crypt to oracle
 -- requires: appschema
 
@@ -1648,29 +1350,21 @@ BEGIN
     SELECT COUNT(*)
       INTO l_err_count
       FROM all_errors
-     WHERE owner = 'FLIPR'
-       AND name  = 'CRYPT';
+     WHERE owner = &#39;FLIPR&#39;
+       AND name  = &#39;CRYPT&#39;;
 
     IF l_err_count &gt; 0 THEN
-        EXECUTE IMMEDIATE 'DROP PROCEDURE flipr.crypt';
-        raise_application_error(-20001, 'Errors in FLIPR.CRYPT');
+        EXECUTE IMMEDIATE &#39;DROP PROCEDURE flipr.crypt&#39;;
+        raise_application_error(-20001, &#39;Errors in FLIPR.CRYPT&#39;);
     END IF;
 END;
-/
-</code></pre>
-
+/</code></pre>
 <p>And the revert script should be:</p>
-
 <pre><code>-- Revert flipr:crypt. from oracle
-DROP FUNCTION flipr.crypt;
-</code></pre>
-
+DROP FUNCTION flipr.crypt;</code></pre>
 <p>And, as usual, the verify script should just use <code>DESCRIBE</code>:</p>
-
 <pre><code>-- Verify flipr:crypt on oracle
-DESCRIBE flipr.crypt;
-</code></pre>
-
+DESCRIBE flipr.crypt;</code></pre>
 <p>With that change in place and committed, we&rsquo;re ready to make use of the
 improved encryption. But how to deploy the changes to <code>insert_user()</code> and
 <code>change_pass()</code>?</p>
@@ -1701,40 +1395,34 @@ anyway, right? Well we have, with <code>@v1.0.0-dev2</code> added in the previou
 section. With that, we can let Sqitch do most of the hard work for us, thanks
 to the <a href="/docs/manual/sqitch-rework"><code>rework</code></a> command, which is similar to
 <a href="/docs/manual/sqitch-add"><code>add</code></a>, including support for the <code>--requires</code> option:</p>
-
-<pre><code>&gt; sqitch rework insert_user --requires crypt -n 'Change insert_user to use crypt.'
-Added &quot;insert_user [insert_user@v1.0.0-dev2 crypt]&quot; to sqitch.plan.
+<pre><code>&gt; sqitch rework insert_user --requires crypt -n &#39;Change insert_user to use crypt.&#39;
+Added &#34;insert_user [insert_user@v1.0.0-dev2 crypt]&#34; to sqitch.plan.
 Modify these files as appropriate:
   * deploy/insert_user.sql
   * revert/insert_user.sql
-  * verify/insert_user.sql
-</code></pre>
-
+  * verify/insert_user.sql</code></pre>
 <p>Oh, so we can edit those files in place. Nice! How does Sqitch do it? Well, in
 point of fact, it has copied the files to stand in for the previous instance
 of the <code>insert_user</code> change, which we can see via <code>git status</code>:</p>
-
 <pre><code>&gt; git status
 # On branch master
-# Your branch is ahead of 'origin/master' by 2 commits.
-#   (use &quot;git push&quot; to publish your local commits)
+# Your branch is ahead of &#39;origin/master&#39; by 2 commits.
+#   (use &#34;git push&#34; to publish your local commits)
 #
 # Changes not staged for commit:
-#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
-#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#   (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
+#   (use &#34;git checkout -- &lt;file&gt;...&#34; to discard changes in working directory)
 #
 #     modified:   revert/insert_user.sql
 #     modified:   sqitch.plan
 #
 # Untracked files:
-#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+#   (use &#34;git add &lt;file&gt;...&#34; to include in what will be committed)
 #
 #     deploy/insert_user@v1.0.0-dev2.sql
 #     revert/insert_user@v1.0.0-dev2.sql
 #     verify/insert_user@v1.0.0-dev2.sql
-no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
-</code></pre>
-
+no changes added to commit (use &#34;git add&#34; and/or &#34;git commit -a&#34;)</code></pre>
 <p>The &ldquo;untracked files&rdquo; part of the output is the first thing to notice. They
 are all named <code>insert_user@v1.0.0-dev2.sql</code>. What that means is: &ldquo;the
 <code>insert_user</code> change as it was implemented as of the <code>@v1.0.0-dev2</code> tag.&rdquo;
@@ -1764,7 +1452,6 @@ no duplicates or errors.</p>
 <p>As a result, there is no need to explicitly add changes. So go ahead. Modify the
 script to switch to <code>crypt()</code>. Make this change to
 <code>deploy/insert_user.sql</code>:</p>
-
 <pre><code> @@ -1,6 +1,7 @@
   -- Deploy flipr:insert_user to oracle
   -- requires: users
@@ -1780,24 +1467,18 @@ script to switch to <code>crypt()</code>. Make this change to
  -        LOWER( RAWTOHEX( UTL_RAW.CAST_TO_RAW(
  -             sys.dbms_obfuscation_toolkit.md5(input_string =&gt; password)
  -        ) ) ),
- +        flipr.crypt(password, DBMS_RANDOM.STRING('p', 10)),
+ +        flipr.crypt(password, DBMS_RANDOM.STRING(&#39;p&#39;, 10)),
           DEFAULT
       );
-  END;
-</code></pre>
-
+  END;</code></pre>
 <p>Go ahead and rework the <code>change_pass</code> change, too:</p>
-
-<pre><code>&gt; sqitch rework change_pass --requires crypt -n 'Change change_pass to use crypt.' 
-Added &quot;change_pass [change_pass@v1.0.0-dev2 crypt]&quot; to sqitch.plan.
+<pre><code>&gt; sqitch rework change_pass --requires crypt -n &#39;Change change_pass to use crypt.&#39; 
+Added &#34;change_pass [change_pass@v1.0.0-dev2 crypt]&#34; to sqitch.plan.
 Modify these files as appropriate:
   * deploy/change_pass.sql
   * revert/change_pass.sql
-  * verify/change_pass.sql
-</code></pre>
-
+  * verify/change_pass.sql</code></pre>
 <p>And make this change to <code>deploy/change_pass.sql</code>:</p>
-
 <pre><code> @@ -1,6 +1,7 @@
   -- Deploy flipr:change_pass to oracle
   -- requires: users
@@ -1813,7 +1494,7 @@ Modify these files as appropriate:
  -       SET password = LOWER( RAWTOHEX( UTL_RAW.CAST_TO_RAW(
  -               sys.dbms_obfuscation_toolkit.md5(input_string =&gt; newpass)
  -           ) ) )
- +       SET password = flipr.crypt(newpass, DBMS_RANDOM.STRING('p', 10))
+ +       SET password = flipr.crypt(newpass, DBMS_RANDOM.STRING(&#39;p&#39;, 10))
        WHERE nickname = nick
  -       AND password = LOWER( RAWTOHEX( UTL_RAW.CAST_TO_RAW(
  -               sys.dbms_obfuscation_toolkit.md5(input_string =&gt; oldpass)
@@ -1821,27 +1502,21 @@ Modify these files as appropriate:
  +       AND password = flipr.crypt(oldpass, password);
        IF SQL%ROWCOUNT = 0 THEN RAISE flipr_auth_failed; END IF;
   END;
-  /
-</code></pre>
-
+  /</code></pre>
 <p>And then try a deployment:</p>
-
 <pre><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + insert_user .. No errors.
 ok
   + change_pass .. No errors.
-ok
-</code></pre>
-
+ok</code></pre>
 <p>So, are the changes deployed?</p>
-
-<pre><code>&gt; echo &quot;
+<pre><code>&gt; echo &#34;
     DELETE FROM flipr.users;
-    EXECUTE flipr.insert_user('foo', 's3cr3t');
-    EXECUTE flipr.insert_user('bar', 's3cr3t');
+    EXECUTE flipr.insert_user(&#39;foo&#39;, &#39;s3cr3t&#39;);
+    EXECUTE flipr.insert_user(&#39;bar&#39;, &#39;s3cr3t&#39;);
     SELECT nickname, password FROM flipr.users;
-&quot; | sqlplus -S scott/tiger@flipr_test
+&#34; | sqlplus -S scott/tiger@flipr_test
 
 PL/SQL procedure successfully completed.
 
@@ -1857,28 +1532,22 @@ foo
 cP?.eR!V[pf3d91ce9b7dcfe9260c6f4bb94ed0b22
 
 bar
-Z+l&quot;_W_JiSefb62b789c0ff114cddcccc69c422e78
-</code></pre>
-
+Z+l&#34;_W_JiSefb62b789c0ff114cddcccc69c422e78</code></pre>
 <p>Awesome, the stored passwords are different now. But can we revert, even
 though we haven&rsquo;t written any reversion scripts?</p>
-
 <pre><code>&gt; sqitch revert --to @HEAD^^ -y
 Reverting changes to crypt from flipr_test
   - change_pass .. No errors.
 ok
   - insert_user .. No errors.
-ok
-</code></pre>
-
+ok</code></pre>
 <p>Did that work, are the MD5 passwords back?</p>
-
-<pre><code>&gt; echo &quot;
+<pre><code>&gt; echo &#34;
     DELETE FROM flipr.users;
-    EXECUTE flipr.insert_user('foo', 's3cr3t');
-    EXECUTE flipr.insert_user('bar', 's3cr3t');
+    EXECUTE flipr.insert_user(&#39;foo&#39;, &#39;s3cr3t&#39;);
+    EXECUTE flipr.insert_user(&#39;bar&#39;, &#39;s3cr3t&#39;);
     SELECT nickname, password FROM flipr.users;
-&quot; | sqlplus -S scott/tiger@flipr_test
+&#34; | sqlplus -S scott/tiger@flipr_test
 
 PL/SQL procedure successfully completed.
 
@@ -1894,9 +1563,7 @@ foo
 a4d80eac9ab26a4a2da04125bc2c096a
 
 bar
-a4d80eac9ab26a4a2da04125bc2c096a
-</code></pre>
-
+a4d80eac9ab26a4a2da04125bc2c096a</code></pre>
 <p>Yes, it works! Sqitch properly finds the original instances of these changes
 in the new script files that include tags.</p>
 
@@ -1905,45 +1572,35 @@ been modified to use <code>crypt()</code>? I think the simplest thing to do is t
 examine the body of the function by querying the
 <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14237/statviews_2063.htm"><code>all_source</code></a>
 view. So the <code>insert_user</code> verify script looks like this:</p>
-
 <pre><code>-- Verify flipr:insert_user on oracle
 
 DESCRIBE flipr.insert_user;
 
 SELECT 1/COUNT(*)
   FROM all_source
- WHERE type = 'PROCEDURE'
-   AND name = 'INSERT_USER'
-   AND text LIKE '%flipr.crypt(password, DBMS_RANDOM.STRING(''p'', 10))%';
-</code></pre>
-
+ WHERE type = &#39;PROCEDURE&#39;
+   AND name = &#39;INSERT_USER&#39;
+   AND text LIKE &#39;%flipr.crypt(password, DBMS_RANDOM.STRING(&#39;&#39;p&#39;&#39;, 10))%&#39;;</code></pre>
 <p>And the <code>change_pass</code> verify script looks like this:</p>
-
 <pre><code>-- Verify flipr:change_pass on oracle
 
 DESCRIBE flipr.change_pass;
 
 SELECT 1/COUNT(*)
   FROM all_source
- WHERE type = 'PROCEDURE'
-   AND name = 'CHANGE_PASS'
-   AND text LIKE '%password = flipr.crypt(newpass, DBMS_RANDOM.STRING(''p'', 10))%';
-</code></pre>
-
+ WHERE type = &#39;PROCEDURE&#39;
+   AND name = &#39;CHANGE_PASS&#39;
+   AND text LIKE &#39;%password = flipr.crypt(newpass, DBMS_RANDOM.STRING(&#39;&#39;p&#39;&#39;, 10))%&#39;;</code></pre>
 <p>Make sure these pass by re-deploying:</p>
-
 <pre><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + insert_user .. No errors.
 ok
   + change_pass .. No errors.
-ok
-</code></pre>
-
+ok</code></pre>
 <p>Excellent. Let&rsquo;s go ahead and commit these changes:</p>
-
 <pre><code>&gt; git add .
-&gt; git commit -m 'Use crypt to encrypt passwords.'
+&gt; git commit -m &#39;Use crypt to encrypt passwords.&#39;
 [master be46175] Use crypt to encrypt passwords.
  13 files changed, 181 insertions(+), 15 deletions(-)
  create mode 100644 deploy/change_pass@v1.0.0-dev2.sql
@@ -1963,9 +1620,7 @@ ok
 # Deployed: 2013-12-31 17:18:28 -0800
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
-Nothing to deploy (up-to-date)
-</code></pre>
-
+Nothing to deploy (up-to-date)</code></pre>
 <h2 id="more-to-come">More to Come</h2>
 
 <p>Sqitch is a work in progress. Better integration with version control systems
@@ -1977,7 +1632,7 @@ is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 
 <h2 id="license">License</h2>
 
-<p>Copyright &copy; 2012-2018 iovation Inc.</p>
+<p>Copyright &copy; 2012-2020 iovation Inc.</p>
 
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal

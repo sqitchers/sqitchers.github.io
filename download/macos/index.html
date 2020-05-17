@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.55.0-DEV" />
+	<meta name="generator" content="Hugo 0.70.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -42,11 +42,8 @@
 Homebrew, configure the tap and then install the variants you need via the
 appropriate <code>--use-$engine-support</code> options. For example, to install Sqitch with
 <a href="https://postgresql.org/" title="PostgreSQL: The World's Most Advanced Open Source Relational Database">PostgreSQL</a> and <a href="https://sqlite.org/" title="SQLite: Small. Fast. Reliable. Choose any three.">SQLite</a> support:</p>
-
 <pre><code>brew tap sqitchers/sqitch
-brew install sqitch --with-postgres-support --with-sqlite-support
-</code></pre>
-
+brew install sqitch --with-postgres-support --with-sqlite-support</code></pre>
 <p>Some engines require the installation of dependencies in advance; consult <a href="https://github.com/sqitchers/homebrew-sqitch/#readme">the
 docs</a> for build details and options.</p>
 

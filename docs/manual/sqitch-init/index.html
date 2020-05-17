@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.55.0-DEV" />
+	<meta name="generator" content="Hugo 0.70.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -62,11 +62,8 @@
 <p>sqitch-init - Create a new Sqitch project</p>
 
 <h2 id="synopsis">Synopsis</h2>
-
 <pre><code>sqitch init &lt;project&gt;
-sqitch init &lt;project&gt; --uri &lt;uri&gt;
-</code></pre>
-
+sqitch init &lt;project&gt; --uri &lt;uri&gt;</code></pre>
 <h2 id="description">Description</h2>
 
 <p>This command creates an new Sqitch project &ndash; basically a <code>sqitch.conf</code> file,
@@ -79,20 +76,14 @@ things that are already there.</p>
 
 <ul>
 <li><p><code>--uri</code></p>
-
-<pre><code>sqitch init widgets --uri https://github.com/me/wigets
-</code></pre>
-
+<pre><code>sqitch init widgets --uri https://github.com/me/wigets</code></pre>
 <p>Optional URI to associate with the project. If present, the URI will be
 written to the project plan and used for added uniqueness in hashed object
 IDs, as well as to prevent the deployment of another project with the same
 name but different URI.</p></li>
 
 <li><p><code>--engine</code></p>
-
-<pre><code>sqitch init widgets --engine pg
-</code></pre>
-
+<pre><code>sqitch init widgets --engine pg</code></pre>
 <p>Specifies the default database engine to use in the project. Supported engines
 include:</p>
 
@@ -108,36 +99,24 @@ include:</p>
 </ul></li>
 
 <li><p><code>--top-dir</code></p>
-
-<pre><code>sqitch init widgets --top-dir sql
-</code></pre>
-
+<pre><code>sqitch init widgets --top-dir sql</code></pre>
 <p>Specifies the top directory to use for the project. Typically contains the
 deployment plan file and the change script directories.</p></li>
 
 <li><p><code>--plan-file</code></p></li>
 
 <li><p><code>-f</code></p>
-
-<pre><code>sqitch init widgets --plan-file my.plan
-</code></pre>
-
+<pre><code>sqitch init widgets --plan-file my.plan</code></pre>
 <p>Specifies the path to the deployment plan file. Defaults to
 <code>$top_dir/sqitch.plan</code>.</p></li>
 
 <li><p><code>--extension</code></p>
-
-<pre><code>sqitch init widgets --extension ddl
-</code></pre>
-
+<pre><code>sqitch init widgets --extension ddl</code></pre>
 <p>Specifies the file name extension to use for change script file names.
 Defaults to <code>sql</code>.</p></li>
 
 <li><p><code>--dir</code></p>
-
-<pre><code>sqitch init widgets --dir deploy=dep --dir revert=rev --dir verify=tst
-</code></pre>
-
+<pre><code>sqitch init widgets --dir deploy=dep --dir revert=rev --dir verify=tst</code></pre>
 <p>Sets the path to a script directory. May be specified multiple times.
 Supported keys are:</p>
 
@@ -152,28 +131,19 @@ Supported keys are:</p>
 </ul></li>
 
 <li><p><code>--target</code></p>
-
-<pre><code>sqitch init widgets --target db:pg:widgets
-</code></pre>
-
+<pre><code>sqitch init widgets --target db:pg:widgets</code></pre>
 <p>Specifies the name or <a href="https://github.com/libwww-perl/uri-db/">URI</a> of the default
 target database. If specified as a name, the default URI for the target will
 be <code>db:$engine:</code>.</p></li>
 
 <li><p><code>--registry</code></p>
-
-<pre><code>sqitch init widgets --registry meta
-</code></pre>
-
+<pre><code>sqitch init widgets --registry meta</code></pre>
 <p>Specifies the name of the database object where Sqitch&rsquo;s state and history
 data is stored. Typically a schema name (as in PostgreSQL and Oracle) or a
 database name (as in SQLite and MySQL). Defaults to <code>sqitch</code>.</p></li>
 
 <li><p><code>--client</code></p>
-
-<pre><code>sqitch init widgets --client /usr/local/pgsql/bin/psql
-</code></pre>
-
+<pre><code>sqitch init widgets --client /usr/local/pgsql/bin/psql</code></pre>
 <p>Specifies the path to the command-line client for the database engine.
 Defaults to a client in the current path named appropriately for the specified
 engine.</p></li>
@@ -256,21 +226,15 @@ what sorts of things are available to edit.</p>
 
 <p>Start a new Sqitch project named &ldquo;quack&rdquo; using the SQLite engine, setting the
 top directory for the project to <code>sqlite</code>:</p>
-
-<pre><code>sqitch init --engine sqlite --top-dir sqlite quack
-</code></pre>
-
+<pre><code>sqitch init --engine sqlite --top-dir sqlite quack</code></pre>
 <p>Start a new Sqitch project named &ldquo;bey&rdquo; using the PostgreSQL engine, setting
 the top directory to <code>postgres</code>, script extension to <code>ddl</code>, reworked
 directory to <code>reworked</code> and a version-specific client:</p>
-
 <pre><code>sqitch init --engine  pg \
             --top-dir postgres \
             --client  /opt/pgsql-9.1/bin/psql \
             --extension ddl --dir reworked=reworked \
-            bey
-</code></pre>
-
+            bey</code></pre>
 <h2 id="see-also">See Also</h2>
 
 <ul>

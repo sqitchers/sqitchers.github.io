@@ -5,8 +5,8 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="mobile-web-app-capable" content="yes" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Sqitch: sqitch-upgrade Documentation</title>
-	<meta name="description" content="Upgrade the registry to the current version" />
+	<title>Sqitch: sqitch-check Documentation</title>
+	<meta name="description" content="Checks for divergences between planned and deployed changes." />
 	<link rel="stylesheet" href="/css/screen.css" />
 	<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch.png" />
 	<link rel="icon" type="image/png" sizes="32x32" href="/img/icon-32.png" />
@@ -33,7 +33,7 @@
 	</header>
 
 	<header id="title">
-		<h1>sqitch-upgrade</h1>
+		<h1>sqitch-check</h1>
 	</header>
 	<main id="docs" class="page">
 		
@@ -56,16 +56,16 @@
 
 <h2 id="name">Name</h2>
 
-<p>sqitch-upgrade - Upgrade the registry to the current version</p>
+<p>sqitch-check - Checks for divergences between planned and deployed changes.</p>
 
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch upgrade [options] [&lt;database&gt;]</code></pre>
+<pre><code>sqitch check [options] [&lt;database&gt;]</code></pre>
 <h2 id="description">Description</h2>
 
-<p>Upgrades the Sqitch registry for a database. That is, it makes sure that the
-schema the Sqitch uses for its registry is up-to-date. This will occasionally
-be necessary when new features are added to Sqitch that require registry
-schema changes.</p>
+<p>Compares the state of the working directory and the database by comparing the
+SHA1 hashes of the deploy scripts. Fails and reports divergence for all
+changes with non-matching hashes, indicating that the project deploy scripts
+differ from the scripts that were used to deploy to the database.</p>
 
 <p>The <code>&lt;database&gt;</code> parameter specifies the database to which to connect,
 and may also be specified as the <code>--target</code> option. It can be target name,
@@ -81,23 +81,28 @@ a URI, an engine name, or plan file path.</p>
 <p>The target database to which to connect. This option can be either a URI or
 the name of a target in the configuration.</p></li>
 
+<li><p><code>--project</code></p>
+
+<p>Project for which to retrieve the status. Defaults to the status of the
+current project, if a plan can be found.</p></li>
+
 <li><p><code>--registry</code></p>
-<pre><code>sqitch upgrade --registry registry</code></pre>
+<pre><code>sqitch check --registry registry</code></pre>
 <p>The name of the Sqitch registry schema or database in which sqitch stores its
 own data.</p></li>
 
 <li><p><code>--db-client</code></p></li>
 
 <li><p><code>--client</code></p>
-<pre><code>sqitch upgrade --client /usr/local/pgsql/bin/psql</code></pre>
+<pre><code>sqitch check --client /usr/local/pgsql/bin/psql</code></pre>
 <p>Path to the command-line client for the database engine. Defaults to a client
 in the current path named appropriately for the database engine.</p></li>
 
 <li><p><code>-d</code></p></li>
 
 <li><p><code>--db-name</code></p>
-<pre><code>sqitch upgrade --db-name widgets
-sqitch upgrade -d bricolage</code></pre>
+<pre><code>sqitch check --db-name widgets
+sqitch check -d bricolage</code></pre>
 <p>Name of the database. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are
 preferred, but this option can be used to override the database name in a
 target.</p></li>
@@ -107,9 +112,9 @@ target.</p></li>
 <li><p><code>--db-user</code></p></li>
 
 <li><p><code>--db-username</code></p>
-<pre><code>sqitch upgrade --db-username root
-sqitch upgrade --db-user postgres
-sqitch upgrade -u Mom</code></pre>
+<pre><code>sqitch check --db-username root
+sqitch check --db-user postgres
+sqitch check -u Mom</code></pre>
 <p>User name to use when connecting to the database. Does not apply to all
 engines. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this
 option can be used to override the user name in a target.</p></li>
@@ -117,8 +122,8 @@ option can be used to override the user name in a target.</p></li>
 <li><p><code>-h</code></p></li>
 
 <li><p><code>--db-host</code></p>
-<pre><code>sqitch upgrade --db-host db.example.com
-sqitch upgrade -h appdb.example.net</code></pre>
+<pre><code>sqitch check --db-host db.example.com
+sqitch check -h appdb.example.net</code></pre>
 <p>Host name to use when connecting to the database. Does not apply to all
 engines. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this
 option can be used to override the host name in a target.</p></li>
@@ -126,11 +131,18 @@ option can be used to override the host name in a target.</p></li>
 <li><p><code>-p</code></p></li>
 
 <li><p><code>--db-port</code></p>
-<pre><code>sqitch upgrade --db-port 7654
-sqitch upgrade -p 5431</code></pre>
+<pre><code>sqitch check --db-port 7654
+sqitch check -p 5431</code></pre>
 <p>Port number to connect to. Does not apply to all engines. In general,
 <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this option can be used
 to override the port in a target.</p></li>
+
+<li><p><code>--plan-file</code></p></li>
+
+<li><p><code>-f</code></p>
+<pre><code>sqitch check --plan-file my.plan</code></pre>
+<p>Path to the deployment plan file. Overrides target, engine, and core
+configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
 </ul>
 
 <h2 id="sqitch">Sqitch</h2>

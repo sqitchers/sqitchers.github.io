@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.55.0-DEV" />
+	<meta name="generator" content="Hugo 0.70.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -42,19 +42,13 @@
 with Sqitch. It supports <a href="https://postgresql.org/">PostgreSQL</a>, <a href="https://sqlite.org/">SQLite</a>, <a href="https://mariadb.com/">MariaDB</a> (<a href="https://mysql.com">MySQL</a>), and
 <a href="https://firebirdsql.org/">Firebird</a>. Simply pull the image, download the shell script wrapper, make it
 executable, and go:</p>
-
 <pre><code>docker pull sqitch/sqitch
 curl -L https://git.io/fAX6Z -o sqitch &amp;&amp; chmod +x sqitch
-./sqitch help
-</code></pre>
-
+./sqitch help</code></pre>
 <p>Set the <code>$SQITCH_IMAGE</code> environment variable to run a different Sqitch image
 from the script. For example, to run an older version:</p>
-
 <pre><code>export SQITCH_IMAGE sqitch/sqitch:0.9998
-./sqitch --version
-</code></pre>
-
+./sqitch --version</code></pre>
 <p>See <a href="https://github.com/sqitchers/docker-sqitch#readme">the README</a> for additional details.</p>
 
 </section>
