@@ -15,12 +15,12 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.70.0" />
+	<meta name="generator" content="Hugo 0.76.5" />
 </head>
 <body>
 	<header id=masthead>
 		<hgroup id="top">
-			<h1><a href="/"><img src="/img/sqitch-logo.png" srcset="/img/sqitch-logo.svg" alt="Sqitch" title="Sqitch" /></a></h1>
+			<h1><a href="/"><img src="/img/sqitch-logo-100.png" srcset="/img/sqitch-logo.svg" alt="Sqitch" title="Sqitch" /></a></h1>
 		</hgroup>
 		<nav id="bar">
 			<menu>
@@ -62,330 +62,301 @@
 	</details>
 	<script src="/js/toc.js"></script>
 </aside>
-		
-
-<h2 id="name">Name</h2>
-
+		<h2 id="name">Name</h2>
 <p>sqitch-environment - Environment variables recognized by Sqitch</p>
-
 <h2 id="description">Description</h2>
-
 <p>Sqitch supports a number of environment variables that affect its
 functionality. This document lists them all, along with brief descriptions of
 their purposes and pointers to relevant documentation.</p>
-
 <h3 id="sqitch-environment">Sqitch Environment</h3>
-
 <ul>
-<li><p><code>SQITCH_CONFIG</code></p>
-
+<li>
+<p><code>SQITCH_CONFIG</code></p>
 <p>Path to the project configuration file. Overrides the default, which is
-<code>./sqitch.conf</code>. See <a href="/docs/manual/sqitch-config">sqitch-config</a> for details.</p></li>
-
-<li><p><code>SQITCH_USER_CONFIG</code></p>
-
+<code>./sqitch.conf</code>. See <a href="/docs/manual/sqitch-config">sqitch-config</a> for details.</p>
+</li>
+<li>
+<p><code>SQITCH_USER_CONFIG</code></p>
 <p>Path to the user&rsquo;s configuration file. Overrides the default, which is
-<code>./.sqitch/sqitch.conf</code>. See <a href="/docs/manual/sqitch-config">sqitch-config</a> for details.</p></li>
-
-<li><p><code>SQITCH_SYSTEM_CONFIG</code></p>
-
+<code>./.sqitch/sqitch.conf</code>. See <a href="/docs/manual/sqitch-config">sqitch-config</a> for details.</p>
+</li>
+<li>
+<p><code>SQITCH_SYSTEM_CONFIG</code></p>
 <p>Path to the system&rsquo;s configuration file. Overrides the default, which is a
 file named <code>sqitch.conf</code> in the directory identified by <code>sqitch --etc</code>. See
-<a href="/docs/manual/sqitch-config">sqitch-config</a> for details.</p></li>
-
-<li><p><code>SQITCH_TARGET</code></p>
-
+<a href="/docs/manual/sqitch-config">sqitch-config</a> for details.</p>
+</li>
+<li>
+<p><code>SQITCH_TARGET</code></p>
 <p>The name or URI of the database target to connect to. Overrides values stored
-in the configuration, but not command-line options or arguments.</p></li>
-
-<li><p><code>SQITCH_USERNAME</code></p>
-
+in the configuration, but not command-line options or arguments.</p>
+</li>
+<li>
+<p><code>SQITCH_USERNAME</code></p>
 <p>Username to use when connecting to a database, for those database engines that
 support authentication. Overrides values stored in a target URI or the
-configuration. See <a href="/docs/manual/sqitch-authentication">sqitch-authentication</a> for details.</p></li>
-
-<li><p><code>SQITCH_PASSWORD</code></p>
-
+configuration. See <a href="/docs/manual/sqitch-authentication">sqitch-authentication</a> for details.</p>
+</li>
+<li>
+<p><code>SQITCH_PASSWORD</code></p>
 <p>Password to use when connecting to a database, for those database engines that
 support authentication. Overrides values stored in a target URI or the
-configuration. See <a href="/docs/manual/sqitch-authentication">sqitch-authentication</a> for details.</p></li>
-
-<li><p><code>SQITCH_FULLNAME</code></p>
-
+configuration. See <a href="/docs/manual/sqitch-authentication">sqitch-authentication</a> for details.</p>
+</li>
+<li>
+<p><code>SQITCH_FULLNAME</code></p>
 <p>Full name of the current user. Used to identify the user adding a change to a
 plan file or deploying a change. Supersedes the &lt;user.name&gt; <a href="/docs/manual/sqitch-config">sqitch-config</a>
-variable.</p></li>
-
-<li><p><code>SQITCH_EMAIL</code></p>
-
+variable.</p>
+</li>
+<li>
+<p><code>SQITCH_EMAIL</code></p>
 <p>Email address of the current user. Used to identify the user adding a change to
 a plan file or deploying a change. Supersedes the <code>user.email</code> <a href="/docs/manual/sqitch-config">sqitch-config</a>
-variable.</p></li>
-
-<li><p><code>SQITCH_ORIG_SYSUSER</code></p>
-
+variable.</p>
+</li>
+<li>
+<p><code>SQITCH_ORIG_SYSUSER</code></p>
 <p>Username from the original system. Intended for use by scripts that run Sqitch
 from another host, where the originating host username should be passed to the
 execution host, such as
-<a href="https://github.com/sqitchers/docker-sqitch/blob/master/docker-sqitch.sh">this Docker script</a>.</p></li>
-
-<li><p><code>SQITCH_ORIG_FULLNAME</code></p>
-
+<a href="https://github.com/sqitchers/docker-sqitch/blob/master/docker-sqitch.sh">this Docker script</a>.</p>
+</li>
+<li>
+<p><code>SQITCH_ORIG_FULLNAME</code></p>
 <p>Full name of the original system user. Intended for use by scripts that run
 Sqitch from another host, where the originating host user&rsquo;s identity should be
 passed to the execution host, such as
 <a href="https://github.com/sqitchers/docker-sqitch/blob/master/docker-sqitch.sh">this Docker script</a>.
 This value will be used only when neither the <code>$SQITCH_FULLNAME</code> nor the
-<code>user.name</code> <a href="/docs/manual/sqitch-config">sqitch-config</a> variable is set.</p></li>
-
-<li><p><code>SQITCH_ORIG_EMAIL</code></p>
-
+<code>user.name</code> <a href="/docs/manual/sqitch-config">sqitch-config</a> variable is set.</p>
+</li>
+<li>
+<p><code>SQITCH_ORIG_EMAIL</code></p>
 <p>Email address of the original user. Intended for use by scripts that run
 Sqitch on a separate host, where the originating host user&rsquo;s identity should
 be passed to the execution host, such as
 <a href="https://github.com/sqitchers/docker-sqitch/blob/master/docker-sqitch.sh">this Docker script</a>.
 This value will be used only when neither the <code>$SQITCH_EMAIL</code> nor the
-<code>user.email</code> <a href="/docs/manual/sqitch-config">sqitch-config</a> variable is set.</p></li>
-
-<li><p><code>SQITCH_EDITOR</code></p>
-
+<code>user.email</code> <a href="/docs/manual/sqitch-config">sqitch-config</a> variable is set.</p>
+</li>
+<li>
+<p><code>SQITCH_EDITOR</code></p>
 <p>The editor that Sqitch will launch when the user needs to edit some text (a
 change note, for example). If unset, the <code>core.editor</code> configuration variable
 will be used. If it&rsquo;s not set, <code>$VISUAL</code> or <code>$EDITOR</code> will be consulted (in
 that order).  Finally, if none of these are set, Sqitch will invoke
-<code>notepad.exe</code> on Windows and <code>vi</code> elsewhere.</p></li>
-
-<li><p><code>SQITCH_PAGER</code></p>
-
+<code>notepad.exe</code> on Windows and <code>vi</code> elsewhere.</p>
+</li>
+<li>
+<p><code>SQITCH_PAGER</code></p>
 <p>The pager program that Sqitch will use when a command (like <code>sqitch log</code>)
 produces multi-page output. If unset, the <code>core.pager</code> configuration
 variable will be used. If this is also not set, the <code>PAGER</code> environment
 variable will be used. Finally, if none of these are set, Sqitch will attempt
 to find and use one of the commonly used pager programs like <code>less</code> and
-<code>more</code>.</p></li>
+<code>more</code>.</p>
+</li>
 </ul>
-
 <h3 id="engine-environments">Engine Environments</h3>
-
 <p>In addition to Sqitch&rsquo;s environment variables, some of the database engines
 support environment variables of their own. These are not comprehensive for
 all variables supported by a database engine, but document those supported by
 Sqitch&rsquo;s implementation for each engine.</p>
-
 <h4 id="postgresql">PostgreSQL</h4>
-
 <p>All the usual
 <a href="https://www.postgresql.org/docs/current/static/libpq-envars.html">PostgreSQL environment variables</a>
 should be implicitly used. However, the following variables are explicitly
 recognized by Sqitch:</p>
-
 <ul>
-<li><p><code>PGUSER</code></p>
-
+<li>
+<p><code>PGUSER</code></p>
 <p>The username to use to connect to the server. Superseded by
-<code>$SQITCH_USERNAME</code> and the target URI username.</p></li>
-
-<li><p><code>PGPASSWORD</code></p>
-
+<code>$SQITCH_USERNAME</code> and the target URI username.</p>
+</li>
+<li>
+<p><code>PGPASSWORD</code></p>
 <p>The password to use to connect to the server. Superseded by
-<code>$SQITCH_PASSWORD</code> and the target URI password.</p></li>
-
-<li><p><code>PGHOST</code></p>
-
+<code>$SQITCH_PASSWORD</code> and the target URI password.</p>
+</li>
+<li>
+<p><code>PGHOST</code></p>
 <p>The PostgreSQL server host to connect to. Superseded by the target URI host
-name.</p></li>
-
-<li><p><code>PGPORT</code></p>
-
-<p>The PostgreSQL server port to connect to. Superseded by the target URI port.</p></li>
-
-<li><p><code>PGDATABASE</code></p>
-
+name.</p>
+</li>
+<li>
+<p><code>PGPORT</code></p>
+<p>The PostgreSQL server port to connect to. Superseded by the target URI port.</p>
+</li>
+<li>
+<p><code>PGDATABASE</code></p>
 <p>The name of the database to connect to. Superseded by the target URI database
-name.</p></li>
+name.</p>
+</li>
 </ul>
-
 <h4 id="sqlite">SQLite</h4>
-
 <p>SQLite provides no environment variable support.</p>
-
 <h4 id="mysql">MySQL</h4>
-
 <p>Sqitch recognizes and takes advantage of the following
 <a href="https://dev.mysql.com/doc/refman/5.7/en/environment-variables.html">MySQL environment variables</a>:</p>
-
 <ul>
-<li><p><code>MYSQL_PWD</code></p>
-
+<li>
+<p><code>MYSQL_PWD</code></p>
 <p>The password to use to connect to the server. Superseded by
-<code>$SQITCH_PASSWORD</code> and the target URI password.</p></li>
-
-<li><p><code>MYSQL_HOST</code></p>
-
+<code>$SQITCH_PASSWORD</code> and the target URI password.</p>
+</li>
+<li>
+<p><code>MYSQL_HOST</code></p>
 <p>The MySQL server host to connect to. Superseded by the target URI host
-name.</p></li>
-
-<li><p><code>MYSQL_TCP_PORT</code></p>
-
-<p>The MySQL server port to connect to. Superseded by the target URI port.</p></li>
+name.</p>
+</li>
+<li>
+<p><code>MYSQL_TCP_PORT</code></p>
+<p>The MySQL server port to connect to. Superseded by the target URI port.</p>
+</li>
 </ul>
-
 <h4 id="oracle">Oracle</h4>
-
 <p>Sqitch&rsquo;s Oracle engine supports a few environment variables:</p>
-
 <ul>
-<li><p><code>ORACLE_HOME</code></p>
-
+<li>
+<p><code>ORACLE_HOME</code></p>
 <p>Required to point to the Oracle home directory, and contain both the SQL*Plus
 client and the shared libraries with which the Perl Oracle driver was
-compiled.</p></li>
-
-<li><p><code>TNS_ADMIN</code></p>
-
+compiled.</p>
+</li>
+<li>
+<p><code>TNS_ADMIN</code></p>
 <p>The directory in which the Oracle networking interface will find its configuration
 files, notably <code>tnsnames.ora</code>. Defaults to <code>$ORACLE HOME/network/admin</code> if not
-set.</p></li>
-
-<li><p><code>TWO_TASK</code></p>
-
-<p>The name of the Oracle database to connect to. Superseded by the target URI.</p></li>
-
-<li><p><code>LOCAL</code></p>
-
+set.</p>
+</li>
+<li>
+<p><code>TWO_TASK</code></p>
+<p>The name of the Oracle database to connect to. Superseded by the target URI.</p>
+</li>
+<li>
+<p><code>LOCAL</code></p>
 <p>The name of the Oracle database to connect to. Windows only. Superseded by the
-target URI.</p></li>
-
-<li><p><code>ORACLE_SID</code></p>
-
+target URI.</p>
+</li>
+<li>
+<p><code>ORACLE_SID</code></p>
 <p>The System Identifier (SID) representing the Oracle database to connect to.
-Superseded by the target URI, <code>TWO_TASK</code> and <code>LOCAL</code> on Windows.</p></li>
+Superseded by the target URI, <code>TWO_TASK</code> and <code>LOCAL</code> on Windows.</p>
+</li>
 </ul>
-
 <p>In addition, the Oracle engine in Sqitch explicitly overrides the <code>NLS_LANG</code>
 and <code>SQLPATH</code> environment variables. The former is set to
 <code>AMERICAN_AMERICA.AL32UTF8</code> to ensure that all database connections use the
 UTF-8 encoding. The latter is set to an empty string, to prevent SQL*Plus
 executing SQL scripts unexpectedly.</p>
-
 <h4 id="firebird">Firebird</h4>
-
 <p>The Sqitch Firebird engine supports the following environment variables:</p>
-
 <ul>
-<li><p><code>ISC_USER</code></p>
-
+<li>
+<p><code>ISC_USER</code></p>
 <p>The username to use to connect to Firebird. Superseded by
-<code>$SQITCH_USERNAME</code> and the target URI username.</p></li>
-
-<li><p><code>ISC_PASSWORD</code></p>
-
+<code>$SQITCH_USERNAME</code> and the target URI username.</p>
+</li>
+<li>
+<p><code>ISC_PASSWORD</code></p>
 <p>The password to use to connect to Firebird. Superseded by <code>$SQITCH_PASSWORD</code>
-and the target URI password.</p></li>
+and the target URI password.</p>
+</li>
 </ul>
-
 <h4 id="vertica">Vertica</h4>
-
 <p>Sqitch provides explicit support for the following
 <a href="https://www.vertica.com/docs/8.1.x/HTML/index.htm#Authoring/ConnectingToVertica/vsql/vsqlEnvironmentVariables.htm">Vertica environment variables</a>:</p>
-
 <ul>
-<li><p><code>VSQL_USER</code></p>
-
+<li>
+<p><code>VSQL_USER</code></p>
 <p>The username to use to connect to the server. Superseded by
-<code>$SQITCH_USERNAME</code> and the target URI username.</p></li>
-
-<li><p><code>VSQL_PASSWORD</code></p>
-
+<code>$SQITCH_USERNAME</code> and the target URI username.</p>
+</li>
+<li>
+<p><code>VSQL_PASSWORD</code></p>
 <p>The password to use to connect to the server. Superseded by
-<code>$SQITCH_PASSWORD</code> and the target URI password.</p></li>
-
-<li><p><code>VSQL_HOST</code></p>
-
+<code>$SQITCH_PASSWORD</code> and the target URI password.</p>
+</li>
+<li>
+<p><code>VSQL_HOST</code></p>
 <p>The PostgreSQL server host to connect to. Superseded by the target URI host
-name.</p></li>
-
-<li><p><code>VSQL_PORT</code></p>
-
-<p>The PostgreSQL server port to connect to. Superseded by the target URI port.</p></li>
-
-<li><p><code>VSQL_DATABASE</code></p>
-
+name.</p>
+</li>
+<li>
+<p><code>VSQL_PORT</code></p>
+<p>The PostgreSQL server port to connect to. Superseded by the target URI port.</p>
+</li>
+<li>
+<p><code>VSQL_DATABASE</code></p>
 <p>The name of the database to connect to. Superseded by the target URI database
-name.</p></li>
+name.</p>
+</li>
 </ul>
-
 <h4 id="exasol">Exasol</h4>
-
 <p>The Sqitch Exasol engine supports no special environment variables. It does,
 however, override THE <code>SQLPATH</code> environment variable, to prevent EXAplus
 executing SQL scripts unexpectedly.</p>
-
 <h4 id="snowflake">Snowflake</h4>
-
 <p>Sqitch provides explicit support for the following
 <a href="https://docs.snowflake.net/manuals/user-guide/snowsql-start.html#connection-syntax">Snowflake environment variables</a>:</p>
-
 <ul>
-<li><p><code>SNOWSQL_ACCOUNT</code></p>
-
+<li>
+<p><code>SNOWSQL_ACCOUNT</code></p>
 <p>The name assigned to the snowflake account. Superseded by the target URI host
-name.</p></li>
-
-<li><p><code>SNOWSQL_USER</code></p>
-
+name.</p>
+</li>
+<li>
+<p><code>SNOWSQL_USER</code></p>
 <p>The username to use to connect to the server. Superseded by
-<code>$SQITCH_USERNAME</code> and the target URI username.</p></li>
-
-<li><p><code>SNOWSQL_PWD</code></p>
-
+<code>$SQITCH_USERNAME</code> and the target URI username.</p>
+</li>
+<li>
+<p><code>SNOWSQL_PWD</code></p>
 <p>The password to use to connect to the server. Superseded by
-<code>$SQITCH_PASSWORD</code> and the target URI password.</p></li>
-
-<li><p><code>SNOWSQL_PRIVATE_KEY_PASSPHRASE</code></p>
-
+<code>$SQITCH_PASSWORD</code> and the target URI password.</p>
+</li>
+<li>
+<p><code>SNOWSQL_PRIVATE_KEY_PASSPHRASE</code></p>
 <p>The passphrase for the private key file when using key pair authentication.
-See <a href="/docs/manual/sqitch-authentication">sqitch-authentication</a> for details.</p></li>
-
-<li><p><code>SNOWSQL_ROLE</code></p>
-
+See <a href="/docs/manual/sqitch-authentication">sqitch-authentication</a> for details.</p>
+</li>
+<li>
+<p><code>SNOWSQL_ROLE</code></p>
 <p>The role to use when connecting to the server. Superseded by the target URI
-database <code>role</code> query parameter.</p></li>
-
-<li><p><code>SNOWSQL_HOST</code></p>
-
+database <code>role</code> query parameter.</p>
+</li>
+<li>
+<p><code>SNOWSQL_HOST</code></p>
 <p>The PostgreSQL server host to connect to. Superseded by the target URI host
-name.</p></li>
-
-<li><p><code>SNOWSQL_PORT</code></p>
-
-<p>The PostgreSQL server port to connect to. Superseded by the target URI port.</p></li>
-
-<li><p><code>SNOWSQL_DATABASE</code></p>
-
+name.</p>
+</li>
+<li>
+<p><code>SNOWSQL_PORT</code></p>
+<p>The PostgreSQL server port to connect to. Superseded by the target URI port.</p>
+</li>
+<li>
+<p><code>SNOWSQL_DATABASE</code></p>
 <p>The name of the database to connect to. Superseded by the target URI database
-name.</p></li>
-
-<li><p><code>SNOWSQL_REGION</code></p>
-
-<p>The snowflake region. Superseded by the target URI host name.</p></li>
-
-<li><p><code>SNOWSQL_WAREHOUSE</code></p>
-
+name.</p>
+</li>
+<li>
+<p><code>SNOWSQL_REGION</code></p>
+<p>The snowflake region. Superseded by the target URI host name.</p>
+</li>
+<li>
+<p><code>SNOWSQL_WAREHOUSE</code></p>
 <p>The warehouse to use. Superseded by the target URI database <code>warehouse</code> query
-parameter.</p></li>
+parameter.</p>
+</li>
 </ul>
-
 <h2 id="see-also">See Also</h2>
-
 <ul>
 <li><a href="/docs/manual/sqitch-configuration">sqitch-configuration</a></li>
 <li><a href="/docs/manual/sqitch-config">sqitch-config</a></li>
 <li><a href="/docs/manual/sqitch-authentication">sqitch-authentication</a></li>
 </ul>
-
 <h2 id="sqitch">Sqitch</h2>
-
 <p>Part of the <a href="/docs/manual/sqitch">sqitch</a> suite.</p>
 
 	</main>

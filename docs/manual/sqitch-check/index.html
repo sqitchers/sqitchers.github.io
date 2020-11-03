@@ -15,12 +15,12 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.70.0" />
+	<meta name="generator" content="Hugo 0.76.5" />
 </head>
 <body>
 	<header id=masthead>
 		<hgroup id="top">
-			<h1><a href="/"><img src="/img/sqitch-logo.png" srcset="/img/sqitch-logo.svg" alt="Sqitch" title="Sqitch" /></a></h1>
+			<h1><a href="/"><img src="/img/sqitch-logo-100.png" srcset="/img/sqitch-logo.svg" alt="Sqitch" title="Sqitch" /></a></h1>
 		</hgroup>
 		<nav id="bar">
 			<menu>
@@ -52,101 +52,107 @@
 	</details>
 	<script src="/js/toc.js"></script>
 </aside>
-		
-
-<h2 id="name">Name</h2>
-
+		<h2 id="name">Name</h2>
 <p>sqitch-check - Checks for divergences between planned and deployed changes.</p>
-
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch check [options] [&lt;database&gt;]</code></pre>
-<h2 id="description">Description</h2>
-
+<pre><code>sqitch check [options] [&lt;database&gt;]
+</code></pre><h2 id="description">Description</h2>
 <p>Compares the state of the working directory and the database by comparing the
 SHA1 hashes of the deploy scripts. Fails and reports divergence for all
 changes with non-matching hashes, indicating that the project deploy scripts
 differ from the scripts that were used to deploy to the database.</p>
-
 <p>The <code>&lt;database&gt;</code> parameter specifies the database to which to connect,
 and may also be specified as the <code>--target</code> option. It can be target name,
 a URI, an engine name, or plan file path.</p>
-
 <h2 id="options">Options</h2>
-
 <ul>
-<li><code>-t</code></li>
-
-<li><p><code>--target</code></p>
-
+<li>
+<p><code>-t</code></p>
+</li>
+<li>
+<p><code>--target</code></p>
 <p>The target database to which to connect. This option can be either a URI or
-the name of a target in the configuration.</p></li>
-
-<li><p><code>--project</code></p>
-
+the name of a target in the configuration.</p>
+</li>
+<li>
+<p><code>--project</code></p>
 <p>Project for which to retrieve the status. Defaults to the status of the
-current project, if a plan can be found.</p></li>
-
-<li><p><code>--registry</code></p>
-<pre><code>sqitch check --registry registry</code></pre>
-<p>The name of the Sqitch registry schema or database in which sqitch stores its
-own data.</p></li>
-
-<li><p><code>--db-client</code></p></li>
-
-<li><p><code>--client</code></p>
-<pre><code>sqitch check --client /usr/local/pgsql/bin/psql</code></pre>
-<p>Path to the command-line client for the database engine. Defaults to a client
-in the current path named appropriately for the database engine.</p></li>
-
-<li><p><code>-d</code></p></li>
-
-<li><p><code>--db-name</code></p>
+current project, if a plan can be found.</p>
+</li>
+<li>
+<p><code>--registry</code></p>
+<pre><code>sqitch check --registry registry
+</code></pre><p>The name of the Sqitch registry schema or database in which sqitch stores its
+own data.</p>
+</li>
+<li>
+<p><code>--db-client</code></p>
+</li>
+<li>
+<p><code>--client</code></p>
+<pre><code>sqitch check --client /usr/local/pgsql/bin/psql
+</code></pre><p>Path to the command-line client for the database engine. Defaults to a client
+in the current path named appropriately for the database engine.</p>
+</li>
+<li>
+<p><code>-d</code></p>
+</li>
+<li>
+<p><code>--db-name</code></p>
 <pre><code>sqitch check --db-name widgets
-sqitch check -d bricolage</code></pre>
-<p>Name of the database. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are
+sqitch check -d bricolage
+</code></pre><p>Name of the database. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are
 preferred, but this option can be used to override the database name in a
-target.</p></li>
-
-<li><p><code>-u</code></p></li>
-
-<li><p><code>--db-user</code></p></li>
-
-<li><p><code>--db-username</code></p>
+target.</p>
+</li>
+<li>
+<p><code>-u</code></p>
+</li>
+<li>
+<p><code>--db-user</code></p>
+</li>
+<li>
+<p><code>--db-username</code></p>
 <pre><code>sqitch check --db-username root
 sqitch check --db-user postgres
-sqitch check -u Mom</code></pre>
-<p>User name to use when connecting to the database. Does not apply to all
+sqitch check -u Mom
+</code></pre><p>User name to use when connecting to the database. Does not apply to all
 engines. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this
-option can be used to override the user name in a target.</p></li>
-
-<li><p><code>-h</code></p></li>
-
-<li><p><code>--db-host</code></p>
+option can be used to override the user name in a target.</p>
+</li>
+<li>
+<p><code>-h</code></p>
+</li>
+<li>
+<p><code>--db-host</code></p>
 <pre><code>sqitch check --db-host db.example.com
-sqitch check -h appdb.example.net</code></pre>
-<p>Host name to use when connecting to the database. Does not apply to all
+sqitch check -h appdb.example.net
+</code></pre><p>Host name to use when connecting to the database. Does not apply to all
 engines. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this
-option can be used to override the host name in a target.</p></li>
-
-<li><p><code>-p</code></p></li>
-
-<li><p><code>--db-port</code></p>
+option can be used to override the host name in a target.</p>
+</li>
+<li>
+<p><code>-p</code></p>
+</li>
+<li>
+<p><code>--db-port</code></p>
 <pre><code>sqitch check --db-port 7654
-sqitch check -p 5431</code></pre>
-<p>Port number to connect to. Does not apply to all engines. In general,
+sqitch check -p 5431
+</code></pre><p>Port number to connect to. Does not apply to all engines. In general,
 <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this option can be used
-to override the port in a target.</p></li>
-
-<li><p><code>--plan-file</code></p></li>
-
-<li><p><code>-f</code></p>
-<pre><code>sqitch check --plan-file my.plan</code></pre>
-<p>Path to the deployment plan file. Overrides target, engine, and core
-configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
+to override the port in a target.</p>
+</li>
+<li>
+<p><code>--plan-file</code></p>
+</li>
+<li>
+<p><code>-f</code></p>
+<pre><code>sqitch check --plan-file my.plan
+</code></pre><p>Path to the deployment plan file. Overrides target, engine, and core
+configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p>
+</li>
 </ul>
-
 <h2 id="sqitch">Sqitch</h2>
-
 <p>Part of the <a href="/docs/manual/sqitch">sqitch</a> suite.</p>
 
 	</main>

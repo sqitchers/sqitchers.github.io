@@ -15,12 +15,12 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.70.0" />
+	<meta name="generator" content="Hugo 0.76.5" />
 </head>
 <body>
 	<header id=masthead>
 		<hgroup id="top">
-			<h1><a href="/"><img src="/img/sqitch-logo.png" srcset="/img/sqitch-logo.svg" alt="Sqitch" title="Sqitch" /></a></h1>
+			<h1><a href="/"><img src="/img/sqitch-logo-100.png" srcset="/img/sqitch-logo.svg" alt="Sqitch" title="Sqitch" /></a></h1>
 		</hgroup>
 		<nav id="bar">
 			<menu>
@@ -53,90 +53,89 @@
 	</details>
 	<script src="/js/toc.js"></script>
 </aside>
-		
-
-<h2 id="name">Name</h2>
-
+		<h2 id="name">Name</h2>
 <p>sqitch-show - Show object information or script contents</p>
-
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch show [options] &lt;type&gt; &lt;object&gt;</code></pre>
-<h2 id="description">Description</h2>
-
+<pre><code>sqitch show [options] &lt;type&gt; &lt;object&gt;
+</code></pre><h2 id="description">Description</h2>
 <p>Shows information about Sqitch objects. The first argument must be the type of
 object to show, and the second must be a key identifier for the object in the
 plan. The second argument must be a a change name or tag as specified in
 <a href="/docs/manual/sqitchchanges">sqitchchanges</a>. The supported types include:</p>
-
 <ul>
-<li><p><code>change</code></p>
-
-<p>A change object. Outputs the text used to generate the change SHA1 ID.</p></li>
-
-<li><p><code>tag</code></p>
-
-<p>A tag. Outputs the text used to generate the tag SHA1 ID.</p></li>
-
-<li><p><code>deploy</code></p>
-
-<p>A change deploy script.</p></li>
-
-<li><p><code>revert</code></p>
-
-<p>A change revert script.</p></li>
-
-<li><p><code>verify</code></p>
-
-<p>A change verify script.</p></li>
+<li>
+<p><code>change</code></p>
+<p>A change object. Outputs the text used to generate the change SHA1 ID.</p>
+</li>
+<li>
+<p><code>tag</code></p>
+<p>A tag. Outputs the text used to generate the tag SHA1 ID.</p>
+</li>
+<li>
+<p><code>deploy</code></p>
+<p>A change deploy script.</p>
+</li>
+<li>
+<p><code>revert</code></p>
+<p>A change revert script.</p>
+</li>
+<li>
+<p><code>verify</code></p>
+<p>A change verify script.</p>
+</li>
 </ul>
-
 <h2 id="options">Options</h2>
-
 <ul>
-<li><code>-t</code></li>
-
-<li><p><code>--target</code></p>
-
+<li>
+<p><code>-t</code></p>
+</li>
+<li>
+<p><code>--target</code></p>
 <p>The target database, the plan for which should be read before deciding what
 object to show. This option should be the name of a target in the
-configuration.</p></li>
-
-<li><p><code>-e</code></p></li>
-
-<li><p><code>--exists</code></p>
-
+configuration.</p>
+</li>
+<li>
+<p><code>-e</code></p>
+</li>
+<li>
+<p><code>--exists</code></p>
 <p>Suppress all output; instead exit with zero status if <code>&lt;object&gt;</code> exists
-and is a valid object.</p></li>
-
-<li><p><code>--plan-file</code></p></li>
-
-<li><p><code>-f</code></p>
-
+and is a valid object.</p>
+</li>
+<li>
+<p><code>--plan-file</code></p>
+</li>
+<li>
+<p><code>-f</code></p>
 <p>Path to the deployment plan file. Overrides target, engine, and core
-configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
+configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p>
+</li>
 </ul>
-
 <h3 id="examples">Examples</h3>
-
 <ul>
-<li><p>Show information about a specific change:</p>
-<pre><code>sqitch show change add_users_table</code></pre></li>
-
-<li><p>Show information about a change by ID:</p>
-<pre><code>sqitch show change be7cd00571d7151eacb0691e825dfc8980cc14ff</code></pre></li>
-
-<li><p>Show the most recent change info:</p>
-<pre><code>sqitch show change @HEAD</code></pre></li>
-
-<li><p>Show information about a tag:</p>
-<pre><code>sqitch show tag @beta1</code></pre></li>
-
-<li><p>Show the contents of a deploy file:</p>
-<pre><code>sqitch show deploy add_users_table@HEAD</code></pre></li>
+<li>
+<p>Show information about a specific change:</p>
+<pre><code>sqitch show change add_users_table
+</code></pre></li>
+<li>
+<p>Show information about a change by ID:</p>
+<pre><code>sqitch show change be7cd00571d7151eacb0691e825dfc8980cc14ff
+</code></pre></li>
+<li>
+<p>Show the most recent change info:</p>
+<pre><code>sqitch show change @HEAD
+</code></pre></li>
+<li>
+<p>Show information about a tag:</p>
+<pre><code>sqitch show tag @beta1
+</code></pre></li>
+<li>
+<p>Show the contents of a deploy file:</p>
+<pre><code>sqitch show deploy add_users_table@HEAD
+</code></pre></li>
 </ul>
-
 <h2 id="sqitch">Sqitch</h2>
-
 <p>Part of the <a href="/docs/manual/sqitch">sqitch</a> suite.</p>
 
 	</main>

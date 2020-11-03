@@ -15,12 +15,12 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.70.0" />
+	<meta name="generator" content="Hugo 0.76.5" />
 </head>
 <body>
 	<header id=masthead>
 		<hgroup id="top">
-			<h1><a href="/"><img src="/img/sqitch-logo.png" srcset="/img/sqitch-logo.svg" alt="Sqitch" title="Sqitch" /></a></h1>
+			<h1><a href="/"><img src="/img/sqitch-logo-100.png" srcset="/img/sqitch-logo.svg" alt="Sqitch" title="Sqitch" /></a></h1>
 		</hgroup>
 		<nav id="bar">
 			<menu>
@@ -54,19 +54,13 @@
 	</details>
 	<script src="/js/toc.js"></script>
 </aside>
-		
-
-<h2 id="name">Name</h2>
-
+		<h2 id="name">Name</h2>
 <p>sqitch-rework - Rework a database change</p>
-
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch  rework [options] [&lt;dependency-options&gt;] name</code></pre>
-<h2 id="description">Description</h2>
-
+<pre><code>sqitch  rework [options] [&lt;dependency-options&gt;] name
+</code></pre><h2 id="description">Description</h2>
 <p>This command allows for the reworking of an existing database change. It is
 best used only under the following circumstances:</p>
-
 <ul>
 <li>There are production deployments, so that you cannot revert to before the
 change, modify it, and then re-deploy. Just reverting, modifying, and
@@ -82,15 +76,12 @@ change. This is required so that Sqitch can disambiguate the two instances of
 the change. It&rsquo;s a good idea to always tag a release anyway. If you haven&rsquo;t,
 see <a href="/docs/manual/sqitch-tag">sqitch-tag</a>.</li>
 </ul>
-
 <p>If all of these hold, then feel free to rework an existing change.</p>
-
 <p>In effect, reworking a change is similar to <a href="/docs/manual/sqitch-add">adding one</a>. However,
 rather than writing new files for the change, the <code>rework</code> command copies the
 files for the existing change. The new files are named with the tag that comes
 between the changes, and serves as the file for the original change. This
 leaves you free to edit the existing files.</p>
-
 <p>By default, the <code>rework</code> command will rework the change in the default plan
 and the scripts to any top directories for that plan, as defined by the core
 configuration and command-line options. This works well for projects in which
@@ -99,117 +90,121 @@ example. Pass the <code>--all</code> option to have it iterate over all known pl
 top directories (as specified for engines and targets) and rework the change
 to them all. Of course, the a change by that name must exist in all the plans
 of the reworking will fail.</p>
-
 <p>To specify which plans to in which to rework the change, pass the target,
 engine, or plan file names to tag as arguments. Use <code>--change</code> to
 disambiguate the and change name from the other parameters if necessary (or
 preferable). See <a href="#examples">&ldquo;Examples&rdquo;</a> for examples.</p>
-
 <h2 id="options">Options</h2>
-
 <ul>
-<li><code>-c</code></li>
-<li><code>--change</code></li>
-
-<li><p><code>--change-name</code></p>
-
+<li>
+<p><code>-c</code></p>
+</li>
+<li>
+<p><code>--change</code></p>
+</li>
+<li>
+<p><code>--change-name</code></p>
 <p>The name of the change to rework. The name can be specified with or without
 this option, but the option can be useful for disambiguating the change name
-from other arguments.</p></li>
-
-<li><p><code>-r</code></p></li>
-
-<li><p><code>--requires</code></p>
-
+from other arguments.</p>
+</li>
+<li>
+<p><code>-r</code></p>
+</li>
+<li>
+<p><code>--requires</code></p>
 <p>Name of a change that is required by the new change. May be specified multiple
 times. See <a href="/docs/manual/sqitchchanges">sqitchchanges</a> for the various ways in which changes can be
-specified.</p></li>
-
-<li><p><code>-x</code></p></li>
-
-<li><p><code>--conflicts</code></p>
-
+specified.</p>
+</li>
+<li>
+<p><code>-x</code></p>
+</li>
+<li>
+<p><code>--conflicts</code></p>
 <p>Name of a change that conflicts with the new change. May be specified multiple
 times. See <a href="/docs/manual/sqitchchanges">sqitchchanges</a> for the various ways in which changes can be
-specified.</p></li>
-
-<li><p><code>-a</code></p></li>
-
-<li><p><code>--all</code></p>
-
+specified.</p>
+</li>
+<li>
+<p><code>-a</code></p>
+</li>
+<li>
+<p><code>--all</code></p>
 <p>Rework the change in all plans in the project. Cannot be mixed with target,
 engine, or plan file name arguments; doing so will result in an error. Useful
 for multi-plan projects in which changes should be kept in sync. Overrides the
 value of the <code>add.all</code> configuration; use <code>--no-all</code> to override a true
-<code>add.all</code> configuration.</p></li>
-
-<li><p><code>-n</code></p></li>
-
-<li><p><code>--note</code></p>
-
+<code>add.all</code> configuration.</p>
+</li>
+<li>
+<p><code>-n</code></p>
+</li>
+<li>
+<p><code>--note</code></p>
 <p>A brief note describing the purpose of the reworking. The note will be
 attached to the change as a comment. Multiple invocations will be concatenated
 together as separate paragraphs.</p>
-
-<p>For you Git folks out there, <code>-m</code> also works.</p></li>
-
-<li><p><code>-e</code></p></li>
-
-<li><p><code>--edit</code></p></li>
-
-<li><p><code>--open-editor</code></p>
-
-<p>Open the generated change scripts in an editor.</p></li>
-
-<li><p><code>--no-edit</code></p></li>
-
-<li><p><code>--no-open-editor</code></p>
-
+<p>For you Git folks out there, <code>-m</code> also works.</p>
+</li>
+<li>
+<p><code>-e</code></p>
+</li>
+<li>
+<p><code>--edit</code></p>
+</li>
+<li>
+<p><code>--open-editor</code></p>
+<p>Open the generated change scripts in an editor.</p>
+</li>
+<li>
+<p><code>--no-edit</code></p>
+</li>
+<li>
+<p><code>--no-open-editor</code></p>
 <p>Do not open the change scripts in an editor. Useful when <a href="https://metacpan.org/pod/rework.open_editor"><code>rework.open_editor</code></a>
-is true.</p></li>
-
-<li><p><code>--plan-file</code></p></li>
-
-<li><p><code>-f</code></p>
-
+is true.</p>
+</li>
+<li>
+<p><code>--plan-file</code></p>
+</li>
+<li>
+<p><code>-f</code></p>
 <p>Path to the deployment plan file. Overrides target, engine, and core
-configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p></li>
+configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p>
+</li>
 </ul>
-
 <h2 id="examples">Examples</h2>
-
 <p>Rework a change in a project and be prompted for a note.</p>
-<pre><code>sqitch rework widgets</code></pre>
-<p>Rework a change and specify the note.</p>
-<pre><code>sqitch rework sprockets --note &#39;Reworks the sprockets view.&#39;</code></pre>
-<p>Rework a change that requires the <code>users</code> change from earlier in the plan.</p>
-<pre><code>sqitch rework contacts --requires users -n &#39;Reworks the contacts view.&#39;</code></pre>
-<p>Rework a change that requires multiple changes, including the change named
+<pre><code>sqitch rework widgets
+</code></pre><p>Rework a change and specify the note.</p>
+<pre><code>sqitch rework sprockets --note 'Reworks the sprockets view.'
+</code></pre><p>Rework a change that requires the <code>users</code> change from earlier in the plan.</p>
+<pre><code>sqitch rework contacts --requires users -n 'Reworks the contacts view.'
+</code></pre><p>Rework a change that requires multiple changes, including the change named
 <code>extract</code> from a completely different Sqitch project named <code>utilities</code>:</p>
-<pre><code>sqitch rework coffee -r users -r utilities:extract -n &#39;Mmmmm...coffee!&#39;</code></pre>
-<p>Rework a change only to the plan used by the <code>vertica</code> engine in a project:</p>
-<pre><code>sqitch rework --change logs vertica -n &#39;Reworks the logs view in Vertica.&#39;</code></pre>
-<p>Rework a change in two plans in a project, and generate the scripts only for
+<pre><code>sqitch rework coffee -r users -r utilities:extract -n 'Mmmmm...coffee!'
+</code></pre><p>Rework a change only to the plan used by the <code>vertica</code> engine in a project:</p>
+<pre><code>sqitch rework --change logs vertica -n 'Reworks the logs view in Vertica.'
+</code></pre><p>Rework a change in two plans in a project, and generate the scripts only for
 those plans:</p>
-<pre><code>sqitch rework -a coolfunctions sqlite.plan pg.plan -n &#39;Reworks functions.&#39;</code></pre>
-<h2 id="configuration-variables">Configuration Variables</h2>
-
+<pre><code>sqitch rework -a coolfunctions sqlite.plan pg.plan -n 'Reworks functions.'
+</code></pre><h2 id="configuration-variables">Configuration Variables</h2>
 <ul>
-<li><p><code>rework.all</code></p>
-
+<li>
+<p><code>rework.all</code></p>
 <p>Rework the change to all the plans in the project. Useful for multi-plan projects
 in which changes should be kept in sync. May be overridden by <code>--all</code>,
-<code>--no-all</code>, or target, engine, and plan file name arguments.</p></li>
-
-<li><p><code>rework.open_editor</code></p>
-
+<code>--no-all</code>, or target, engine, and plan file name arguments.</p>
+</li>
+<li>
+<p><code>rework.open_editor</code></p>
 <p>Boolean indicating if the rework command should spawn an editor after
 generating change scripts.  When true, equivalent to passing <code>--edit</code>.
-Defaults off.</p></li>
+Defaults off.</p>
+</li>
 </ul>
-
 <h2 id="sqitch">Sqitch</h2>
-
 <p>Part of the <a href="/docs/manual/sqitch">sqitch</a> suite.</p>
 
 	</main>

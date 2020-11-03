@@ -15,12 +15,12 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.70.0" />
+	<meta name="generator" content="Hugo 0.76.5" />
 </head>
 <body>
 	<header id=masthead>
 		<hgroup id="top">
-			<h1><a href="/"><img src="/img/sqitch-logo.png" srcset="/img/sqitch-logo.svg" alt="Sqitch" title="Sqitch" /></a></h1>
+			<h1><a href="/"><img src="/img/sqitch-logo-100.png" srcset="/img/sqitch-logo.svg" alt="Sqitch" title="Sqitch" /></a></h1>
 		</hgroup>
 		<nav id="bar">
 			<menu>
@@ -43,9 +43,9 @@ use <a href="http://yum.baseurl.org">Yum</a> to install dependencies, and then b
 For example, to install Sqitch with support for <a href="https://postgresql.org/" title="PostgreSQL: The World's Most Advanced Open Source Relational Database">PostgreSQL</a>:</p>
 <pre><code>sudo yum install perl-devel perl-CPAN postgresql perl-DBD-Pg
 curl -L https://cpanmin.us | perl - --sudo App::cpanminus
-cpanm --quiet --notest App::Sqitch</code></pre>
+cpanm --quiet --notest App::Sqitch
+</code></pre>
 <p>The client and connection libraries for each engine are:</p>
-
 <ul>
 <li>PostgreSQL: <code>postgresql perl-DBD-Pg</code></li>
 <li>SQLite: <code>sqlite perl-DBD-SQLite</code></li>
@@ -54,9 +54,7 @@ cpanm --quiet --notest App::Sqitch</code></pre>
 <li>Firebird: <code>firebird-classic perl-DBD-Firebird perl-Time-HiRes</code></li>
 <li>Vertica, Exasol, Snowflake: <code>perl-DBD-ODBC</code></li>
 </ul>
-
 </section>
-
 	</main>
 	    <footer>
         <div class="code">

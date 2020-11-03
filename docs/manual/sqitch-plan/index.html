@@ -15,12 +15,12 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.70.0" />
+	<meta name="generator" content="Hugo 0.76.5" />
 </head>
 <body>
 	<header id=masthead>
 		<hgroup id="top">
-			<h1><a href="/"><img src="/img/sqitch-logo.png" srcset="/img/sqitch-logo.svg" alt="Sqitch" title="Sqitch" /></a></h1>
+			<h1><a href="/"><img src="/img/sqitch-logo-100.png" srcset="/img/sqitch-logo.svg" alt="Sqitch" title="Sqitch" /></a></h1>
 		</hgroup>
 		<nav id="bar">
 			<menu>
@@ -54,62 +54,56 @@
 	</details>
 	<script src="/js/toc.js"></script>
 </aside>
-		
-
-<h2 id="name">Name</h2>
-
+		<h2 id="name">Name</h2>
 <p>sqitch-plan - Show planned database changes</p>
-
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch plan [options] [&lt;database&gt;]</code></pre>
-<h2 id="description">Description</h2>
-
+<pre><code>sqitch plan [options] [&lt;database&gt;]
+</code></pre><h2 id="description">Description</h2>
 <p>The <code>plan</code> command displays information about planned changes for a database
 target. By default, it will show all the changes for the plan, but you can
 also search for changes matching regular expressions, and limit the results.
 Of course you could just <code>cat</code> your plan file, but this is more fun.</p>
-
 <p>The <code>&lt;database&gt;</code> parameter specifies the database for which the plan
 should be read, and may also be specified as the <code>--target</code> option. It can be
 target name, a URI, an engine name, or plan file path.</p>
-
 <h2 id="options">Options</h2>
-
 <ul>
-<li><code>-t</code></li>
-
-<li><p><code>--target</code></p>
-
+<li>
+<p><code>-t</code></p>
+</li>
+<li>
+<p><code>--target</code></p>
 <p>The target database, the plan for which should be read. This option should be
-the name of a target in the configuration.</p></li>
-
-<li><p><code>--event</code></p>
-
+the name of a target in the configuration.</p>
+</li>
+<li>
+<p><code>--event</code></p>
 <p>Filter by event type. May be specified more than once. Allowed values are:</p>
-
 <ul>
 <li><code>deploy</code></li>
 <li><code>revert</code></li>
-</ul></li>
-
-<li><p><code>--change-pattern</code></p></li>
-
-<li><p><code>--change</code></p>
-
-<p>A regular expression to match against change names.</p></li>
-
-<li><p><code>--planner-pattern</code></p></li>
-
-<li><p><code>--planner</code></p>
-
-<p>A regular expression to match against planner names.</p></li>
-
-<li><p><code>--format</code></p></li>
-
-<li><p><code>-f</code></p>
-
+</ul>
+</li>
+<li>
+<p><code>--change-pattern</code></p>
+</li>
+<li>
+<p><code>--change</code></p>
+<p>A regular expression to match against change names.</p>
+</li>
+<li>
+<p><code>--planner-pattern</code></p>
+</li>
+<li>
+<p><code>--planner</code></p>
+<p>A regular expression to match against planner names.</p>
+</li>
+<li>
+<p><code>--format</code></p>
+</li>
+<li>
+<p><code>-f</code></p>
 <p>The format to use. May be one of:</p>
-
 <ul>
 <li><code>full</code></li>
 <li><code>long</code></li>
@@ -119,157 +113,164 @@ the name of a target in the configuration.</p></li>
 <li><code>raw</code></li>
 <li><code>format:&lt;string&gt;</code></li>
 </ul>
-
-<p>See <a href="#formats">&ldquo;Formats&rdquo;</a> for details on each format. Defaults to <code>medium</code>.</p></li>
-
-<li><p><code>--date-format</code></p></li>
-
-<li><p><code>--date</code></p>
-
+<p>See <a href="#formats">&ldquo;Formats&rdquo;</a> for details on each format. Defaults to <code>medium</code>.</p>
+</li>
+<li>
+<p><code>--date-format</code></p>
+</li>
+<li>
+<p><code>--date</code></p>
 <p>Format to use for timestamps. Defaults to <code>iso</code>. Allowed values:</p>
-
 <ul>
-<li><code>iso</code></li>
-
-<li><p><code>iso8601</code></p>
-
-<p>Shows timestamps in ISO-8601 format.</p></li>
-
-<li><p><code>rfc</code></p></li>
-
-<li><p><code>rfc2822</code></p>
-
-<p>Show timestamps in RFC-2822 format.</p></li>
-
-<li><p><code>full</code></p></li>
-
-<li><p><code>long</code></p></li>
-
-<li><p><code>medium</code></p></li>
-
-<li><p><code>short</code></p>
-
+<li>
+<p><code>iso</code></p>
+</li>
+<li>
+<p><code>iso8601</code></p>
+<p>Shows timestamps in ISO-8601 format.</p>
+</li>
+<li>
+<p><code>rfc</code></p>
+</li>
+<li>
+<p><code>rfc2822</code></p>
+<p>Show timestamps in RFC-2822 format.</p>
+</li>
+<li>
+<p><code>full</code></p>
+</li>
+<li>
+<p><code>long</code></p>
+</li>
+<li>
+<p><code>medium</code></p>
+</li>
+<li>
+<p><code>short</code></p>
 <p>Show timestamps in the specified format length, using the system locale&rsquo;s
-<code>LC_TIME</code> category.</p></li>
-
-<li><p><code>raw</code></p>
-
-<p>Show timestamps in raw format, which is strict ISO-8601 in the UTC time zone.</p></li>
-
-<li><p><code>strftime:$string</code></p>
-
+<code>LC_TIME</code> category.</p>
+</li>
+<li>
+<p><code>raw</code></p>
+<p>Show timestamps in raw format, which is strict ISO-8601 in the UTC time zone.</p>
+</li>
+<li>
+<p><code>strftime:$string</code></p>
 <p>Show timestamps using an arbitrary <code>strftime</code> pattern. See
 <a href="https://metacpan.org/pod/DateTime#strftime-Paterns">&ldquo;strftime Paterns&rdquo; in DateTime</a> for comprehensive documentation of supported
-patterns.</p></li>
-
-<li><p><code>cldr:$pattern</code></p>
-
+patterns.</p>
+</li>
+<li>
+<p><code>cldr:$pattern</code></p>
 <p>Show timestamps using an arbitrary <code>cldr</code> pattern. See
 <a href="https://metacpan.org/pod/DateTime#CLDR-Paterns">&ldquo;CLDR Paterns&rdquo; in DateTime</a> for comprehensive documentation of supported
-patterns.</p></li>
-</ul></li>
-
-<li><p><code>--max-count</code></p></li>
-
-<li><p><code>-n</code></p>
-
-<p>Limit the number of changes to output.</p></li>
-
-<li><p><code>--skip</code></p>
-
-<p>Skip the specified number changes before starting to show the output.</p></li>
-
-<li><p><code>--reverse</code></p>
-
-<p>Output the changes in reverse order.</p></li>
-
-<li><p><code>--no-reverse</code></p>
-
-<p>Do not output the changes in reverse order.</p></li>
-
-<li><p><code>--headers</code></p>
-
-<p>Output headers describing the project and plan file. Enabled by default.</p></li>
-
-<li><p><code>--no-headers</code></p>
-
-<p>Do not output headers describing the project and plan file.</p></li>
-
-<li><p><code>--color</code></p>
-
+patterns.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>--max-count</code></p>
+</li>
+<li>
+<p><code>-n</code></p>
+<p>Limit the number of changes to output.</p>
+</li>
+<li>
+<p><code>--skip</code></p>
+<p>Skip the specified number changes before starting to show the output.</p>
+</li>
+<li>
+<p><code>--reverse</code></p>
+<p>Output the changes in reverse order.</p>
+</li>
+<li>
+<p><code>--no-reverse</code></p>
+<p>Do not output the changes in reverse order.</p>
+</li>
+<li>
+<p><code>--headers</code></p>
+<p>Output headers describing the project and plan file. Enabled by default.</p>
+</li>
+<li>
+<p><code>--no-headers</code></p>
+<p>Do not output headers describing the project and plan file.</p>
+</li>
+<li>
+<p><code>--color</code></p>
 <p>Show colored output. The value may be one of:</p>
-
 <ul>
 <li><code>auto</code> (the default)</li>
 <li><code>always</code></li>
 <li><code>never</code></li>
-</ul></li>
-
-<li><p><code>--no-color</code></p>
-
-<p>Turn off colored output. It is the same as <code>--color never</code>.</p></li>
-
-<li><p><code>--abbrev</code></p>
-
+</ul>
+</li>
+<li>
+<p><code>--no-color</code></p>
+<p>Turn off colored output. It is the same as <code>--color never</code>.</p>
+</li>
+<li>
+<p><code>--abbrev</code></p>
 <p>Instead of showing the full 40-byte hexadecimal change ID, show only a partial
-prefix the specified number of characters long.</p></li>
-
-<li><p><code>--oneline</code></p>
-
-<p>Shorthand for <code>--format oneline --abbrev 6</code>.</p></li>
+prefix the specified number of characters long.</p>
+</li>
+<li>
+<p><code>--oneline</code></p>
+<p>Shorthand for <code>--format oneline --abbrev 6</code>.</p>
+</li>
 </ul>
-
 <h2 id="configuration-variables">Configuration Variables</h2>
-
 <ul>
-<li><p><code>plan.format</code></p>
-
-<p>Output format to use. Supports the same values as <code>--format</code>.</p></li>
-
-<li><p><code>plan.date_format</code></p>
-
+<li>
+<p><code>plan.format</code></p>
+<p>Output format to use. Supports the same values as <code>--format</code>.</p>
+</li>
+<li>
+<p><code>plan.date_format</code></p>
 <p>Format to use for timestamps. Supports the same values as the <code>--date-format</code>
-option.</p></li>
-
-<li><p><code>plan.color</code></p>
-
-<p>Output colors. Supports the same values as the <code>--color</code> option.</p></li>
+option.</p>
+</li>
+<li>
+<p><code>plan.color</code></p>
+<p>Output colors. Supports the same values as the <code>--color</code> option.</p>
+</li>
 </ul>
-
 <h2 id="formats">Formats</h2>
-
 <p>There are several built-in formats, and you can emit data in a custom format
 <code>format:&lt;string&gt;</code> format. Here are the details of the built-in formats:</p>
-
 <ul>
-<li><p><code>oneline</code></p>
-<pre><code>&lt;change id&gt; &lt;event type&gt; &lt;change name&gt; &lt;title line&gt; &lt;tags&gt;</code></pre>
-<p>This is designed to be as compact as possible.</p></li>
-
-<li><p><code>short</code></p>
+<li>
+<p><code>oneline</code></p>
+<pre><code>&lt;change id&gt; &lt;event type&gt; &lt;change name&gt; &lt;title line&gt; &lt;tags&gt;
+</code></pre><p>This is designed to be as compact as possible.</p>
+</li>
+<li>
+<p><code>short</code></p>
 <pre><code>&lt;event type&gt; &lt;change id&gt;
 Name:      &lt;change name&gt;
 Planner:   &lt;planner&gt;
 
-&lt;title line&gt;</code></pre></li>
-
-<li><p><code>medium</code></p>
+&lt;title line&gt;
+</code></pre></li>
+<li>
+<p><code>medium</code></p>
 <pre><code>&lt;event type&gt; &lt;change id&gt;
 Name:      &lt;change name&gt;
 Planner:   &lt;planner&gt;
 Date:      &lt;commit date&gt;
 
-&lt;full change note&gt;</code></pre></li>
-
-<li><p><code>long</code></p>
+&lt;full change note&gt;
+</code></pre></li>
+<li>
+<p><code>long</code></p>
 <pre><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
 Name:      &lt;change name&gt;
 Project:   &lt;change name&gt;
 Planner:   &lt;planner&gt;
 
-&lt;full change note&gt;</code></pre></li>
-
-<li><p><code>full</code></p>
+&lt;full change note&gt;
+</code></pre></li>
+<li>
+<p><code>full</code></p>
 <pre><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
 Event:     &lt;event type&gt;
 Name:      &lt;change name&gt;
@@ -279,9 +280,10 @@ Conflicts: &lt;conflicting changes&gt;
 Planner:   &lt;planner&gt;
 Planned:   &lt;plan date&gt;
 
-&lt;full change note&gt;</code></pre></li>
-
-<li><p><code>raw</code></p>
+&lt;full change note&gt;
+</code></pre></li>
+<li>
+<p><code>raw</code></p>
 <pre><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
 name      &lt;change name&gt;
 project   &lt;project name&gt;
@@ -290,22 +292,21 @@ conflicts &lt;conflicting changes&gt;
 planner   &lt;planner&gt;
 planned   &lt;raw plan date&gt;
 
-&lt;full change note&gt;</code></pre>
-<p>Suitable for parsing: the change ID is displayed in full, without regard to
+&lt;full change note&gt;
+</code></pre><p>Suitable for parsing: the change ID is displayed in full, without regard to
 the value of <code>--abbrev</code>; dates are formatted raw (strict ISO-8601 format in
-the UTC time zone); and all labels are lowercased and unlocalized.</p></li>
-
-<li><p><code>format:&lt;string&gt;</code></p>
-
+the UTC time zone); and all labels are lowercased and unlocalized.</p>
+</li>
+<li>
+<p><code>format:&lt;string&gt;</code></p>
 <p>The <code>format:&lt;string&gt;</code> format allows you to specify which information you
 want to show. It works a little bit like <code>printf</code> format and a little like
 Git plan format. For example, this format:</p>
-<pre><code>format:The planner of %h was %{name}p%vThe title was &gt;&gt;%s&lt;&lt;%v</code></pre>
-<p>Would show something like this:</p>
+<pre><code>format:The planner of %h was %{name}p%vThe title was &gt;&gt;%s&lt;&lt;%v
+</code></pre><p>Would show something like this:</p>
 <pre><code>The planner of f26a3s was Tom Lane
-The title was &gt;&gt;We really need to get this right.&lt;&lt;</code></pre>
-<p>The placeholders are:</p>
-
+The title was &gt;&gt;We really need to get this right.&lt;&lt;
+</code></pre><p>The placeholders are:</p>
 <ul>
 <li><code>%H</code>: Event change ID</li>
 <li><code>%h</code>: Event change ID (respects <code>--abbrev</code>)</li>
@@ -358,11 +359,10 @@ The title was &gt;&gt;We really need to get this right.&lt;&lt;</code></pre>
 <li><code>%{$color}C</code>: An ANSI color: black, red, green, yellow, reset, etc.</li>
 <li><code>%{:event}C</code>: An ANSI color based on event type (green deploy, blue revert, red fail)</li>
 <li><code>%{$attribute}a</code>: The raw attribute name and value, if it exists and has a value</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h2 id="sqitch">Sqitch</h2>
-
 <p>Part of the <a href="/docs/manual/sqitch">sqitch</a> suite.</p>
 
 	</main>
