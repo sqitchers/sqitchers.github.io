@@ -322,12 +322,12 @@ We have foo!
 <li>
 <p><code>[% UNLESS %]</code></p>
 <p>Conditional blocks:</p>
-<pre><code>[% IF transactions  %]
-BEGIN;
-[% ELSE %]
--- No transaction, beware!
-[% END %]
-</code></pre></li>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">[<span style="color:#f92672">%</span> <span style="color:#66d9ef">IF</span> transactions  <span style="color:#f92672">%</span>]
+<span style="color:#66d9ef">BEGIN</span>;
+[<span style="color:#f92672">%</span> <span style="color:#66d9ef">ELSE</span> <span style="color:#f92672">%</span>]
+<span style="color:#75715e">-- No transaction, beware!
+</span><span style="color:#75715e"></span>[<span style="color:#f92672">%</span> <span style="color:#66d9ef">END</span> <span style="color:#f92672">%</span>]
+</code></pre></div></li>
 <li>
 <p><code>[% FOREACH item IN list %]</code></p>
 <p>Loop over a list of values:</p>

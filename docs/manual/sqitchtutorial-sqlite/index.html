@@ -173,14 +173,14 @@ Added &quot;users&quot; to sqitch.plan
 deploy, revert, and verify scripts that represent the change. Now we edit
 these files. The <code>deploy</code> script&rsquo;s job is to create the table. By default,
 the <code>deploy/users.sql</code> file looks like this:</p>
-<pre><code>-- Deploy flipr:users to sqlite
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:users to sqlite
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">BEGIN</span>;
 
-BEGIN;
-
--- XXX Add DDLs here.
-
-COMMIT;
-</code></pre><p>What we want to do is to replace the <code>XXX</code> comment with the <code>CREATE TABLE</code>
+<span style="color:#75715e">-- XXX Add DDLs here.
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">COMMIT</span>;
+</code></pre></div><p>What we want to do is to replace the <code>XXX</code> comment with the <code>CREATE TABLE</code>
 statement, like so:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:users to sqlite
 </span><span style="color:#75715e"></span>
