@@ -309,10 +309,10 @@ is output:</p>
 <pre><code>-- Deploy [% project %]:[% change %] to [% engine %]
 </code></pre><p>You can add <code>-</code> to the immediate start or end of a directive tag to control
 the whitespace chomping options:</p>
-<pre><code>[% IF foo -%]    # remove trailing newline
-We have foo!
-[%- END %]       # remove leading newline
-</code></pre></li>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-abnf" data-lang="abnf">[% <span style="color:#a6e22e">IF</span> <span style="color:#a6e22e">foo</span> -%]    # <span style="color:#a6e22e">remove</span> <span style="color:#a6e22e">trailing</span> <span style="color:#a6e22e">newline</span>
+<span style="color:#a6e22e">We</span> <span style="color:#a6e22e">have</span> <span style="color:#a6e22e">foo</span>!
+[%- <span style="color:#a6e22e">END</span> %]       # <span style="color:#a6e22e">remove</span> <span style="color:#a6e22e">leading</span> <span style="color:#a6e22e">newline</span>
+</code></pre></div></li>
 <li>
 <p><code>[% IF %]</code></p>
 </li>
@@ -322,19 +322,19 @@ We have foo!
 <li>
 <p><code>[% UNLESS %]</code></p>
 <p>Conditional blocks:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">[<span style="color:#f92672">%</span> <span style="color:#66d9ef">IF</span> transactions  <span style="color:#f92672">%</span>]
-<span style="color:#66d9ef">BEGIN</span>;
-[<span style="color:#f92672">%</span> <span style="color:#66d9ef">ELSE</span> <span style="color:#f92672">%</span>]
-<span style="color:#75715e">-- No transaction, beware!
-</span><span style="color:#75715e"></span>[<span style="color:#f92672">%</span> <span style="color:#66d9ef">END</span> <span style="color:#f92672">%</span>]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-abnf" data-lang="abnf">[% <span style="color:#a6e22e">IF</span> <span style="color:#a6e22e">transactions</span>  %]
+<span style="color:#a6e22e">BEGIN</span><span style="color:#75715e">;</span>
+[% <span style="color:#a6e22e">ELSE</span> %]
+-- <span style="color:#a6e22e">No</span> <span style="color:#a6e22e">transaction</span>, <span style="color:#a6e22e">beware</span>!
+[% <span style="color:#a6e22e">END</span> %]
 </code></pre></div></li>
 <li>
 <p><code>[% FOREACH item IN list %]</code></p>
 <p>Loop over a list of values:</p>
-<pre><code>[% FOREACH item IN requires -%]
--- requires: [% item %]
-[% END -%]
-</code></pre></li>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-abnf" data-lang="abnf">[% <span style="color:#a6e22e">FOREACH</span> <span style="color:#a6e22e">item</span> <span style="color:#a6e22e">IN</span> <span style="color:#a6e22e">requires</span> -%]
+-- <span style="color:#a6e22e">requires</span>: [% <span style="color:#a6e22e">item</span> %]
+[% <span style="color:#a6e22e">END</span> -%]
+</code></pre></div></li>
 </ul>
 <p>If this is not sufficient for your needs, simply install <a href="https://metacpan.org/pod/Template%3A%3AToolkit">Template::Toolkit</a>
 and all templates will be processed by its more comprehensive features. See
