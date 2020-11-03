@@ -394,6 +394,7 @@ main > section:first-of-type { border: none !important; }
 .cc:before { content: "\f25e" }
 .sqitch:before { content: "\e80c" }
 .so:before { content: "\f16c" }
+.err:before { content: "\26A0" }
 
 body > footer .code:before {
     line-height: 1em;
