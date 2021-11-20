@@ -120,14 +120,14 @@ variable.</p>
 <p>Username from the original system. Intended for use by scripts that run Sqitch
 from another host, where the originating host username should be passed to the
 execution host, such as
-<a href="https://github.com/sqitchers/docker-sqitch/blob/master/docker-sqitch.sh">this Docker script</a>.</p>
+<a href="https://github.com/sqitchers/docker-sqitch/blob/main/docker-sqitch.sh">this Docker script</a>.</p>
 </li>
 <li>
 <p><code>SQITCH_ORIG_FULLNAME</code></p>
 <p>Full name of the original system user. Intended for use by scripts that run
 Sqitch from another host, where the originating host user&rsquo;s identity should be
 passed to the execution host, such as
-<a href="https://github.com/sqitchers/docker-sqitch/blob/master/docker-sqitch.sh">this Docker script</a>.
+<a href="https://github.com/sqitchers/docker-sqitch/blob/main/docker-sqitch.sh">this Docker script</a>.
 This value will be used only when neither the <code>$SQITCH_FULLNAME</code> nor the
 <code>user.name</code> <a href="/docs/manual/sqitch-config">sqitch-config</a> variable is set.</p>
 </li>
@@ -136,7 +136,7 @@ This value will be used only when neither the <code>$SQITCH_FULLNAME</code> nor 
 <p>Email address of the original user. Intended for use by scripts that run
 Sqitch on a separate host, where the originating host user&rsquo;s identity should
 be passed to the execution host, such as
-<a href="https://github.com/sqitchers/docker-sqitch/blob/master/docker-sqitch.sh">this Docker script</a>.
+<a href="https://github.com/sqitchers/docker-sqitch/blob/main/docker-sqitch.sh">this Docker script</a>.
 This value will be used only when neither the <code>$SQITCH_EMAIL</code> nor the
 <code>user.email</code> <a href="/docs/manual/sqitch-config">sqitch-config</a> variable is set.</p>
 </li>
@@ -299,7 +299,7 @@ however, override THE <code>SQLPATH</code> environment variable, to prevent EXAp
 executing SQL scripts unexpectedly.</p>
 <h4 id="snowflake">Snowflake</h4>
 <p>Sqitch provides explicit support for the following
-<a href="https://docs.snowflake.net/manuals/user-guide/snowsql-start.html#connection-syntax">Snowflake environment variables</a>:</p>
+<a href="https://docs.snowflake.com/en/user-guide/snowsql-start.html#connection-syntax">Snowflake environment variables</a>:</p>
 <ul>
 <li>
 <p><code>SNOWSQL_ACCOUNT</code></p>
@@ -327,27 +327,29 @@ See <a href="/docs/manual/sqitch-authentication">sqitch-authentication</a> for d
 database <code>role</code> query parameter.</p>
 </li>
 <li>
-<p><code>SNOWSQL_HOST</code></p>
-<p>The PostgreSQL server host to connect to. Superseded by the target URI host
-name.</p>
-</li>
-<li>
-<p><code>SNOWSQL_PORT</code></p>
-<p>The PostgreSQL server port to connect to. Superseded by the target URI port.</p>
-</li>
-<li>
 <p><code>SNOWSQL_DATABASE</code></p>
 <p>The name of the database to connect to. Superseded by the target URI database
 name.</p>
 </li>
 <li>
-<p><code>SNOWSQL_REGION</code></p>
-<p>The snowflake region. Superseded by the target URI host name.</p>
-</li>
-<li>
 <p><code>SNOWSQL_WAREHOUSE</code></p>
 <p>The warehouse to use. Superseded by the target URI database <code>warehouse</code> query
 parameter.</p>
+</li>
+<li>
+<p><code>SNOWSQL_HOST</code></p>
+<p>The Snowflake server host to connect to. Superseded by the target URI host
+name. Deprecated by Snowflake.</p>
+</li>
+<li>
+<p><code>SNOWSQL_PORT</code></p>
+<p>The Snowflake server port to connect to. Superseded by the target URI port.
+Deprecated by Snowflake.</p>
+</li>
+<li>
+<p><code>SNOWSQL_REGION</code></p>
+<p>The Snowflake region. Superseded by the target URI host name. Deprecated by
+Snowflake.</p>
 </li>
 </ul>
 <h2 id="see-also">See Also</h2>

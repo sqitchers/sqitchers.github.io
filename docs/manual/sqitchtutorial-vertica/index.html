@@ -194,7 +194,7 @@ to parse the plan, even if the format changes in the future.</p>
 <p>Let&rsquo;s commit these changes and start creating the database changes.</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -am 'Initialize Sqitch configuration.'
-[master a42564d] Initialize Sqitch configuration.
+[main a42564d] Initialize Sqitch configuration.
  2 files changed, 16 insertions(+), 0 deletions(-)
  create mode 100644 sqitch.conf
  create mode 100644 sqitch.plan
@@ -350,7 +350,7 @@ the revert first and then the deploy.</p>
 <p>Cool. Now let&rsquo;s commit it.</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -m 'Add flipr schema.'
-[master 9bee4bd] Add flipr schema.
+[main 9bee4bd] Add flipr schema.
  5 files changed, 197 insertions(+), 0 deletions(-)
  create mode 100644 deploy/appschema.sql
  create mode 100644 revert/appschema.sql
@@ -410,7 +410,7 @@ changes are verified after deploying them:</p>
 </code></pre><p>We&rsquo;ll see the <a href="/docs/manual/sqitch-rebase"><code>rebase</code></a> command a bit later. In the meantime,
 let&rsquo;s commit the new configuration and and make some more changes!</p>
 <pre tabindex="0"><code>&gt; git commit -am 'Set default deployment target and always verify.'     
-[master 469779a] Set default deployment target and always verify.
+[main 469779a] Set default deployment target and always verify.
  1 files changed, 8 insertions(+), 0 deletions(-)
 </code></pre><h2 id="deploy-with-dependency">Deploy with Dependency</h2>
 <p>Let&rsquo;s add another change, this time to create a table. Our app will need
@@ -523,7 +523,7 @@ the current state.</p>
 <p>Okay, let&rsquo;s commit and deploy again:</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -am 'Add users table.'
-[master c7c24c5] Add users table.
+[main c7c24c5] Add users table.
  4 files changed, 18 insertions(+), 0 deletions(-)
  create mode 100644 deploy/users.sql
  create mode 100644 revert/users.sql
@@ -657,7 +657,7 @@ No matching relations found.
 the last deployed change. Looks good. Let&rsquo;s do the commit and re-deploy dance:</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -m 'Add flips table and userflips view.'
-[master c40f23f] Add flips table and userflips view.
+[main c40f23f] Add flips table and userflips view.
  7 files changed, 41 insertions(+), 0 deletions(-)
  create mode 100644 deploy/flips.sql
  create mode 100644 deploy/userflips.sql
@@ -695,7 +695,7 @@ to have it go out with deployments tied to the release, let&rsquo;s tag it:</p>
 <pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev1 -n 'Tag v1.0.0-dev1.'
 Tagged &quot;userflips&quot; with @v1.0.0-dev1
 &gt; git commit -am 'Tag the database with v1.0.0-dev1.'
-[master b07ce3d] Tag the database with v1.0.0-dev1.
+[main b07ce3d] Tag the database with v1.0.0-dev1.
  1 files changed, 1 insertions(+), 0 deletions(-)
 &gt; git tag v1.0.0-dev1 -am 'Tag v1.0.0-dev1'
 </code></pre><p>We can try deploying to make sure the tag gets picked up like so:</p>
@@ -800,11 +800,11 @@ Deploying changes to flipr_test
  create mode 100644 deploy/hashtags.sql
  create mode 100644 revert/hashtags.sql
  create mode 100644 verify/hashtags.sql
-</code></pre><p>Good, we&rsquo;ve finished this feature. Time to merge back into <code>master</code>.</p>
+</code></pre><p>Good, we&rsquo;ve finished this feature. Time to merge back into <code>main</code>.</p>
 <h3 id="emergency">Emergency</h3>
 <p>Let&rsquo;s do it:</p>
-<pre tabindex="0"><code>&gt; git checkout master
-Switched to branch 'master'
+<pre tabindex="0"><code>&gt; git checkout main
+Switched to branch 'main'
 &gt; git pull
 Updating b07ce3d..05d3e5d
 Fast-forward
@@ -816,7 +816,7 @@ Fast-forward
  create mode 100644 deploy/lists.sql
  create mode 100644 revert/lists.sql
  create mode 100644 verify/lists.sql
-</code></pre><p>Hrm, that&rsquo;s interesting. Looks like someone made some changes to <code>master</code>.
+</code></pre><p>Hrm, that&rsquo;s interesting. Looks like someone made some changes to <code>main</code>.
 They added list support. Well, let&rsquo;s see what happens when we merge our
 changes.</p>
 <pre tabindex="0"><code>&gt; git merge --no-ff hashtags
@@ -826,26 +826,26 @@ Automatic merge failed; fix conflicts and then commit the result.
 </code></pre><p>Oh, a conflict in <code>sqitch.plan</code>. Not too surprising, since both the merged
 <code>lists</code> branch and our <code>hashtags</code> branch added changes to the plan. Let&rsquo;s
 try a different approach.</p>
-<p>The truth is, we got lazy. Those changes when we pulled master from the origin
+<p>The truth is, we got lazy. Those changes when we pulled main from the origin
 should have raised a red flag. It&rsquo;s considered a bad practice not to look at
-what&rsquo;s changed in <code>master</code> before merging in a branch. What one <em>should</em> do
+what&rsquo;s changed in <code>main</code> before merging in a branch. What one <em>should</em> do
 is either:</p>
 <ul>
-<li>Rebase the <code>hashtags</code> branch from master before merging. This &ldquo;rewinds&rdquo; the
-branch changes, pulls from <code>master</code>, and then replays the changes back on top
+<li>Rebase the <code>hashtags</code> branch from main before merging. This &ldquo;rewinds&rdquo; the
+branch changes, pulls from <code>main</code>, and then replays the changes back on top
 of the pulled changes.</li>
-<li>Create a patch and apply <em>that</em> to master. This is the sort of thing you
+<li>Create a patch and apply <em>that</em> to main. This is the sort of thing you
 might have to do if you&rsquo;re sending changes to another user, especially if the
 VCS is not Git.</li>
 </ul>
-<p>So let&rsquo;s restore things to how they were at master:</p>
+<p>So let&rsquo;s restore things to how they were at main:</p>
 <pre tabindex="0"><code>&gt; git reset --hard HEAD
 HEAD is now at 05d3e5d Merge branch 'lists'
 </code></pre><p>That throws out our botched merge. Now let&rsquo;s go back to our branch and rebase
-it on <code>master</code>:</p>
+it on <code>main</code>:</p>
 <pre tabindex="0"><code>&gt; git checkout hashtags
 Switched to branch 'hashtags'
-&gt; git rebase master
+&gt; git rebase main
 First, rewinding head to replay your work on top of it...
 Applying: Add hashtags table.
 Using index info to reconstruct a base tree...
@@ -881,7 +881,7 @@ HEAD is now at d893e9c Add hashtags table.
 </code></pre><p>Now add the union merge driver to <code>.gitattributes</code> for <code>sqitch.plan</code>
 and rebase again:</p>
 <pre tabindex="0"><code>&gt; echo sqitch.plan merge=union &gt; .gitattributes
-&gt; git rebase master
+&gt; git rebase main
 First, rewinding head to replay your work on top of it...
 Applying: Add hashtags table.
 Using index info to reconstruct a base tree...
@@ -932,9 +932,9 @@ worthwhile to keep that change:</p>
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 .gitattributes
 </code></pre><h3 id="merges-mastered">Merges Mastered</h3>
-<p>And now, finally, we can merge into <code>master</code>:</p>
-<pre tabindex="0"><code>&gt; git checkout master
-Switched to branch 'master'
+<p>And now, finally, we can merge into <code>main</code>:</p>
+<pre tabindex="0"><code>&gt; git checkout main
+Switched to branch 'main'
 &gt; git merge --no-ff hashtags -m &quot;Merge branch 'hashtags'&quot;
 Merge made by recursive.
  .gitattributes      |    1 +
@@ -961,13 +961,13 @@ userflips [appschema users flips] 2014-09-05T00:18:43Z Marge N. O’Vera &lt;mar
 
 lists [appschema users] 2014-09-05T17:33:43Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing lists.
 hashtags [appschema flips] 2014-09-05T17:39:53Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing hashtags.
-</code></pre><p>Much much better, a nice clean master now. And because it is now identical to
+</code></pre><p>Much much better, a nice clean main now. And because it is now identical to
 the &ldquo;hashtags&rdquo; branch, we can just carry on. Go ahead and tag it, bundle, and
 release:</p>
 <pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev2 -n 'Tag v1.0.0-dev2.'
 Tagged &quot;hashtags&quot; with @v1.0.0-dev2
 &gt; git commit -am 'Tag the database with v1.0.0-dev2.'
-[master 8a6a73b] Tag the database with v1.0.0-dev2.
+[main 8a6a73b] Tag the database with v1.0.0-dev2.
  1 files changed, 1 insertions(+), 0 deletions(-)
 &gt; git tag v1.0.0-dev2 -am 'Tag v1.0.0-dev2'
 &gt; sqitch bundle --dest-dir flipr-1.0.0-dev2
@@ -1024,7 +1024,7 @@ Modify these files as appropriate:
 point of fact, it has copied the files to stand in for the previous instance
 of the <code>userflips</code> change, which we can see via <code>git status</code>:</p>
 <pre tabindex="0"><code>&gt; git status
-# On branch master
+# On branch main
 # Changed but not updated:
 #   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
 #   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
@@ -1122,7 +1122,7 @@ in the new script files that include tags.</p>
 <p>Excellent. Let&rsquo;s go ahead and commit these changes:</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -m 'Add the twitter column to the userflips view.'
-[master 95d6dd0] Add the twitter column to the userflips view.
+[main 95d6dd0] Add the twitter column to the userflips view.
  7 files changed, 30 insertions(+), 4 deletions(-)
  create mode 100644 deploy/userflips@v1.0.0-dev2.sql
  create mode 100644 revert/userflips@v1.0.0-dev2.sql
@@ -1133,7 +1133,7 @@ is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 <h2 id="author">Author</h2>
 <p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
 <h2 id="license">License</h2>
-<p>Copyright (c) 2012-2020 iovation Inc.</p>
+<p>Copyright (c) 2012-2021 iovation Inc., David E. Wheeler</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal
 in the Software without restriction, including without limitation the rights

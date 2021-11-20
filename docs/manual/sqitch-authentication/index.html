@@ -127,7 +127,7 @@ Otherwise, it uses the system username.</p>
 <p>Snowflake</p>
 <p>The Snowflake engine uses the <code>SNOWSQL_USER</code> environment variable, if set.
 Next, it looks in the
-<a href="https://docs.snowflake.net/manuals/user-guide/snowsql-start.html#snowsql-config-file"><code>~/.snowsql/config</code> file</a>
+<a href="https://docs.snowflake.com/en/user-guide/snowsql-start.html#snowsql-config-file"><code>~/.snowsql/config</code> file</a>
 and use the default <code>connections.username</code> value. Otherwise, it uses the
 system username.</p>
 </li>
@@ -209,14 +209,18 @@ for local connections.</p>
 </li>
 <li>
 <p>Exasol</p>
-<p>Exasol doesn&rsquo;t seem to support password-less authentication at this time; for
-other options, see the <a href="https://www.exasol.com/portal/display/DOC/Database+User+Manual">documentation</a>.</p>
-</li>
+<p>Exasol doesn&rsquo;t seem to support password-less authentication at this time,
+though there is support for
+<a href="https://docs.exasol.com/sql/create_user.htm#Authenti4">Authentication using OpenID</a>.
+To use it with Sqitch, include <code>AUTHMETHOD=refreshtoken</code> in the target URI
+query string, e.g.,</p>
+<pre tabindex="0"><code>db:exasol://sys:exasol@localhost:8563/?Driver=Exasol&amp;AUTHMETHOD=refreshtoken
+</code></pre></li>
 <li>
 <p>Snowflake</p>
 <p>Snowflake does not support password-less authentication, but does support
 key-pair authentication. Follow
-<a href="https://docs.snowflake.net/manuals/user-guide/snowsql-start.html#using-key-pair-authentication">the instructions</a>
+<a href="https://docs.snowflake.com/en/user-guide/snowsql-start.html#using-key-pair-authentication">the instructions</a>
 to create a key pair, then set the following variables in the <code>~/.snowsql/config</code>
 file:</p>
 <pre tabindex="0"><code>authenticator = SNOWFLAKE_JWT
@@ -300,6 +304,7 @@ the chapter on &ldquo;Clients and interfaces&rdquo;.</p>
 <span style="color:#a6e22e">EXAHOST</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">localhost:8563</span>
 <span style="color:#a6e22e">EXAUID</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">sys</span>
 <span style="color:#a6e22e">EXAPWD</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">exasol</span>
+<span style="color:#a6e22e">AUTHMETHOD</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">refreshtoken</span>
 </code></pre></div><p>When combining the above, Sqitch doesn&rsquo;t need to know any credentials; they are
 stored somewhat safely in <code>~/.exasol/profiles.xml</code> and <code>~/.odbc.ini</code>:</p>
 <pre tabindex="0"><code>&gt; sqitch status db:exasol:flipr_test
@@ -317,12 +322,11 @@ Deploying changes to db:exasol:flipr_test
 <li>
 <p>Snowflake</p>
 <p>For Snowflake, Sqitch will read the
-<a href="https://docs.snowflake.net/manuals/user-guide/snowsql-start.html#snowsql-config-file"><code>~/.snowsql/config</code> file</a>
+<a href="https://docs.snowflake.com/en/user-guide/snowsql-start.html#snowsql-config-file"><code>~/.snowsql/config</code> file</a>
 and use the default connections settings; named connections are not supported.
 An example:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[connections]</span>
-<span style="color:#a6e22e">accountname</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">myaccount</span>
-<span style="color:#a6e22e">region</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">us-east-1</span>
+<span style="color:#a6e22e">accountname</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">myaccount.us-east-1</span>
 <span style="color:#a6e22e">warehousename</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">compute</span>
 <span style="color:#a6e22e">username</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">frank</span>
 <span style="color:#a6e22e">password</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">fistula postmark bag</span>
@@ -334,7 +338,7 @@ An example:</p>
 <li><code>connections.username</code></li>
 <li><code>connections.password</code></li>
 <li><code>connections.rolename</code></li>
-<li><code>connections.region</code></li>
+<li><code>connections.region</code> (Deprecated by Snowflake)</li>
 <li><code>connections.warehousename</code></li>
 <li><code>connections.dbname</code></li>
 </ul>

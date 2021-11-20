@@ -146,6 +146,14 @@ Sqitch, and you need to log changes as deployed because they have been
 deployed by other means in the past.</p>
 </li>
 <li>
+<p><code>--lock-timeout</code></p>
+<pre tabindex="0"><code>sqitch deploy --lock-timeout 600
+</code></pre><p>Set the number of seconds for Sqitch to wait to get an exclusive advisory
+lock on the target database, for engines that support such a lock. This
+lock prevents other instances of Sqitch from working on the target at the
+same time, but prevents no other database activity. Defaults to 60.</p>
+</li>
+<li>
 <p><code>--registry</code></p>
 <pre tabindex="0"><code>sqitch deploy --registry registry
 </code></pre><p>The name of the Sqitch registry schema or database in which sqitch stores its
@@ -240,7 +248,7 @@ MySQL&rsquo;s
 SQL*Plus&rsquo;s
 <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14357/ch12017.htm"><code>DEFINE</code> variables</a>,
 and Snowflake&rsquo;s
-<a href="https://docs.snowflake.net/manuals/user-guide/snowsql-use.html#using-variables">SnowSQL variables</a>.</p>
+<a href="https://docs.snowflake.com/en/user-guide/snowsql-use.html#using-variables">SnowSQL variables</a>.</p>
 <p>May be overridden by <code>--set</code> or target and engine configuration. Variables
 are merged in the following priority order:</p>
 <ul>

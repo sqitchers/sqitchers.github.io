@@ -89,7 +89,7 @@ examples as appropriate.</p>
 <h3 id="connection-configuration">Connection Configuration</h3>
 <p>Sqitch requires ODBC to connect to the Snowflake database. As such, you&rsquo;ll
 need to make sure that the
-<a href="https://docs.snowflake.net/manuals/user-guide/odbc.html">Snowflake ODBC driver</a>
+<a href="https://docs.snowflake.com/en/user-guide/odbc.html">Snowflake ODBC driver</a>
 is installed and properly configured. At its simplest, on Unix-like systems,
 name the driver &ldquo;Snowflake&rdquo; by adding this entry to <code>odbcinst.ini</code> (usually
 found in <code>/etc</code>, <code>/usr/etc</code>, or <code>/usr/local/etc</code>):</p>
@@ -98,7 +98,7 @@ found in <code>/etc</code>, <code>/usr/etc</code>, or <code>/usr/local/etc</code
 <span style="color:#a6e22e">Driver</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/lib64/snowflake/odbc/lib/libSnowflake.so</span>
 </code></pre></div><p>Note that you&rsquo;ll need to adjust the path depending on the version of the ODBC
 driver, and where you installed it.</p>
-<p>See the <a href="https://docs.snowflake.net/manuals/user-guide/odbc.html">Snowflake ODBC documentation</a>
+<p>See the <a href="https://docs.snowflake.com/en/user-guide/odbc.html">Snowflake ODBC documentation</a>
 for details on downloading, installing, and configuring ODBC for your
 platform.</p>
 <h2 id="starting-a-new-project">Starting a New Project</h2>
@@ -173,7 +173,7 @@ to parse the plan, even if the format changes in the future.</p>
 <p>Let&rsquo;s commit these changes and start creating the database changes.</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -am 'Initialize Sqitch configuration.'
-[master b731cc3] Initialize Sqitch configuration.
+[main b731cc3] Initialize Sqitch configuration.
  2 files changed, 15 insertions(+)
  create mode 100644 sqitch.conf
  create mode 100644 sqitch.plan
@@ -206,7 +206,7 @@ from the URI if that&rsquo;s the warehouse you want Sqitch to use (we&rsquo;ll o
 the remainder of this tutorial). Otherwise, specify it in the URI. Snowflake
 also requires a password, which could also be included in the URI, but it&rsquo;s
 best to put it in the <code>connections</code> section of the
-<a href="https://docs.snowflake.net/manuals/user-guide/snowsql-start.html#configuring-default-connection-settings"><code>.snowsql/config</code> file</a>.
+<a href="https://docs.snowflake.com/en/user-guide/snowsql-start.html#configuring-default-connection-settings"><code>.snowsql/config</code> file</a>.
 See <a href="/docs/manual/sqitch-authentication">sqitch-authentication</a> for details.</p>
 <p>We just tell Sqitch to use that URI to deploy the change:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy 'db:snowflake://movera@example/flipr?Driver=Snowflake'
@@ -252,7 +252,7 @@ not exist, you could do something like this:</p>
 </code></pre></div><p>Note the <code>USE WAREHOUSE</code> statement which is provided in the default Snowflake
 change script templates. For scripts that execute queries requiring compute
 resources (typically DML and <code>SELECT</code> statements), we&rsquo;ll need to use a
-<a href="https://docs.snowflake.net/manuals/user-guide/warehouses.html">virtual warehouse</a>.
+<a href="https://docs.snowflake.com/en/user-guide/warehouses.html">virtual warehouse</a>.
 This statement lets the script use the warehouse that Sqitch itself uses for
 its registry, which should be a reasonable default, since Sqitch is
 already using this warehouse. You can always change it to a different
@@ -362,7 +362,7 @@ the revert first and then the deploy.</p>
 <p>Cool. Now let&rsquo;s commit it.</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -m 'Add flipr schema.'
-[master 7fd5ace] Add flipr schema.
+[main 7fd5ace] Add flipr schema.
 4 files changed, 10 insertions(+)
 create mode 100644 deploy/appschema.sql
 create mode 100644 revert/appschema.sql
@@ -424,7 +424,7 @@ changes are verified after deploying them:</p>
 </code></pre><p>We&rsquo;ll see the <a href="/docs/manual/sqitch-rebase"><code>rebase</code></a> command a bit later. In the meantime,
 let&rsquo;s commit the new configuration and and make some more changes!</p>
 <pre tabindex="0"><code>&gt; git commit -am 'Set default deployment target and always verify.'
-[master 3834a8d] Set default deployment target and always verify.
+[main 3834a8d] Set default deployment target and always verify.
  1 files changed, 8 insertions(+), 0 deletions(-)
 </code></pre><h2 id="deploy-with-dependency">Deploy with Dependency</h2>
 <p>Let&rsquo;s add another change, this time to create a table. Our app will need
@@ -551,7 +551,7 @@ the current state.</p>
 <p>Okay, let&rsquo;s commit and deploy again:</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -am 'Add users table.'
-[master 8c16c09] Add users table.
+[main 8c16c09] Add users table.
  4 files changed, 22 insertions(+)
  create mode 100644 deploy/users.sql
  create mode 100644 revert/users.sql
@@ -699,7 +699,7 @@ Reverting changes to users from flipr_test
 the last deployed change. Looks good. Let&rsquo;s do the commit and re-deploy dance:</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -m 'Add flips table and userflips view.'
-[master b36f48b] Add flips table and userflips view.
+[main b36f48b] Add flips table and userflips view.
  7 files changed, 43 insertions(+)
  create mode 100644 deploy/flips.sql
  create mode 100644 deploy/userflips.sql
@@ -736,7 +736,7 @@ to have it go out with deployments tied to the release, let&rsquo;s tag it:</p>
 <pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev1 -n 'Tag v1.0.0-dev1.'
 Tagged &quot;userflips&quot; with @v1.0.0-dev1
 &gt; git commit -am 'Tag the database with v1.0.0-dev1.'
-[master 84ed9db] Tag the database with v1.0.0-dev1.
+[main 84ed9db] Tag the database with v1.0.0-dev1.
  1 files changed, 1 insertion(+)
 &gt; git tag v1.0.0-dev1 -am 'Tag v1.0.0-dev1'
 </code></pre><p>We can try deploying to make sure the tag gets picked up like so:</p>
@@ -836,11 +836,11 @@ Deploying changes to flipr_test
  create mode 100644 deploy/hashtags.sql
  create mode 100644 revert/hashtags.sql
  create mode 100644 verify/hashtags.sql
-</code></pre><p>Good, we&rsquo;ve finished this feature. Time to merge back into <code>master</code>.</p>
+</code></pre><p>Good, we&rsquo;ve finished this feature. Time to merge back into <code>main</code>.</p>
 <h3 id="emergency">Emergency</h3>
 <p>Let&rsquo;s do it:</p>
-<pre tabindex="0"><code>&gt; git checkout master
-Switched to branch 'master'
+<pre tabindex="0"><code>&gt; git checkout main
+Switched to branch 'main'
 &gt; git pull
 Updating 84ed9db..31d026c
 Fast-forward
@@ -852,7 +852,7 @@ Fast-forward
  create mode 100644 deploy/lists.sql
  create mode 100644 revert/lists.sql
  create mode 100644 verify/lists.sql
-</code></pre><p>Hrm, that&rsquo;s interesting. Looks like someone made some changes to <code>master</code>.
+</code></pre><p>Hrm, that&rsquo;s interesting. Looks like someone made some changes to <code>main</code>.
 They added list support. Well, let&rsquo;s see what happens when we merge our
 changes.</p>
 <pre tabindex="0"><code>&gt; git merge --no-ff hashtags
@@ -862,26 +862,26 @@ Automatic merge failed; fix conflicts and then commit the result.
 </code></pre><p>Oh, a conflict in <code>sqitch.plan</code>. Not too surprising, since both the merged
 <code>lists</code> branch and our <code>hashtags</code> branch added changes to the plan. Let&rsquo;s
 try a different approach.</p>
-<p>The truth is, we got lazy. Those changes when we pulled master from the origin
+<p>The truth is, we got lazy. Those changes when we pulled main from the origin
 should have raised a red flag. It&rsquo;s considered a bad practice not to look at
-what&rsquo;s changed in <code>master</code> before merging in a branch. What one <em>should</em> do
+what&rsquo;s changed in <code>main</code> before merging in a branch. What one <em>should</em> do
 is either:</p>
 <ul>
-<li>Rebase the <code>hashtags</code> branch from master before merging. This &ldquo;rewinds&rdquo; the
-branch changes, pulls from <code>master</code>, and then replays the changes back on top
+<li>Rebase the <code>hashtags</code> branch from main before merging. This &ldquo;rewinds&rdquo; the
+branch changes, pulls from <code>main</code>, and then replays the changes back on top
 of the pulled changes.</li>
-<li>Create a patch and apply <em>that</em> to master. This is the sort of thing you
+<li>Create a patch and apply <em>that</em> to main. This is the sort of thing you
 might have to do if you&rsquo;re sending changes to another user, especially if the
 VCS is not Git.</li>
 </ul>
-<p>So let&rsquo;s restore things to how they were at master:</p>
+<p>So let&rsquo;s restore things to how they were at main:</p>
 <pre tabindex="0"><code>&gt; git reset --hard HEAD
 HEAD is now at 31d026c Merge branch 'lists'
 </code></pre><p>That throws out our botched merge. Now let&rsquo;s go back to our branch and rebase
-it on <code>master</code>:</p>
+it on <code>main</code>:</p>
 <pre tabindex="0"><code>&gt; git checkout hashtags
 Switched to branch 'hashtags'
-&gt; git rebase master
+&gt; git rebase main
 First, rewinding head to replay your work on top of it...
 Applying: Add hashtags table.
 Using index info to reconstruct a base tree...
@@ -917,7 +917,7 @@ HEAD is now at 06a0bf4 Add hashtags table.
 </code></pre><p>Now add the union merge driver to <code>.gitattributes</code> for <code>sqitch.plan</code>
 and rebase again:</p>
 <pre tabindex="0"><code>&gt; echo sqitch.plan merge=union &gt; .gitattributes
-&gt; git rebase master
+&gt; git rebase main
 First, rewinding head to replay your work on top of it...
 Applying: Add hashtags table.
 Using index info to reconstruct a base tree...
@@ -966,9 +966,9 @@ worthwhile to keep that change:</p>
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 .gitattributes
 </code></pre><h3 id="merges-mastered">Merges Mastered</h3>
-<p>And now, finally, we can merge into <code>master</code>:</p>
-<pre tabindex="0"><code>&gt; git checkout master
-Switched to branch 'master'
+<p>And now, finally, we can merge into <code>main</code>:</p>
+<pre tabindex="0"><code>&gt; git checkout main
+Switched to branch 'main'
 &gt; git merge --no-ff hashtags -m &quot;Merge branch 'hashtags'&quot;
 Merge made by the 'recursive' strategy.
  .gitattributes      | 1 +
@@ -995,13 +995,13 @@ userflips [appschema users flips] 2018-07-27T15:23:50Z Marge N. O’Vera &lt;mar
 
 lists [appschema flips] 2018-07-27T16:00:00Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing lists.
 hashtags [flips] 2018-07-27T15:51:16Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing hashtags.
-</code></pre><p>Much much better, a nice clean master now. And because it is now identical to
+</code></pre><p>Much much better, a nice clean main now. And because it is now identical to
 the &ldquo;hashtags&rdquo; branch, we can just carry on. Go ahead and tag it, bundle, and
 release:</p>
 <pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev2 -n 'Tag v1.0.0-dev2.'
 Tagged &quot;hashtags&quot; with @v1.0.0-dev2
 &gt; git commit -am 'Tag the database with v1.0.0-dev2.'
-[master 1c67e0d] Tag the database with v1.0.0-dev2.
+[main 1c67e0d] Tag the database with v1.0.0-dev2.
  1 files changed, 1 insertion(+)
 &gt; git tag v1.0.0-dev2 -am 'Tag v1.0.0-dev2'
 &gt; sqitch bundle --dest-dir flipr-1.0.0-dev2
@@ -1058,8 +1058,8 @@ Modify these files as appropriate:
 point of fact, it has copied the files to stand in for the previous instance
 of the <code>userflips</code> change, which we can see via <code>git status</code>:</p>
 <pre tabindex="0"><code>&gt; git status
-On branch master
-Your branch is up to date with 'origin/master'.
+On branch main
+Your branch is up to date with 'origin/main'.
 
 Changes not staged for commit:
   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
@@ -1156,7 +1156,7 @@ in the new script files that include tags.</p>
 <p>Excellent. Let&rsquo;s go ahead and commit these changes:</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -m 'Add the twitter column to the userflips view.'
-[master c004445] Add the twitter column to the userflips view.
+[main c004445] Add the twitter column to the userflips view.
  7 files changed, 31 insertions(+), 4 deletions(-)
  create mode 100644 deploy/userflips@v1.0.0-dev2.sql
  create mode 100644 revert/userflips@v1.0.0-dev2.sql
@@ -1167,7 +1167,7 @@ is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 <h2 id="author">Author</h2>
 <p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
 <h2 id="license">License</h2>
-<p>Copyright (c) 2012-2020 iovation Inc.</p>
+<p>Copyright (c) 2012-2021 iovation Inc., David E. Wheeler</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal
 in the Software without restriction, including without limitation the rights
