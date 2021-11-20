@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.82.0" />
+	<meta name="generator" content="Hugo 0.89.4" />
 </head>
 <body>
 	<header id=masthead>
@@ -62,7 +62,7 @@
 		<h2 id="name">Name</h2>
 <p>sqitch-target - Manage target database configuration</p>
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch target
+<pre tabindex="0"><code>sqitch target
 sqitch target [-v | --verbose]
 sqitch target add &lt;name&gt; &lt;uri&gt; [-s &lt;property&gt;=&lt;value&gt; ...]
 sqitch target alter &lt;name&gt; [-s &lt;property&gt;=&lt;value&gt; ...]
@@ -76,7 +76,7 @@ number of properties:</p>
 <li>
 <p><code>uri</code></p>
 <p>The <a href="https://metacpan.org/pod/URI%3A%3Adb">database connection URI</a> for the target. Required. Its format is:</p>
-<pre><code>db:engine:[dbname]
+<pre tabindex="0"><code>db:engine:[dbname]
 db:engine:[//[user[:password]@][host][:port]/][dbname][?params][#fragment]
 </code></pre><p>Some examples:</p>
 <ul>
@@ -166,7 +166,7 @@ managed by <a href="/docs/manual/sqitch-engine">engine</a>.</p>
 </li>
 <li>
 <p><code>--verbose</code></p>
-<pre><code>sqitch target --verbose
+<pre tabindex="0"><code>sqitch target --verbose
 </code></pre><p>Be more verbose when listing targets.</p>
 </li>
 </ul>
@@ -175,12 +175,12 @@ managed by <a href="/docs/manual/sqitch-engine">engine</a>.</p>
 <ul>
 <li>
 <p><code>--uri</code></p>
-<pre><code>sqitch target add devwidgets --uri db:pg:widgets
+<pre tabindex="0"><code>sqitch target add devwidgets --uri db:pg:widgets
 </code></pre><p>Specifies the <a href="https://github.com/libwww-perl/uri-db/">URI</a> of the target database.</p>
 </li>
 <li>
 <p><code>--top-dir</code></p>
-<pre><code>sqitch target add devwidgets --top-dir sql
+<pre tabindex="0"><code>sqitch target add devwidgets --top-dir sql
 </code></pre><p>Specifies the top directory to use for the target. Typically contains the
 deployment plan file and the change script directories.</p>
 </li>
@@ -189,19 +189,19 @@ deployment plan file and the change script directories.</p>
 </li>
 <li>
 <p><code>-f</code></p>
-<pre><code>sqitch target add devwidgets --plan-file my.plan
+<pre tabindex="0"><code>sqitch target add devwidgets --plan-file my.plan
 </code></pre><p>Specifies the path to the deployment plan file. Defaults to
 <code>$top_dir/sqitch.plan</code>.</p>
 </li>
 <li>
 <p><code>--extension</code></p>
-<pre><code>sqitch target add devwidgets --extension ddl
+<pre tabindex="0"><code>sqitch target add devwidgets --extension ddl
 </code></pre><p>Specifies the file name extension to use for change script file names.
 Defaults to <code>sql</code>.</p>
 </li>
 <li>
 <p><code>--dir</code></p>
-<pre><code>sqitch target add devwidgets --dir deploy=dep --dir revert=rev --dir verify=tst
+<pre tabindex="0"><code>sqitch target add devwidgets --dir deploy=dep --dir revert=rev --dir verify=tst
 </code></pre><p>Sets the path to a script directory. May be specified multiple times.
 Supported keys are:</p>
 <ul>
@@ -216,14 +216,14 @@ Supported keys are:</p>
 </li>
 <li>
 <p><code>--registry</code></p>
-<pre><code>sqitch target add devwidgets --registry meta
+<pre tabindex="0"><code>sqitch target add devwidgets --registry meta
 </code></pre><p>Specifies the name of the database object where Sqitch&rsquo;s state and history
 data is stored. Typically a schema name (as in PostgreSQL and Oracle) or a
 database name (as in SQLite and MySQL). Defaults to <code>sqitch</code>.</p>
 </li>
 <li>
 <p><code>--client</code></p>
-<pre><code>sqitch target add devwidgets --client /usr/local/pgsql/bin/psql
+<pre tabindex="0"><code>sqitch target add devwidgets --client /usr/local/pgsql/bin/psql
 </code></pre><p>Specifies the path to the command-line client for the target. Defaults to a
 client in the current path named appropriately for the engine specified by the
 URI.</p>

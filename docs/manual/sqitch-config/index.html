@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.82.0" />
+	<meta name="generator" content="Hugo 0.89.4" />
 </head>
 <body>
 	<header id=masthead>
@@ -67,7 +67,7 @@
 		<h2 id="name">Name</h2>
 <p>sqitch-config - Get and set local, user, or system Sqitch options</p>
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch config [&lt;file-option&gt;] [type] name [value [value_regex]]
+<pre tabindex="0"><code>sqitch config [&lt;file-option&gt;] [type] name [value [value_regex]]
 sqitch config [&lt;file-option&gt;] [type] --add name value
 sqitch config [&lt;file-option&gt;] [type] --replace-all name value [value_regex]
 sqitch config [&lt;file-option&gt;] [type] --get name [value_regex]
@@ -241,7 +241,7 @@ the local file will be opened.</p>
 </ul>
 <h2 id="examples">Examples</h2>
 <p>Given a <code>./sqitch.conf</code> like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#75715e">#</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#75715e">#</span>
 <span style="color:#75715e"># This is the config file, and</span>
 <span style="color:#75715e"># a &#39;#&#39; or &#39;;&#39; character indicates</span>
 <span style="color:#75715e"># a comment</span>
@@ -264,36 +264,36 @@ the local file will be opened.</p>
 </span><span style="color:#e6db74">        clack        = bar
 </span><span style="color:#e6db74">        clack        = barzlewidth</span>
 </code></pre></div><p>You can set the <code>tags_only</code> setting to true with</p>
-<pre><code>% sqitch config bundle.tags_only true
+<pre tabindex="0"><code>% sqitch config bundle.tags_only true
 </code></pre><p>The hypothetical <code>clack</code> key in the <code>core.fuzzle</code> section might need to set
 <code>foo</code> to &ldquo;hi&rdquo; instead of &ldquo;foo&rdquo;. You can make the replacement by passing an
 additional argument to match the old value, which will be evaluated as a
 regular expression. Here&rsquo;s one way to make that change:</p>
-<pre><code>% sqitch config core.fuzzle.clack hi '^foo$'
+<pre tabindex="0"><code>% sqitch config core.fuzzle.clack hi '^foo$'
 </code></pre><p>To delete the entry for <code>bundle.from</code>, do</p>
-<pre><code>% sqitch config --unset bundle.from
+<pre tabindex="0"><code>% sqitch config --unset bundle.from
 </code></pre><p>If you want to delete an entry for a multivalue setting (like
 <code>core.fuzzle.clack</code>), provide a regex matching the value of exactly one line.
 This example deletes the &ldquo;bar&rdquo; value:</p>
-<pre><code>% sqitch config --unset core.fuzzle.clack '^bar$'
+<pre tabindex="0"><code>% sqitch config --unset core.fuzzle.clack '^bar$'
 </code></pre><p>To query the value for a given key, do:</p>
-<pre><code>% sqitch config --get core.engine
+<pre tabindex="0"><code>% sqitch config --get core.engine
 </code></pre><p>Or:</p>
-<pre><code>% sqitch config core.engine
+<pre tabindex="0"><code>% sqitch config core.engine
 </code></pre><p>Or, to query a multivalue setting for only those values that match <code>/ba/</code>:</p>
-<pre><code>% sqitch config --get core.fuzzle.clack ba
+<pre tabindex="0"><code>% sqitch config --get core.fuzzle.clack ba
 </code></pre><p>If you want to know all the values for a multivalue setting, do:</p>
-<pre><code>% sqitch config --get-all core.fuzzle.clack
+<pre tabindex="0"><code>% sqitch config --get-all core.fuzzle.clack
 </code></pre><p>If you like to live dangerously, you can replace all <code>core.fuzzle.clack</code> with a
 new one with</p>
-<pre><code>% sqitch config --replace-all core.fuzzle.clack funk
+<pre tabindex="0"><code>% sqitch config --replace-all core.fuzzle.clack funk
 </code></pre><p>However, if you only want to replace lines that don&rsquo;t match <code>bar</code>, prepend
 the matching regular expression with an exclamation point (<code>!</code>), like so:</p>
-<pre><code>% sqitch config --replace-all core.fuzzle.clack yow '!bar'
+<pre tabindex="0"><code>% sqitch config --replace-all core.fuzzle.clack yow '!bar'
 </code></pre><p>To match only values with an exclamation mark, you have to escape it:</p>
-<pre><code>% sqitch config section.key '[!]'
+<pre tabindex="0"><code>% sqitch config section.key '[!]'
 </code></pre><p>To add a new setting without altering any of the existing ones, use:</p>
-<pre><code>% sqitch config --add core.fuzzle.set widget=fred
+<pre tabindex="0"><code>% sqitch config --add core.fuzzle.set widget=fred
 </code></pre><h2 id="configuration-file">Configuration File</h2>
 <p>The sqitch configuration file contains a number of variables that affect the
 sqitch command&rsquo;s behavior. The <code>./sqitch.conf</code> file local to each project is
@@ -320,7 +320,7 @@ variable.</p>
 <p>Sections can be further divided into subsections. To begin a subsection put
 its name in double quotes, separated by space from the section name, in the
 section header, like in the example below:</p>
-<pre><code>[section &quot;subsection&quot;]
+<pre tabindex="0"><code>[section &quot;subsection&quot;]
 </code></pre><p>Subsection names are case sensitive and can contain any characters except
 newline (double quote and backslash have to be escaped as <code>\&quot;</code> and <code>\\</code>,
 respectively). Section headers cannot span multiple lines. Variables may
@@ -353,7 +353,7 @@ character sequence is valid.</p>
 customary UNIX fashion.</p>
 <p>Some variables may require a special value format.</p>
 <h3 id="example">Example</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#75715e"># Core variables</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#75715e"># Core variables</span>
 <span style="color:#66d9ef">[core]</span>
     <span style="color:#a6e22e">engine</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">pg
 </span><span style="color:#e6db74">    top_dir   = migrations

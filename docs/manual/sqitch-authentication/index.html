@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.82.0" />
+	<meta name="generator" content="Hugo 0.89.4" />
 </head>
 <body>
 	<header id=masthead>
@@ -219,7 +219,7 @@ key-pair authentication. Follow
 <a href="https://docs.snowflake.net/manuals/user-guide/snowsql-start.html#using-key-pair-authentication">the instructions</a>
 to create a key pair, then set the following variables in the <code>~/.snowsql/config</code>
 file:</p>
-<pre><code>authenticator = SNOWFLAKE_JWT
+<pre tabindex="0"><code>authenticator = SNOWFLAKE_JWT
 private_key_path = &quot;path/to/privatekey.p8&quot;
 </code></pre><p>To connect, set the <code>$SNOWSQL_PRIVATE_KEY_PASSPHRASE</code> environment variable to
 the passphrase for the private key, and add these parameters to the query part
@@ -231,7 +231,7 @@ of your connection URI:</p>
 <li><code>priv_key_file_pwd=$private_key_password</code></li>
 </ul>
 <p>For example:</p>
-<pre><code>db:snowflake://movera@example.snowflakecomputing.com/flipr?Driver=Snowflake;warehouse=sqitch;authenticator=SNOWFLAKE_JWT;uid=movera;priv_key_file=path/to/privatekey.p8;priv_key_file_pwd=s0up3rs3cre7
+<pre tabindex="0"><code>db:snowflake://movera@example.snowflakecomputing.com/flipr?Driver=Snowflake;warehouse=sqitch;authenticator=SNOWFLAKE_JWT;uid=movera;priv_key_file=path/to/privatekey.p8;priv_key_file_pwd=s0up3rs3cre7
 </code></pre></li>
 </ul>
 <h3 id="use-a-password-file">Use a Password File</h3>
@@ -248,7 +248,7 @@ the feature. Here&rsquo;s how the database engines supported by Sqitch shake out
 user&rsquo;s home directory to or referenced by the <code>$PGPASSFILE</code> environment
 variable. This file must limit access only to the current user (<code>0600</code>) and
 contains lines specify authentication rules as follows:</p>
-<pre><code>hostname:port:database:username:password
+<pre tabindex="0"><code>hostname:port:database:username:password
 </code></pre></li>
 <li>
 <p>MySQL</p>
@@ -281,7 +281,7 @@ file.</p>
 <li>
 <p>Exasol</p>
 <p>Exasol allows configuring connection profiles for the &lsquo;exaplus&rsquo; client:</p>
-<pre><code>&gt; exaplus -u sys -p exasol -c localhost:8563 -wp flipr_test
+<pre tabindex="0"><code>&gt; exaplus -u sys -p exasol -c localhost:8563 -wp flipr_test
 EXAplus 6.0.4 (c) EXASOL AG
 
 Profile flipr_test is saved.
@@ -295,14 +295,14 @@ by default. See the <a href="https://www.exasol.com/portal/display/DOC/Database+
 for more information on connection profiles, specifically the EXAplus section in
 the chapter on &ldquo;Clients and interfaces&rdquo;.</p>
 <p>For ODBC connections from Sqitch, we can use connection settings in <code>~/.odbc.ini</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[flipr_test]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[flipr_test]</span>
 <span style="color:#a6e22e">DRIVER</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Exasol</span>
 <span style="color:#a6e22e">EXAHOST</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">localhost:8563</span>
 <span style="color:#a6e22e">EXAUID</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">sys</span>
 <span style="color:#a6e22e">EXAPWD</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">exasol</span>
 </code></pre></div><p>When combining the above, Sqitch doesn&rsquo;t need to know any credentials; they are
 stored somewhat safely in <code>~/.exasol/profiles.xml</code> and <code>~/.odbc.ini</code>:</p>
-<pre><code>&gt; sqitch status db:exasol:flipr_test
+<pre tabindex="0"><code>&gt; sqitch status db:exasol:flipr_test
 # On database db:exasol:flipr_test
 # Project:  flipr
 # ...
@@ -320,7 +320,7 @@ Deploying changes to db:exasol:flipr_test
 <a href="https://docs.snowflake.net/manuals/user-guide/snowsql-start.html#snowsql-config-file"><code>~/.snowsql/config</code> file</a>
 and use the default connections settings; named connections are not supported.
 An example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[connections]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[connections]</span>
 <span style="color:#a6e22e">accountname</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">myaccount</span>
 <span style="color:#a6e22e">region</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">us-east-1</span>
 <span style="color:#a6e22e">warehousename</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">compute</span>
@@ -380,11 +380,11 @@ which is generally pushed to your source code repository. But it&rsquo;s provide
 here as an absolute last resort (and because web URLs support it, though it&rsquo;s
 heavily frowned upon there, too).</p>
 <p>Such URIs can either be specified on the command-line:</p>
-<pre><code>sqitch deploy db:pg://fred:s3cr3t@db.example.com/widgets
+<pre tabindex="0"><code>sqitch deploy db:pg://fred:s3cr3t@db.example.com/widgets
 </code></pre><p>Or stored as named targets in the project configuration file:</p>
-<pre><code>sqitch target add wigets db:pg://fred:s3cr3t@db.example.com/widgets
+<pre tabindex="0"><code>sqitch target add wigets db:pg://fred:s3cr3t@db.example.com/widgets
 </code></pre><p>After which the target is available by its name:</p>
-<pre><code>sqitch deploy widgets
+<pre tabindex="0"><code>sqitch deploy widgets
 </code></pre><p>See <a href="/docs/manual/sqitch-targets">sqitch-targets</a> and <code>sqitch-configuration</code> for details  on target
 configuration.</p>
 <h2 id="see-also">See Also</h2>

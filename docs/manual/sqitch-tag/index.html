@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.82.0" />
+	<meta name="generator" content="Hugo 0.89.4" />
 </head>
 <body>
 	<header id=masthead>
@@ -58,7 +58,7 @@
 		<h2 id="name">Name</h2>
 <p>sqitch-tag - Create or list tag objects</p>
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch tag [options]
+<pre tabindex="0"><code>sqitch tag [options]
 sqitch tag &lt;name&gt;
 sqitch tag &lt;name&gt; change --note &lt;note&gt;
 sqitch tag --tag &lt;name&gt; --change &lt;change&gt;
@@ -149,26 +149,26 @@ multi-plan projects in which tags should be kept in sync. May be overridden by
 </ul>
 <h2 id="examples">Examples</h2>
 <p>Get a list of tags in the default project plan:</p>
-<pre><code>sqitch tag
+<pre tabindex="0"><code>sqitch tag
 </code></pre><p>Get a list of all tags in the project:</p>
-<pre><code>sqitch tag --all
+<pre tabindex="0"><code>sqitch tag --all
 </code></pre><p>Get a list of the tags in the plan used by the <code>pg</code> engine:</p>
-<pre><code>sqitch tag pg
+<pre tabindex="0"><code>sqitch tag pg
 </code></pre><p>Get a list of the tags in two specific plans:</p>
-<pre><code>sqitch tag sqlite.plan pg.plan
+<pre tabindex="0"><code>sqitch tag sqlite.plan pg.plan
 </code></pre><p>Tag the latest change in the default project plan and be prompted for a note.</p>
-<pre><code>sqitch tag alpha1
+<pre tabindex="0"><code>sqitch tag alpha1
 </code></pre><p>Tag the latest change in all project plans and be prompted for a note.</p>
-<pre><code>sqitch tag alpha1 --all
+<pre tabindex="0"><code>sqitch tag alpha1 --all
 </code></pre><p>Tag the latest change in the default project plan and and specify the note.</p>
-<pre><code>sqitch tag alpha2 -n 'Tag @alpha2.'
+<pre tabindex="0"><code>sqitch tag alpha2 -n 'Tag @alpha2.'
 </code></pre><p>Tag change <code>users</code> in the default plan:</p>
-<pre><code>sqitch tag --tag alpha3 --change users
+<pre tabindex="0"><code>sqitch tag --tag alpha3 --change users
 </code></pre><p>Tag the latest change change in the project plan used by the <code>vertica</code>
 engine:</p>
-<pre><code>sqitch tag --tag beta1 vertica -n 'Tag the Vertica with @beta1.'
+<pre tabindex="0"><code>sqitch tag --tag beta1 vertica -n 'Tag the Vertica with @beta1.'
 </code></pre><p>Tag the latest change in two plans in a project:</p>
-<pre><code>sqitch tag -t v1.0.1 sqlite.plan pg.plan -n 'Tag @v1.0.1.'
+<pre tabindex="0"><code>sqitch tag -t v1.0.1 sqlite.plan pg.plan -n 'Tag @v1.0.1.'
 </code></pre><h2 id="configuration-variables-1">Configuration Variables</h2>
 <p>None currently.</p>
 <h2 id="sqitch">Sqitch</h2>

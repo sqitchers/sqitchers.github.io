@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.82.0" />
+	<meta name="generator" content="Hugo 0.89.4" />
 </head>
 <body>
 	<header id=masthead>
@@ -56,7 +56,7 @@
 		<h2 id="name">Name</h2>
 <p>sqitch-checkout - Revert, checkout another VCS branch, and re-deploy changes</p>
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch checkout [options] [&lt;database&gt;] &lt;branch&gt;
+<pre tabindex="0"><code>sqitch checkout [options] [&lt;database&gt;] &lt;branch&gt;
 </code></pre><h2 id="description">Description</h2>
 <p>Checkout another branch in your project&rsquo;s VCS (such as
 <a href="https://git-scm.org/">git</a>), while performing the necessary database changes
@@ -156,7 +156,7 @@ deployed by other means in the past.</p>
 </li>
 <li>
 <p><code>--registry</code></p>
-<pre><code>sqitch checkout --registry registry
+<pre tabindex="0"><code>sqitch checkout --registry registry
 </code></pre><p>The name of the Sqitch registry schema or database in which sqitch stores its
 own data.</p>
 </li>
@@ -165,7 +165,7 @@ own data.</p>
 </li>
 <li>
 <p><code>--client</code></p>
-<pre><code>sqitch checkout --client /usr/local/pgsql/bin/psql
+<pre tabindex="0"><code>sqitch checkout --client /usr/local/pgsql/bin/psql
 </code></pre><p>Path to the command-line client for the database engine. Defaults to a client
 in the current path named appropriately for the database engine.</p>
 </li>
@@ -174,7 +174,7 @@ in the current path named appropriately for the database engine.</p>
 </li>
 <li>
 <p><code>--db-name</code></p>
-<pre><code>sqitch checkout --db-name widgets
+<pre tabindex="0"><code>sqitch checkout --db-name widgets
 sqitch checkout -d bricolage
 </code></pre><p>Name of the database. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are
 preferred, but this option can be used to override the database name in a
@@ -188,7 +188,7 @@ target.</p>
 </li>
 <li>
 <p><code>--db-username</code></p>
-<pre><code>sqitch checkout --db-username root
+<pre tabindex="0"><code>sqitch checkout --db-username root
 sqitch checkout --db-user postgres
 sqitch checkout -u Mom
 </code></pre><p>User name to use when connecting to the database. Does not apply to all
@@ -200,7 +200,7 @@ option can be used to override the user name in a target.</p>
 </li>
 <li>
 <p><code>--db-host</code></p>
-<pre><code>sqitch checkout --db-host db.example.com
+<pre tabindex="0"><code>sqitch checkout --db-host db.example.com
 sqitch checkout -h appdb.example.net
 </code></pre><p>Host name to use when connecting to the database. Does not apply to all
 engines. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this
@@ -211,7 +211,7 @@ option can be used to override the host name in a target.</p>
 </li>
 <li>
 <p><code>--db-port</code></p>
-<pre><code>sqitch checkout --db-port 7654
+<pre tabindex="0"><code>sqitch checkout --db-port 7654
 sqitch checkout -p 5431
 </code></pre><p>Port number to connect to. Does not apply to all engines. In general,
 <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this option can be used
@@ -222,7 +222,7 @@ to override the port in a target.</p>
 </li>
 <li>
 <p><code>-f</code></p>
-<pre><code>sqitch checkout --plan-file my.plan
+<pre tabindex="0"><code>sqitch checkout --plan-file my.plan
 </code></pre><p>Path to the deployment plan file. Overrides target, engine, and core
 configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p>
 </li>

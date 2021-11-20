@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.82.0" />
+	<meta name="generator" content="Hugo 0.89.4" />
 </head>
 <body>
 	<header id=masthead>
@@ -57,7 +57,7 @@
 		<h2 id="name">Name</h2>
 <p>sqitch-rework - Rework a database change</p>
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch  rework [options] [&lt;dependency-options&gt;] name
+<pre tabindex="0"><code>sqitch  rework [options] [&lt;dependency-options&gt;] name
 </code></pre><h2 id="description">Description</h2>
 <p>This command allows for the reworking of an existing database change. It is
 best used only under the following circumstances:</p>
@@ -176,19 +176,19 @@ configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p>
 </ul>
 <h2 id="examples">Examples</h2>
 <p>Rework a change in a project and be prompted for a note.</p>
-<pre><code>sqitch rework widgets
+<pre tabindex="0"><code>sqitch rework widgets
 </code></pre><p>Rework a change and specify the note.</p>
-<pre><code>sqitch rework sprockets --note 'Reworks the sprockets view.'
+<pre tabindex="0"><code>sqitch rework sprockets --note 'Reworks the sprockets view.'
 </code></pre><p>Rework a change that requires the <code>users</code> change from earlier in the plan.</p>
-<pre><code>sqitch rework contacts --requires users -n 'Reworks the contacts view.'
+<pre tabindex="0"><code>sqitch rework contacts --requires users -n 'Reworks the contacts view.'
 </code></pre><p>Rework a change that requires multiple changes, including the change named
 <code>extract</code> from a completely different Sqitch project named <code>utilities</code>:</p>
-<pre><code>sqitch rework coffee -r users -r utilities:extract -n 'Mmmmm...coffee!'
+<pre tabindex="0"><code>sqitch rework coffee -r users -r utilities:extract -n 'Mmmmm...coffee!'
 </code></pre><p>Rework a change only to the plan used by the <code>vertica</code> engine in a project:</p>
-<pre><code>sqitch rework --change logs vertica -n 'Reworks the logs view in Vertica.'
+<pre tabindex="0"><code>sqitch rework --change logs vertica -n 'Reworks the logs view in Vertica.'
 </code></pre><p>Rework a change in two plans in a project, and generate the scripts only for
 those plans:</p>
-<pre><code>sqitch rework -a coolfunctions sqlite.plan pg.plan -n 'Reworks functions.'
+<pre tabindex="0"><code>sqitch rework -a coolfunctions sqlite.plan pg.plan -n 'Reworks functions.'
 </code></pre><h2 id="configuration-variables">Configuration Variables</h2>
 <ul>
 <li>

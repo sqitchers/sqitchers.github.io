@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.82.0" />
+	<meta name="generator" content="Hugo 0.89.4" />
 </head>
 <body>
 	<header id=masthead>
@@ -61,7 +61,7 @@
 		<h2 id="name">Name</h2>
 <p>sqitch - Sensible database change management</p>
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch &lt;command&gt; [options] [command-options] [args]
+<pre tabindex="0"><code>sqitch &lt;command&gt; [options] [command-options] [args]
 </code></pre><h2 id="description">Description</h2>
 <p>Sqitch is a database change management application. What makes it different
 from your typical <a href="https://metacpan.org/pod/Module%3A%3ABuild%3A%3ADB">migration</a>-<a href="https://metacpan.org/pod/DBIx%3A%3AMigration">style</a>
@@ -208,7 +208,7 @@ name or tag).</p>
 </li>
 </ul>
 <h2 id="options">Options</h2>
-<pre><code>-C --chdir --cd DIR       Change to directory before performing any actions.
+<pre tabindex="0"><code>-C --chdir --cd DIR       Change to directory before performing any actions.
    --etc-path             Print path to etc directory and exit.
    --no-pager             Do not pipe output into a pager.
    --quiet                Quiet mode with non-error output suppressed.
@@ -226,30 +226,30 @@ name or tag).</p>
 </li>
 <li>
 <p><code>-C</code></p>
-<pre><code>sqitch --chdir dbproject
+<pre tabindex="0"><code>sqitch --chdir dbproject
 sqitch --cd /usr/local/somedb
 sqitch -C dbcheckout
 </code></pre><p>Change to the specified directory before performing any actions. Effectively the
 same as:</p>
-<pre><code>(cd somedir &amp;&amp; sqitch ...)
+<pre tabindex="0"><code>(cd somedir &amp;&amp; sqitch ...)
 </code></pre><p>But a bit friendlier when managing multiple projects.</p>
 </li>
 <li>
 <p><code>--etc-path</code></p>
-<pre><code>sqitch --etc-path
+<pre tabindex="0"><code>sqitch --etc-path
 </code></pre><p>Print out the path to the Sqitch <code>etc</code> directory and exit. This is the
 directory where the system-wide configuration file lives, as well as change
 script templates.</p>
 </li>
 <li>
 <p><code>--no-pager</code></p>
-<pre><code>sqitch --no-pager
+<pre tabindex="0"><code>sqitch --no-pager
 </code></pre><p>Do not pipe Sqitch output into a pager. Currently limited to the <code>log</code> and
 <code>plan</code> commands.</p>
 </li>
 <li>
 <p><code>--quiet</code></p>
-<pre><code>sqitch --quiet
+<pre tabindex="0"><code>sqitch --quiet
 </code></pre><p>Suppress normal output messages. Error messages will still be emitted to
 <code>STDERR</code>. Overrides any value specified by <code>--verbose</code>.</p>
 </li>
@@ -258,7 +258,7 @@ script templates.</p>
 </li>
 <li>
 <p><code>--verbose</code></p>
-<pre><code>sqitch --verbose
+<pre tabindex="0"><code>sqitch --verbose
 sqitch -VVV
 </code></pre><p>Pass multiple times to specify a value between 0 and 3 to determine how
 verbose Sqitch should be. Unless <code>--quiet</code> is specified, the default is 1,
@@ -268,17 +268,17 @@ specified.</p>
 </li>
 <li>
 <p><code>--help</code></p>
-<pre><code>sqitch --help
+<pre tabindex="0"><code>sqitch --help
 </code></pre><p>Outputs a brief description all known Sqitch commands and exits.</p>
 </li>
 <li>
 <p><code>--man</code></p>
-<pre><code>sqitch --man
+<pre tabindex="0"><code>sqitch --man
 </code></pre><p>Outputs this documentation and exits.</p>
 </li>
 <li>
 <p><code>--version</code></p>
-<pre><code>sqitch --version
+<pre tabindex="0"><code>sqitch --version
 </code></pre><p>Outputs the program name and version and exits.</p>
 </li>
 </ul>
@@ -356,7 +356,7 @@ VCS for a project that deploys to PostgreSQL and stores its deployment scripts
 with the extension <code>ddl</code> under the <code>migrations</code> directory. It also wants
 bundle to be created in the <code>_build/sql</code> directory, and to deploy starting
 with the &ldquo;gamma&rdquo; tag:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[core]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[core]</span>
     <span style="color:#a6e22e">engine</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">pg
 </span><span style="color:#e6db74">    top_dir   = migrations
 </span><span style="color:#e6db74">    extension = ddl</span>
@@ -376,7 +376,7 @@ with the &ldquo;gamma&rdquo; tag:</p>
     <span style="color:#a6e22e">uri</span>       <span style="color:#f92672">=</span> <span style="color:#e6db74">db:pg:widgetopolis</span>
 </code></pre></div><p>And here&rsquo;s an example of useful configuration in <code>~/.sqitch/sqitch.conf</code>, to
 point to system-specific engine information:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[user]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[user]</span>
     <span style="color:#a6e22e">name</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
 </span><span style="color:#e6db74">    email     = marge@example.com</span>
 

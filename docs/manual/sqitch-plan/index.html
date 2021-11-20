@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.82.0" />
+	<meta name="generator" content="Hugo 0.89.4" />
 </head>
 <body>
 	<header id=masthead>
@@ -57,7 +57,7 @@
 		<h2 id="name">Name</h2>
 <p>sqitch-plan - Show planned database changes</p>
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch plan [options] [&lt;database&gt;]
+<pre tabindex="0"><code>sqitch plan [options] [&lt;database&gt;]
 </code></pre><h2 id="description">Description</h2>
 <p>The <code>plan</code> command displays information about planned changes for a database
 target. By default, it will show all the changes for the plan, but you can
@@ -240,12 +240,12 @@ option.</p>
 <ul>
 <li>
 <p><code>oneline</code></p>
-<pre><code>&lt;change id&gt; &lt;event type&gt; &lt;change name&gt; &lt;title line&gt; &lt;tags&gt;
+<pre tabindex="0"><code>&lt;change id&gt; &lt;event type&gt; &lt;change name&gt; &lt;title line&gt; &lt;tags&gt;
 </code></pre><p>This is designed to be as compact as possible.</p>
 </li>
 <li>
 <p><code>short</code></p>
-<pre><code>&lt;event type&gt; &lt;change id&gt;
+<pre tabindex="0"><code>&lt;event type&gt; &lt;change id&gt;
 Name:      &lt;change name&gt;
 Planner:   &lt;planner&gt;
 
@@ -253,7 +253,7 @@ Planner:   &lt;planner&gt;
 </code></pre></li>
 <li>
 <p><code>medium</code></p>
-<pre><code>&lt;event type&gt; &lt;change id&gt;
+<pre tabindex="0"><code>&lt;event type&gt; &lt;change id&gt;
 Name:      &lt;change name&gt;
 Planner:   &lt;planner&gt;
 Date:      &lt;commit date&gt;
@@ -262,7 +262,7 @@ Date:      &lt;commit date&gt;
 </code></pre></li>
 <li>
 <p><code>long</code></p>
-<pre><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
+<pre tabindex="0"><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
 Name:      &lt;change name&gt;
 Project:   &lt;change name&gt;
 Planner:   &lt;planner&gt;
@@ -271,7 +271,7 @@ Planner:   &lt;planner&gt;
 </code></pre></li>
 <li>
 <p><code>full</code></p>
-<pre><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
+<pre tabindex="0"><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
 Event:     &lt;event type&gt;
 Name:      &lt;change name&gt;
 Project:   &lt;change name&gt;
@@ -284,7 +284,7 @@ Planned:   &lt;plan date&gt;
 </code></pre></li>
 <li>
 <p><code>raw</code></p>
-<pre><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
+<pre tabindex="0"><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
 name      &lt;change name&gt;
 project   &lt;project name&gt;
 requires  &lt;required changes&gt;
@@ -302,9 +302,9 @@ the UTC time zone); and all labels are lowercased and unlocalized.</p>
 <p>The <code>format:&lt;string&gt;</code> format allows you to specify which information you
 want to show. It works a little bit like <code>printf</code> format and a little like
 Git plan format. For example, this format:</p>
-<pre><code>format:The planner of %h was %{name}p%vThe title was &gt;&gt;%s&lt;&lt;%v
+<pre tabindex="0"><code>format:The planner of %h was %{name}p%vThe title was &gt;&gt;%s&lt;&lt;%v
 </code></pre><p>Would show something like this:</p>
-<pre><code>The planner of f26a3s was Tom Lane
+<pre tabindex="0"><code>The planner of f26a3s was Tom Lane
 The title was &gt;&gt;We really need to get this right.&lt;&lt;
 </code></pre><p>The placeholders are:</p>
 <ul>

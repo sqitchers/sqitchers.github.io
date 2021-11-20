@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.82.0" />
+	<meta name="generator" content="Hugo 0.89.4" />
 </head>
 <body>
 	<header id=masthead>
@@ -57,7 +57,7 @@
 		<h2 id="name">Name</h2>
 <p>sqitch-log - Show Sqitch change deployment logs</p>
 <h2 id="synopsis">Synopsis</h2>
-<pre><code>sqitch log [options] [&lt;database&gt;]
+<pre tabindex="0"><code>sqitch log [options] [&lt;database&gt;]
 </code></pre><h2 id="description">Description</h2>
 <p>Sqitch keeps a record of the deployment, failed deployment, or reversion of
 all changes in a target database. Even after a change has been reverted, a log
@@ -228,7 +228,7 @@ prefix the specified number of characters long.</p>
 </li>
 <li>
 <p><code>--registry</code></p>
-<pre><code>sqitch log --registry registry
+<pre tabindex="0"><code>sqitch log --registry registry
 </code></pre><p>The name of the Sqitch registry schema or database in which sqitch stores its
 own data.</p>
 </li>
@@ -237,7 +237,7 @@ own data.</p>
 </li>
 <li>
 <p><code>--client</code></p>
-<pre><code>sqitch log --client /usr/local/pgsql/bin/psql
+<pre tabindex="0"><code>sqitch log --client /usr/local/pgsql/bin/psql
 </code></pre><p>Path to the command-line client for the database engine. Defaults to a client
 in the current path named appropriately for the database engine.</p>
 </li>
@@ -246,7 +246,7 @@ in the current path named appropriately for the database engine.</p>
 </li>
 <li>
 <p><code>--db-name</code></p>
-<pre><code>sqitch log --db-name widgets
+<pre tabindex="0"><code>sqitch log --db-name widgets
 sqitch log -d bricolage
 </code></pre><p>Name of the database. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are
 preferred, but this option can be used to override the database name in a
@@ -260,7 +260,7 @@ target.</p>
 </li>
 <li>
 <p><code>--db-username</code></p>
-<pre><code>sqitch log --db-username root
+<pre tabindex="0"><code>sqitch log --db-username root
 sqitch log --db-user postgres
 sqitch log -u Mom
 </code></pre><p>User name to use when connecting to the database. Does not apply to all
@@ -272,7 +272,7 @@ option can be used to override the user name in a target.</p>
 </li>
 <li>
 <p><code>--db-host</code></p>
-<pre><code>sqitch log --db-host db.example.com
+<pre tabindex="0"><code>sqitch log --db-host db.example.com
 sqitch log -h appdb.example.net
 </code></pre><p>Host name to use when connecting to the database. Does not apply to all
 engines. In general, <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this
@@ -283,7 +283,7 @@ option can be used to override the host name in a target.</p>
 </li>
 <li>
 <p><code>--db-port</code></p>
-<pre><code>sqitch log --db-port 7654
+<pre tabindex="0"><code>sqitch log --db-port 7654
 sqitch log -p 5431
 </code></pre><p>Port number to connect to. Does not apply to all engines. In general,
 <a href="/docs/manual/sqitch-target">targets</a> and URIs are preferred, but this option can be used
@@ -312,12 +312,12 @@ option.</p>
 <ul>
 <li>
 <p><code>oneline</code></p>
-<pre><code>&lt;change id&gt; &lt;event type&gt; &lt;project name&gt;:&lt;change name&gt; &lt;title line&gt;
+<pre tabindex="0"><code>&lt;change id&gt; &lt;event type&gt; &lt;project name&gt;:&lt;change name&gt; &lt;title line&gt;
 </code></pre><p>This is designed to be as compact as possible.</p>
 </li>
 <li>
 <p><code>short</code></p>
-<pre><code>&lt;event type&gt; &lt;change id&gt;
+<pre tabindex="0"><code>&lt;event type&gt; &lt;change id&gt;
 Name:      &lt;change name&gt;
 Committer: &lt;committer&gt;
 
@@ -325,7 +325,7 @@ Committer: &lt;committer&gt;
 </code></pre></li>
 <li>
 <p><code>medium</code></p>
-<pre><code>&lt;event type&gt; &lt;change id&gt;
+<pre tabindex="0"><code>&lt;event type&gt; &lt;change id&gt;
 Name:      &lt;change name&gt;
 Committer: &lt;committer&gt;
 Date:      &lt;commit date&gt;
@@ -334,7 +334,7 @@ Date:      &lt;commit date&gt;
 </code></pre></li>
 <li>
 <p><code>long</code></p>
-<pre><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
+<pre tabindex="0"><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
 Name:      &lt;change name&gt;
 Project:   &lt;change name&gt;
 Planner:   &lt;planner&gt;
@@ -344,7 +344,7 @@ Committer: &lt;committer&gt;
 </code></pre></li>
 <li>
 <p><code>full</code></p>
-<pre><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
+<pre tabindex="0"><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
 Event:     &lt;event type&gt;
 Name:      &lt;change name&gt;
 Project:   &lt;change name&gt;
@@ -359,7 +359,7 @@ Committed: &lt;commit date&gt;
 </code></pre></li>
 <li>
 <p><code>raw</code></p>
-<pre><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
+<pre tabindex="0"><code>&lt;event type&gt; &lt;change id&gt; &lt;tags&gt;
 name      &lt;change name&gt;
 project   &lt;project name&gt;
 requires  &lt;required changes&gt;
@@ -379,9 +379,9 @@ the UTC time zone); and all labels are lowercased and unlocalized.</p>
 <p>The <code>format:&lt;string&gt;</code> format allows you to specify which information you
 want to show. It works a little bit like <code>printf</code> format and a little like
 Git log format. For example, this format:</p>
-<pre><code>format:The committer of %h was %{name}c%vThe title was &gt;&gt;%s&lt;&lt;%v
+<pre tabindex="0"><code>format:The committer of %h was %{name}c%vThe title was &gt;&gt;%s&lt;&lt;%v
 </code></pre><p>Would show something like this:</p>
-<pre><code>The committer of f26a3s was Tom Lane
+<pre tabindex="0"><code>The committer of f26a3s was Tom Lane
 The title was &gt;&gt;We really need to get this right.&lt;&lt;
 </code></pre><p>The placeholders are:</p>
 <ul>
