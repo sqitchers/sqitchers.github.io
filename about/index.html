@@ -60,7 +60,7 @@ committed changes to your VCS out-of-order.
 </section>
 <section class="hash">
 <h2 id="deployment-integrity">Deployment integrity</h2>
-<p>Sqitch manages changes and dependencies via a plan file, and employs a <a href="https://en.wikipedia.org/wiki/Merkle_tree" title="Wikipedia: “Merkle tree”">Merkle
+<p>Sqitch manages changes and dependencies via a plan file, employing a <a href="https://en.wikipedia.org/wiki/Merkle_tree" title="Wikipedia: “Merkle tree”">Merkle
 tree</a> pattern similar to <a href="https://stackoverflow.com/a/18589734/" title="Stack Overflow: “What is the mathematical structure that represents a Git repo”">Git</a> and <a href="https://medium.com/byzantine-studio/blockchain-fundamentals-what-is-a-merkle-tree-d44c529391d7" title="Medium: “Blockchain Fundamentals #1: What is a Merkle Tree?”">Blockchain</a> to ensure deployment integrity.
 As such, there is no need to number your changes, although you can if you want.
 Sqitch doesn&rsquo;t much care how you name your changes.
@@ -70,8 +70,7 @@ Sqitch doesn&rsquo;t much care how you name your changes.
 <p>Up until you <a href="/docs/manual/sqitch-tag/">tag</a> and <a href="/docs/manual/sqitch-bundle/" title="Sqitch commands: bundle">release</a> your application, you
 can modify your change deployment scripts as often as you like. They&rsquo;re not
 locked in just because they&rsquo;ve been committed to your VCS. This allows you to
-take an iterative approach to developing your database schema. Or, better, you
-can do test-driven database development.
+take an iterative or test-driven approach to developing your database schema.
 </section>
 <hr>
 <p>Ready to give Sqitch a try? <a href="/download/">Download</a> it now or read <a href="/docs/">the docs</a>.</p>
