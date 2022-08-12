@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.92.1" />
+	<meta name="generator" content="Hugo 0.101.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -356,42 +356,42 @@ VCS for a project that deploys to PostgreSQL and stores its deployment scripts
 with the extension <code>ddl</code> under the <code>migrations</code> directory. It also wants
 bundle to be created in the <code>_build/sql</code> directory, and to deploy starting
 with the &ldquo;gamma&rdquo; tag:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[core]</span>
-    <span style="color:#a6e22e">engine</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">pg
-</span><span style="color:#e6db74">    top_dir   = migrations
-</span><span style="color:#e6db74">    extension = ddl</span>
-
-<span style="color:#66d9ef">[engine &#34;pg&#34;]</span>
-    <span style="color:#a6e22e">target</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">widgetopolis</span>
-
-<span style="color:#66d9ef">[revert]</span>
-    <span style="color:#a6e22e">to</span>        <span style="color:#f92672">=</span> <span style="color:#e6db74">gamma</span>
-
-<span style="color:#66d9ef">[bundle]</span>
-    <span style="color:#a6e22e">from</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">gamma
-</span><span style="color:#e6db74">    tags_only = yes
-</span><span style="color:#e6db74">    dest_dir  = _build/sql</span>
-
-<span style="color:#66d9ef">[target &#34;widgetopolis&#34;]</span>
-    <span style="color:#a6e22e">uri</span>       <span style="color:#f92672">=</span> <span style="color:#e6db74">db:pg:widgetopolis</span>
-</code></pre></div><p>And here&rsquo;s an example of useful configuration in <code>~/.sqitch/sqitch.conf</code>, to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">engine</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">pg
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    top_dir   = migrations
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    extension = ddl</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;pg&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">target</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">widgetopolis</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[revert]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">to</span>        <span style="color:#f92672">=</span> <span style="color:#e6db74">gamma</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[bundle]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">from</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">gamma
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    tags_only = yes
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    dest_dir  = _build/sql</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[target &#34;widgetopolis&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">uri</span>       <span style="color:#f92672">=</span> <span style="color:#e6db74">db:pg:widgetopolis</span>
+</span></span></code></pre></div><p>And here&rsquo;s an example of useful configuration in <code>~/.sqitch/sqitch.conf</code>, to
 point to system-specific engine information:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[user]</span>
-    <span style="color:#a6e22e">name</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
-</span><span style="color:#e6db74">    email     = marge@example.com</span>
-
-<span style="color:#66d9ef">[engine &#34;pg&#34;]</span>
-    <span style="color:#a6e22e">client</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/local/pgsql/bin/psql</span>
-
-<span style="color:#66d9ef">[engine &#34;mysql&#34;]</span>
-    <span style="color:#a6e22e">client</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/local/mysql/bin/mysql</span>
-
-<span style="color:#66d9ef">[engine &#34;oracle&#34;]</span>
-    <span style="color:#a6e22e">client</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/local/instantclient_11_2/sqlplus</span>
-
-<span style="color:#66d9ef">[engine &#34;sqlite&#34;]</span>
-    <span style="color:#a6e22e">client</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/local/bin/sqlite3</span>
-</code></pre></div><p>Various commands read from the configuration file and adjust their operation
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[user]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">name</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    email     = marge@example.com</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;pg&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">client</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/local/pgsql/bin/psql</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;mysql&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">client</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/local/mysql/bin/mysql</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;oracle&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">client</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/local/instantclient_11_2/sqlplus</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;sqlite&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">client</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/local/bin/sqlite3</span>
+</span></span></code></pre></div><p>Various commands read from the configuration file and adjust their operation
 accordingly. See <a href="/docs/manual/sqitch-config">sqitch-config</a> for a list.</p>
 <h2 id="see-also">See Also</h2>
 <p>The original design for Sqitch was sketched out in a number of blog posts:</p>

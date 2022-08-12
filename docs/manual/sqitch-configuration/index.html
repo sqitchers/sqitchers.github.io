@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.92.1" />
+	<meta name="generator" content="Hugo 0.101.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -98,16 +98,16 @@ Created revert/
 Created verify/
 </code></pre><p>This creates a very simple configuration file with most of the settings
 commented out, like so:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
-<span style="color:#66d9ef">[core]</span>
-  <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">pg
-</span><span style="color:#e6db74">  # plan_file = sqitch.plan
-</span><span style="color:#e6db74">  # top_dir = .</span>
-<span style="color:#75715e"># [engine &#34;pg&#34;]</span>
-  <span style="color:#75715e"># target = db:pg:</span>
-  <span style="color:#75715e"># registry = sqitch</span>
-  <span style="color:#75715e"># client = psql</span>
-</code></pre></div><p>The <code>[core]</code> section contains default configurations, the most important of
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">pg
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  # plan_file = sqitch.plan
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  # top_dir = .</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># [engine &#34;pg&#34;]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># target = db:pg:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># registry = sqitch</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># client = psql</span>
+</span></span></code></pre></div><p>The <code>[core]</code> section contains default configurations, the most important of
 which is the default engine, <code>pg</code>. Of course, it&rsquo;s the <em>only</em> engine this
 project supports, and the values of the other configuration variables are
 reasonable for a single-engine project. If your Sqitch project never needs to
@@ -143,8 +143,8 @@ that configuration for yourself:</p>
 configuration. In other words, it sets the PostgreSQL client for all Sqitch
 projects you manage on this host. In fact, it can be a good idea to configure
 clients not in the path first thing whenever you start working on a new host:</p>
-<pre tabindex="0"><code>&gt; sqitch config --user user.name 'Marge N. O’Vera'
-&gt; sqitch config --user user.email 'marge@example.com'
+<pre tabindex="0"><code>&gt; sqitch config --user user.name &#39;Marge N. O’Vera&#39;
+&gt; sqitch config --user user.email &#39;marge@example.com&#39;
 &gt; sqitch config --user engine.pg.client /usr/local/pgsql/bin/psql
 &gt; sqitch config --user engine.mysql.client /usr/local/mysql/bin/mysql
 &gt; sqitch config --user engine.sqlite.client /sbin/sqlite3
@@ -171,12 +171,12 @@ configuration, use the <a href="/docs/manual/sqitch-engine"><code>engine</code><
 </code></pre><p>The <code>add</code> action adds the <code>pg</code> engine to the configuration, setting the top
 directory to our newly-created <code>pg</code> directory. The configuration looks like
 this (with comments removed for clarity):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[core]</span>
-  <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">pg</span>
-<span style="color:#66d9ef">[engine &#34;pg&#34;]</span>
-  <span style="color:#a6e22e">target</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">db:pg:
-</span><span style="color:#e6db74">  top_dir = pg</span>
-</code></pre></div><p>Curious about all the other settings for the engine? Let <code>sqitch engine show</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">pg</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;pg&#34;]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">target</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">db:pg:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  top_dir = pg</span>
+</span></span></code></pre></div><p>Curious about all the other settings for the engine? Let <code>sqitch engine show</code>
 show you:</p>
 <pre tabindex="0"><code>&gt; sqitch engine show pg
 * pg
@@ -235,26 +235,26 @@ now added to the configuration file:</p>
     No Variables
 </code></pre><p>Good, everything&rsquo;s in the right place. Start adding changes to the SQLite plan
 by passing the engine name to the <code>add</code> command:</p>
-<pre tabindex="0"><code>&gt; sqitch add users sqlite -m 'Creates users table.'
+<pre tabindex="0"><code>&gt; sqitch add users sqlite -m &#39;Creates users table.&#39;
 Created sqlite/deploy/users.sql
 Created sqlite/revert/users.sql
 Created sqlite/verify/users.sql
-Added &quot;users&quot; to sqlite/sqitch.plan
+Added &#34;users&#34; to sqlite/sqitch.plan
 </code></pre><p>Pass <code>pg</code> when adding PostgreSQL changes, or omit it, in which case Sqitch
 will fall back on the default engine, defined by the <code>core.engine</code> variable
 set when we created the PostgreSQL project. Want to add a change with the same
 name to both engines? Simply pass them both, or use the <code>--all</code> option:</p>
-<pre tabindex="0"><code>&gt; sqitch add users --all -m 'Creates users table.'
+<pre tabindex="0"><code>&gt; sqitch add users --all -m &#39;Creates users table.&#39;
 Created pg/deploy/users.sql
 Created pg/revert/users.sql
 Created pg/test/users.sql
 Created pg/verify/users.sql
-Added &quot;users&quot; to pg/sqitch.plan
+Added &#34;users&#34; to pg/sqitch.plan
 Created sqlite/deploy/users.sql
 Created sqlite/revert/users.sql
 Created sqlite/test/users.sql
 Created sqlite/verify/users.sql
-Added &quot;users&quot; to sqlite/sqitch.plan
+Added &#34;users&#34; to sqlite/sqitch.plan
 </code></pre><h3 id="shared-plan">Shared Plan</h3>
 <p>The other approach is to have both the PostgreSQL and the SQLite projects
 share the same plan. In that case, we should move the plan file out of the
@@ -307,14 +307,14 @@ use the shared plan file:</p>
 PostgreSQL to SQLite and you&rsquo;re ready to go.</p>
 <p>Later, when you want to add a new change to both projects, just pass the
 <code>--all</code> option to the <code>add</code> command:</p>
-<pre tabindex="0"><code>&gt; sqitch add users --all -n 'Creates users table.'
+<pre tabindex="0"><code>&gt; sqitch add users --all -n &#39;Creates users table.&#39;
 Created pg/deploy/users.sql
 Created pg/revert/users.sql
 Created pg/verify/users.sql
 Created sqlite/deploy/users.sql
 Created sqlite/revert/users.sql
 Created sqlite/verify/users.sql
-Added &quot;users&quot; to sqitch.plan
+Added &#34;users&#34; to sqitch.plan
 </code></pre><p>This option also works for the <code>tag</code>, <code>rework</code>, and <code>bundle</code> commands. If
 you know you always want to act on all plans, set the <code>all</code> configuration
 variable for each command:</p>
@@ -458,12 +458,12 @@ Then add targets for the specific servers and plans:</p>
 </code></pre><p>Now, any management of the <code>prod-billing</code> target will use the <code>target.plan</code>
 plan file. Want to add changes to that plan? specify the plan file. Here&rsquo;s
 an example that re-uses the existing change scripts:</p>
-<pre tabindex="0"><code>&gt; sqitch add users target.plan -n 'Creates users table.'
+<pre tabindex="0"><code>&gt; sqitch add users target.plan -n &#39;Creates users table.&#39;
 Skipped pg/deploy/users.sql: already exists
 Skipped pg/revert/users.sql: already exists
 Skipped pg/test/users.sql: already exists
 Skipped pg/verify/users.sql: already exists
-Added &quot;users&quot; to target.plan
+Added &#34;users&#34; to target.plan
 </code></pre><h2 id="overworked">Overworked</h2>
 <p>Say you&rsquo;ve been working on your project for some time, and now you have a slew
 of changes you&rsquo;ve <a href="/docs/manual/sqitch-rework">reworked</a>. (You really only do that with
@@ -473,7 +473,7 @@ revert, and verify directories are full of files representing older versions
 of the changes, all containing the <code>@</code> symbol, and they&rsquo;re starting to get in
 the way (in general you&rsquo;ll never modify them). Here&rsquo;s an example adapted from
 a real project:</p>
-<pre tabindex="0"><code>&gt; find pg -name '*@*'
+<pre tabindex="0"><code>&gt; find pg -name &#39;*@*&#39;
 pg/deploy/extensions@v2.9.0.sql
 pg/deploy/jobs/func_enabler@v2.6.1.sql
 pg/deploy/stem/func_check_all_widgets@v2.11.0.sql
@@ -520,7 +520,7 @@ to have different names or locations, you can use the <code>reworked_deploy</cod
 <code>reworked_revert</code>, and <code>reworked_verify</code> options.</p>
 <p>Now all we have to do is move the files:</p>
 <pre tabindex="0"><code>cd pg
-for file in `find . -name '*@*'`
+for file in `find . -name &#39;*@*&#39;`
 do
     mkdir -p reworked/`dirname $file`
     mv $file reworked/`dirname $file`

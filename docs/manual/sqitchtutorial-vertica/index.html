@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.92.1" />
+	<meta name="generator" content="Hugo 0.101.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -93,27 +93,27 @@ to make sure that the Vertica ODBC driver is properly configured. At its
 simplest, on Unix-like systems, name the driver &ldquo;Vertica&rdquo; by adding this entry
 to <code>odbcinst.ini</code> (usually found in <code>/etc</code>, <code>/usr/etc</code>, or
 <code>/usr/local/etc</code>):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[Vertica]</span>
-<span style="color:#a6e22e">Description</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">ODBC for Vertica</span>
-<span style="color:#a6e22e">Driver</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/vertica/lib64/libverticaodbc.so</span>
-</code></pre></div><p>And also creating a <code>vertica.ini</code> file in the same directory that contains:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[Driver]</span>
-<span style="color:#a6e22e">DriverManagerEncoding</span><span style="color:#f92672">=</span><span style="color:#e6db74">UTF-16</span>
-<span style="color:#a6e22e">ODBCInstLib</span><span style="color:#f92672">=</span><span style="color:#e6db74">/usr/lib64/libodbcinst.so</span>
-<span style="color:#a6e22e">ErrorMessagesPath</span><span style="color:#f92672">=</span><span style="color:#e6db74">/opt/vertica/lib64</span>
-</code></pre></div><p>You might also consider naming your database connection by putting an entry in
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[Vertica]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Description</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">ODBC for Vertica</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Driver</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/vertica/lib64/libverticaodbc.so</span>
+</span></span></code></pre></div><p>And also creating a <code>vertica.ini</code> file in the same directory that contains:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[Driver]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">DriverManagerEncoding</span><span style="color:#f92672">=</span><span style="color:#e6db74">UTF-16</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ODBCInstLib</span><span style="color:#f92672">=</span><span style="color:#e6db74">/usr/lib64/libodbcinst.so</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ErrorMessagesPath</span><span style="color:#f92672">=</span><span style="color:#e6db74">/opt/vertica/lib64</span>
+</span></span></code></pre></div><p>You might also consider naming your database connection by putting an entry in
 <code>odbc.ini</code> (same directory), like so (assuming that Vertica is running on
 your local host):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[dbadmin]</span>
-<span style="color:#a6e22e">Description</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Vertica dbadmin connection</span>
-<span style="color:#a6e22e">Driver</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Vertica</span>
-<span style="color:#a6e22e">Database</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">dbadmin</span>
-<span style="color:#a6e22e">Servername</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">localhost</span>
-<span style="color:#a6e22e">UserName</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">dbadmin</span>
-<span style="color:#a6e22e">Password</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">password</span>
-<span style="color:#a6e22e">Port</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">5433</span>
-<span style="color:#a6e22e">Locale</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">en_US</span>
-</code></pre></div><p>See the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[dbadmin]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Description</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Vertica dbadmin connection</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Driver</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Vertica</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Database</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">dbadmin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Servername</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">localhost</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">UserName</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">dbadmin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Password</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">password</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Port</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">5433</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Locale</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">en_US</span>
+</span></span></code></pre></div><p>See the
 <a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/ConnectingToHPVertica/InstallingDrivers/CreatingAnODBCDataSourceNameDSN.htm">Vertica ODBC Documentation</a>
 for details. Specific links:</p>
 <ul>
@@ -131,7 +131,7 @@ source code repository. So let&rsquo;s do that with Git:</p>
 Initialized empty Git repository in /flipr/.git/
 &gt; touch README.md
 &gt; git add .
-&gt; git commit -am 'Initialize project, add README.'
+&gt; git commit -am &#39;Initialize project, add README.&#39;
 </code></pre><p>If you&rsquo;re a Git user and want to follow along the history, the repository
 used in these examples is
 <a href="https://github.com/sqitchers/sqitch-vertica-intro">on GitHub</a>.</p>
@@ -147,16 +147,16 @@ Created deploy/
 Created revert/
 Created verify/
 </code></pre><p>Let&rsquo;s have a look at <code>sqitch.conf</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
-<span style="color:#66d9ef">[core]</span>
-        <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">vertica
-</span><span style="color:#e6db74">        # plan_file = sqitch.plan
-</span><span style="color:#e6db74">        # top_dir = .</span>
-<span style="color:#75715e"># [engine &#34;vertica&#34;]</span>
-        <span style="color:#75715e"># target = db:vertica:</span>
-        <span style="color:#75715e"># registry = sqitch</span>
-        <span style="color:#75715e"># client = vsql</span>
-</code></pre></div><p>Good, it picked up on the fact that we&rsquo;re creating changes for the Vertica
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">vertica
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        # plan_file = sqitch.plan
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        # top_dir = .</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># [engine &#34;vertica&#34;]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># target = db:vertica:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># registry = sqitch</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># client = vsql</span>
+</span></span></code></pre></div><p>Good, it picked up on the fact that we&rsquo;re creating changes for the Vertica
 engine, thanks to the <code>--engine vertica</code> option, and saved it to the
 file. Furthermore, it wrote a commented-out <code>[engine &quot;vertica&quot;]</code> section with
 all the available Vertica engine-specific settings commented out and ready to
@@ -171,16 +171,16 @@ client inside the container, not on your host machine):</p>
 <pre tabindex="0"><code>&gt; sqitch config --user engine.vertica.client /opt/vertica/bin/vsql
 </code></pre><p>And let&rsquo;s also tell it who we are, since this data will be used in all
 of our projects:</p>
-<pre tabindex="0"><code>&gt; sqitch config --user user.name 'Marge N. O’Vera'
-&gt; sqitch config --user user.email 'marge@example.com'
+<pre tabindex="0"><code>&gt; sqitch config --user user.name &#39;Marge N. O’Vera&#39;
+&gt; sqitch config --user user.email &#39;marge@example.com&#39;
 </code></pre><p>Have a look at <code>~/.sqitch/sqitch.conf</code> and you&rsquo;ll see this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
-<span style="color:#66d9ef">[engine &#34;vertica&#34;]</span>
-        <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/vertica/bin/vsql</span>
-<span style="color:#66d9ef">[user]</span>
-        <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
-</span><span style="color:#e6db74">        email = marge@example.com</span>
-</code></pre></div><p>Which means that Sqitch should be able to find <code>vsql</code> for any project, and
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;vertica&#34;]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/vertica/bin/vsql</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[user]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        email = marge@example.com</span>
+</span></span></code></pre></div><p>Which means that Sqitch should be able to find <code>vsql</code> for any project, and
 that it will always properly identify us when planning and committing changes.</p>
 <p>Back to the repository. Have a look at the plan file, <code>sqitch.plan</code>:</p>
 <pre tabindex="0"><code>&gt; cat sqitch.plan
@@ -193,7 +193,7 @@ Sqitch uses this data to manage cross-project dependencies. The
 to parse the plan, even if the format changes in the future.</p>
 <p>Let&rsquo;s commit these changes and start creating the database changes.</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -am 'Initialize Sqitch configuration.'
+&gt; git commit -am &#39;Initialize Sqitch configuration.&#39;
 [main a42564d] Initialize Sqitch configuration.
  2 files changed, 16 insertions(+), 0 deletions(-)
  create mode 100644 sqitch.conf
@@ -201,26 +201,26 @@ to parse the plan, even if the format changes in the future.</p>
 </code></pre><h2 id="our-first-change">Our First Change</h2>
 <p>First, our project will need a schema. This creates a nice namespace for all
 of the objects that will be part of the flipr app. Run this command:</p>
-<pre tabindex="0"><code>&gt; sqitch add appschema -n 'Add schema for all flipr objects.'
+<pre tabindex="0"><code>&gt; sqitch add appschema -n &#39;Add schema for all flipr objects.&#39;
 Created deploy/appschema.sql
 Created revert/appschema.sql
 Created verify/appschema.sql
-Added &quot;appschema&quot; to sqitch.plan
+Added &#34;appschema&#34; to sqitch.plan
 </code></pre><p>The <a href="/docs/manual/sqitch-add"><code>add</code></a> command adds a database change to the plan and writes
 deploy, revert, and verify scripts that represent the change. Now we edit
 these files. The <code>deploy</code> script&rsquo;s job is to create the schema. So we add
 this to <code>deploy/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
-</code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
+</span></span></code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
 script, so we add this to <code>revert/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
-</code></pre></div><p>Now we can try deploying this change. We tell Sqitch where to send the change
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
+</span></span></code></pre></div><p>Now we can try deploying this change. We tell Sqitch where to send the change
 via a <a href="https://github.com/libwww-perl/uri-db/">database URI</a>, assuming the default
 <code>dbadmin</code> database and user and an ODBC driver named <code>Vertica</code> (see
 <a href="#connection-configuration">&ldquo;Connection Configuration&rdquo;</a> for details). If you want to first
 <a href="https://www.vertica.com/docs/8.1.x/HTML/index.htm#Authoring/InstallationGuide/AfterYouInstall/CreatingADatabase.htm">create a database</a>,
 simply use its name in place of <code>dbadmin</code>:</p>
-<pre tabindex="0"><code>&gt; sqitch deploy 'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'
+<pre tabindex="0"><code>&gt; sqitch deploy &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 Adding registry tables to db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
 Deploying changes to db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
   + appschema .. ok
@@ -231,7 +231,7 @@ databases). Next, Sqitch deploys changes. We only have one so far; the <code>+</
 reinforces the idea that the change is being <code>added</code> to the database.</p>
 <p>With this change deployed, if you connect to the database, you&rsquo;ll be able to
 see the schema:</p>
-<pre tabindex="0"><code>&gt; vsql -U dbadmin -c '\dn flipr'
+<pre tabindex="0"><code>&gt; vsql -U dbadmin -c &#39;\dn flipr&#39;
       List of schemas
  Name  |  Owner  | Comment 
 -------+---------+---------
@@ -245,28 +245,28 @@ might be in the database, and should throw an error if the deploy was not
 successful. In Vertica, the simplest way to do so for schema is probably to
 simply create an object in the schema. Put this SQL into
 <code>verify/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.verify__ (id int);
-<span style="color:#66d9ef">DROP</span>   <span style="color:#66d9ef">TABLE</span> flipr.verify__;
-</code></pre></div><p>In truth, you can use <em>any</em> query that generates an SQL error if the schema
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.verify__ (id int);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span>   <span style="color:#66d9ef">TABLE</span> flipr.verify__;
+</span></span></code></pre></div><p>In truth, you can use <em>any</em> query that generates an SQL error if the schema
 doesn&rsquo;t exist. Another handy way to do that is to divide by zero if an object
 doesn&rsquo;t exist. For example, to throw an error when the <code>flipr</code> schema does
 not exist, you could do something like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> v_catalog.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;flipr&#39;</span>;
-</code></pre></div><p>Either way, run the <code>verify</code> script with the <a href="/docs/manual/sqitch-verify"><code>verify</code></a>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> v_catalog.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;flipr&#39;</span>;
+</span></span></code></pre></div><p>Either way, run the <code>verify</code> script with the <a href="/docs/manual/sqitch-verify"><code>verify</code></a>
 command:</p>
-<pre tabindex="0"><code>&gt; sqitch verify 'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'
+<pre tabindex="0"><code>&gt; sqitch verify &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 Verifying db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
   * appschema .. ok
 Verify successful
 </code></pre><p>Looks good! If you want to make sure that the verify script correctly dies if
 the schema doesn&rsquo;t exist, temporarily change the schema name in the script to
 something that doesn&rsquo;t exist, something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> nonesuch.verify__ (id int);
-</code></pre></div><p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
-<pre tabindex="0"><code>&gt; sqitch verify 'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> nonesuch.verify__ (id int);
+</span></span></code></pre></div><p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
+<pre tabindex="0"><code>&gt; sqitch verify &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 Verifying db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
-  * appschema .. vsql:verify/appschema.sql:5: ROLLBACK 4650:  Schema &quot;nonesuch&quot; does not exist
-# Verify script &quot;verify/appschema.sql&quot; failed.
+  * appschema .. vsql:verify/appschema.sql:5: ROLLBACK 4650:  Schema &#34;nonesuch&#34; does not exist
+# Verify script &#34;verify/appschema.sql&#34; failed.
 not ok
 
 Verify Summary Report
@@ -276,12 +276,12 @@ Errors:  1
 Verify failed
 </code></pre><p>It&rsquo;s even nice enough to tell us what the problem is. Or, for the
 divide-by-zero example, change the schema name:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> v_catalog.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;nonesuch&#39;</span>;
-</code></pre></div><p>Then the verify will look something like:</p>
-<pre tabindex="0"><code>&gt; sqitch verify 'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> v_catalog.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;nonesuch&#39;</span>;
+</span></span></code></pre></div><p>Then the verify will look something like:</p>
+<pre tabindex="0"><code>&gt; sqitch verify &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 Verifying db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
   * appschema .. vsql:verify/appschema.sql:5: ERROR 2005:  division by zero
-# Verify script &quot;verify/appschema.sql&quot; failed.
+# Verify script &#34;verify/appschema.sql&#34; failed.
 not ok
 
 Verify Summary Report
@@ -296,7 +296,7 @@ wrong.</p>
 <p>For purely informational purposes, we can always see how a deployment was
 recorded via the <a href="/docs/manual/sqitch-status"><code>status</code></a> command, which reads the registry
 tables from the database:</p>
-<pre tabindex="0"><code>&gt; sqitch status 'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'
+<pre tabindex="0"><code>&gt; sqitch status &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 # On database db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
 # Project:  flipr
 # Change:   f9759f0ed77964b6a3b6c7aa3b6058b4bb7db764
@@ -306,7 +306,7 @@ tables from the database:</p>
 # 
 Nothing to deploy (up-to-date)
 </code></pre><p>Let&rsquo;s make sure that we can revert the change:</p>
-<pre tabindex="0"><code>&gt; sqitch revert 'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'
+<pre tabindex="0"><code>&gt; sqitch revert &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 Revert all changes from db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica? [Yes] 
   - appschema .. ok
 </code></pre><p>The <a href="/docs/manual/sqitch-revert"><code>revert</code></a> command first prompts to make sure that we
@@ -314,23 +314,23 @@ really do want to revert. This is to prevent unnecessary accidents. You can
 pass the <code>-y</code> option to disable the prompt. Also, notice the <code>-</code> before the
 change name in the output, which reinforces that the change is being
 <em>removed</em> from the database. And now the schema should be gone:</p>
-<pre tabindex="0"><code>&gt; vsql -U dbadmin -c '\dn flipr'
+<pre tabindex="0"><code>&gt; vsql -U dbadmin -c &#39;\dn flipr&#39;
     List of schemas
  Name | Owner | Comment 
 ------+-------+---------
 (0 rows)
 </code></pre><p>And the status message should reflect as much:</p>
-<pre tabindex="0"><code>&gt; sqitch status 'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'
+<pre tabindex="0"><code>&gt; sqitch status &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 # On database db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
 No changes deployed
 </code></pre><p>Of course, since nothing is deployed, the <a href="/docs/manual/sqitch-verify"><code>verify</code></a> command
 has nothing to verify:</p>
-<pre tabindex="0"><code>&gt; sqitch verify 'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'
+<pre tabindex="0"><code>&gt; sqitch verify &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 Verifying db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
 No changes deployed
 </code></pre><p>However, we still have a record that the change happened, visible via the
 <a href="/docs/manual/sqitch-log"><code>log</code></a> command:</p>
-<pre tabindex="0"><code>&gt; sqitch log 'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'
+<pre tabindex="0"><code>&gt; sqitch log &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 On database db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
 Revert f9759f0ed77964b6a3b6c7aa3b6058b4bb7db764
 Name:      appschema
@@ -349,7 +349,7 @@ Date:      2014-09-04 15:26:28 -0700
 the revert first and then the deploy.</p>
 <p>Cool. Now let&rsquo;s commit it.</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add flipr schema.'
+&gt; git commit -m &#39;Add flipr schema.&#39;
 [main 9bee4bd] Add flipr schema.
  5 files changed, 197 insertions(+), 0 deletions(-)
  create mode 100644 deploy/appschema.sql
@@ -358,17 +358,17 @@ the revert first and then the deploy.</p>
  create mode 100644 verify/appschema.sql
 </code></pre><p>And then deploy again. This time, let&rsquo;s use the <code>--verify</code> option, so that
 the <code>verify</code> script is applied when the change is deployed:</p>
-<pre tabindex="0"><code>&gt; sqitch deploy --verify 'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'
+<pre tabindex="0"><code>&gt; sqitch deploy --verify &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 Deploying changes to db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
   + appschema .. ok
 </code></pre><p>And now the schema should be back:</p>
-<pre tabindex="0"><code>&gt; vsql -U dbadmin -c '\dn flipr'
+<pre tabindex="0"><code>&gt; vsql -U dbadmin -c &#39;\dn flipr&#39;
       List of schemas
  Name  |  Owner  | Comment 
 -------+---------+---------
  flipr | dbadmin | 
 </code></pre><p>When we look at the status, the deployment will be there:</p>
-<pre tabindex="0"><code>&gt; sqitch status 'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'
+<pre tabindex="0"><code>&gt; sqitch status &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 # On database db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
 # Project:  flipr
 # Change:   f9759f0ed77964b6a3b6c7aa3b6058b4bb7db764
@@ -383,7 +383,7 @@ Nothing to deploy (up-to-date)
 you? This <a href="https://github.com/libwww-perl/uri-db/">database connection URI</a> tells
 Sqitch how to connect to the deployment target, but we don&rsquo;t have to keep
 using the URI. We can name the target:</p>
-<pre tabindex="0"><code>&gt; sqitch target add flipr_test 'db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica'
+<pre tabindex="0"><code>&gt; sqitch target add flipr_test &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 </code></pre><p>The <a href="/docs/manual/sqitch-target"><code>target</code></a> command, inspired by
 <a href="https://git-scm.com/docs/git-remote"><code>git-remote</code></a>, allows management of one
 or more named deployment targets. We&rsquo;ve just added a target named
@@ -409,34 +409,34 @@ changes are verified after deploying them:</p>
 &gt; sqitch config --bool rebase.verify true
 </code></pre><p>We&rsquo;ll see the <a href="/docs/manual/sqitch-rebase"><code>rebase</code></a> command a bit later. In the meantime,
 let&rsquo;s commit the new configuration and and make some more changes!</p>
-<pre tabindex="0"><code>&gt; git commit -am 'Set default deployment target and always verify.'     
+<pre tabindex="0"><code>&gt; git commit -am &#39;Set default deployment target and always verify.&#39;     
 [main 469779a] Set default deployment target and always verify.
  1 files changed, 8 insertions(+), 0 deletions(-)
 </code></pre><h2 id="deploy-with-dependency">Deploy with Dependency</h2>
 <p>Let&rsquo;s add another change, this time to create a table. Our app will need
 users, of course, so we&rsquo;ll create a table for them. First, add the new change:</p>
-<pre tabindex="0"><code>&gt; sqitch add users --requires appschema -n 'Creates table to track our users.'
+<pre tabindex="0"><code>&gt; sqitch add users --requires appschema -n &#39;Creates table to track our users.&#39;
 Created deploy/users.sql
 Created revert/users.sql
 Created verify/users.sql
-Added &quot;users [appschema]&quot; to sqitch.plan
+Added &#34;users [appschema]&#34; to sqitch.plan
 </code></pre><p>Note that we&rsquo;re requiring the <code>appschema</code> change as a dependency of the new
 <code>users</code> change. Although that change has already been added to the plan and
 therefore should always be applied before the <code>users</code> change, it&rsquo;s a good
 idea to be explicit about dependencies.</p>
 <p>Now edit the scripts. When you&rsquo;re done, <code>deploy/users.sql</code> should look like
 this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:users to vertica
-</span><span style="color:#75715e">-- requires: appschema                                                                          
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.users (
-    nickname  VARCHAR      <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
-    password  VARCHAR      <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-    fullname  VARCHAR(<span style="color:#ae81ff">256</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-    twitter   VARCHAR      <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-    <span style="color:#66d9ef">timestamp</span> TIMESTAMPTZ  <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> NOW()
-);
-</code></pre></div><p>A few things to notice here. On the second line, the dependence on the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to vertica
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema                                                                          
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.users (
+</span></span><span style="display:flex;"><span>    nickname  VARCHAR      <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
+</span></span><span style="display:flex;"><span>    password  VARCHAR      <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    fullname  VARCHAR(<span style="color:#ae81ff">256</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    twitter   VARCHAR      <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">timestamp</span> TIMESTAMPTZ  <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> NOW()
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>A few things to notice here. On the second line, the dependence on the
 <code>appschema</code> change has been listed. This doesn&rsquo;t do anything, but the default
 <code>deploy</code> Vertica template lists it here for your reference while editing
 the file. Useful, right?</p>
@@ -445,25 +445,25 @@ to require the <code>appschema</code> change.</p>
 <p>Now for the verify script. The simplest way to check that the table was
 created and has the expected columns without touching the data? Just select
 from the table with a false <code>WHERE</code> clause. Add this to <code>verify/users.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter, <span style="color:#66d9ef">timestamp</span>
-  <span style="color:#66d9ef">FROM</span> flipr.users
- <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
-</code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter, <span style="color:#66d9ef">timestamp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.users
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
+</span></span></code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
 <code>revert/users.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.users;
-</code></pre></div><p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.users;
+</span></span></code></pre></div><p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + users .. ok
 </code></pre><p>We know, since verification is enabled, that the table must have been created.
 But for the purposes of visibility, let&rsquo;s have a quick look:</p>
-<pre tabindex="0"><code>&gt; vsql -U dbadmin -c '\d flipr.users'
+<pre tabindex="0"><code>&gt; vsql -U dbadmin -c &#39;\d flipr.users&#39;
                                       List of Fields by Tables
  Schema | Table |   Column    |    Type     | Size | Default | Not Null | Primary Key | Foreign Key 
 --------+-------+-------------+-------------+------+---------+----------+-------------+-------------
  flipr  | users | nickname    | varchar(80) |   80 |         | t        | t           | 
  flipr  | users | password    | varchar(80) |   80 |         | t        | f           | 
- flipr  | users | &quot;timestamp&quot; | timestamptz |    8 | now()   | t        | f           | 
+ flipr  | users | &#34;timestamp&#34; | timestamptz |    8 | now()   | t        | f           | 
 </code></pre><p>We can also verify all currently deployed changes with the
 <a href="/docs/manual/sqitch-verify"><code>verify</code></a> command:</p>
 <pre tabindex="0"><code>&gt; sqitch verify
@@ -496,7 +496,7 @@ first change deployed to the database (or in the plan, depending on the
 command).</p>
 <p>Back to the database. The <code>users</code> table should be gone but the <code>flipr</code> schema
 should still be around:</p>
-<pre tabindex="0"><code>&gt; vsql -U dbadmin -c '\d flipr.users'
+<pre tabindex="0"><code>&gt; vsql -U dbadmin -c &#39;\d flipr.users&#39;
 Did not find any relation.
 </code></pre><p>The <a href="/docs/manual/sqitch-status"><code>status</code></a> command politely informs us that we have
 undeployed changes:</p>
@@ -522,7 +522,7 @@ verified. The list of undeployed changes (just &ldquo;users&rdquo; here) reminds
 the current state.</p>
 <p>Okay, let&rsquo;s commit and deploy again:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -am 'Add users table.'
+&gt; git commit -am &#39;Add users table.&#39;
 [main c7c24c5] Add users table.
  4 files changed, 18 insertions(+), 0 deletions(-)
  create mode 100644 deploy/users.sql
@@ -546,18 +546,18 @@ Nothing to deploy (up-to-date)
 from users. Let&rsquo;s call them &ndash; and the table to store them &ndash; &ldquo;flips&rdquo;. And
 we&rsquo;ll also need a view that lists user names with their flips. Let&rsquo;s add
 changes for them both:</p>
-<pre tabindex="0"><code>&gt; sqitch add flips -r appschema -r users -n 'Adds table for storing flips.'
+<pre tabindex="0"><code>&gt; sqitch add flips -r appschema -r users -n &#39;Adds table for storing flips.&#39;
 Created deploy/flips.sql
 Created revert/flips.sql
 Created verify/flips.sql
-Added &quot;flips [appschema users]&quot; to sqitch.plan
+Added &#34;flips [appschema users]&#34; to sqitch.plan
 
 &gt; sqitch add userflips -r appschema -r users -r flips \
-        -n 'Creates the userflips view.'
+        -n &#39;Creates the userflips view.&#39;
 Created deploy/userflips.sql
 Created revert/userflips.sql
 Created verify/userflips.sql
-Added &quot;userflips [appschema users flips]&quot; to sqitch.plan
+Added &#34;userflips [appschema users flips]&#34; to sqitch.plan
 </code></pre><p>Now might be a good time to have a look at the deployment plan:</p>
 <pre tabindex="0"><code>&gt; cat sqitch.plan
 %syntax-version=1.0.0
@@ -573,59 +573,59 @@ list of dependencies, a timestamp, the name and email address of the user who
 planned the change, and a note.</p>
 <p>Let&rsquo;s write the code for the new changes. Here&rsquo;s what <code>deploy/flips.sql</code>
 should look like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:flips to vertica
-</span><span style="color:#75715e">-- requires: appschema
-</span><span style="color:#75715e">-- requires: users
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.flips (
-    id        AUTO_INCREMENT <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> ,
-    nickname  VARCHAR        <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flipr.users(nickname),
-    body      VARCHAR(<span style="color:#ae81ff">180</span>)   <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span>,
-    <span style="color:#66d9ef">timestamp</span> TIMESTAMPTZ    <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> clock_timestamp()
-);
-</code></pre></div><p>Here&rsquo;s what <code>verify/flips.sql</code> might look like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Verify flipr:flips on vertica
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">SELECT</span> id, nickname, body, <span style="color:#66d9ef">timestamp</span>
-  <span style="color:#66d9ef">FROM</span> flipr.flips
- <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
-</code></pre></div><p>We simply take advantage of the fact that <code>has_function_privilege()</code> throws
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to vertica
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.flips (
+</span></span><span style="display:flex;"><span>    id        AUTO_INCREMENT <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> ,
+</span></span><span style="display:flex;"><span>    nickname  VARCHAR        <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flipr.users(nickname),
+</span></span><span style="display:flex;"><span>    body      VARCHAR(<span style="color:#ae81ff">180</span>)   <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">timestamp</span> TIMESTAMPTZ    <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> clock_timestamp()
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>Here&rsquo;s what <code>verify/flips.sql</code> might look like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on vertica
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">SELECT</span> id, nickname, body, <span style="color:#66d9ef">timestamp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.flips
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
+</span></span></code></pre></div><p>We simply take advantage of the fact that <code>has_function_privilege()</code> throws
 an exception if the specified function does not exist.</p>
 <p>And <code>revert/flips.sql</code> should look something like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Revert flipr:flips from vertica
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.flips;
-</code></pre></div><p>Now for <code>userflips</code>; <code>deploy/userflips.sql</code> might look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:userflips to vertica
-</span><span style="color:#75715e">-- requires: appschema
-</span><span style="color:#75715e">-- requires: users
-</span><span style="color:#75715e">-- requires: flips
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">VIEW</span> flipr.userflips <span style="color:#66d9ef">AS</span>
-<span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.<span style="color:#66d9ef">timestamp</span>
-  <span style="color:#66d9ef">FROM</span> flipr.users u
-  <span style="color:#66d9ef">JOIN</span> flipr.flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname;
-</code></pre></div><p>Use a <code>SELECT</code> statement in <code>verify/userflips.sql</code> again:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Verify flipr:userflips on vertica
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">SELECT</span> id, nickname, fullname, body, <span style="color:#66d9ef">timestamp</span>
-  <span style="color:#66d9ef">FROM</span> flipr.userflips
- <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
-</code></pre></div><p>And of course, its <code>revert</code> script, <code>revert/userflips.sql</code>, should look
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from vertica
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.flips;
+</span></span></code></pre></div><p>Now for <code>userflips</code>; <code>deploy/userflips.sql</code> might look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:userflips to vertica
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: flips
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">VIEW</span> flipr.userflips <span style="color:#66d9ef">AS</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.<span style="color:#66d9ef">timestamp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.users u
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">JOIN</span> flipr.flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname;
+</span></span></code></pre></div><p>Use a <code>SELECT</code> statement in <code>verify/userflips.sql</code> again:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:userflips on vertica
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">SELECT</span> id, nickname, fullname, body, <span style="color:#66d9ef">timestamp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.userflips
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
+</span></span></code></pre></div><p>And of course, its <code>revert</code> script, <code>revert/userflips.sql</code>, should look
 something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Revert flipr:userflips from vertica
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">VIEW</span> flipr.userflips;
-</code></pre></div><p>Try em out!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:userflips from vertica
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">VIEW</span> flipr.userflips;
+</span></span></code></pre></div><p>Try em out!</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + flips ...... ok
   + userflips .. ok
 </code></pre><p>Do we have the new table and view? Of course we do, they were verified. Still,
 have a look:</p>
-<pre tabindex="0"><code>&gt; vsql -U dbadmin -c '\dt flipr.flips'
+<pre tabindex="0"><code>&gt; vsql -U dbadmin -c &#39;\dt flipr.flips&#39;
                List of tables
  Schema | Name  | Kind  |  Owner  | Comment 
 --------+-------+-------+---------+---------
  flipr  | flips | table | dbadmin | 
 
-&gt; vsql -U dbadmin -c '\dv flipr.userflips'
+&gt; vsql -U dbadmin -c &#39;\dv flipr.userflips&#39;
                   List of View Fields
  Schema |   View    |   Column    |     Type     | Size 
 --------+-----------+-------------+--------------+------
@@ -633,7 +633,7 @@ have a look:</p>
  flipr  | userflips | nickname    | varchar(80)  |   80
  flipr  | userflips | fullname    | varchar(256) |  256
  flipr  | userflips | body        | varchar(180) |  180
- flipr  | userflips | &quot;timestamp&quot; | timestamptz  |    8
+ flipr  | userflips | &#34;timestamp&#34; | timestamptz  |    8
 </code></pre><p>And what&rsquo;s the status?</p>
 <pre tabindex="0"><code>&gt; sqitch status 
 # On database flipr_test
@@ -649,14 +649,14 @@ Nothing to deploy (up-to-date)
 Reverting changes to users from flipr_test
   - userflips .. ok
   - flips ...... ok
-&gt;  vsql -U dbadmin -c '\d flipr.flips'
+&gt;  vsql -U dbadmin -c &#39;\d flipr.flips&#39;
 Did not find any relation.
-&gt; vsql -U dbadmin -c '\dv flipr.userflips'
+&gt; vsql -U dbadmin -c &#39;\dv flipr.userflips&#39;
 No matching relations found.
 </code></pre><p>Note the use of <code>@HEAD^^</code> to specify that the revert be to two changes prior
 the last deployed change. Looks good. Let&rsquo;s do the commit and re-deploy dance:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add flips table and userflips view.'
+&gt; git commit -m &#39;Add flips table and userflips view.&#39;
 [main c40f23f] Add flips table and userflips view.
  7 files changed, 41 insertions(+), 0 deletions(-)
  create mode 100644 deploy/flips.sql
@@ -692,12 +692,12 @@ Verify successful
 <h2 id="ship-it">Ship It!</h2>
 <p>Let&rsquo;s do a first release of our app. Let&rsquo;s call it <code>1.0.0-dev1</code> Since we want
 to have it go out with deployments tied to the release, let&rsquo;s tag it:</p>
-<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev1 -n 'Tag v1.0.0-dev1.'
-Tagged &quot;userflips&quot; with @v1.0.0-dev1
-&gt; git commit -am 'Tag the database with v1.0.0-dev1.'
+<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev1 -n &#39;Tag v1.0.0-dev1.&#39;
+Tagged &#34;userflips&#34; with @v1.0.0-dev1
+&gt; git commit -am &#39;Tag the database with v1.0.0-dev1.&#39;
 [main b07ce3d] Tag the database with v1.0.0-dev1.
  1 files changed, 1 insertions(+), 0 deletions(-)
-&gt; git tag v1.0.0-dev1 -am 'Tag v1.0.0-dev1'
+&gt; git tag v1.0.0-dev1 -am &#39;Tag v1.0.0-dev1&#39;
 </code></pre><p>We can try deploying to make sure the tag gets picked up like so:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Nothing to deploy (up-to-date)
@@ -750,24 +750,24 @@ track the hashtags associated with flips, right? Let&rsquo;s add a table for the
 But since other folks are working on other tasks in the repository, we&rsquo;ll work
 on a branch, so we can all stay out of each other&rsquo;s way. So let&rsquo;s branch:</p>
 <pre tabindex="0"><code>&gt; git checkout -b hashtags
-Switched to a new branch 'hashtags'
+Switched to a new branch &#39;hashtags&#39;
 </code></pre><p>Now we can add a new change to create a table for hashtags.</p>
-<pre tabindex="0"><code>&gt; sqitch add hashtags --requires flips -n 'Adds table for storing hashtags.'
+<pre tabindex="0"><code>&gt; sqitch add hashtags --requires flips -n &#39;Adds table for storing hashtags.&#39;
 Created deploy/hashtags.sql
 Created revert/hashtags.sql
 Created verify/hashtags.sql
-Added &quot;hashtags [appschema flips]&quot; to sqitch.plan
+Added &#34;hashtags [appschema flips]&#34; to sqitch.plan
 </code></pre><p>You know the drill by now. Add this to <code>deploy/hashtags.sql</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.hashtags (
-    flip_id   BIGINT  <span style="color:#66d9ef">NOT</span>   <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flipr.Flips(id),
-    hashtag   VARCHAR(<span style="color:#ae81ff">128</span>)  <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-    <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (flip_id, hashtag)
-);
-</code></pre></div><p>Again, select from the table in <code>verify/hashtags.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> flip_id, hashtag <span style="color:#66d9ef">FROM</span> flipr.hashtags <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
-</code></pre></div><p>And drop it in <code>revert/hashtags.sql</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.hashtags;
-</code></pre></div><p>And give it a whirl:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.hashtags (
+</span></span><span style="display:flex;"><span>    flip_id   BIGINT  <span style="color:#66d9ef">NOT</span>   <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flipr.Flips(id),
+</span></span><span style="display:flex;"><span>    hashtag   VARCHAR(<span style="color:#ae81ff">128</span>)  <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (flip_id, hashtag)
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>Again, select from the table in <code>verify/hashtags.sql</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> flip_id, hashtag <span style="color:#66d9ef">FROM</span> flipr.hashtags <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
+</span></span></code></pre></div><p>And drop it in <code>revert/hashtags.sql</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.hashtags;
+</span></span></code></pre></div><p>And give it a whirl:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
         + hashtags .. ok
@@ -794,7 +794,7 @@ Deploying changes to flipr_test
   + hashtags .. ok
 </code></pre><p>Great! Now make it so:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add hashtags table.'
+&gt; git commit -m &#39;Add hashtags table.&#39;
 [hashtags d893e9c] Add hashtags table.
  4 files changed, 18 insertions(+), 0 deletions(-)
  create mode 100644 deploy/hashtags.sql
@@ -804,7 +804,7 @@ Deploying changes to flipr_test
 <h3 id="emergency">Emergency</h3>
 <p>Let&rsquo;s do it:</p>
 <pre tabindex="0"><code>&gt; git checkout main
-Switched to branch 'main'
+Switched to branch &#39;main&#39;
 &gt; git pull
 Updating b07ce3d..05d3e5d
 Fast-forward
@@ -840,11 +840,11 @@ VCS is not Git.</li>
 </ul>
 <p>So let&rsquo;s restore things to how they were at main:</p>
 <pre tabindex="0"><code>&gt; git reset --hard HEAD
-HEAD is now at 05d3e5d Merge branch 'lists'
+HEAD is now at 05d3e5d Merge branch &#39;lists&#39;
 </code></pre><p>That throws out our botched merge. Now let&rsquo;s go back to our branch and rebase
 it on <code>main</code>:</p>
 <pre tabindex="0"><code>&gt; git checkout hashtags
-Switched to branch 'hashtags'
+Switched to branch &#39;hashtags&#39;
 &gt; git rebase main
 First, rewinding head to replay your work on top of it...
 Applying: Add hashtags table.
@@ -858,9 +858,9 @@ CONFLICT (content): Merge conflict in sqitch.plan
 Failed to merge in the changes.
 Patch failed at 0001 Add hashtags table.
 
-When you have resolved this problem run &quot;git rebase --continue&quot;.
-If you would prefer to skip this patch, instead run &quot;git rebase --skip&quot;.
-To restore the original branch and stop rebasing run &quot;git rebase --abort&quot;.
+When you have resolved this problem run &#34;git rebase --continue&#34;.
+If you would prefer to skip this patch, instead run &#34;git rebase --skip&#34;.
+To restore the original branch and stop rebasing run &#34;git rebase --abort&#34;.
 </code></pre><p>Oy, that&rsquo;s kind of a pain. It seems like no matter what we do, we&rsquo;ll need to
 resolve conflicts in that file. Except in Git. Fortunately for us, we can tell
 Git to resolve conflicts in <code>sqitch.plan</code> differently. Because we only ever
@@ -927,15 +927,15 @@ command. Handy, right? It correctly reverted our changes, and then deployed
 them all again in the proper order. So let&rsquo;s commit <code>.gitattributes</code>; seems
 worthwhile to keep that change:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add `.gitattributes` with union merge for `sqitch.plan`.'
+&gt; git commit -m &#39;Add `.gitattributes` with union merge for `sqitch.plan`.&#39;
 [hashtags 2f065a3] Add `.gitattributes` with union merge for `sqitch.plan`.
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 .gitattributes
 </code></pre><h3 id="merges-mastered">Merges Mastered</h3>
 <p>And now, finally, we can merge into <code>main</code>:</p>
 <pre tabindex="0"><code>&gt; git checkout main
-Switched to branch 'main'
-&gt; git merge --no-ff hashtags -m &quot;Merge branch 'hashtags'&quot;
+Switched to branch &#39;main&#39;
+&gt; git merge --no-ff hashtags -m &#34;Merge branch &#39;hashtags&#39;&#34;
 Merge made by recursive.
  .gitattributes      |    1 +
  deploy/hashtags.sql |   10 ++++++++++
@@ -964,12 +964,12 @@ hashtags [appschema flips] 2014-09-05T17:39:53Z Marge N. O’Vera &lt;marge@exam
 </code></pre><p>Much much better, a nice clean main now. And because it is now identical to
 the &ldquo;hashtags&rdquo; branch, we can just carry on. Go ahead and tag it, bundle, and
 release:</p>
-<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev2 -n 'Tag v1.0.0-dev2.'
-Tagged &quot;hashtags&quot; with @v1.0.0-dev2
-&gt; git commit -am 'Tag the database with v1.0.0-dev2.'
+<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev2 -n &#39;Tag v1.0.0-dev2.&#39;
+Tagged &#34;hashtags&#34; with @v1.0.0-dev2
+&gt; git commit -am &#39;Tag the database with v1.0.0-dev2.&#39;
 [main 8a6a73b] Tag the database with v1.0.0-dev2.
  1 files changed, 1 insertions(+), 0 deletions(-)
-&gt; git tag v1.0.0-dev2 -am 'Tag v1.0.0-dev2'
+&gt; git tag v1.0.0-dev2 -am &#39;Tag v1.0.0-dev2&#39;
 &gt; sqitch bundle --dest-dir flipr-1.0.0-dev2
 Bundling into flipr-1.0.0-dev2
 Writing config
@@ -1014,8 +1014,8 @@ tagged anyway, right? Well we have, with <code>@v1.0.0-dev2</code> added in the 
 section. With that, we can let Sqitch do most of the hard work for us, thanks
 to the <a href="/docs/manual/sqitch-rework"><code>rework</code></a> command, which is similar to
 <a href="/docs/manual/sqitch-add"><code>add</code></a>:</p>
-<pre tabindex="0"><code>&gt; sqitch rework userflips -n 'Adds userflips.twitter.'
-Added &quot;userflips [userflips@v1.0.0-dev2]&quot; to sqitch.plan.
+<pre tabindex="0"><code>&gt; sqitch rework userflips -n &#39;Adds userflips.twitter.&#39;
+Added &#34;userflips [userflips@v1.0.0-dev2]&#34; to sqitch.plan.
 Modify these files as appropriate:
         * deploy/userflips.sql
         * revert/userflips.sql
@@ -1026,19 +1026,19 @@ of the <code>userflips</code> change, which we can see via <code>git status</cod
 <pre tabindex="0"><code>&gt; git status
 # On branch main
 # Changed but not updated:
-#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
-#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#   (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
+#   (use &#34;git checkout -- &lt;file&gt;...&#34; to discard changes in working directory)
 #
 #       modified:   revert/userflips.sql
 #       modified:   sqitch.plan
 #
 # Untracked files:
-#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+#   (use &#34;git add &lt;file&gt;...&#34; to include in what will be committed)
 #
 #       deploy/userflips@v1.0.0-dev2.sql
 #       revert/userflips@v1.0.0-dev2.sql
 #       verify/userflips@v1.0.0-dev2.sql
-no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+no changes added to commit (use &#34;git add&#34; and/or &#34;git commit -a&#34;)
 </code></pre><p>The &ldquo;untracked files&rdquo; part of the output is the first thing to notice. They&rsquo;re
 all named <code>userflips@v1.0.0-dev2.sql</code>. What that means is: &ldquo;the <code>userflips</code>
 change as it was implemented as of the <code>@v1.0.0-dev2</code> tag.&rdquo; These are copies
@@ -1065,34 +1065,34 @@ no duplicates or errors.</p>
 <p>As a result, there is no need to explicitly add changes. So go ahead. Modify
 the script to add the <code>twitter</code> column to the view. Make this change to
 <code>deploy/userflips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#75715e">@@ -4,8 +4,9 @@
-</span><span style="color:#75715e"></span> 
- BEGIN;
- 
-<span style="color:#75715e">@@ -4,6 +4,6 @@
-</span><span style="color:#75715e"></span> -- requires: flips
- 
- CREATE OR REPLACE VIEW flipr.userflips AS
-<span style="color:#f92672">-SELECT f.id, u.nickname, u.fullname, f.body, f.timestamp
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT f.id, u.nickname, u.fullname, u.twitter, f.body, f.timestamp
-</span><span style="color:#a6e22e"></span>   FROM flipr.users u
-   JOIN flipr.flips f ON u.nickname = f.nickname;
-</code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>twitter</code> column.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -4,8 +4,9 @@
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span><span style="display:flex;"><span> BEGIN;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">@@ -4,6 +4,6 @@
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- requires: flips
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> CREATE OR REPLACE VIEW flipr.userflips AS
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT f.id, u.nickname, u.fullname, f.body, f.timestamp
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT f.id, u.nickname, u.fullname, u.twitter, f.body, f.timestamp
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>   FROM flipr.users u
+</span></span><span style="display:flex;"><span>   JOIN flipr.flips f ON u.nickname = f.nickname;
+</span></span></code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>twitter</code> column.
 Here&rsquo;s the diff:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#75715e">@@ -1,6 +1,6 @@
-</span><span style="color:#75715e"></span> -- Verify flipr:userflips on vertica
- 
-<span style="color:#f92672">-SELECT id, nickname, fullname, body, timestamp
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT id, nickname, fullname, twitter, body, timestamp
-</span><span style="color:#a6e22e"></span>   FROM flipr.userflips
-  WHERE FALSE;
- 
-</code></pre></div><p>Now try a deployment:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,6 @@
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- Verify flipr:userflips on vertica
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT id, nickname, fullname, body, timestamp
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT id, nickname, fullname, twitter, body, timestamp
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>   FROM flipr.userflips
+</span></span><span style="display:flex;"><span>  WHERE FALSE;
+</span></span><span style="display:flex;"><span> 
+</span></span></code></pre></div><p>Now try a deployment:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
         + userflips .. ok
 </code></pre><p>So, are the changes deployed?</p>
-<pre tabindex="0"><code>&gt; vsql -U dbadmin -c '\dv flipr.userflips'
+<pre tabindex="0"><code>&gt; vsql -U dbadmin -c &#39;\dv flipr.userflips&#39;
                   List of View Fields
  Schema |   View    |   Column    |     Type     | Size 
 --------+-----------+-------------+--------------+------
@@ -1101,13 +1101,13 @@ Deploying changes to flipr_test
  flipr  | userflips | fullname    | varchar(256) |  256
  flipr  | userflips | twitter     | varchar(80)  |   80
  flipr  | userflips | body        | varchar(180) |  180
- flipr  | userflips | &quot;timestamp&quot; | timestamptz  |    8
+ flipr  | userflips | &#34;timestamp&#34; | timestamptz  |    8
 </code></pre><p>Awesome, the view now includes the <code>twitter</code> column. But can we revert?</p>
 <pre tabindex="0"><code>&gt; sqitch revert --to @HEAD^ -y
 Reverting changes to hashtags @v1.0.0-dev2 from flipr_test
         - userflips .. ok
 </code></pre><p>Did that work, is the <code>twitter</code> column gone?</p>
-<pre tabindex="0"><code>&gt; vsql -U dbadmin -c '\dv flipr.userflips'
+<pre tabindex="0"><code>&gt; vsql -U dbadmin -c &#39;\dv flipr.userflips&#39;
                   List of View Fields
  Schema |   View    |   Column    |     Type     | Size 
 --------+-----------+-------------+--------------+------
@@ -1116,12 +1116,12 @@ Reverting changes to hashtags @v1.0.0-dev2 from flipr_test
  flipr  | userflips | fullname    | varchar(256) |  256
  flipr  | userflips | twitter     | varchar(80)  |   80
  flipr  | userflips | body        | varchar(180) |  180
- flipr  | userflips | &quot;timestamp&quot; | timestamptz  |    8
+ flipr  | userflips | &#34;timestamp&#34; | timestamptz  |    8
 </code></pre><p>Yes, it works! Sqitch properly finds the original instances of these changes
 in the new script files that include tags.</p>
 <p>Excellent. Let&rsquo;s go ahead and commit these changes:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add the twitter column to the userflips view.'
+&gt; git commit -m &#39;Add the twitter column to the userflips view.&#39;
 [main 95d6dd0] Add the twitter column to the userflips view.
  7 files changed, 30 insertions(+), 4 deletions(-)
  create mode 100644 deploy/userflips@v1.0.0-dev2.sql

@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.92.1" />
+	<meta name="generator" content="Hugo 0.101.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -95,7 +95,7 @@ source code repository. So let&rsquo;s do that with Git:</p>
 Initialized empty Git repository in /flipr/.git/
 &gt; touch README.md
 &gt; git add .
-&gt; git commit -am 'Initialize project, add README.'
+&gt; git commit -am &#39;Initialize project, add README.&#39;
 </code></pre><p>If you&rsquo;re a Git user and want to follow along the history, the repository
 used in these examples is <a href="https://github.com/sqitchers/sqitch-intro">on GitHub</a>.</p>
 <p>Now that we have a repository, let&rsquo;s get started with Sqitch. Every Sqitch
@@ -110,16 +110,16 @@ Created deploy/
 Created revert/
 Created verify/
 </code></pre><p>Let&rsquo;s have a look at <code>sqitch.conf</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
-<span style="color:#66d9ef">[core]</span>
-        <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">pg
-</span><span style="color:#e6db74">        # plan_file = sqitch.plan
-</span><span style="color:#e6db74">        # top_dir = .</span>
-<span style="color:#75715e"># [engine &#34;pg&#34;]</span>
-        <span style="color:#75715e"># target = db:pg:</span>
-        <span style="color:#75715e"># registry = sqitch</span>
-        <span style="color:#75715e"># client = psql</span>
-</code></pre></div><p>Good, it picked up on the fact that we&rsquo;re creating changes for the PostgreSQL
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">pg
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        # plan_file = sqitch.plan
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        # top_dir = .</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># [engine &#34;pg&#34;]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># target = db:pg:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># registry = sqitch</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># client = psql</span>
+</span></span></code></pre></div><p>Good, it picked up on the fact that we&rsquo;re creating changes for the PostgreSQL
 engine, thanks to the <code>--engine pg</code> option, and saved it to the file.
 Furthermore, it wrote a commented-out <code>[engine &quot;pg&quot;]</code> section with all the
 available PostgreSQL engine-specific settings commented out and ready to be
@@ -134,16 +134,16 @@ client inside the container, not on your host machine):</p>
 <pre tabindex="0"><code>&gt; sqitch config --user engine.pg.client /opt/local/pgsql/bin/psql
 </code></pre><p>And let&rsquo;s also tell it who we are, since this data will be used in all
 of our projects:</p>
-<pre tabindex="0"><code>&gt; sqitch config --user user.name 'Marge N. O’Vera'
-&gt; sqitch config --user user.email 'marge@example.com'
+<pre tabindex="0"><code>&gt; sqitch config --user user.name &#39;Marge N. O’Vera&#39;
+&gt; sqitch config --user user.email &#39;marge@example.com&#39;
 </code></pre><p>Have a look at <code>~/.sqitch/sqitch.conf</code> and you&rsquo;ll see this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
-<span style="color:#66d9ef">[engine &#34;pg&#34;]</span>
-        <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/local/pgsql/bin/psql</span>
-<span style="color:#66d9ef">[user]</span>
-        <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
-</span><span style="color:#e6db74">        email = marge@example.com</span>
-</code></pre></div><p>Which means that Sqitch should be able to find <code>psql</code> for any project, and
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;pg&#34;]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/local/pgsql/bin/psql</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[user]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        email = marge@example.com</span>
+</span></span></code></pre></div><p>Which means that Sqitch should be able to find <code>psql</code> for any project, and
 that it will always properly identify us when planning and committing changes.</p>
 <p>Back to the repository. Have a look at the plan file, <code>sqitch.plan</code>:</p>
 <pre tabindex="0"><code>&gt; cat sqitch.plan
@@ -156,7 +156,7 @@ Sqitch uses this data to manage cross-project dependencies. The
 to parse the plan, even if the format changes in the future.</p>
 <p>Let&rsquo;s commit these changes and start creating the database changes.</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -am 'Initialize Sqitch configuration.'
+&gt; git commit -am &#39;Initialize Sqitch configuration.&#39;
 [main 85e8d7c] Initialize Sqitch configuration.
  2 files changed, 19 insertions(+)
  create mode 100644 sqitch.conf
@@ -164,20 +164,20 @@ to parse the plan, even if the format changes in the future.</p>
 </code></pre><h2 id="our-first-change">Our First Change</h2>
 <p>First, our project will need a schema. This creates a nice namespace for all
 of the objects that will be part of the flipr app. Run this command:</p>
-<pre tabindex="0"><code>&gt; sqitch add appschema -n 'Add schema for all flipr objects.'
+<pre tabindex="0"><code>&gt; sqitch add appschema -n &#39;Add schema for all flipr objects.&#39;
 Created deploy/appschema.sql
 Created revert/appschema.sql
 Created verify/appschema.sql
-Added &quot;appschema&quot; to sqitch.plan
+Added &#34;appschema&#34; to sqitch.plan
 </code></pre><p>The <a href="/docs/manual/sqitch-add"><code>add</code></a> command adds a database change to the plan and writes
 deploy, revert, and verify scripts that represent the change. Now we edit
 these files. The <code>deploy</code> script&rsquo;s job is to create the schema. So we add
 this to <code>deploy/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
-</code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
+</span></span></code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
 script, so we add this to <code>revert/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
-</code></pre></div><p>Now we can try deploying this change. First, we need to create a database
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
+</span></span></code></pre></div><p>Now we can try deploying this change. First, we need to create a database
 to deploy to:</p>
 <pre tabindex="0"><code>&gt; createdb flipr_test
 </code></pre><p>Now we tell Sqitch where to send the change via a
@@ -193,7 +193,7 @@ databases). Next, Sqitch deploys changes. We only have one so far; the <code>+</
 reinforces the idea that the change is being <code>added</code> to the database.</p>
 <p>With this change deployed, if you connect to the database, you&rsquo;ll be able to
 see the schema:</p>
-<pre tabindex="0"><code>&gt; psql -d flipr_test -c '\dn flipr'
+<pre tabindex="0"><code>&gt; psql -d flipr_test -c &#39;\dn flipr&#39;
 List of schemas
  Name  | Owner 
 -------+-------
@@ -210,8 +210,8 @@ such as schemas is to take advantage the
 These functions conveniently throw exceptions if the object being inquired
 does not exist. For our new schema, <code>has_schema_privilege()</code> will do very
 nicely. Put this query into <code>verify/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> pg_catalog.has_schema_privilege(<span style="color:#e6db74">&#39;flipr&#39;</span>, <span style="color:#e6db74">&#39;usage&#39;</span>);
-</code></pre></div><p><strong>Important!</strong> This query isn&rsquo;t verifying that the user has <code>usage</code> privilege
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> pg_catalog.has_schema_privilege(<span style="color:#e6db74">&#39;flipr&#39;</span>, <span style="color:#e6db74">&#39;usage&#39;</span>);
+</span></span></code></pre></div><p><strong>Important!</strong> This query isn&rsquo;t verifying that the user has <code>usage</code> privilege
 on schema <code>flipr</code>. The verification will pass even if the current user
 has no usage rights.</p>
 <p><strong>Important!</strong> Both <code>SELECT false;</code> and <code>SELECT true;</code> queries will successfully
@@ -221,22 +221,22 @@ pass <code>verify</code> step. Only queries that raise an exception will fail.</
 handy way to do that is to divide by zero if an object doesn&rsquo;t exist. So for
 other databases, assuming division by zero is fatal, you could do something
 like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> information_schema.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;flipr&#39;</span>;
-</code></pre></div><p>In Postgres 9.5+ you can use <code>PL/pgSQL</code> anonymous functions with
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> information_schema.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;flipr&#39;</span>;
+</span></span></code></pre></div><p>In Postgres 9.5+ you can use <code>PL/pgSQL</code> anonymous functions with
 <code>ASSERT</code> / <code>RAISE</code> statements.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DO</span> <span style="color:#960050;background-color:#1e0010">$$</span>
-<span style="color:#66d9ef">BEGIN</span>
-   ASSERT (<span style="color:#66d9ef">SELECT</span> has_schema_privilege(<span style="color:#e6db74">&#39;flipr&#39;</span>, <span style="color:#e6db74">&#39;usage&#39;</span>));
-<span style="color:#66d9ef">END</span> <span style="color:#960050;background-color:#1e0010">$$</span>;
-</code></pre></div><p>You can use variables to perform more complex checks:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DO</span> <span style="color:#960050;background-color:#1e0010">$$</span>
-<span style="color:#66d9ef">DECLARE</span>
-    <span style="color:#66d9ef">result</span> varchar;
-<span style="color:#66d9ef">BEGIN</span>
-   <span style="color:#66d9ef">result</span> :<span style="color:#f92672">=</span> (<span style="color:#66d9ef">SELECT</span> name <span style="color:#66d9ef">FROM</span> flipr.pipelines <span style="color:#66d9ef">WHERE</span> id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>);
-   ASSERT <span style="color:#66d9ef">result</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Example&#39;</span>;
-<span style="color:#66d9ef">END</span> <span style="color:#960050;background-color:#1e0010">$$</span>;
-</code></pre></div><p>This example ensures the record with <code>id=1</code> in <code>pipelines</code> table
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DO</span> <span style="color:#960050;background-color:#1e0010">$$</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
+</span></span><span style="display:flex;"><span>   ASSERT (<span style="color:#66d9ef">SELECT</span> has_schema_privilege(<span style="color:#e6db74">&#39;flipr&#39;</span>, <span style="color:#e6db74">&#39;usage&#39;</span>));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span> <span style="color:#960050;background-color:#1e0010">$$</span>;
+</span></span></code></pre></div><p>You can use variables to perform more complex checks:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DO</span> <span style="color:#960050;background-color:#1e0010">$$</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">result</span> varchar;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">result</span> :<span style="color:#f92672">=</span> (<span style="color:#66d9ef">SELECT</span> name <span style="color:#66d9ef">FROM</span> flipr.pipelines <span style="color:#66d9ef">WHERE</span> id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>   ASSERT <span style="color:#66d9ef">result</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Example&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span> <span style="color:#960050;background-color:#1e0010">$$</span>;
+</span></span></code></pre></div><p>This example ensures the record with <code>id=1</code> in <code>pipelines</code> table
 has <code>name</code> field equals <code>'Example'</code>.</p>
 <p>Either way, run the <code>verify</code> script with the <a href="/docs/manual/sqitch-verify"><code>verify</code></a>
 command:</p>
@@ -247,12 +247,12 @@ Verify successful
 </code></pre><p>Looks good! If you want to make sure that the verify script correctly dies if
 the schema doesn&rsquo;t exist, temporarily change the schema name in the script to
 something that doesn&rsquo;t exist, something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> pg_catalog.has_schema_privilege(<span style="color:#e6db74">&#39;nonesuch&#39;</span>, <span style="color:#e6db74">&#39;usage&#39;</span>);
-</code></pre></div><p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> pg_catalog.has_schema_privilege(<span style="color:#e6db74">&#39;nonesuch&#39;</span>, <span style="color:#e6db74">&#39;usage&#39;</span>);
+</span></span></code></pre></div><p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
 <pre tabindex="0"><code>&gt; sqitch verify db:pg:flipr_test
 Verifying db:pg:flipr_test
-  * appschema .. psql:verify/appschema.sql:5: ERROR:  schema &quot;nonesuch&quot; does not exist
-# Verify script &quot;verify/appschema.sql&quot; failed.
+  * appschema .. psql:verify/appschema.sql:5: ERROR:  schema &#34;nonesuch&#34; does not exist
+# Verify script &#34;verify/appschema.sql&#34; failed.
 not ok
 
 Verify Summary Report
@@ -262,12 +262,12 @@ Errors:  1
 Verify failed
 </code></pre><p>It&rsquo;s even nice enough to tell us what the problem is. Or, for the
 divide-by-zero example, change the schema name:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> information_schema.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;nonesuch&#39;</span>;
-</code></pre></div><p>Then the verify will look something like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> information_schema.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;nonesuch&#39;</span>;
+</span></span></code></pre></div><p>Then the verify will look something like:</p>
 <pre tabindex="0"><code>&gt; sqitch verify db:pg:flipr_test
 Verifying db:pg:flipr_test
   * appschema .. psql:verify/appschema.sql:5: ERROR:  division by zero
-# Verify script &quot;verify/appschema.sql&quot; failed.
+# Verify script &#34;verify/appschema.sql&#34; failed.
 not ok
 
 Verify Summary Report
@@ -300,7 +300,7 @@ really do want to revert. This is to prevent unnecessary accidents. You can
 pass the <code>-y</code> option to disable the prompt. Also, notice the <code>-</code> before the
 change name in the output, which reinforces that the change is being
 <em>removed</em> from the database. And now the schema should be gone:</p>
-<pre tabindex="0"><code>&gt; psql -d flipr_test -c '\dn flipr'
+<pre tabindex="0"><code>&gt; psql -d flipr_test -c &#39;\dn flipr&#39;
 List of schemas
  Name | Owner 
 ------+-------
@@ -334,7 +334,7 @@ Date:      2013-12-30 15:27:15 -0800
 the revert first and then the deploy.</p>
 <p>Cool. Now let&rsquo;s commit it.</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add flipr schema.'
+&gt; git commit -m &#39;Add flipr schema.&#39;
 [main d812132] Add flipr schema.
  4 files changed, 22 insertions(+)
  create mode 100644 deploy/appschema.sql
@@ -346,7 +346,7 @@ the <code>verify</code> script is applied when the change is deployed:</p>
 Deploying changes to db:pg:flipr_test
   + appschema .. ok
 </code></pre><p>And now the schema should be back:</p>
-<pre tabindex="0"><code>&gt; psql -d flipr_test -c '\dn flipr'
+<pre tabindex="0"><code>&gt; psql -d flipr_test -c &#39;\dn flipr&#39;
 List of schemas
  Name  | Owner 
 -------+-------
@@ -393,38 +393,38 @@ changes are verified after deploying them:</p>
 &gt; sqitch config --bool rebase.verify true
 </code></pre><p>We&rsquo;ll see the <a href="/docs/manual/sqitch-rebase"><code>rebase</code></a> command a bit later. In the meantime,
 let&rsquo;s commit the new configuration and and make some more changes!</p>
-<pre tabindex="0"><code>&gt; git commit -am 'Set default deployment target and always verify.'
+<pre tabindex="0"><code>&gt; git commit -am &#39;Set default deployment target and always verify.&#39;
 [main a6267d3] Set default deployment target and always verify.
  1 file changed, 8 insertions(+)
 </code></pre><h2 id="deploy-with-dependency">Deploy with Dependency</h2>
 <p>Let&rsquo;s add another change, this time to create a table. Our app will need
 users, of course, so we&rsquo;ll create a table for them. First, add the new change:</p>
-<pre tabindex="0"><code>&gt; sqitch add users --requires appschema -n 'Creates table to track our users.'
+<pre tabindex="0"><code>&gt; sqitch add users --requires appschema -n &#39;Creates table to track our users.&#39;
 Created deploy/users.sql
 Created revert/users.sql
 Created verify/users.sql
-Added &quot;users [appschema]&quot; to sqitch.plan
+Added &#34;users [appschema]&#34; to sqitch.plan
 </code></pre><p>Note that we&rsquo;re requiring the <code>appschema</code> change as a dependency of the new
 <code>users</code> change. Although that change has already been added to the plan and
 therefore should always be applied before the <code>users</code> change, it&rsquo;s a good
 idea to be explicit about dependencies.</p>
 <p>Now edit the scripts. When you&rsquo;re done, <code>deploy/users.sql</code> should look like
 this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:users to pg
-</span><span style="color:#75715e">-- requires: appschema
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">SET</span> client_min_messages <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;warning&#39;</span>;
-
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.users (
-    nickname  TEXT        <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
-    password  TEXT        <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-    <span style="color:#66d9ef">timestamp</span> TIMESTAMPTZ <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> NOW()
-);
-
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>A few things to notice here. On the second line, the dependence on the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> client_min_messages <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;warning&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.users (
+</span></span><span style="display:flex;"><span>    nickname  TEXT        <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
+</span></span><span style="display:flex;"><span>    password  TEXT        <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">timestamp</span> TIMESTAMPTZ <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> NOW()
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>A few things to notice here. On the second line, the dependence on the
 <code>appschema</code> change has been listed. This doesn&rsquo;t do anything, but the default
 <code>deploy</code> PostgreSQL template lists it here for your reference while editing
 the file. Useful, right?</p>
@@ -437,27 +437,27 @@ to require the <code>appschema</code> change.</p>
 <p>Now for the verify script. The simplest way to check that the table was
 created and has the expected columns without touching the data? Just select
 from the table with a false <code>WHERE</code> clause. Add this to <code>verify/users.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> nickname, password, <span style="color:#66d9ef">timestamp</span>
-  <span style="color:#66d9ef">FROM</span> flipr.users
- <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
-</code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, <span style="color:#66d9ef">timestamp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.users
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
+</span></span></code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
 <code>revert/users.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.users;
-</code></pre></div><p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.users;
+</span></span></code></pre></div><p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + users .. ok
 </code></pre><p>We know, since verification is enabled, that the table must have been created.
 But for the purposes of visibility, let&rsquo;s have a quick look:</p>
-<pre tabindex="0"><code>&gt; psql -d flipr_test -c '\d flipr.users'
-                      Table &quot;flipr.users&quot;
+<pre tabindex="0"><code>&gt; psql -d flipr_test -c &#39;\d flipr.users&#39;
+                      Table &#34;flipr.users&#34;
   Column   |           Type           |       Modifiers        
 -----------+--------------------------+------------------------
  nickname  | text                     | not null
  password  | text                     | not null
  timestamp | timestamp with time zone | not null default now()
 Indexes:
-    &quot;users_pkey&quot; PRIMARY KEY, btree (nickname)
+    &#34;users_pkey&#34; PRIMARY KEY, btree (nickname)
 </code></pre><p>We can also verify all currently deployed changes with the
 <a href="/docs/manual/sqitch-verify"><code>verify</code></a> command:</p>
 <pre tabindex="0"><code>&gt; sqitch verify
@@ -490,8 +490,8 @@ first change deployed to the database (or in the plan, depending on the
 command).</p>
 <p>Back to the database. The <code>users</code> table should be gone but the <code>flipr</code> schema
 should still be around:</p>
-<pre tabindex="0"><code>&gt; psql -d flipr_test -c '\d flipr.users'
-Did not find any relation named &quot;flipr.users&quot;.
+<pre tabindex="0"><code>&gt; psql -d flipr_test -c &#39;\d flipr.users&#39;
+Did not find any relation named &#34;flipr.users&#34;.
 </code></pre><p>The <a href="/docs/manual/sqitch-status"><code>status</code></a> command politely informs us that we have
 undeployed changes:</p>
 <pre tabindex="0"><code>&gt; sqitch status
@@ -516,7 +516,7 @@ verified. The list of undeployed changes (just &ldquo;users&rdquo; here) reminds
 the current state.</p>
 <p>Okay, let&rsquo;s commit and deploy again:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -am 'Add users table.'
+&gt; git commit -am &#39;Add users table.&#39;
 [main d58ea2f] Add users table.
  4 files changed, 31 insertions(+)
  create mode 100644 deploy/users.sql
@@ -539,18 +539,18 @@ Nothing to deploy (up-to-date)
 <h2 id="add-two-at-once">Add Two at Once</h2>
 <p>Let&rsquo;s add a couple more changes to add functions for managing users.</p>
 <pre tabindex="0"><code>&gt; sqitch add insert_user --requires users --requires appschema \
-  -n 'Creates a function to insert a user.'
+  -n &#39;Creates a function to insert a user.&#39;
 Created deploy/insert_user.sql
 Created revert/insert_user.sql
 Created verify/insert_user.sql
-Added &quot;insert_user [users appschema]&quot; to sqitch.plan
+Added &#34;insert_user [users appschema]&#34; to sqitch.plan
 
 &gt; sqitch add change_pass --requires users --requires appschema \
-  -n 'Creates a function to change a user password.'
+  -n &#39;Creates a function to change a user password.&#39;
 Created deploy/change_pass.sql
 Created revert/change_pass.sql
 Created verify/change_pass.sql
-Added &quot;change_pass [users appschema]&quot; to sqitch.plan
+Added &#34;change_pass [users appschema]&#34; to sqitch.plan
 </code></pre><p>Now might be a good time to have a look at the deployment plan:</p>
 <pre tabindex="0"><code>&gt; cat sqitch.plan
 %syntax-version=1.0.0
@@ -566,71 +566,71 @@ list of dependencies, a timestamp, the name and email address of the user who
 planned the change, and a note.</p>
 <p>Let&rsquo;s write the code for the new changes. Here&rsquo;s what
 <code>deploy/insert_user.sql</code> should look like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:insert_user to pg
-</span><span style="color:#75715e">-- requires: users
-</span><span style="color:#75715e">-- requires: appschema
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">FUNCTION</span> flipr.insert_user(
-    nickname TEXT,
-    password TEXT
-) <span style="color:#66d9ef">RETURNS</span> VOID <span style="color:#66d9ef">LANGUAGE</span> <span style="color:#66d9ef">SQL</span> <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span> <span style="color:#66d9ef">AS</span> <span style="color:#960050;background-color:#1e0010">$$</span>
-    <span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> flipr.users <span style="color:#66d9ef">VALUES</span>(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">1</span>, md5(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">2</span>));
-<span style="color:#960050;background-color:#1e0010">$$</span>;
-
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>Here&rsquo;s what <code>verify/insert_user.sql</code> might look like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">BEGIN</span>;
-<span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;flipr.insert_user(text, text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
-<span style="color:#66d9ef">ROLLBACK</span>;
-</code></pre></div><p>We simply take advantage of the fact that <code>has_function_privilege()</code> throws
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:insert_user to pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">FUNCTION</span> flipr.insert_user(
+</span></span><span style="display:flex;"><span>    nickname TEXT,
+</span></span><span style="display:flex;"><span>    password TEXT
+</span></span><span style="display:flex;"><span>) <span style="color:#66d9ef">RETURNS</span> VOID <span style="color:#66d9ef">LANGUAGE</span> <span style="color:#66d9ef">SQL</span> <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span> <span style="color:#66d9ef">AS</span> <span style="color:#960050;background-color:#1e0010">$$</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> flipr.users <span style="color:#66d9ef">VALUES</span>(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">1</span>, md5(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">2</span>));
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$$</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>Here&rsquo;s what <code>verify/insert_user.sql</code> might look like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;flipr.insert_user(text, text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
+</span></span></code></pre></div><p>We simply take advantage of the fact that <code>has_function_privilege()</code> throws
 an exception if the specified function does not exist.</p>
 <p>And <code>revert/insert_user.sql</code> should look something like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Revert flipr:insert_user from pg
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">BEGIN</span>;
-<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> flipr.insert_user(TEXT, TEXT);
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>Now for <code>change_pass</code>; <code>deploy/change_pass.sql</code> might look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:change_pass to pg
-</span><span style="color:#75715e">-- requires: users
-</span><span style="color:#75715e">-- requires: appschema
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">FUNCTION</span> flipr.change_pass(
-    nick    TEXT,
-    oldpass TEXT,
-    newpass TEXT
-) <span style="color:#66d9ef">RETURNS</span> BOOLEAN <span style="color:#66d9ef">LANGUAGE</span> plpgsql <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span> <span style="color:#66d9ef">AS</span> <span style="color:#960050;background-color:#1e0010">$$</span>
-<span style="color:#66d9ef">BEGIN</span>
-    <span style="color:#66d9ef">UPDATE</span> flipr.users
-       <span style="color:#66d9ef">SET</span> password <span style="color:#f92672">=</span> md5(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">3</span>)
-     <span style="color:#66d9ef">WHERE</span> nickname <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">1</span>
-       <span style="color:#66d9ef">AND</span> password <span style="color:#f92672">=</span> md5(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">2</span>);
-    <span style="color:#66d9ef">RETURN</span> <span style="color:#66d9ef">FOUND</span>;
-<span style="color:#66d9ef">END</span>;
-<span style="color:#960050;background-color:#1e0010">$$</span>;
-
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>Use <code>has_function_privilege()</code> in <code>verify/change_pass.sql</code> again:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">BEGIN</span>;
-<span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;flipr.change_pass(text, text, text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
-<span style="color:#66d9ef">ROLLBACK</span>;
-</code></pre></div><p>And of course, its <code>revert</code> script, <code>revert/change_pass.sql</code>, should look
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:insert_user from pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> flipr.insert_user(TEXT, TEXT);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>Now for <code>change_pass</code>; <code>deploy/change_pass.sql</code> might look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:change_pass to pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">FUNCTION</span> flipr.change_pass(
+</span></span><span style="display:flex;"><span>    nick    TEXT,
+</span></span><span style="display:flex;"><span>    oldpass TEXT,
+</span></span><span style="display:flex;"><span>    newpass TEXT
+</span></span><span style="display:flex;"><span>) <span style="color:#66d9ef">RETURNS</span> BOOLEAN <span style="color:#66d9ef">LANGUAGE</span> plpgsql <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span> <span style="color:#66d9ef">AS</span> <span style="color:#960050;background-color:#1e0010">$$</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">UPDATE</span> flipr.users
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">SET</span> password <span style="color:#f92672">=</span> md5(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">WHERE</span> nickname <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">AND</span> password <span style="color:#f92672">=</span> md5(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">RETURN</span> <span style="color:#66d9ef">FOUND</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span>;
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$$</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>Use <code>has_function_privilege()</code> in <code>verify/change_pass.sql</code> again:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;flipr.change_pass(text, text, text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
+</span></span></code></pre></div><p>And of course, its <code>revert</code> script, <code>revert/change_pass.sql</code>, should look
 something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Revert flipr:change_pass from pg
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">BEGIN</span>;
-<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> flipr.change_pass(TEXT, TEXT, TEXT);
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>Try em out!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:change_pass from pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> flipr.change_pass(TEXT, TEXT, TEXT);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>Try em out!</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + insert_user .. ok
   + change_pass .. ok
 </code></pre><p>Do we have the functions? Of course we do, they were verified. Still, have a
 look:</p>
-<pre tabindex="0"><code>&gt; psql -d flipr_test -c '\df flipr.*'
+<pre tabindex="0"><code>&gt; psql -d flipr_test -c &#39;\df flipr.*&#39;
                                     List of functions
  Schema |    Name     | Result data type |          Argument data types          |  Type  
 --------+-------------+------------------+---------------------------------------+--------
@@ -651,14 +651,14 @@ Nothing to deploy (up-to-date)
 Reverting changes to users from flipr_test
   - change_pass .. ok
   - insert_user .. ok
-&gt; psql -d flipr_test -c '\df flipr.*'
+&gt; psql -d flipr_test -c &#39;\df flipr.*&#39;
                        List of functions
  Schema | Name | Result data type | Argument data types | Type 
 --------+------+------------------+---------------------+------
 </code></pre><p>Note the use of <code>@HEAD^^</code> to specify that the revert be to two changes prior
 the last deployed change. Looks good. Let&rsquo;s do the commit and re-deploy dance:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add `insert_user()` and `change_pass()`.'
+&gt; git commit -m &#39;Add `insert_user()` and `change_pass()`.&#39;
 [main c9b4d68] Add `insert_user()` and `change_pass()`.
  7 files changed, 65 insertions(+)
  create mode 100644 deploy/change_pass.sql
@@ -694,12 +694,12 @@ Verify successful
 <h2 id="ship-it">Ship It!</h2>
 <p>Let&rsquo;s do a first release of our app. Let&rsquo;s call it <code>1.0.0-dev1</code> Since we want
 to have it go out with deployments tied to the release, let&rsquo;s tag it:</p>
-<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev1 -n 'Tag v1.0.0-dev1.'
-Tagged &quot;change_pass&quot; with @v1.0.0-dev1
-&gt; git commit -am 'Tag the database with v1.0.0-dev1.'
+<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev1 -n &#39;Tag v1.0.0-dev1.&#39;
+Tagged &#34;change_pass&#34; with @v1.0.0-dev1
+&gt; git commit -am &#39;Tag the database with v1.0.0-dev1.&#39;
 [main 0acef3e] Tag the database with v1.0.0-dev1.
  1 file changed, 1 insertion(+)
-&gt; git tag v1.0.0-dev1 -am 'Tag v1.0.0-dev1'
+&gt; git tag v1.0.0-dev1 -am &#39;Tag v1.0.0-dev1&#39;
 </code></pre><p>We can try deploying to make sure the tag gets picked up like so:</p>
 <pre tabindex="0"><code>&gt; createdb flipr_dev
 &gt; sqitch deploy db:pg:flipr_dev
@@ -754,52 +754,52 @@ the core of our product, the &ldquo;flip.&rdquo; Since other folks are working o
 tasks in the repository, we&rsquo;ll work on a branch, so we can all stay out of
 each other&rsquo;s way. So let&rsquo;s branch:</p>
 <pre tabindex="0"><code>&gt; git checkout -b flips
-Switched to a new branch 'flips'
+Switched to a new branch &#39;flips&#39;
 </code></pre><p>Now we can add a new change to create a table for our flips.</p>
-<pre tabindex="0"><code>&gt; sqitch add flips -r appschema -r users -n 'Adds table for storing flips.'
+<pre tabindex="0"><code>&gt; sqitch add flips -r appschema -r users -n &#39;Adds table for storing flips.&#39;
 Created deploy/flips.sql
 Created revert/flips.sql
 Created verify/flips.sql
-Added &quot;flips [appschema users]&quot; to sqitch.plan
+Added &#34;flips [appschema users]&#34; to sqitch.plan
 </code></pre><p>You know the drill by now. Edit <code>deploy/flips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:flips to pg
-</span><span style="color:#75715e">-- requires: appschema
-</span><span style="color:#75715e">-- requires: users
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">SET</span> client_min_messages <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;warning&#39;</span>;
-
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.flips (
-    id        BIGSERIAL   <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
-    nickname  TEXT        <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flipr.users(nickname),
-    body      TEXT        <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#66d9ef">CHECK</span> ( <span style="color:#66d9ef">length</span>(body) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">180</span> ),
-    <span style="color:#66d9ef">timestamp</span> TIMESTAMPTZ <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> clock_timestamp()
-);
-
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>Edit <code>verify/flips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Verify flipr:flips on pg
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">SELECT</span> id
-     , nickname
-     , body
-     , <span style="color:#66d9ef">timestamp</span>
-  <span style="color:#66d9ef">FROM</span> flipr.flips
- <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
-
-<span style="color:#66d9ef">ROLLBACK</span>;
-</code></pre></div><p>And edit <code>revert/flips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Revert flipr:flips from pg
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.flips;
-
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>And give it a whirl:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> client_min_messages <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;warning&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.flips (
+</span></span><span style="display:flex;"><span>    id        BIGSERIAL   <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
+</span></span><span style="display:flex;"><span>    nickname  TEXT        <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flipr.users(nickname),
+</span></span><span style="display:flex;"><span>    body      TEXT        <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#66d9ef">CHECK</span> ( <span style="color:#66d9ef">length</span>(body) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">180</span> ),
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">timestamp</span> TIMESTAMPTZ <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> clock_timestamp()
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>Edit <code>verify/flips.sql</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id
+</span></span><span style="display:flex;"><span>     , nickname
+</span></span><span style="display:flex;"><span>     , body
+</span></span><span style="display:flex;"><span>     , <span style="color:#66d9ef">timestamp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.flips
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
+</span></span></code></pre></div><p>And edit <code>revert/flips.sql</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.flips;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>And give it a whirl:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + flips .. ok
@@ -819,7 +819,7 @@ Nothing to deploy (up-to-date)
 </code></pre><p>Note the use of <code>--show-tags</code> to show all the deployed tags. Now make it so:</p>
 <pre tabindex="0"><code>&gt; git add .
 [flips e8f4655] Add flips table.
-&gt; git commit -am 'Add flips table.'
+&gt; git commit -am &#39;Add flips table.&#39;
  4 files changed, 37 insertions(+)
  create mode 100644 deploy/flips.sql
  create mode 100644 revert/flips.sql
@@ -828,74 +828,74 @@ Nothing to deploy (up-to-date)
 <p>Now comes the time to add functions to manage flips. I&rsquo;m sure you have things
 nailed down now. Go ahead and add <code>insert_flip</code> and <code>delete_flip</code> changes
 and commit them. The <code>insert_flip</code> deploy script might look something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:insert_flip to pg
-</span><span style="color:#75715e">-- requires: flips
-</span><span style="color:#75715e">-- requires: appschema
-</span><span style="color:#75715e">-- requires: users
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">FUNCTION</span> flipr.insert_flip(
-   nickname TEXT,
-   body     TEXT
-) <span style="color:#66d9ef">RETURNS</span> BIGINT <span style="color:#66d9ef">LANGUAGE</span> <span style="color:#66d9ef">sql</span> <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span> <span style="color:#66d9ef">AS</span> <span style="color:#960050;background-color:#1e0010">$$</span>
-    <span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> flipr.flips (nickname, body)
-    <span style="color:#66d9ef">VALUES</span> (<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">1</span>, <span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">2</span>)
-    RETURNING id;
-<span style="color:#960050;background-color:#1e0010">$$</span>;
-
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>And the <code>delete_flip</code> deploy script might look something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:delete_flip to pg
-</span><span style="color:#75715e">-- requires: flips
-</span><span style="color:#75715e">-- requires: appschema
-</span><span style="color:#75715e">-- requires: users
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">FUNCTION</span> flipr.delete_flip(
-   flip_id BIGINT
-) <span style="color:#66d9ef">RETURNS</span> BOOLEAN <span style="color:#66d9ef">LANGUAGE</span> plpgsql <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span> <span style="color:#66d9ef">AS</span> <span style="color:#960050;background-color:#1e0010">$$</span>
-<span style="color:#66d9ef">BEGIN</span>
-    <span style="color:#66d9ef">DELETE</span> <span style="color:#66d9ef">FROM</span> flipr.flips <span style="color:#66d9ef">WHERE</span> id <span style="color:#f92672">=</span> flip_id;
-    <span style="color:#66d9ef">RETURN</span> <span style="color:#66d9ef">FOUND</span>;
-<span style="color:#66d9ef">END</span>;
-<span style="color:#960050;background-color:#1e0010">$$</span>;
-
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>The <code>verify</code> scripts are:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Verify flipr:insert_flip on pg
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;flipr.insert_flip(text, text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
-
-<span style="color:#66d9ef">ROLLBACK</span>;
-</code></pre></div><p>And:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Verify flipr:delete_flip on pg
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;flipr.delete_flip(bigint)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
-
-<span style="color:#66d9ef">ROLLBACK</span>;
-</code></pre></div><p>The <code>revert</code> scripts are:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Revert flipr:insert_flip from pg
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> flipr.insert_flip(TEXT, TEXT);
-
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>And:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Revert flipr:delete_flip from pg
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> flipr.delete_flip(BIGINT);
-
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>Check the <a href="https://github.com/sqitchers/sqitch-intro">example git repository</a> for
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:insert_flip to pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: flips
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">FUNCTION</span> flipr.insert_flip(
+</span></span><span style="display:flex;"><span>   nickname TEXT,
+</span></span><span style="display:flex;"><span>   body     TEXT
+</span></span><span style="display:flex;"><span>) <span style="color:#66d9ef">RETURNS</span> BIGINT <span style="color:#66d9ef">LANGUAGE</span> <span style="color:#66d9ef">sql</span> <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span> <span style="color:#66d9ef">AS</span> <span style="color:#960050;background-color:#1e0010">$$</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> flipr.flips (nickname, body)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">VALUES</span> (<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">1</span>, <span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    RETURNING id;
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$$</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>And the <code>delete_flip</code> deploy script might look something like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:delete_flip to pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: flips
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">FUNCTION</span> flipr.delete_flip(
+</span></span><span style="display:flex;"><span>   flip_id BIGINT
+</span></span><span style="display:flex;"><span>) <span style="color:#66d9ef">RETURNS</span> BOOLEAN <span style="color:#66d9ef">LANGUAGE</span> plpgsql <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span> <span style="color:#66d9ef">AS</span> <span style="color:#960050;background-color:#1e0010">$$</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">DELETE</span> <span style="color:#66d9ef">FROM</span> flipr.flips <span style="color:#66d9ef">WHERE</span> id <span style="color:#f92672">=</span> flip_id;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">RETURN</span> <span style="color:#66d9ef">FOUND</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span>;
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$$</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>The <code>verify</code> scripts are:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:insert_flip on pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;flipr.insert_flip(text, text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
+</span></span></code></pre></div><p>And:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:delete_flip on pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;flipr.delete_flip(bigint)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
+</span></span></code></pre></div><p>The <code>revert</code> scripts are:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:insert_flip from pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> flipr.insert_flip(TEXT, TEXT);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>And:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:delete_flip from pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> flipr.delete_flip(BIGINT);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>Check the <a href="https://github.com/sqitchers/sqitch-intro">example git repository</a> for
 the complete details. Test <a href="/docs/manual/sqitch-deploy"><code>deploy</code></a> and
 <a href="/docs/manual/sqitch-revert"><code>revert</code></a>, then commit it to the repository. The status
 should end up looking something like this:</p>
@@ -915,7 +915,7 @@ Nothing to deploy (up-to-date)
 <h3 id="emergency">Emergency</h3>
 <p>Let&rsquo;s do it:</p>
 <pre tabindex="0"><code>&gt; git checkout main
-Switched to branch 'main'
+Switched to branch &#39;main&#39;
 &gt; git pull
 Updating 0acef3e..d4cbd7d
 Fast-forward
@@ -963,11 +963,11 @@ VCS is not Git.</li>
 </ul>
 <p>So let&rsquo;s restore things to how they were at main:</p>
 <pre tabindex="0"><code>&gt; git reset --hard HEAD
-HEAD is now at ff60b9b Merge branch 'lists'
+HEAD is now at ff60b9b Merge branch &#39;lists&#39;
 </code></pre><p>That throws out our botched merge. Now let&rsquo;s go back to our branch and rebase
 it on <code>main</code>:</p>
 <pre tabindex="0"><code>&gt; git checkout flips
-Switched to branch 'flips'
+Switched to branch &#39;flips&#39;
 &gt; git rebase main
 First, rewinding head to replay your work on top of it...
 Applying: Add flips table.
@@ -981,9 +981,9 @@ Patch failed at 0001 Add flips table.
 The copy of the patch that failed is found in:
    .git/rebase-apply/patch
 
-When you have resolved this problem, run &quot;git rebase --continue&quot;.
-If you prefer to skip this patch, run &quot;git rebase --skip&quot; instead.
-To check out the original branch and stop rebasing, run &quot;git rebase --abort&quot;.
+When you have resolved this problem, run &#34;git rebase --continue&#34;.
+If you prefer to skip this patch, run &#34;git rebase --skip&#34; instead.
+To check out the original branch and stop rebasing, run &#34;git rebase --abort&#34;.
 </code></pre><p>Oy, that&rsquo;s kind of a pain. It seems like no matter what we do, we&rsquo;ll need to
 resolve conflicts in that file. Except in Git. Fortunately for us, we can tell
 Git to resolve conflicts in <code>sqitch.plan</code> differently. Because we only ever
@@ -1066,16 +1066,16 @@ command. Handy, right? It correctly reverted our changes, and then deployed
 them all again in the proper order. So let&rsquo;s commit <code>.gitattributes</code>; seems
 worthwhile to keep that change:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add `.gitattributes` with union merge for `sqitch.plan`.'
+&gt; git commit -m &#39;Add `.gitattributes` with union merge for `sqitch.plan`.&#39;
 [flips f5ad242] Add `.gitattributes` with union merge for `sqitch.plan`.
  1 file changed, 1 insertion(+)
  create mode 100644 .gitattributes
 </code></pre><h3 id="merges-mastered">Merges Mastered</h3>
 <p>And now, finally, we can merge into <code>main</code>:</p>
 <pre tabindex="0"><code>&gt; git checkout main
-Switched to branch 'main'
+Switched to branch &#39;main&#39;
 &gt; git merge --no-ff flips
-Merge made by the 'recursive' strategy.
+Merge made by the &#39;recursive&#39; strategy.
  .gitattributes         |  1 +
  deploy/delete_flip.sql | 17 +++++++++++++++++
  deploy/flips.sql       | 16 ++++++++++++++++
@@ -1119,12 +1119,12 @@ delete_flip [flips appschema users] 2013-12-31T00:36:34Z Marge N. O’Vera &lt;m
 </code></pre><p>Much much better, a nice clean main now. And because it is now identical to
 the &ldquo;flips&rdquo; branch, we can just carry on. Go ahead and tag it, bundle, and
 release:</p>
-<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev2 -n 'Tag v1.0.0-dev2.'
-Tagged &quot;delete_flip&quot; with @v1.0.0-dev2
-&gt; git commit -am 'Tag the database with v1.0.0-dev2.'
+<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev2 -n &#39;Tag v1.0.0-dev2.&#39;
+Tagged &#34;delete_flip&#34; with @v1.0.0-dev2
+&gt; git commit -am &#39;Tag the database with v1.0.0-dev2.&#39;
 [main 230603b] Tag the database with v1.0.0-dev2.
  1 file changed, 1 insertion(+)
-&gt; git tag v1.0.0-dev2 -am 'Tag v1.0.0-dev2'
+&gt; git tag v1.0.0-dev2 -am &#39;Tag v1.0.0-dev2&#39;
 &gt; sqitch bundle --dest-dir flipr-1.0.0-dev2
 Bundling into flipr-1.0.0-dev2
 Writing config
@@ -1146,10 +1146,10 @@ to create the top-level directory name so we don&rsquo;t have to rename it from
 <h2 id="in-place-changes">In Place Changes</h2>
 <p>Uh-oh, someone just noticed that MD5 hashing is not particularly secure. Why?
 Have a look at this:</p>
-<pre tabindex="0"><code>&gt; psql -d flipr_test -c &quot;
-    SELECT flipr.insert_user('foo', 'secr3t'), flipr.insert_user('bar', 'secr3t');
+<pre tabindex="0"><code>&gt; psql -d flipr_test -c &#34;
+    SELECT flipr.insert_user(&#39;foo&#39;, &#39;secr3t&#39;), flipr.insert_user(&#39;bar&#39;, &#39;secr3t&#39;);
     SELECT * FROM flipr.users;
-&quot;
+&#34;
  nickname |             password             |           timestamp           
 ----------+----------------------------------+-------------------------------
  foo      | 9695da4dd567a19f9b92065f240c6725 | 2013-12-31 00:56:20.240481+00
@@ -1163,10 +1163,10 @@ functions to fix that. How?</p>
 <code>crypt()</code> function to encrypt passwords with a salt, so that they&rsquo;re all
 unique. We just add a change to add <code>pgcrypto</code> to the database, and then we
 can use it. The deploy script should be:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> EXTENSION pgcrypto;
-</code></pre></div><p>And the revert script should be:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DROP</span> EXTENSION pgcrypto;
-</code></pre></div><blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> EXTENSION pgcrypto;
+</span></span></code></pre></div><p>And the revert script should be:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> EXTENSION pgcrypto;
+</span></span></code></pre></div><blockquote>
 <p>If you&rsquo;re on PostgreSQL 9.0 or lower, you won&rsquo;t be able to deploy <code>pgcrypto</code>
 with a Sqitch change, alas. You&rsquo;ll have to install it manually, like so:</p>
 <pre tabindex="0"><code>psql -d flipr_test -f /path/to/pgsql/share/contrib/pgcrypto.sql
@@ -1177,10 +1177,10 @@ support is amazingly useful.</p>
 <p>We&rsquo;re going to use the <code>crypt()</code> and <code>gen_salt()</code> functions, so in the
 <code>verify</code> script, let&rsquo;s make sure that the extension exists <em>and</em> that both
 those functions exist:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">count</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> pg_extension <span style="color:#66d9ef">WHERE</span> extname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;pgcrypto&#39;</span>;
-<span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;crypt(text, text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
-<span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;gen_salt(text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
-</code></pre></div><p>Now we can use <code>pgcrypto</code>. But how to deploy the changes to <code>insert_user()</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">count</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> pg_extension <span style="color:#66d9ef">WHERE</span> extname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;pgcrypto&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;crypt(text, text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;gen_salt(text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
+</span></span></code></pre></div><p>Now we can use <code>pgcrypto</code>. But how to deploy the changes to <code>insert_user()</code>
 and <code>change_pass()</code>?</p>
 <p>Normally, modifying functions in database changes is a
 <a href="https://www.urbandictionary.com/define.php?term=pita">PITA</a>. You have to make
@@ -1205,8 +1205,8 @@ anyway, right? Well we have, with <code>@v1.0.0-dev2</code> added in the previou
 section. With that, we can let Sqitch do most of the hard work for us, thanks
 to the <a href="/docs/manual/sqitch-rework"><code>rework</code></a> command, which is similar to
 <a href="/docs/manual/sqitch-add"><code>add</code></a>, including support for the <code>--requires</code> option:</p>
-<pre tabindex="0"><code>&gt; sqitch rework insert_user --requires pgcrypto -n 'Change insert_user to use pgcrypto.'
-Added &quot;insert_user [insert_user@v1.0.0-dev2 pgcrypto]&quot; to sqitch.plan.
+<pre tabindex="0"><code>&gt; sqitch rework insert_user --requires pgcrypto -n &#39;Change insert_user to use pgcrypto.&#39;
+Added &#34;insert_user [insert_user@v1.0.0-dev2 pgcrypto]&#34; to sqitch.plan.
 Modify these files as appropriate:
   * deploy/insert_user.sql
   * revert/insert_user.sql
@@ -1217,19 +1217,19 @@ of the <code>insert_user</code> change, which we can see via <code>git status</c
 <pre tabindex="0"><code>&gt; git status
 # On branch main
 # Changes not staged for commit:
-#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
-#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#   (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
+#   (use &#34;git checkout -- &lt;file&gt;...&#34; to discard changes in working directory)
 #
 #       modified:   revert/insert_user.sql
 #       modified:   sqitch.plan
 #
 # Untracked files:
-#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+#   (use &#34;git add &lt;file&gt;...&#34; to include in what will be committed)
 #
 #       deploy/insert_user@v1.0.0-dev2.sql
 #       revert/insert_user@v1.0.0-dev2.sql
 #       verify/insert_user@v1.0.0-dev2.sql
-no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+no changes added to commit (use &#34;git add&#34; and/or &#34;git commit -a&#34;)
 </code></pre><p>The &ldquo;untracked files&rdquo; part of the output is the first thing to notice. They
 are all named <code>insert_user@v1.0.0-dev2.sql</code>. What that means is: &ldquo;the
 <code>insert_user</code> change as it was implemented as of the <code>@v1.0.0-dev2</code> tag.&rdquo;
@@ -1256,62 +1256,62 @@ no duplicates or errors.</p>
 <p>As a result, there is no need to explicitly add changes. So go ahead. Modify the
 script to switch to <code>crypt()</code>. Make this change to
 <code>deploy/insert_user.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#75715e">@@ -1,6 +1,7 @@
-</span><span style="color:#75715e"></span> -- Deploy flipr:insert_user to pg
- -- requires: users
- -- requires: appschema
-<span style="color:#a6e22e">+-- requires: pgcrypto
-</span><span style="color:#a6e22e"></span> 
- BEGIN;
- 
-<span style="color:#75715e">@@ -8,7 +9,7 @@ CREATE OR REPLACE FUNCTION flipr.insert_user(
-</span><span style="color:#75715e"></span>     nickname TEXT,
-     password TEXT
- ) RETURNS VOID LANGUAGE SQL SECURITY DEFINER AS $$
-<span style="color:#f92672">-    INSERT INTO flipr.users VALUES($1, md5($2));
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+    INSERT INTO flipr.users values($1, crypt($2, gen_salt(&#39;md5&#39;)));
-</span><span style="color:#a6e22e"></span> $$;
- 
- COMMIT;
-</code></pre></div><p>Go ahead and rework the <code>change_pass</code> change, too:</p>
-<pre tabindex="0"><code>&gt; sqitch rework change_pass --requires pgcrypto -n 'Change change_pass to use pgcrypto.'
-Added &quot;change_pass [change_pass@v1.0.0-dev2 pgcrypto]&quot; to sqitch.plan.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,7 @@
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- Deploy flipr:insert_user to pg
+</span></span><span style="display:flex;"><span> -- requires: users
+</span></span><span style="display:flex;"><span> -- requires: appschema
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">+-- requires: pgcrypto
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span> 
+</span></span><span style="display:flex;"><span> BEGIN;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">@@ -8,7 +9,7 @@ CREATE OR REPLACE FUNCTION flipr.insert_user(
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>     nickname TEXT,
+</span></span><span style="display:flex;"><span>     password TEXT
+</span></span><span style="display:flex;"><span> ) RETURNS VOID LANGUAGE SQL SECURITY DEFINER AS $$
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-    INSERT INTO flipr.users VALUES($1, md5($2));
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+    INSERT INTO flipr.users values($1, crypt($2, gen_salt(&#39;md5&#39;)));
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span> $$;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> COMMIT;
+</span></span></code></pre></div><p>Go ahead and rework the <code>change_pass</code> change, too:</p>
+<pre tabindex="0"><code>&gt; sqitch rework change_pass --requires pgcrypto -n &#39;Change change_pass to use pgcrypto.&#39;
+Added &#34;change_pass [change_pass@v1.0.0-dev2 pgcrypto]&#34; to sqitch.plan.
 Modify these files as appropriate:
   * deploy/change_pass.sql
   * revert/change_pass.sql
   * verify/change_pass.sql
 </code></pre><p>And make this change to <code>deploy/change_pass.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#75715e">@@ -1,6 +1,7 @@
-</span><span style="color:#75715e"></span> -- Deploy flipr:change_pass to pg
- -- requires: users
- -- requires: appschema
-<span style="color:#a6e22e">+-- requires: pgcrypto
-</span><span style="color:#a6e22e"></span> 
- BEGIN;
- 
-<span style="color:#75715e">@@ -11,9 +12,9 @@ CREATE OR REPLACE FUNCTION flipr.change_pass(
-</span><span style="color:#75715e"></span> ) RETURNS BOOLEAN LANGUAGE plpgsql SECURITY DEFINER AS $$
- BEGIN
-     UPDATE flipr.users
-<span style="color:#f92672">-       SET password = md5($3)
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+       SET password = crypt($3, gen_salt(&#39;md5&#39;))
-</span><span style="color:#a6e22e"></span>      WHERE nickname = $1
-<span style="color:#f92672">-       AND password = md5($2);
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+       AND password = crypt($2, password);
-</span><span style="color:#a6e22e"></span>     RETURN FOUND;
- END;
- $$;
-</code></pre></div><p>And then try a deployment:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,7 @@
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- Deploy flipr:change_pass to pg
+</span></span><span style="display:flex;"><span> -- requires: users
+</span></span><span style="display:flex;"><span> -- requires: appschema
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">+-- requires: pgcrypto
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span> 
+</span></span><span style="display:flex;"><span> BEGIN;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">@@ -11,9 +12,9 @@ CREATE OR REPLACE FUNCTION flipr.change_pass(
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> ) RETURNS BOOLEAN LANGUAGE plpgsql SECURITY DEFINER AS $$
+</span></span><span style="display:flex;"><span> BEGIN
+</span></span><span style="display:flex;"><span>     UPDATE flipr.users
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-       SET password = md5($3)
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+       SET password = crypt($3, gen_salt(&#39;md5&#39;))
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>      WHERE nickname = $1
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-       AND password = md5($2);
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+       AND password = crypt($2, password);
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>     RETURN FOUND;
+</span></span><span style="display:flex;"><span> END;
+</span></span><span style="display:flex;"><span> $$;
+</span></span></code></pre></div><p>And then try a deployment:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + insert_user .. ok
   + change_pass .. ok
 </code></pre><p>So, are the changes deployed?</p>
-<pre tabindex="0"><code>&gt; psql -d flipr_test -c &quot;
+<pre tabindex="0"><code>&gt; psql -d flipr_test -c &#34;
     DELETE FROM flipr.users;
-    SELECT flipr.insert_user('foo', 'secr3t'), flipr.insert_user('bar', 'secr3t');
+    SELECT flipr.insert_user(&#39;foo&#39;, &#39;secr3t&#39;), flipr.insert_user(&#39;bar&#39;, &#39;secr3t&#39;);
     SELECT * FROM flipr.users;
-&quot;
+&#34;
  nickname |              password              |           timestamp           
 ----------+------------------------------------+-------------------------------
  foo      | $1$pRNfJjI9$CdcEXJ9xCoJPD.R5Z/7.R1 | 2013-12-31 01:03:15.398572+00
@@ -1323,11 +1323,11 @@ Reverting changes to pgcrypto from flipr_test
   - change_pass .. ok
   - insert_user .. ok
 </code></pre><p>Did that work, are the <code>MD5()</code> passwords back?</p>
-<pre tabindex="0"><code>&gt; psql -d flipr_test -c &quot;
+<pre tabindex="0"><code>&gt; psql -d flipr_test -c &#34;
     DELETE FROM flipr.users;
-    SELECT flipr.insert_user('foo', 'secr3t'), flipr.insert_user('bar', 'secr3t');
+    SELECT flipr.insert_user(&#39;foo&#39;, &#39;secr3t&#39;), flipr.insert_user(&#39;bar&#39;, &#39;secr3t&#39;);
     SELECT * FROM flipr.users;
-&quot;
+&#34;
  nickname |             password             |           timestamp           
 ----------+----------------------------------+-------------------------------
  foo      | 9695da4dd567a19f9b92065f240c6725 | 2013-12-31 01:03:57.263583+00
@@ -1338,39 +1338,39 @@ in the new script files that include tags.</p>
 been modified to use <code>crypt()</code>? I think the simplest thing to do is to
 examine the body of the function, using
 <a href="https://www.postgresql.org/docs/9.2/static/functions-info.html#FUNCTIONS-INFO-CATALOG-TABLE"><code>pg_get_functiondef()</code></a>. So the <code>insert_user</code> verify script looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Verify flipr:insert_user on pg
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;flipr.insert_user(text, text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
-
-<span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>)
-  <span style="color:#66d9ef">FROM</span> pg_catalog.pg_proc
- <span style="color:#66d9ef">WHERE</span> proname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;insert_user&#39;</span>
-   <span style="color:#66d9ef">AND</span> pg_get_functiondef(oid) <span style="color:#66d9ef">LIKE</span> <span style="color:#960050;background-color:#1e0010">$$</span><span style="color:#f92672">%</span>crypt(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">2</span>, gen_salt(<span style="color:#e6db74">&#39;md5&#39;</span>))<span style="color:#f92672">%</span><span style="color:#960050;background-color:#1e0010">$$</span>;
-
-<span style="color:#66d9ef">ROLLBACK</span>;
-</code></pre></div><p>And the <code>change_pass</code> verify script looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Verify flipr:change_pass on pg
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">BEGIN</span>;
-
-<span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;flipr.change_pass(text, text, text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
-
-<span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>)
-  <span style="color:#66d9ef">FROM</span> pg_catalog.pg_proc
- <span style="color:#66d9ef">WHERE</span> proname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;change_pass&#39;</span>
-   <span style="color:#66d9ef">AND</span> pg_get_functiondef(oid) <span style="color:#66d9ef">LIKE</span> <span style="color:#960050;background-color:#1e0010">$$</span><span style="color:#f92672">%</span>crypt(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">3</span>, gen_salt(<span style="color:#e6db74">&#39;md5&#39;</span>))<span style="color:#f92672">%</span><span style="color:#960050;background-color:#1e0010">$$</span>;
-
-<span style="color:#66d9ef">ROLLBACK</span>;
-</code></pre></div><p>Make sure these pass by re-deploying:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:insert_user on pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;flipr.insert_user(text, text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> pg_catalog.pg_proc
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> proname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;insert_user&#39;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> pg_get_functiondef(oid) <span style="color:#66d9ef">LIKE</span> <span style="color:#960050;background-color:#1e0010">$$</span><span style="color:#f92672">%</span>crypt(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">2</span>, gen_salt(<span style="color:#e6db74">&#39;md5&#39;</span>))<span style="color:#f92672">%</span><span style="color:#960050;background-color:#1e0010">$$</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
+</span></span></code></pre></div><p>And the <code>change_pass</code> verify script looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:change_pass on pg
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> has_function_privilege(<span style="color:#e6db74">&#39;flipr.change_pass(text, text, text)&#39;</span>, <span style="color:#e6db74">&#39;execute&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> pg_catalog.pg_proc
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> proname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;change_pass&#39;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> pg_get_functiondef(oid) <span style="color:#66d9ef">LIKE</span> <span style="color:#960050;background-color:#1e0010">$$</span><span style="color:#f92672">%</span>crypt(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">3</span>, gen_salt(<span style="color:#e6db74">&#39;md5&#39;</span>))<span style="color:#f92672">%</span><span style="color:#960050;background-color:#1e0010">$$</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
+</span></span></code></pre></div><p>Make sure these pass by re-deploying:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + insert_user .. ok
   + change_pass .. ok
 </code></pre><p>Excellent. Let&rsquo;s go ahead and commit these changes:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Use pgcrypto to encrypt passwords.'
+&gt; git commit -m &#39;Use pgcrypto to encrypt passwords.&#39;
 [main 4257ae6] Use pgcrypto to encrypt passwords.
  13 files changed, 107 insertions(+), 9 deletions(-)
  create mode 100644 deploy/change_pass@v1.0.0-dev2.sql

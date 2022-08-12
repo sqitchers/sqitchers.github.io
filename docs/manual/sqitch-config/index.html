@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.92.1" />
+	<meta name="generator" content="Hugo 0.101.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -241,41 +241,41 @@ the local file will be opened.</p>
 </ul>
 <h2 id="examples">Examples</h2>
 <p>Given a <code>./sqitch.conf</code> like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#75715e">#</span>
-<span style="color:#75715e"># This is the config file, and</span>
-<span style="color:#75715e"># a &#39;#&#39; or &#39;;&#39; character indicates</span>
-<span style="color:#75715e"># a comment</span>
-<span style="color:#75715e">#</span>
-
-<span style="color:#75715e">; core variables</span>
-<span style="color:#66d9ef">[core]</span>
-        <span style="color:#75715e">; Use PostgreSQL</span>
-        <span style="color:#a6e22e">engine</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">pg</span>
-
-<span style="color:#75715e">; Bundle command settings.</span>
-<span style="color:#66d9ef">[bundle]</span>
-        <span style="color:#a6e22e">from</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">gamma
-</span><span style="color:#e6db74">        tags_only = false
-</span><span style="color:#e6db74">        dest_dir  = _build/sql</span>
-
-<span style="color:#75715e">; Fuzzle command settings</span>
-<span style="color:#66d9ef">[core &#34;fuzzle&#34;]</span>
-        <span style="color:#a6e22e">clack</span>        <span style="color:#f92672">=</span> <span style="color:#e6db74">foo
-</span><span style="color:#e6db74">        clack        = bar
-</span><span style="color:#e6db74">        clack        = barzlewidth</span>
-</code></pre></div><p>You can set the <code>tags_only</code> setting to true with</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This is the config file, and</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># a &#39;#&#39; or &#39;;&#39; character indicates</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># a comment</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">; core variables</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">; Use PostgreSQL</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">engine</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">pg</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">; Bundle command settings.</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[bundle]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">from</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">gamma
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        tags_only = false
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        dest_dir  = _build/sql</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">; Fuzzle command settings</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[core &#34;fuzzle&#34;]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">clack</span>        <span style="color:#f92672">=</span> <span style="color:#e6db74">foo
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        clack        = bar
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        clack        = barzlewidth</span>
+</span></span></code></pre></div><p>You can set the <code>tags_only</code> setting to true with</p>
 <pre tabindex="0"><code>% sqitch config bundle.tags_only true
 </code></pre><p>The hypothetical <code>clack</code> key in the <code>core.fuzzle</code> section might need to set
 <code>foo</code> to &ldquo;hi&rdquo; instead of &ldquo;foo&rdquo;. You can make the replacement by passing an
 additional argument to match the old value, which will be evaluated as a
 regular expression. Here&rsquo;s one way to make that change:</p>
-<pre tabindex="0"><code>% sqitch config core.fuzzle.clack hi '^foo$'
+<pre tabindex="0"><code>% sqitch config core.fuzzle.clack hi &#39;^foo$&#39;
 </code></pre><p>To delete the entry for <code>bundle.from</code>, do</p>
 <pre tabindex="0"><code>% sqitch config --unset bundle.from
 </code></pre><p>If you want to delete an entry for a multivalue setting (like
 <code>core.fuzzle.clack</code>), provide a regex matching the value of exactly one line.
 This example deletes the &ldquo;bar&rdquo; value:</p>
-<pre tabindex="0"><code>% sqitch config --unset core.fuzzle.clack '^bar$'
+<pre tabindex="0"><code>% sqitch config --unset core.fuzzle.clack &#39;^bar$&#39;
 </code></pre><p>To query the value for a given key, do:</p>
 <pre tabindex="0"><code>% sqitch config --get core.engine
 </code></pre><p>Or:</p>
@@ -289,9 +289,9 @@ new one with</p>
 <pre tabindex="0"><code>% sqitch config --replace-all core.fuzzle.clack funk
 </code></pre><p>However, if you only want to replace lines that don&rsquo;t match <code>bar</code>, prepend
 the matching regular expression with an exclamation point (<code>!</code>), like so:</p>
-<pre tabindex="0"><code>% sqitch config --replace-all core.fuzzle.clack yow '!bar'
+<pre tabindex="0"><code>% sqitch config --replace-all core.fuzzle.clack yow &#39;!bar&#39;
 </code></pre><p>To match only values with an exclamation mark, you have to escape it:</p>
-<pre tabindex="0"><code>% sqitch config section.key '[!]'
+<pre tabindex="0"><code>% sqitch config section.key &#39;[!]&#39;
 </code></pre><p>To add a new setting without altering any of the existing ones, use:</p>
 <pre tabindex="0"><code>% sqitch config --add core.fuzzle.set widget=fred
 </code></pre><h2 id="configuration-file">Configuration File</h2>
@@ -320,7 +320,7 @@ variable.</p>
 <p>Sections can be further divided into subsections. To begin a subsection put
 its name in double quotes, separated by space from the section name, in the
 section header, like in the example below:</p>
-<pre tabindex="0"><code>[section &quot;subsection&quot;]
+<pre tabindex="0"><code>[section &#34;subsection&#34;]
 </code></pre><p>Subsection names are case sensitive and can contain any characters except
 newline (double quote and backslash have to be escaped as <code>\&quot;</code> and <code>\\</code>,
 respectively). Section headers cannot span multiple lines. Variables may
@@ -353,23 +353,23 @@ character sequence is valid.</p>
 customary UNIX fashion.</p>
 <p>Some variables may require a special value format.</p>
 <h3 id="example">Example</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#75715e"># Core variables</span>
-<span style="color:#66d9ef">[core]</span>
-    <span style="color:#a6e22e">engine</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">pg
-</span><span style="color:#e6db74">    top_dir   = migrations
-</span><span style="color:#e6db74">    extension = ddl</span>
-
-<span style="color:#66d9ef">[engine &#34;pg&#34;]</span>
-    <span style="color:#a6e22e">registry</span>  <span style="color:#f92672">=</span> <span style="color:#e6db74">widgetopolis</span>
-
-<span style="color:#66d9ef">[revert]</span>
-    <span style="color:#a6e22e">to</span>        <span style="color:#f92672">=</span> <span style="color:#e6db74">gamma</span>
-
-<span style="color:#66d9ef">[bundle]</span>
-    <span style="color:#a6e22e">from</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">gamma
-</span><span style="color:#e6db74">    tags_only = yes
-</span><span style="color:#e6db74">    dest_dir  = _build/sql</span>
-</code></pre></div><h3 id="variables">Variables</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#75715e"># Core variables</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">engine</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">pg
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    top_dir   = migrations
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    extension = ddl</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;pg&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">registry</span>  <span style="color:#f92672">=</span> <span style="color:#e6db74">widgetopolis</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[revert]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">to</span>        <span style="color:#f92672">=</span> <span style="color:#e6db74">gamma</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[bundle]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">from</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">gamma
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    tags_only = yes
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    dest_dir  = _build/sql</span>
+</span></span></code></pre></div><h3 id="variables">Variables</h3>
 <p>Note that this list is not comprehensive and not necessarily complete. For
 command-specific variables, you will find a more detailed description in the
 appropriate manual page.</p>

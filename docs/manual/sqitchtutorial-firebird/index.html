@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.92.1" />
+	<meta name="generator" content="Hugo 0.101.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -92,7 +92,7 @@ source code repository. So let&rsquo;s do that with Git:</p>
 Initialized empty Git repository in /flipr/.git/
 &gt; touch README.md
 &gt; git add .
-&gt; git commit -am 'Initialize project, add README.'
+&gt; git commit -am &#39;Initialize project, add README.&#39;
 [main (root-commit) 761ffcd] Initialize project, add README.
  1 files changed, 39 insertions(+), 0 deletions(-)
  create mode 100644 README.md
@@ -111,16 +111,16 @@ Created deploy/
 Created revert/
 Created verify/
 </code></pre><p>Let&rsquo;s have a look at <code>sqitch.conf</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
-<span style="color:#66d9ef">[core]</span>
-        <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">firebird
-</span><span style="color:#e6db74">        # plan_file = sqitch.plan
-</span><span style="color:#e6db74">        # top_dir = .</span>
-<span style="color:#75715e"># [engine &#34;firebird&#34;]</span>
-        <span style="color:#75715e"># target = db:firebird:</span>
-        <span style="color:#75715e"># registry = sqitch</span>
-        <span style="color:#75715e"># client = isql-fb</span>
-</code></pre></div><p>Good, it picked up on the fact that we&rsquo;re creating changes for the Firebird
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">firebird
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        # plan_file = sqitch.plan
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        # top_dir = .</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># [engine &#34;firebird&#34;]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># target = db:firebird:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># registry = sqitch</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># client = isql-fb</span>
+</span></span></code></pre></div><p>Good, it picked up on the fact that we&rsquo;re creating changes for the Firebird
 engine, thanks to the <code>--engine firebird</code> option, and saved it to the
 file. Furthermore, it wrote a commented-out <code>[engine &quot;firebird&quot;]</code> section
 with all the available Firebird engine-specific settings commented out and
@@ -142,17 +142,17 @@ to <code>isql-fb</code>, for example in Debian and Fedora, or <code>fbsql</code>
 Gentoo.</p>
 <p>And let&rsquo;s also tell it who we are, since this data will be used in all
 of our projects:</p>
-<pre tabindex="0"><code>&gt; sqitch config --user user.name 'Marge N. O’Vera'
-&gt; sqitch config --user user.email 'marge@example.com'
+<pre tabindex="0"><code>&gt; sqitch config --user user.name &#39;Marge N. O’Vera&#39;
+&gt; sqitch config --user user.email &#39;marge@example.com&#39;
 </code></pre><p>Have a look at <code>~/.sqitch/sqitch.conf</code> and you&rsquo;ll see something like
 this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
-<span style="color:#66d9ef">[engine &#34;firebird&#34;]</span>
-  <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/local/bin/isql</span>
-<span style="color:#66d9ef">[user]</span>
-  <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
-</span><span style="color:#e6db74">  email = marge@example.com</span>
-</code></pre></div><p>Which means that Sqitch should be able to find <code>isql</code> for any project, and
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;firebird&#34;]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/local/bin/isql</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[user]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  email = marge@example.com</span>
+</span></span></code></pre></div><p>Which means that Sqitch should be able to find <code>isql</code> for any project, and
 that it will always properly identify us when planning and committing changes.</p>
 <p>Back to the repository. Have a look at the plan file, <code>sqitch.plan</code>:</p>
 <pre tabindex="0"><code>&gt; cat sqitch.plan
@@ -165,23 +165,23 @@ Sqitch uses this data to manage cross-project dependencies. The
 to parse the plan, even if the format changes in the future.</p>
 <p>Let&rsquo;s commit these changes and start creating the database changes.</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -am 'Initialize Sqitch configuration.'
+&gt; git commit -am &#39;Initialize Sqitch configuration.&#39;
 [main 2177ce4] Initialize Sqitch configuration.
  2 files changed, 19 insertions(+), 0 deletions(-)
  create mode 100644 sqitch.conf
  create mode 100644 sqitch.plan
 </code></pre><p>Let&rsquo;s create our flipr test database using <code>isql</code>:</p>
 <pre tabindex="0"><code>&gt; sudo -u firebird mkdir /tmp/flipr_test
-&gt; echo &quot;CREATE DATABASE 'localhost:/tmp/flipr_test/flipr.fdb'; exit;&quot; \
+&gt; echo &#34;CREATE DATABASE &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; exit;&#34; \
   | isql-fb -q -u SYSDBA -p masterkey
 </code></pre><h2 id="our-first-change">Our First Change</h2>
 <p>Let&rsquo;s create a table. Our app will need users, of course, so we&rsquo;ll create a
 table for them. Run this command:</p>
-<pre tabindex="0"><code>&gt; sqitch add users -n 'Creates table to track our users.'
+<pre tabindex="0"><code>&gt; sqitch add users -n &#39;Creates table to track our users.&#39;
 Created deploy/users.sql
 Created revert/users.sql
 Created verify/users.sql
-Added &quot;users&quot; to sqitch.plan
+Added &#34;users&#34; to sqitch.plan
 </code></pre><p>The <a href="/docs/manual/sqitch-add"><code>add</code></a> command adds a database change to the plan and writes
 deploy, revert, and verify scripts that represent the change. Now we edit
 these files. The <code>deploy</code> script&rsquo;s job is to create the table. By default,
@@ -193,25 +193,25 @@ the <code>deploy/users.sql</code> file looks like this:</p>
 COMMIT;
 </code></pre><p>What we want to do is to replace the <code>XXX</code> comment with the <code>CREATE TABLE</code>
 statement, like so:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:users to firebird
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> users (
-    nickname   VARCHAR(<span style="color:#ae81ff">50</span>)  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
-    password   VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-    fullname   VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-    twitter    VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-    created_at <span style="color:#66d9ef">TIMESTAMP</span>    <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>
-);
-
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to firebird
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> users (
+</span></span><span style="display:flex;"><span>    nickname   VARCHAR(<span style="color:#ae81ff">50</span>)  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
+</span></span><span style="display:flex;"><span>    password   VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    fullname   VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    twitter    VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    created_at <span style="color:#66d9ef">TIMESTAMP</span>    <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
 script, so we edit this to <code>revert/users.sql</code> to look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Revert flipr:users from firebird
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> users;
-
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>Now we can try deploying this change. We tell Sqitch where to send the change
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:users from firebird
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> users;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>Now we can try deploying this change. We tell Sqitch where to send the change
 via a <a href="https://github.com/libwww-perl/uri-db/">database URI</a>. Here we&rsquo;ve
 specified a database file, <code>/tmp/flipr_test/flipr.fdb</code>:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
@@ -248,7 +248,7 @@ command-line. We only have one so far; the <code>+</code> reinforces the idea th
 change is being <em>added</em> to the database.</p>
 <p>With this change deployed, if you connect to the database, you&rsquo;ll be able to
 see the <code>users</code> table:</p>
-<pre tabindex="0"><code>&gt; echo &quot;CONNECT 'localhost:/tmp/flipr_test/flipr.fdb'; SHOW TABLES; quit;&quot; \
+<pre tabindex="0"><code>&gt; echo &#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW TABLES; quit;&#34; \
   | isql-fb -q -u SYSDBA -p masterkey
      USERS                        
 </code></pre><h3 id="trust-but-verify">Trust, But Verify</h3>
@@ -259,10 +259,10 @@ did was it was supposed to. It should do so without regard to any data that
 might be in the database, and should throw an error if the deploy was not
 successful. The easiest way to do that with a table is to simply <code>SELECT</code>
 from it. Put this query into <code>verify/users.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter
-  <span style="color:#66d9ef">FROM</span> users
- <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
-</code></pre></div><p>Now you can run the <code>verify</code> script with the <a href="/docs/manual/sqitch-verify"><code>verify</code></a>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><p>Now you can run the <code>verify</code> script with the <a href="/docs/manual/sqitch-verify"><code>verify</code></a>
 command:</p>
 <pre tabindex="0"><code>&gt; sqitch verify db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
 Verifying db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb
@@ -271,10 +271,10 @@ Verify successful
 </code></pre><p>Looks good! If you want to make sure that the verify script correctly dies if
 the table doesn&rsquo;t exist, temporarily change the table name in the script to
 something that doesn&rsquo;t exist, something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter, created_at
-  <span style="color:#66d9ef">FROM</span> users_nonesuch
- <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
-</code></pre></div><p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter, created_at
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users_nonesuch
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
 <pre tabindex="0"><code>&gt; sqitch verify db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
 Verifying db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb
   * users .. Statement failed, SQLSTATE = 42S02
@@ -284,7 +284,7 @@ Dynamic SQL Error
 -USERS_NONESUCH
 -At line 3, column 2
 At line 3 in file verify/users.sql
-# Verify script &quot;verify/users.sql&quot; failed.
+# Verify script &#34;verify/users.sql&#34; failed.
 not ok
 
 Verify Summary Report
@@ -316,7 +316,7 @@ really do want to revert. This is to prevent unnecessary accidents. You can
 pass the <code>-y</code> option to disable the prompt. Also, notice the <code>-</code> before the
 change name in the output, which reinforces that the change is being
 <em>removed</em> from the database. And now the <code>users</code> table should be gone:</p>
-<pre tabindex="0"><code>&gt; echo &quot;CONNECT 'localhost:/tmp/flipr_test/flipr.fdb'; SHOW TABLES; quit;&quot; \
+<pre tabindex="0"><code>&gt; echo &#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW TABLES; quit;&#34; \
   | isql-fb -q -u SYSDBA -p masterkey
 There are no tables in this database
 </code></pre><p>And the status message should reflect as much:</p>
@@ -349,7 +349,7 @@ Date:      2014-01-05 14:05:22 -0800
 the revert first and then the deploy.</p>
 <p>Cool. Now let&rsquo;s commit it.</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add users table.'
+&gt; git commit -m &#39;Add users table.&#39;
 [main ec72105] Add users table.
  4 files changed, 24 insertions(+), 0 deletions(-)
  create mode 100644 deploy/users.sql
@@ -361,7 +361,7 @@ the <code>verify</code> script is applied when the change is deployed:</p>
 Deploying changes to db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb
   + users .. ok
 </code></pre><p>And now the <code>users</code> table should be back:</p>
-<pre tabindex="0"><code>&gt; echo &quot;CONNECT 'localhost:/tmp/flipr_test/flipr.fdb'; SHOW TABLES; quit;&quot; \
+<pre tabindex="0"><code>&gt; echo &#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW TABLES; quit;&#34; \
   | isql-fb -q -u SYSDBA -p masterkey
        USERS                           
 </code></pre><p>When we look at the status, the deployment will be there:</p>
@@ -406,36 +406,36 @@ changes are verified after deploying them:</p>
 &gt; sqitch config --bool rebase.verify true
 </code></pre><p>We&rsquo;ll see the <a href="/docs/manual/sqitch-rebase"><code>rebase</code></a> command a bit later. In the meantime,
 let&rsquo;s commit the new configuration and and make some more changes!</p>
-<pre tabindex="0"><code>&gt; git commit -am 'Set default target and always verify.'
+<pre tabindex="0"><code>&gt; git commit -am &#39;Set default target and always verify.&#39;
 [main cfc9fea] Set default target and always verify.
  1 files changed, 8 insertions(+), 0 deletions(-)
 </code></pre><h2 id="deploy-with-dependency">Deploy with Dependency</h2>
 <p>Let&rsquo;s add another change. Our app will need to store status messages from
 users. Let&rsquo;s call them &ndash; and the table to store them &ndash; &ldquo;flips&rdquo;. First, add
 the new change:</p>
-<pre tabindex="0"><code>&gt; sqitch add flips --requires users -n 'Adds table for storing flips.'
+<pre tabindex="0"><code>&gt; sqitch add flips --requires users -n &#39;Adds table for storing flips.&#39;
 Created deploy/flips.sql
 Created revert/flips.sql
 Created verify/flips.sql
-Added &quot;flips [users]&quot; to sqitch.plan
+Added &#34;flips [users]&#34; to sqitch.plan
 </code></pre><p>Note that we&rsquo;re requiring the <code>users</code> change as a dependency of the new
 <code>flips</code> change. Although that change has already been added to the plan and
 therefore should always be applied before the <code>flips</code> change, it&rsquo;s a good
 idea to be explicit about dependencies.</p>
 <p>Now edit the scripts. When you&rsquo;re done, <code>deploy/flips.sql</code> should look like
 this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:flips to firebird
-</span><span style="color:#75715e">-- requires: users
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flips (
-    id         INTEGER       <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
-    nickname   VARCHAR(<span style="color:#ae81ff">50</span>)   <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> users(nickname),
-    body       VARCHAR(<span style="color:#ae81ff">512</span>)  <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">CHECK</span> ( <span style="color:#66d9ef">char_length</span>(body) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">180</span> ),
-    created_at <span style="color:#66d9ef">TIMESTAMP</span>     <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>
-);
-
-COMMMIT;
-</code></pre></div><p>A couple things to notice here. On the second line, the dependence on the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to firebird
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flips (
+</span></span><span style="display:flex;"><span>    id         INTEGER       <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
+</span></span><span style="display:flex;"><span>    nickname   VARCHAR(<span style="color:#ae81ff">50</span>)   <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> users(nickname),
+</span></span><span style="display:flex;"><span>    body       VARCHAR(<span style="color:#ae81ff">512</span>)  <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">CHECK</span> ( <span style="color:#66d9ef">char_length</span>(body) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">180</span> ),
+</span></span><span style="display:flex;"><span>    created_at <span style="color:#66d9ef">TIMESTAMP</span>     <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>COMMMIT;
+</span></span></code></pre></div><p>A couple things to notice here. On the second line, the dependence on the
 <code>users</code> change has been listed. This doesn&rsquo;t do anything, but the default
 <code>deploy</code> template lists it here for your reference while editing the file.
 Useful, right?</p>
@@ -444,25 +444,25 @@ need to require the <code>users</code> change.</p>
 <p>Now for the verify script. Again, all we need to do is <code>SELECT</code> from the
 table. I recommend selecting each column by name, too, to be sure that no
 column is missing. Here&rsquo;s the <code>verify/flips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Verify flipr:flips on firebird
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">SELECT</span> id, nickname, body, created_at
-  <span style="color:#66d9ef">FROM</span> flips
-  <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
-</code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on firebird
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, body, created_at
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flips
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
 <code>revert/flips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Revert flipr:flips from firebird
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flips;
-
-<span style="color:#66d9ef">COMMIT</span>;
-</code></pre></div><p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from firebird
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flips;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + flips .. ok
 </code></pre><p>We know, since verification is enabled, that the table must have been created.
 But for the purposes of visibility, let&rsquo;s have a quick look:</p>
-<pre tabindex="0"><code>&gt; echo &quot;CONNECT 'localhost:/tmp/flipr_test/flipr.fdb'; SHOW TABLES; quit;&quot; \
+<pre tabindex="0"><code>&gt; echo &#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW TABLES; quit;&#34; \
   | isql-fb -q -u SYSDBA -p masterkey
        FLIPS                                  USERS
 </code></pre><p>We can also verify all currently deployed changes with the
@@ -496,7 +496,7 @@ other potentially useful symbolic tag is <code>@ROOT</code>, which refers to the
 change deployed to the database (or in the plan, depending on the command).</p>
 <p>Back to the database. The <code>flips</code> table should be gone but the
 <code>users</code> table should still be around:</p>
-<pre tabindex="0"><code>&gt; echo &quot;CONNECT 'localhost:/tmp/flipr_test/flipr.fdb'; SHOW TABLES; quit;&quot; \
+<pre tabindex="0"><code>&gt; echo &#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW TABLES; quit;&#34; \
   | isql-fb -q -u SYSDBA -p masterkey
      USERS                        
 </code></pre><p>The <a href="/docs/manual/sqitch-status"><code>status</code></a> command politely informs us that we have
@@ -523,7 +523,7 @@ verified. The list of undeployed changes (just &ldquo;flips&rdquo; here) reminds
 the current state.</p>
 <p>Okay, let&rsquo;s commit and deploy again:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -am 'Add flips table.'
+&gt; git commit -am &#39;Add flips table.&#39;
 [main 09c636c] Add flips table.
  4 files changed, 24 insertions(+), 0 deletions(-)
  create mode 100644 deploy/flips.sql
@@ -546,23 +546,23 @@ Nothing to deploy (up-to-date)
 <p>One more thing to add before we are ready to ship a first beta release. Let&rsquo;s
 create a view that lists user names with their flips.</p>
 <pre tabindex="0"><code>&gt; sqitch add userflips --requires users --requires flips \
-  -n 'Creates the userflips view.'
+  -n &#39;Creates the userflips view.&#39;
 Created deploy/userflips.sql
 Created revert/userflips.sql
 Created verify/userflips.sql
-Added &quot;userflips [users flips]&quot; to sqitch.plan
+Added &#34;userflips [users flips]&#34; to sqitch.plan
 </code></pre><p>Now add this SQL to <code>deploy/userflips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">VIEW</span> userflips <span style="color:#66d9ef">AS</span>
-<span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.created_at
-  <span style="color:#66d9ef">FROM</span> users u
-  <span style="color:#66d9ef">JOIN</span> flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname;
-</code></pre></div><p>Add this SQL to <code>verify/userflips.sql</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> id, nickname, fullname, body, created_at
-  <span style="color:#66d9ef">FROM</span> userflips
- <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
-</code></pre></div><p>And add the <code>DROP VIEW</code> statement to <code>revert/userflips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">VIEW</span> userflips;
-</code></pre></div><p>Now Try it out!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">VIEW</span> userflips <span style="color:#66d9ef">AS</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.created_at
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users u
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">JOIN</span> flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname;
+</span></span></code></pre></div><p>Add this SQL to <code>verify/userflips.sql</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, fullname, body, created_at
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> userflips
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><p>And add the <code>DROP VIEW</code> statement to <code>revert/userflips.sql</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">VIEW</span> userflips;
+</span></span></code></pre></div><p>Now Try it out!</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + userflips .. ok
@@ -578,7 +578,7 @@ Deploying changes to flipr_test
   + userflips .. ok
 </code></pre><p>Looks good! Commit it.</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add the userflips view.'
+&gt; git commit -m &#39;Add the userflips view.&#39;
 [main 28ffa63] Add the userflips view.
  4 files changed, 23 insertions(+), 0 deletions(-)
  create mode 100644 deploy/userflips.sql
@@ -588,15 +588,15 @@ Deploying changes to flipr_test
 <p>Now we&rsquo;re ready for the first development release of our app. Let&rsquo;s call it
 <code>1.0.0-dev1</code> Since we want to have it go out with deployments tied to the
 release, let&rsquo;s tag it:</p>
-<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev1 -n 'Tag v1.0.0-dev1.'
-Tagged &quot;userflips&quot; with @v1.0.0-dev1
-&gt; git commit -am 'Tag the database with v1.0.0-dev1.'
+<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev1 -n &#39;Tag v1.0.0-dev1.&#39;
+Tagged &#34;userflips&#34; with @v1.0.0-dev1
+&gt; git commit -am &#39;Tag the database with v1.0.0-dev1.&#39;
 [main 696a891] Tag the database with v1.0.0-dev1.
  1 files changed, 1 insertions(+), 0 deletions(-)
-&gt; git tag v1.0.0-dev1 -am 'Tag v1.0.0-dev1'
+&gt; git tag v1.0.0-dev1 -am &#39;Tag v1.0.0-dev1&#39;
 </code></pre><p>We can try deploying to make sure the tag gets picked up like so:</p>
 <pre tabindex="0"><code>&gt; sudo -u firebird mkdir /tmp/flipr_dev
-&gt; echo &quot;CREATE DATABASE 'localhost:/tmp/flipr_dev/flipr.fdb'; exit;&quot; \
+&gt; echo &#34;CREATE DATABASE &#39;localhost:/tmp/flipr_dev/flipr.fdb&#39;; exit;&#34; \
   | isql-fb -q -u SYSDBA -p masterkey
 &gt; sqitch deploy db:firebird://sysdba:masterkey@localhost//tmp/flipr_dev/flipr.fdb
 Adding registry tables to db:firebird://sysdba:@localhost//tmp/flipr_dev/sqitch.fdb
@@ -631,7 +631,7 @@ installed somewhere, users can use Sqitch to deploy to the database. Let&rsquo;s
 deploying it:</p>
 <pre tabindex="0"><code>&gt; cd bundle
 &gt; sudo -u firebird mkdir /tmp/flipr_prod
-&gt; echo &quot;CREATE DATABASE 'localhost:/tmp/flipr_prod/flipr.fdb'; exit;&quot; \
+&gt; echo &#34;CREATE DATABASE &#39;localhost:/tmp/flipr_prod/flipr.fdb&#39;; exit;&#34; \
   | isql-fb -q -u SYSDBA -p masterkey
 &gt; sqitch deploy db:firebird://sysdba:masterkey@localhost//tmp/flipr_prod/flipr.fdb
 Adding registry tables to db:firebird://sysdba:@localhost//tmp/flipr_prod/sqitch.fdb
@@ -649,24 +649,24 @@ track the hashtags associated with flips, right? Let&rsquo;s add a table for the
 But since other folks are working on other tasks in the repository, we&rsquo;ll work
 on a branch, so we can all stay out of each other&rsquo;s way. So let&rsquo;s branch:</p>
 <pre tabindex="0"><code>&gt; git checkout -b hashtags
-Switched to a new branch 'hashtags'
+Switched to a new branch &#39;hashtags&#39;
 </code></pre><p>Now we can add a new change to create a table for hashtags.</p>
-<pre tabindex="0"><code>&gt; sqitch add hashtags --requires flips -n 'Adds table for storing hashtags.'
+<pre tabindex="0"><code>&gt; sqitch add hashtags --requires flips -n &#39;Adds table for storing hashtags.&#39;
 Created deploy/hashtags.sql
 Created revert/hashtags.sql
 Created verify/hashtags.sql
-Added &quot;hashtags [flips]&quot; to sqitch.plan
+Added &#34;hashtags [flips]&#34; to sqitch.plan
 </code></pre><p>You know the drill by now. Add this to <code>deploy/hashtags.sql</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> hashtags (
-    flip_id   INTEGER      <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flips(id),
-    hashtag   VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">CHECK</span>(<span style="color:#66d9ef">char_length</span>(hashtag) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>),
-    <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (flip_id, hashtag)
-);
-</code></pre></div><p>Again, select from the table in <code>verify/hashtags.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> flip_id, hashtag <span style="color:#66d9ef">FROM</span> hashtags <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
-</code></pre></div><p>And drop it in <code>revert/hashtags.sql</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> hashtags;
-</code></pre></div><p>And give it a whirl:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> hashtags (
+</span></span><span style="display:flex;"><span>    flip_id   INTEGER      <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flips(id),
+</span></span><span style="display:flex;"><span>    hashtag   VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">CHECK</span>(<span style="color:#66d9ef">char_length</span>(hashtag) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>),
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (flip_id, hashtag)
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>Again, select from the table in <code>verify/hashtags.sql</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> flip_id, hashtag <span style="color:#66d9ef">FROM</span> hashtags <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><p>And drop it in <code>revert/hashtags.sql</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> hashtags;
+</span></span></code></pre></div><p>And give it a whirl:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + hashtags .. ok
@@ -686,7 +686,7 @@ Nothing to deploy (up-to-date)
 </code></pre><p>Note the use of <code>--show-tags</code> to show all the deployed tags. Now make it so:</p>
 <pre tabindex="0"><code>&gt; rm -rf flipr-v1.0.0-dev1*
 &gt; git add .
-&gt; git commit -am 'Add hashtags table.'
+&gt; git commit -am &#39;Add hashtags table.&#39;
 [hashtags 9c40bf5] Add hashtags table.
  4 files changed, 22 insertions(+), 0 deletions(-)
  create mode 100644 deploy/hashtags.sql
@@ -696,7 +696,7 @@ Nothing to deploy (up-to-date)
 <h3 id="emergency">Emergency</h3>
 <p>Let&rsquo;s do it:</p>
 <pre tabindex="0"><code>&gt; git checkout main
-Switched to branch 'main'
+Switched to branch &#39;main&#39;
 &gt; git pull
 Updating 696a891..9af80a1
 Fast-forward
@@ -732,11 +732,11 @@ VCS is not Git.</li>
 </ul>
 <p>So let&rsquo;s restore things to how they were at main:</p>
 <pre tabindex="0"><code>&gt; git reset --hard HEAD
-HEAD is now at d5e7e86 Merge branch 'lists'
+HEAD is now at d5e7e86 Merge branch &#39;lists&#39;
 </code></pre><p>That throws out our botched merge. Now let&rsquo;s go back to our branch and rebase
 it on <code>main</code>:</p>
 <pre tabindex="0"><code>&gt; git checkout hashtags
-Switched to branch 'hashtags'
+Switched to branch &#39;hashtags&#39;
 &gt; git rebase main
 First, rewinding head to replay your work on top of it...
 Applying: Add hashtags table.
@@ -750,9 +750,9 @@ Patch failed at 0001 Add hashtags table.
 The copy of the patch that failed is found in:
    .git/rebase-apply/patch
 
-When you have resolved this problem, run &quot;git rebase --continue&quot;.
-If you prefer to skip this patch, run &quot;git rebase --skip&quot; instead.
-To check out the original branch and stop rebasing, run &quot;git rebase --abort&quot;.
+When you have resolved this problem, run &#34;git rebase --continue&#34;.
+If you prefer to skip this patch, run &#34;git rebase --skip&#34; instead.
+To check out the original branch and stop rebasing, run &#34;git rebase --abort&#34;.
 </code></pre><p>Oy, that&rsquo;s kind of a pain. It seems like no matter what we do, we&rsquo;ll need to
 resolve conflicts in that file. Except in Git. Fortunately for us, we can tell
 Git to resolve conflicts in <code>sqitch.plan</code> differently. Because we only ever
@@ -813,15 +813,15 @@ command. Handy, right? It correctly reverted our changes, and then deployed
 them all again in the proper order. So let&rsquo;s commit <code>.gitattributes</code>; seems
 worthwhile to keep that change:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add `.gitattributes` with union merge for `sqitch.plan`.'
+&gt; git commit -m &#39;Add `.gitattributes` with union merge for `sqitch.plan`.&#39;
 [hashtags 52ed9a2] Add `.gitattributes` with union merge for `sqitch.plan`.
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 .gitattributes
 </code></pre><h3 id="merges-mastered">Merges Mastered</h3>
 <p>And now, finally, we can merge into <code>main</code>:</p>
 <pre tabindex="0"><code>&gt; git checkout main
-Switched to branch 'main'
-&gt; git merge --no-ff hashtags -m &quot;Merge branch 'hashtags'&quot;
+Switched to branch &#39;main&#39;
+&gt; git merge --no-ff hashtags -m &#34;Merge branch &#39;hashtags&#39;&#34;
 Merge made by recursive.
  .gitattributes      |    1 +
  deploy/hashtags.sql |   10 ++++++++++
@@ -849,12 +849,12 @@ hashtags [flips] 2014-01-05T22:54:27Z Marge N. O’Vera &lt;marge@example.com&gt
 </code></pre><p>Much much better, a nice clean main now. And because it is now identical to
 the &ldquo;hashtags&rdquo; branch, we can just carry on. Go ahead and tag it, bundle, and
 release:</p>
-<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev2 -n 'Tag v1.0.0-dev2.'
-Tagged &quot;hashtags&quot; with @v1.0.0-dev2
-&gt; git commit -am 'Tag the database with v1.0.0-dev2.'
+<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev2 -n &#39;Tag v1.0.0-dev2.&#39;
+Tagged &#34;hashtags&#34; with @v1.0.0-dev2
+&gt; git commit -am &#39;Tag the database with v1.0.0-dev2.&#39;
 [main 7d07ee3] Tag the database with v1.0.0-dev2.
  1 file changed, 1 insertion(+)
-&gt; git tag v1.0.0-dev2 -am 'Tag v1.0.0-dev2'
+&gt; git tag v1.0.0-dev2 -am &#39;Tag v1.0.0-dev2&#39;
 &gt; sqitch bundle --dest-dir flipr-1.0.0-dev2
 Bundling into flipr-1.0.0-dev2
 Writing config
@@ -898,8 +898,8 @@ tagged anyway, right? Well we have, with <code>@v1.0.0-dev2</code> added in the 
 section. With that, we can let Sqitch do most of the hard work for us, thanks
 to the <a href="/docs/manual/sqitch-rework"><code>rework</code></a> command, which is similar to
 <a href="/docs/manual/sqitch-add"><code>add</code></a>:</p>
-<pre tabindex="0"><code>&gt; sqitch rework userflips -n 'Adds userflips.twitter.'
-Added &quot;userflips [userflips@v1.0.0-dev2]&quot; to sqitch.plan.
+<pre tabindex="0"><code>&gt; sqitch rework userflips -n &#39;Adds userflips.twitter.&#39;
+Added &#34;userflips [userflips@v1.0.0-dev2]&#34; to sqitch.plan.
 Modify these files as appropriate:
   * deploy/userflips.sql
   * revert/userflips.sql
@@ -909,23 +909,23 @@ point of fact, it has copied the files to stand in for the previous instance
 of the <code>userflips</code> change, which we can see via <code>git status</code>:</p>
 <pre tabindex="0"><code>&gt; git status
 # On branch main
-# Your branch is ahead of 'origin/main' by 4 commits.
-#   (use &quot;git push&quot; to publish your local commits)
+# Your branch is ahead of &#39;origin/main&#39; by 4 commits.
+#   (use &#34;git push&#34; to publish your local commits)
 #
 # Changes not staged for commit:
-#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
-#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#   (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
+#   (use &#34;git checkout -- &lt;file&gt;...&#34; to discard changes in working directory)
 #
 #       modified:   revert/userflips.sql
 #       modified:   sqitch.plan
 #
 # Untracked files:
-#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+#   (use &#34;git add &lt;file&gt;...&#34; to include in what will be committed)
 #
 #       deploy/userflips@v1.0.0-dev2.sql
 #       revert/userflips@v1.0.0-dev2.sql
 #       verify/userflips@v1.0.0-dev2.sql
-no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+no changes added to commit (use &#34;git add&#34; and/or &#34;git commit -a&#34;)
 </code></pre><p>The &ldquo;untracked files&rdquo; part of the output is the first thing to notice. They
 are all named <code>userflips@v1.0.0-dev2.sql</code>. What that means is: &ldquo;the
 <code>userflips</code> change as it was implemented as of the <code>@v1.0.0-dev2</code> tag.&rdquo;
@@ -952,68 +952,68 @@ script is run, the end result will be the same instance of the view, with
 no duplicates or errors.</p>
 <p>As a result, there is no need to explicitly add changes. So go ahead. Modify
 <code>deploy/userflips.sql</code> to add the <code>twitter</code> column.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#75715e">@@ -3,7 +3,7 @@
-</span><span style="color:#75715e"></span> -- requires: flips
- 
- CREATE OR ALTER VIEW userflips AS
-<span style="color:#f92672">-SELECT f.id, u.nickname, u.fullname, f.body, f.created_at
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT f.id, u.nickname, u.fullname, u.twitter, f.body, f.created_at
-</span><span style="color:#a6e22e"></span>   FROM users u
-   JOIN flips f ON u.nickname = f.nickname;
- 
-</code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>twitter</code> column.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -3,7 +3,7 @@
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- requires: flips
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> CREATE OR ALTER VIEW userflips AS
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT f.id, u.nickname, u.fullname, f.body, f.created_at
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT f.id, u.nickname, u.fullname, u.twitter, f.body, f.created_at
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>   FROM users u
+</span></span><span style="display:flex;"><span>   JOIN flips f ON u.nickname = f.nickname;
+</span></span><span style="display:flex;"><span> 
+</span></span></code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>twitter</code> column.
 Here&rsquo;s the diff:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#75715e">@@ -1,6 +1,6 @@
-</span><span style="color:#75715e"></span> -- Verify flipr:userflips on firebird
- 
-<span style="color:#f92672">-SELECT id, nickname, fullname, body, created_at
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT id, nickname, twitter, fullname, body, created_at
-</span><span style="color:#a6e22e"></span>   FROM userflips
-  WHERE 1=2;
- 
-</code></pre></div><p>Now try a deployment:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,6 @@
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- Verify flipr:userflips on firebird
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT id, nickname, fullname, body, created_at
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT id, nickname, twitter, fullname, body, created_at
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>   FROM userflips
+</span></span><span style="display:flex;"><span>  WHERE 1=2;
+</span></span><span style="display:flex;"><span> 
+</span></span></code></pre></div><p>Now try a deployment:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + userflips .. ok
 </code></pre><p>So, are the changes deployed?</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#f92672">&gt;</span> echo <span style="color:#e6db74">&#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW VIEW userflips; quit;&#34;</span> <span style="color:#960050;background-color:#1e0010">\</span>
-  <span style="color:#f92672">|</span> isql<span style="color:#f92672">-</span>fb <span style="color:#f92672">-</span>q <span style="color:#f92672">-</span>u SYSDBA <span style="color:#f92672">-</span>p masterkey
-ID                              INTEGER <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-NICKNAME                        VARCHAR(<span style="color:#ae81ff">50</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-FULLNAME                        VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-TWITTER                         VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-BODY                            VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-CREATED_AT                      <span style="color:#66d9ef">TIMESTAMP</span> <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-<span style="color:#66d9ef">View</span> <span style="color:#66d9ef">Source</span>:
-<span style="color:#f92672">====</span> <span style="color:#f92672">======</span>
-
-<span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, u.twitter, f.body, f.created_at
-  <span style="color:#66d9ef">FROM</span> users u
-  <span style="color:#66d9ef">JOIN</span> flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname
-</code></pre></div><p>Awesome, the view now includes the <code>twitter</code> column. But can we revert?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> echo <span style="color:#e6db74">&#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW VIEW userflips; quit;&#34;</span> <span style="color:#960050;background-color:#1e0010">\</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">|</span> isql<span style="color:#f92672">-</span>fb <span style="color:#f92672">-</span>q <span style="color:#f92672">-</span>u SYSDBA <span style="color:#f92672">-</span>p masterkey
+</span></span><span style="display:flex;"><span>ID                              INTEGER <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
+</span></span><span style="display:flex;"><span>NICKNAME                        VARCHAR(<span style="color:#ae81ff">50</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
+</span></span><span style="display:flex;"><span>FULLNAME                        VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
+</span></span><span style="display:flex;"><span>TWITTER                         VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
+</span></span><span style="display:flex;"><span>BODY                            VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
+</span></span><span style="display:flex;"><span>CREATED_AT                      <span style="color:#66d9ef">TIMESTAMP</span> <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">View</span> <span style="color:#66d9ef">Source</span>:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">====</span> <span style="color:#f92672">======</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, u.twitter, f.body, f.created_at
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users u
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">JOIN</span> flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname
+</span></span></code></pre></div><p>Awesome, the view now includes the <code>twitter</code> column. But can we revert?</p>
 <pre tabindex="0"><code>&gt; sqitch revert --to @HEAD^ -y
 Reverting changes to hashtags @v1.0.0-dev2 from flipr_test
   - userflips .. ok
 </code></pre><p>Did that work, is the <code>twitter</code> column gone?</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#f92672">&gt;</span> echo <span style="color:#e6db74">&#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW VIEW userflips; quit;&#34;</span> <span style="color:#960050;background-color:#1e0010">\</span>
-  <span style="color:#f92672">|</span> isql<span style="color:#f92672">-</span>fb <span style="color:#f92672">-</span>q <span style="color:#f92672">-</span>u SYSDBA <span style="color:#f92672">-</span>p masterkey
-ID                              INTEGER <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-NICKNAME                        VARCHAR(<span style="color:#ae81ff">50</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-FULLNAME                        VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-BODY                            VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-CREATED_AT                      <span style="color:#66d9ef">TIMESTAMP</span> <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-<span style="color:#66d9ef">View</span> <span style="color:#66d9ef">Source</span>:
-<span style="color:#f92672">====</span> <span style="color:#f92672">======</span>
-
-<span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.created_at
-  <span style="color:#66d9ef">FROM</span> users u
-  <span style="color:#66d9ef">JOIN</span> flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname
-</code></pre></div><p>Yes, it works! Sqitch properly finds the original instances of these changes
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> echo <span style="color:#e6db74">&#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW VIEW userflips; quit;&#34;</span> <span style="color:#960050;background-color:#1e0010">\</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">|</span> isql<span style="color:#f92672">-</span>fb <span style="color:#f92672">-</span>q <span style="color:#f92672">-</span>u SYSDBA <span style="color:#f92672">-</span>p masterkey
+</span></span><span style="display:flex;"><span>ID                              INTEGER <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
+</span></span><span style="display:flex;"><span>NICKNAME                        VARCHAR(<span style="color:#ae81ff">50</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
+</span></span><span style="display:flex;"><span>FULLNAME                        VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
+</span></span><span style="display:flex;"><span>BODY                            VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
+</span></span><span style="display:flex;"><span>CREATED_AT                      <span style="color:#66d9ef">TIMESTAMP</span> <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">View</span> <span style="color:#66d9ef">Source</span>:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">====</span> <span style="color:#f92672">======</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.created_at
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users u
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">JOIN</span> flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname
+</span></span></code></pre></div><p>Yes, it works! Sqitch properly finds the original instances of these changes
 in the new script files that include tags.</p>
 <p>Excellent. Let&rsquo;s go ahead and commit these changes:</p>
 <pre tabindex="0"><code>&gt; rm -rf flipr-1.0.0-dev2
 &gt; git add .
-&gt; git commit -m 'Add the twitter column to the userflips view.'
+&gt; git commit -m &#39;Add the twitter column to the userflips view.&#39;
 [main f530359] Add the twitter column to the userflips view.
  7 files changed, 32 insertions(+), 4 deletions(-)
  create mode 100644 deploy/userflips@v1.0.0-dev2.sql

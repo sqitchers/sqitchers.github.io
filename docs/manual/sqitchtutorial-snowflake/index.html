@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.92.1" />
+	<meta name="generator" content="Hugo 0.101.0" />
 </head>
 <body>
 	<header id=masthead>
@@ -93,10 +93,10 @@ need to make sure that the
 is installed and properly configured. At its simplest, on Unix-like systems,
 name the driver &ldquo;Snowflake&rdquo; by adding this entry to <code>odbcinst.ini</code> (usually
 found in <code>/etc</code>, <code>/usr/etc</code>, or <code>/usr/local/etc</code>):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[Snowflake]</span>
-<span style="color:#a6e22e">Description</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">ODBC for Snowflake</span>
-<span style="color:#a6e22e">Driver</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/lib64/snowflake/odbc/lib/libSnowflake.so</span>
-</code></pre></div><p>Note that you&rsquo;ll need to adjust the path depending on the version of the ODBC
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[Snowflake]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Description</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">ODBC for Snowflake</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Driver</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/lib64/snowflake/odbc/lib/libSnowflake.so</span>
+</span></span></code></pre></div><p>Note that you&rsquo;ll need to adjust the path depending on the version of the ODBC
 driver, and where you installed it.</p>
 <p>See the <a href="https://docs.snowflake.com/en/user-guide/odbc.html">Snowflake ODBC documentation</a>
 for details on downloading, installing, and configuring ODBC for your
@@ -110,7 +110,7 @@ source code repository. So let&rsquo;s do that with Git:</p>
 Initialized empty Git repository in /flipr/.git/
 &gt; touch README.md
 &gt; git add .
-&gt; git commit -am 'Initialize project, add README.'
+&gt; git commit -am &#39;Initialize project, add README.&#39;
 </code></pre><p>If you&rsquo;re a Git user and want to follow along the history, the repository
 used in these examples is
 <a href="https://github.com/sqitchers/sqitch-snowflake-intro">on GitHub</a>.</p>
@@ -126,16 +126,16 @@ Created deploy/
 Created revert/
 Created verify/
 </code></pre><p>Let&rsquo;s have a look at <code>sqitch.conf</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
-<span style="color:#66d9ef">[core]</span>
-  <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">snowflake
-</span><span style="color:#e6db74">  # plan_file = sqitch.plan
-</span><span style="color:#e6db74">  # top_dir = .</span>
-<span style="color:#75715e"># [engine &#34;snowflake&#34;]</span>
-  <span style="color:#75715e"># target = db:snowflake:</span>
-  <span style="color:#75715e"># registry = sqitch</span>
-  <span style="color:#75715e"># client = snowsql</span>
-</code></pre></div><p>Good, it picked up on the fact that we&rsquo;re creating changes for the Snowflake
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">snowflake
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  # plan_file = sqitch.plan
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  # top_dir = .</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># [engine &#34;snowflake&#34;]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># target = db:snowflake:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># registry = sqitch</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># client = snowsql</span>
+</span></span></code></pre></div><p>Good, it picked up on the fact that we&rsquo;re creating changes for the Snowflake
 engine, thanks to the <code>--engine snowflake</code> option, and saved it to the
 file. Furthermore, it wrote a commented-out <code>[engine &quot;snowflake&quot;]</code> section with
 all the available Snowflake engine-specific settings commented out and ready to
@@ -150,16 +150,16 @@ client inside the container, not on your host machine):</p>
 <pre tabindex="0"><code>&gt; sqitch config --user engine.snowflake.client /Applications/SnowSQL.app/Contents/MacOS/snowsql
 </code></pre><p>And let&rsquo;s also tell it who we are, since this data will be used in all
 of our projects:</p>
-<pre tabindex="0"><code>&gt; sqitch config --user user.name 'Marge N. O’Vera'
-&gt; sqitch config --user user.email 'marge@example.com'
+<pre tabindex="0"><code>&gt; sqitch config --user user.name &#39;Marge N. O’Vera&#39;
+&gt; sqitch config --user user.email &#39;marge@example.com&#39;
 </code></pre><p>Have a look at <code>~/.sqitch/sqitch.conf</code> and you&rsquo;ll see this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
-<span style="color:#66d9ef">[engine &#34;snowflake&#34;]</span>
-  <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/Applications/SnowSQL.app/Contents/MacOS/snowsql</span>
-<span style="color:#66d9ef">[user]</span>
-  <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
-</span><span style="color:#e6db74">  email = marge@example.com</span>
-</code></pre></div><p>Which means that Sqitch should be able to find <code>snowsql</code> for any project, and
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;snowflake&#34;]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/Applications/SnowSQL.app/Contents/MacOS/snowsql</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[user]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  email = marge@example.com</span>
+</span></span></code></pre></div><p>Which means that Sqitch should be able to find <code>snowsql</code> for any project, and
 that it will always properly identify us when planning and committing changes.</p>
 <p>Back to the repository. Have a look at the plan file, <code>sqitch.plan</code>:</p>
 <pre tabindex="0"><code>&gt; cat sqitch.plan
@@ -172,7 +172,7 @@ Sqitch uses this data to manage cross-project dependencies. The
 to parse the plan, even if the format changes in the future.</p>
 <p>Let&rsquo;s commit these changes and start creating the database changes.</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -am 'Initialize Sqitch configuration.'
+&gt; git commit -am &#39;Initialize Sqitch configuration.&#39;
 [main b731cc3] Initialize Sqitch configuration.
  2 files changed, 15 insertions(+)
  create mode 100644 sqitch.conf
@@ -180,20 +180,20 @@ to parse the plan, even if the format changes in the future.</p>
 </code></pre><h2 id="our-first-change">Our First Change</h2>
 <p>First, our project will need a schema. This creates a nice namespace for all
 of the objects that will be part of the flipr app. Run this command:</p>
-<pre tabindex="0"><code>&gt; sqitch add appschema -n 'Add schema for all flipr objects.'
+<pre tabindex="0"><code>&gt; sqitch add appschema -n &#39;Add schema for all flipr objects.&#39;
 Created deploy/appschema.sql
 Created revert/appschema.sql
 Created verify/appschema.sql
-Added &quot;appschema&quot; to sqitch.plan
+Added &#34;appschema&#34; to sqitch.plan
 </code></pre><p>The <a href="/docs/manual/sqitch-add"><code>add</code></a> command adds a database change to the plan and writes
 deploy, revert, and verify scripts that represent the change. Now we edit
 these files. The <code>deploy</code> script&rsquo;s job is to create the schema. So we add
 this to <code>deploy/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
-</code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
+</span></span></code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
 script, so we add this to <code>revert/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
-</code></pre></div><p>Now we can try deploying this change. We tell Sqitch where to send the change
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
+</span></span></code></pre></div><p>Now we can try deploying this change. We tell Sqitch where to send the change
 via a <a href="https://github.com/libwww-perl/uri-db/">database URI</a>. Let&rsquo;s say we&rsquo;re
 using the account name <code>example</code>, username <code>movera</code>, database <code>flipr</code>, and
 warehouse <code>sqitch</code>, and an ODBC driver named <code>Snowflake</code> (see
@@ -209,7 +209,7 @@ best to put it in the <code>connections</code> section of the
 <a href="https://docs.snowflake.com/en/user-guide/snowsql-start.html#configuring-default-connection-settings"><code>.snowsql/config</code> file</a>.
 See <a href="/docs/manual/sqitch-authentication">sqitch-authentication</a> for details.</p>
 <p>We just tell Sqitch to use that URI to deploy the change:</p>
-<pre tabindex="0"><code>&gt; sqitch deploy 'db:snowflake://movera@example/flipr?Driver=Snowflake'
+<pre tabindex="0"><code>&gt; sqitch deploy &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 Adding registry tables to db:snowflake://movera@example/flipr?Driver=Snowflake
 Deploying changes to db:snowflake://movera@example/flipr?Driver=Snowflake
   + appschema .. ok
@@ -226,7 +226,7 @@ most likely waiting on Snowflake.</p>
 <p>With this change deployed, if you connect to the database, you&rsquo;ll be able to
 see the schema:</p>
 <pre tabindex="0"><code>&gt; snowsql --accountname example --username movera --dbname flipr -o friendly=false \
-  --query &quot;SHOW TERSE SCHEMAS LIKE 'flipr'&quot;
+  --query &#34;SHOW TERSE SCHEMAS LIKE &#39;flipr&#39;&#34;
 +-------------------------------+-------+------+---------------+-------------+
 | created_on                    | name  | kind | database_name | schema_name |
 |-------------------------------+-------+------+---------------+-------------|
@@ -242,14 +242,14 @@ might be in the database, and should throw an error if the deploy was not
 successful. In Snowflake, the simplest way to do so for schema is probably to
 simply create an object in the schema. Put this SQL into
 <code>verify/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TEMPORARY</span> <span style="color:#66d9ef">TABLE</span> flipr.verify__ (id INT);
-</code></pre></div><p>In truth, you can use <em>any</em> query that generates an SQL error if the schema
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TEMPORARY</span> <span style="color:#66d9ef">TABLE</span> flipr.verify__ (id INT);
+</span></span></code></pre></div><p>In truth, you can use <em>any</em> query that generates an SQL error if the schema
 doesn&rsquo;t exist. Another handy way to do that is to divide by zero if an object
 doesn&rsquo;t exist. For example, to throw an error when the <code>flipr</code> schema does
 not exist, you could do something like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
-<span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> information_schema.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;FLIPR&#39;</span>;
-</code></pre></div><p>Note the <code>USE WAREHOUSE</code> statement which is provided in the default Snowflake
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> information_schema.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;FLIPR&#39;</span>;
+</span></span></code></pre></div><p>Note the <code>USE WAREHOUSE</code> statement which is provided in the default Snowflake
 change script templates. For scripts that execute queries requiring compute
 resources (typically DML and <code>SELECT</code> statements), we&rsquo;ll need to use a
 <a href="https://docs.snowflake.com/en/user-guide/warehouses.html">virtual warehouse</a>.
@@ -260,21 +260,21 @@ warehouse if need be. If not, Sqitch always sets this variable (as well as
 <code>&amp;registry</code> containing the name of the Sqitch registry schema) for all
 deploy, revert, and verify script executions.</p>
 <p>Now run the <code>verify</code> script with the <a href="/docs/manual/sqitch-verify"><code>verify</code></a> command:</p>
-<pre tabindex="0"><code>&gt; sqitch verify 'db:snowflake://movera@example/flipr?Driver=Snowflake'
+<pre tabindex="0"><code>&gt; sqitch verify &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 Verifying db:snowflake://movera@example/flipr?Driver=Snowflake
   * appschema .. ok
 Verify successful
 </code></pre><p>Looks good! If you want to make sure that the verify script correctly dies if
 the schema doesn&rsquo;t exist, temporarily change the schema name in the script to
 something that doesn&rsquo;t exist, something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TEMPORARY</span> <span style="color:#66d9ef">TABLE</span> nonesuch.verify__ (id INT);
-</code></pre></div><p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
-<pre tabindex="0"><code>&gt; sqitch verify 'db:snowflake://movera@example/flipr?Driver=Snowflake'
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TEMPORARY</span> <span style="color:#66d9ef">TABLE</span> nonesuch.verify__ (id INT);
+</span></span></code></pre></div><p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
+<pre tabindex="0"><code>&gt; sqitch verify &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 Verifying db:snowflake://movera@example/flipr?Driver=Snowflake
 * appschema ..
 002003 (02000): SQL compilation error:
-Schema 'FLIPR.NONESUCH' does not exist.
-# Verify script &quot;verify/appschema.sql&quot; failed.
+Schema &#39;FLIPR.NONESUCH&#39; does not exist.
+# Verify script &#34;verify/appschema.sql&#34; failed.
 not ok
 
 Verify Summary Report
@@ -284,14 +284,14 @@ Errors:  1
 Verify failed
 </code></pre><p>It&rsquo;s even nice enough to tell us what the problem is. Or, for the
 divide-by-zero example, change the schema name:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
-<span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> information_schema.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;NONESUCH&#39;</span>;
-</code></pre></div><p>Then the verify will look something like:</p>
-<pre tabindex="0"><code>&gt; sqitch verify 'db:snowflake://movera@example/flipr?Driver=Snowflake'
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> information_schema.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;NONESUCH&#39;</span>;
+</span></span></code></pre></div><p>Then the verify will look something like:</p>
+<pre tabindex="0"><code>&gt; sqitch verify &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 Verifying db:snowflake://movera@example/flipr?Driver=Snowflake
 * appschema ..
 100051 (22012): Division by zero
-# Verify script &quot;verify/appschema.sql&quot; failed.
+# Verify script &#34;verify/appschema.sql&#34; failed.
 not ok
 
 Verify Summary Report
@@ -306,7 +306,7 @@ wrong.</p>
 <p>For purely informational purposes, we can always see how a deployment was
 recorded via the <a href="/docs/manual/sqitch-status"><code>status</code></a> command, which reads the registry
 tables from the database:</p>
-<pre tabindex="0"><code>&gt; sqitch status 'db:snowflake://movera@example/flipr?Driver=Snowflake'
+<pre tabindex="0"><code>&gt; sqitch status &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 # On database db:snowflake://movera@example/flipr?Driver=Snowflake
 # Project:  flipr
 # Change:   5a2ac4ae6801bfe392483ee5912b4e3592cdd57a
@@ -316,7 +316,7 @@ tables from the database:</p>
 #
 Nothing to deploy (up-to-date)
 </code></pre><p>Let&rsquo;s make sure that we can revert the change:</p>
-<pre tabindex="0"><code>&gt; sqitch revert 'db:snowflake://movera@example/flipr?Driver=Snowflake'
+<pre tabindex="0"><code>&gt; sqitch revert &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 Revert all changes from db:snowflake://movera@example/flipr?Driver=Snowflake? [Yes]
   - appschema .. ok
 </code></pre><p>The <a href="/docs/manual/sqitch-revert"><code>revert</code></a> command first prompts to make sure that we
@@ -325,24 +325,24 @@ pass the <code>-y</code> option to disable the prompt. Also, notice the <code>-<
 change name in the output, which reinforces that the change is being
 <em>removed</em> from the database. And now the schema should be gone:</p>
 <pre tabindex="0"><code>&gt; snowsql --accountname example --username movera --dbname flipr -o friendly=false \
-  --query &quot;SHOW TERSE SCHEMAS LIKE 'flipr'&quot;
+  --query &#34;SHOW TERSE SCHEMAS LIKE &#39;flipr&#39;&#34;
 +------------+------+------+---------------+-------------+
 | created_on | name | kind | database_name | schema_name |
 |------------+------+------+---------------+-------------|
 +------------+------+------+---------------+-------------+
 0 Row(s) produced. Time Elapsed: 0.204s
 </code></pre><p>And the status message should reflect as much:</p>
-<pre tabindex="0"><code>&gt; sqitch status 'db:snowflake://movera@example/flipr?Driver=Snowflake'
+<pre tabindex="0"><code>&gt; sqitch status &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 # On database db:snowflake://movera@example/flipr?Driver=Snowflake
 No changes deployed
 </code></pre><p>Of course, since nothing is deployed, the <a href="/docs/manual/sqitch-verify"><code>verify</code></a> command
 has nothing to verify:</p>
-<pre tabindex="0"><code>&gt; sqitch verify 'db:snowflake://movera@example/flipr?Driver=Snowflake'
+<pre tabindex="0"><code>&gt; sqitch verify &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 Verifying db:snowflake://movera@example/flipr?Driver=Snowflake
 No changes deployed
 </code></pre><p>However, we still have a record that the change happened, visible via the
 <a href="/docs/manual/sqitch-log"><code>log</code></a> command:</p>
-<pre tabindex="0"><code>&gt; sqitch log 'db:snowflake://movera@example/flipr?Driver=Snowflake'
+<pre tabindex="0"><code>&gt; sqitch log &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 On database db:snowflake://movera@example/flipr?Driver=Snowflake
 Revert 5a2ac4ae6801bfe392483ee5912b4e3592cdd57a
 Name:      appschema
@@ -361,7 +361,7 @@ Date:      2018-07-27 10:47:24 -0400
 the revert first and then the deploy.</p>
 <p>Cool. Now let&rsquo;s commit it.</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add flipr schema.'
+&gt; git commit -m &#39;Add flipr schema.&#39;
 [main 7fd5ace] Add flipr schema.
 4 files changed, 10 insertions(+)
 create mode 100644 deploy/appschema.sql
@@ -369,12 +369,12 @@ create mode 100644 revert/appschema.sql
 create mode 100644 verify/appschema.sql
 </code></pre><p>And then deploy again. This time, let&rsquo;s use the <code>--verify</code> option, so that
 the <code>verify</code> script is applied when the change is deployed:</p>
-<pre tabindex="0"><code>&gt; sqitch deploy --verify 'db:snowflake://movera@example/flipr?Driver=Snowflake'
+<pre tabindex="0"><code>&gt; sqitch deploy --verify &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 Deploying changes to db:snowflake://movera@example/flipr?Driver=Snowflake
   + appschema .. ok
 </code></pre><p>And now the schema should be back:</p>
 <pre tabindex="0"><code>&gt; snowsql --accountname example --username movera --dbname flipr -o friendly=false \
-  --query &quot;SHOW TERSE SCHEMAS LIKE 'flipr'&quot;
+  --query &#34;SHOW TERSE SCHEMAS LIKE &#39;flipr&#39;&#34;
 +-------------------------------+-------+------+---------------+-------------+
 | created_on                    | name  | kind | database_name | schema_name |
 |-------------------------------+-------+------+---------------+-------------|
@@ -382,7 +382,7 @@ Deploying changes to db:snowflake://movera@example/flipr?Driver=Snowflake
 +-------------------------------+-------+------+---------------+-------------+
 1 Row(s) produced. Time Elapsed: 0.283s
 </code></pre><p>When we look at the status, the deployment will be there:</p>
-<pre tabindex="0"><code>&gt; sqitch status 'db:snowflake://movera@example/flipr?Driver=Snowflake'
+<pre tabindex="0"><code>&gt; sqitch status &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 # On database db:snowflake://movera@example/flipr?Driver=Snowflake
 # Project:  flipr
 # Change:   5a2ac4ae6801bfe392483ee5912b4e3592cdd57a
@@ -397,7 +397,7 @@ Nothing to deploy (up-to-date)
 This <a href="https://github.com/libwww-perl/uri-db/">database connection URI</a> tells
 Sqitch how to connect to the deployment target, but we don&rsquo;t have to keep
 using the URI. We can name the target:</p>
-<pre tabindex="0"><code>&gt; sqitch target add flipr_test 'db:snowflake://movera@example/flipr?Driver=Snowflake'
+<pre tabindex="0"><code>&gt; sqitch target add flipr_test &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 </code></pre><p>The <a href="/docs/manual/sqitch-target"><code>target</code></a> command, inspired by
 <a href="https://git-scm.com/docs/git-remote"><code>git-remote</code></a>, allows management of one
 or more named deployment targets. We&rsquo;ve just added a target named
@@ -423,35 +423,35 @@ changes are verified after deploying them:</p>
 &gt; sqitch config --bool rebase.verify true
 </code></pre><p>We&rsquo;ll see the <a href="/docs/manual/sqitch-rebase"><code>rebase</code></a> command a bit later. In the meantime,
 let&rsquo;s commit the new configuration and and make some more changes!</p>
-<pre tabindex="0"><code>&gt; git commit -am 'Set default deployment target and always verify.'
+<pre tabindex="0"><code>&gt; git commit -am &#39;Set default deployment target and always verify.&#39;
 [main 3834a8d] Set default deployment target and always verify.
  1 files changed, 8 insertions(+), 0 deletions(-)
 </code></pre><h2 id="deploy-with-dependency">Deploy with Dependency</h2>
 <p>Let&rsquo;s add another change, this time to create a table. Our app will need
 users, of course, so we&rsquo;ll create a table for them. First, add the new change:</p>
-<pre tabindex="0"><code>&gt; sqitch add users --requires appschema -n 'Creates table to track our users.'
+<pre tabindex="0"><code>&gt; sqitch add users --requires appschema -n &#39;Creates table to track our users.&#39;
 Created deploy/users.sql
 Created revert/users.sql
 Created verify/users.sql
-Added &quot;users [appschema]&quot; to sqitch.plan
+Added &#34;users [appschema]&#34; to sqitch.plan
 </code></pre><p>Note that we&rsquo;re requiring the <code>appschema</code> change as a dependency of the new
 <code>users</code> change. Although that change has already been added to the plan and
 therefore should always be applied before the <code>users</code> change, it&rsquo;s a good
 idea to be explicit about dependencies.</p>
 <p>Now edit the scripts. When you&rsquo;re done, <code>deploy/users.sql</code> should look like
 this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:users to snowflake
-</span><span style="color:#75715e">-- requires: appschema
-</span><span style="color:#75715e"></span>
-USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.users (
-    nickname  TEXT         <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
-    password  TEXT         <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-    fullname  TEXT         <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-    twitter   TEXT         <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-    <span style="color:#66d9ef">timestamp</span> TIMESTAMP_TZ <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span>
-);
-</code></pre></div><p>A few things to notice here. On the second line, the dependence on the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to snowflake
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.users (
+</span></span><span style="display:flex;"><span>    nickname  TEXT         <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
+</span></span><span style="display:flex;"><span>    password  TEXT         <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    fullname  TEXT         <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    twitter   TEXT         <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">timestamp</span> TIMESTAMP_TZ <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span>
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>A few things to notice here. On the second line, the dependence on the
 <code>appschema</code> change has been listed. This doesn&rsquo;t do anything, but the default
 <code>deploy</code> Snowflake template lists it here for your reference while editing
 the file. Useful, right?</p>
@@ -467,21 +467,21 @@ statement is required so that the <code>SELECT</code> statement can actually exe
 Probably easiest just to leave the default, which uses the warehouse that
 Sqitch uses to maintain its registry. Edit <code>verify/users.sql</code> to look like
 this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
-<span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter, <span style="color:#66d9ef">timestamp</span>
-  <span style="color:#66d9ef">FROM</span> flipr.users
-<span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
-</code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter, <span style="color:#66d9ef">timestamp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.users
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
+</span></span></code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
 <code>revert/users.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.users;
-</code></pre></div><p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.users;
+</span></span></code></pre></div><p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + users .. ok
 </code></pre><p>We know, since verification is enabled, that the table must have been created.
 But for the purposes of visibility, let&rsquo;s have a quick look:</p>
 <pre tabindex="0"><code>&gt; snowsql --accountname example --username movera --dbname flipr -o friendly=false \
-  --query &quot;SHOW TERSE TABLES LIKE 'users' IN flipr&quot;
+  --query &#34;SHOW TERSE TABLES LIKE &#39;users&#39; IN flipr&#34;
 +-------------------------------+-------+-------+---------------+-------------+
 | created_on                    | name  | kind  | database_name | schema_name |
 |-------------------------------+-------+-------+---------------+-------------|
@@ -521,7 +521,7 @@ command).</p>
 <p>Back to the database. The <code>users</code> table should be gone but the <code>flipr</code> schema
 should still be around:</p>
 <pre tabindex="0"><code>&gt; snowsql --accountname example --username movera --dbname flipr -o friendly=false \
-  --query &quot;SHOW TERSE TABLES LIKE 'users' IN flipr&quot;
+  --query &#34;SHOW TERSE TABLES LIKE &#39;users&#39; IN flipr&#34;
 +------------+------+------+---------------+-------------+
 | created_on | name | kind | database_name | schema_name |
 |------------+------+------+---------------+-------------|
@@ -550,7 +550,7 @@ verified. The list of undeployed changes (just &ldquo;users&rdquo; here) reminds
 the current state.</p>
 <p>Okay, let&rsquo;s commit and deploy again:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -am 'Add users table.'
+&gt; git commit -am &#39;Add users table.&#39;
 [main 8c16c09] Add users table.
  4 files changed, 22 insertions(+)
  create mode 100644 deploy/users.sql
@@ -574,18 +574,18 @@ Nothing to deploy (up-to-date)
 from users. Let&rsquo;s call them &ndash; and the table to store them &ndash; &ldquo;flips&rdquo;. And
 we&rsquo;ll also need a view that lists user names with their flips. Let&rsquo;s add
 changes for them both:</p>
-<pre tabindex="0"><code>&gt; sqitch add flips -r appschema -r users -n 'Adds table for storing flips.'
+<pre tabindex="0"><code>&gt; sqitch add flips -r appschema -r users -n &#39;Adds table for storing flips.&#39;
 Created deploy/flips.sql
 Created revert/flips.sql
 Created verify/flips.sql
-Added &quot;flips [appschema users]&quot; to sqitch.plan
+Added &#34;flips [appschema users]&#34; to sqitch.plan
 
 &gt; sqitch add userflips -r appschema -r users -r flips \
-  -n 'Creates the userflips view.'
+  -n &#39;Creates the userflips view.&#39;
 Created deploy/userflips.sql
 Created revert/userflips.sql
 Created verify/userflips.sql
-Added &quot;userflips [appschema users flips]&quot; to sqitch.plan
+Added &#34;userflips [appschema users flips]&#34; to sqitch.plan
 </code></pre><p>Now might be a good time to have a look at the deployment plan:</p>
 <pre tabindex="0"><code>&gt; cat sqitch.plan
 %syntax-version=1.0.0
@@ -601,54 +601,54 @@ list of dependencies, a timestamp, the name and email address of the user who
 planned the change, and a note.</p>
 <p>Let&rsquo;s write the code for the new changes. Here&rsquo;s what <code>deploy/flips.sql</code>
 should look like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:flips to snowflake
-</span><span style="color:#75715e">-- requires: appschema
-</span><span style="color:#75715e">-- requires: users
-</span><span style="color:#75715e"></span>
-USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.flips (
-    id        INTEGER        <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
-    nickname  TEXT           <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flipr.users(nickname),
-    body      VARCHAR(<span style="color:#ae81ff">180</span>)   <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span>,
-    <span style="color:#66d9ef">timestamp</span> TIMESTAMP_TZ <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span>
-);
-</code></pre></div><p>Here&rsquo;s what <code>verify/flips.sql</code> might look like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Verify flipr:flips on snowflake
-</span><span style="color:#75715e"></span>
-USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
-<span style="color:#66d9ef">SELECT</span> id, nickname, body, <span style="color:#66d9ef">timestamp</span>
-  <span style="color:#66d9ef">FROM</span> flipr.flips
- <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
-</code></pre></div><p>And <code>revert/flips.sql</code> should look something like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Revert flipr:flips from snowflake
-</span><span style="color:#75715e"></span>
-USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
-<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.flips;
-</code></pre></div><p>Now for <code>userflips</code>; <code>deploy/userflips.sql</code> might look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Deploy flipr:userflips to snowflake
-</span><span style="color:#75715e">-- requires: appschema
-</span><span style="color:#75715e">-- requires: users
-</span><span style="color:#75715e">-- requires: flips
-</span><span style="color:#75715e"></span>
-USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
-<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">VIEW</span> flipr.userflips <span style="color:#66d9ef">AS</span>
-<span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.<span style="color:#66d9ef">timestamp</span>
-  <span style="color:#66d9ef">FROM</span> flipr.users u
-  <span style="color:#66d9ef">JOIN</span> flipr.flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname;
-</code></pre></div><p>Use a <code>SELECT</code> statement in <code>verify/userflips.sql</code> again:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Verify flipr:userflips on snowflake
-</span><span style="color:#75715e"></span>
-USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
-<span style="color:#66d9ef">SELECT</span> id, nickname, fullname, body, <span style="color:#66d9ef">timestamp</span>
-  <span style="color:#66d9ef">FROM</span> flipr.userflips
- <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
-</code></pre></div><p>And of course, its <code>revert</code> script, <code>revert/userflips.sql</code>, should look
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to snowflake
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.flips (
+</span></span><span style="display:flex;"><span>    id        INTEGER        <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
+</span></span><span style="display:flex;"><span>    nickname  TEXT           <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flipr.users(nickname),
+</span></span><span style="display:flex;"><span>    body      VARCHAR(<span style="color:#ae81ff">180</span>)   <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">timestamp</span> TIMESTAMP_TZ <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span>
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>Here&rsquo;s what <code>verify/flips.sql</code> might look like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on snowflake
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, body, <span style="color:#66d9ef">timestamp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.flips
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
+</span></span></code></pre></div><p>And <code>revert/flips.sql</code> should look something like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from snowflake
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.flips;
+</span></span></code></pre></div><p>Now for <code>userflips</code>; <code>deploy/userflips.sql</code> might look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:userflips to snowflake
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: flips
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">VIEW</span> flipr.userflips <span style="color:#66d9ef">AS</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.<span style="color:#66d9ef">timestamp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.users u
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">JOIN</span> flipr.flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname;
+</span></span></code></pre></div><p>Use a <code>SELECT</code> statement in <code>verify/userflips.sql</code> again:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:userflips on snowflake
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, fullname, body, <span style="color:#66d9ef">timestamp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.userflips
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
+</span></span></code></pre></div><p>And of course, its <code>revert</code> script, <code>revert/userflips.sql</code>, should look
 something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- Revert flipr:userflips from snowflake
-</span><span style="color:#75715e"></span>
-USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
-<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">VIEW</span> flipr.userflips;
-</code></pre></div><p>Try em out!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:userflips from snowflake
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">VIEW</span> flipr.userflips;
+</span></span></code></pre></div><p>Try em out!</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + flips ...... ok
@@ -656,7 +656,7 @@ Deploying changes to flipr_test
 </code></pre><p>Do we have the new table and view? Of course we do, they were verified. Still,
 have a look:</p>
 <pre tabindex="0"><code>&gt; snowsql --accountname example --username movera --dbname flipr -o friendly=false \
-  --query &quot;SHOW TERSE TABLES LIKE 'flips' IN flipr&quot;
+  --query &#34;SHOW TERSE TABLES LIKE &#39;flips&#39; IN flipr&#34;
 +-------------------------------+-------+-------+---------------+-------------+
 | created_on                    | name  | kind  | database_name | schema_name |
 |-------------------------------+-------+-------+---------------+-------------|
@@ -665,7 +665,7 @@ have a look:</p>
 1 Row(s) produced. Time Elapsed: 0.225s
 
 &gt; snowsql --accountname example --username movera --dbname flipr -o friendly=false \
-  --query &quot;SHOW TERSE VIEWS LIKE 'userflips' IN flipr&quot;
+  --query &#34;SHOW TERSE VIEWS LIKE &#39;userflips&#39; IN flipr&#34;
 +-------------------------------+-----------+------+---------------+-------------+
 | created_on                    | name      | kind | database_name | schema_name |
 |-------------------------------+-----------+------+---------------+-------------|
@@ -689,7 +689,7 @@ Reverting changes to users from flipr_test
   - flips ...... ok
 
 &gt; snowsql --accountname example --username movera --dbname flipr -o friendly=false \
-  --query &quot;SHOW TERSE TABLES LIKE 'flips' IN flipr&quot;
+  --query &#34;SHOW TERSE TABLES LIKE &#39;flips&#39; IN flipr&#34;
 +------------+------+------+---------------+-------------+
 | created_on | name | kind | database_name | schema_name |
 |------------+------+------+---------------+-------------|
@@ -698,7 +698,7 @@ Reverting changes to users from flipr_test
 </code></pre><p>Note the use of <code>@HEAD^^</code> to specify that the revert be to two changes prior
 the last deployed change. Looks good. Let&rsquo;s do the commit and re-deploy dance:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add flips table and userflips view.'
+&gt; git commit -m &#39;Add flips table and userflips view.&#39;
 [main b36f48b] Add flips table and userflips view.
  7 files changed, 43 insertions(+)
  create mode 100644 deploy/flips.sql
@@ -733,12 +733,12 @@ Verify successful
 <h2 id="ship-it">Ship It!</h2>
 <p>Let&rsquo;s do a first release of our app. Let&rsquo;s call it <code>1.0.0-dev1</code> Since we want
 to have it go out with deployments tied to the release, let&rsquo;s tag it:</p>
-<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev1 -n 'Tag v1.0.0-dev1.'
-Tagged &quot;userflips&quot; with @v1.0.0-dev1
-&gt; git commit -am 'Tag the database with v1.0.0-dev1.'
+<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev1 -n &#39;Tag v1.0.0-dev1.&#39;
+Tagged &#34;userflips&#34; with @v1.0.0-dev1
+&gt; git commit -am &#39;Tag the database with v1.0.0-dev1.&#39;
 [main 84ed9db] Tag the database with v1.0.0-dev1.
  1 files changed, 1 insertion(+)
-&gt; git tag v1.0.0-dev1 -am 'Tag v1.0.0-dev1'
+&gt; git tag v1.0.0-dev1 -am &#39;Tag v1.0.0-dev1&#39;
 </code></pre><p>We can try deploying to make sure the tag gets picked up like so:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Nothing to deploy (up-to-date)
@@ -768,9 +768,9 @@ Writing scripts
 installed somewhere, users can use Sqitch to deploy to the database. Let&rsquo;s try
 deploying it to another database, <code>flipr_prod</code>:</p>
 <pre tabindex="0"><code>&gt; cd bundle
-&gt; sqitch deploy 'db:snowflake://movera@example/flipr_prod?Driver=Snowflake'
-Adding registry tables to db:snowflake://movera@example/flipr_prod?Driver=Snowflake'
-Deploying changes to db:snowflake://movera@example/flipr_prod?Driver=Snowflake'
+&gt; sqitch deploy &#39;db:snowflake://movera@example/flipr_prod?Driver=Snowflake&#39;
+Adding registry tables to db:snowflake://movera@example/flipr_prod?Driver=Snowflake&#39;
+Deploying changes to db:snowflake://movera@example/flipr_prod?Driver=Snowflake&#39;
   + appschema ............... ok
   + users ................... ok
   + flips ................... ok
@@ -786,24 +786,24 @@ track the hashtags associated with flips, right? Let&rsquo;s add a table for the
 But since other folks are working on other tasks in the repository, we&rsquo;ll work
 on a branch, so we can all stay out of each other&rsquo;s way. So let&rsquo;s branch:</p>
 <pre tabindex="0"><code>&gt; git checkout -b hashtags
-Switched to a new branch 'hashtags'
+Switched to a new branch &#39;hashtags&#39;
 </code></pre><p>Now we can add a new change to create a table for hashtags.</p>
-<pre tabindex="0"><code>&gt; sqitch add hashtags --requires flips -n 'Adds table for storing hashtags.'
+<pre tabindex="0"><code>&gt; sqitch add hashtags --requires flips -n &#39;Adds table for storing hashtags.&#39;
 Created deploy/hashtags.sql
 Created revert/hashtags.sql
 Created verify/hashtags.sql
-Added &quot;hashtags [appschema flips]&quot; to sqitch.plan
+Added &#34;hashtags [appschema flips]&#34; to sqitch.plan
 </code></pre><p>You know the drill by now. Add this to <code>deploy/hashtags.sql</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.hashtags (
-    flip_id   INTEGER       <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flipr.flips(id),
-    hashtag   VARCHAR(<span style="color:#ae81ff">128</span>)  <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-    <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (flip_id, hashtag)
-);
-</code></pre></div><p>Again, select from the table in <code>verify/hashtags.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> flip_id, hashtag <span style="color:#66d9ef">FROM</span> flipr.hashtags <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
-</code></pre></div><p>And drop it in <code>revert/hashtags.sql</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.hashtags;
-</code></pre></div><p>And give it a whirl:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.hashtags (
+</span></span><span style="display:flex;"><span>    flip_id   INTEGER       <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flipr.flips(id),
+</span></span><span style="display:flex;"><span>    hashtag   VARCHAR(<span style="color:#ae81ff">128</span>)  <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (flip_id, hashtag)
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>Again, select from the table in <code>verify/hashtags.sql</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> flip_id, hashtag <span style="color:#66d9ef">FROM</span> flipr.hashtags <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
+</span></span></code></pre></div><p>And drop it in <code>revert/hashtags.sql</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.hashtags;
+</span></span></code></pre></div><p>And give it a whirl:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + hashtags .. ok
@@ -830,7 +830,7 @@ Deploying changes to flipr_test
   + hashtags .. ok
 </code></pre><p>Great! Now make it so:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add hashtags table.'
+&gt; git commit -m &#39;Add hashtags table.&#39;
 [hashtags 06a0bf4] Add hashtags table.
  4 files changed, 19 insertions(+)
  create mode 100644 deploy/hashtags.sql
@@ -840,7 +840,7 @@ Deploying changes to flipr_test
 <h3 id="emergency">Emergency</h3>
 <p>Let&rsquo;s do it:</p>
 <pre tabindex="0"><code>&gt; git checkout main
-Switched to branch 'main'
+Switched to branch &#39;main&#39;
 &gt; git pull
 Updating 84ed9db..31d026c
 Fast-forward
@@ -876,11 +876,11 @@ VCS is not Git.</li>
 </ul>
 <p>So let&rsquo;s restore things to how they were at main:</p>
 <pre tabindex="0"><code>&gt; git reset --hard HEAD
-HEAD is now at 31d026c Merge branch 'lists'
+HEAD is now at 31d026c Merge branch &#39;lists&#39;
 </code></pre><p>That throws out our botched merge. Now let&rsquo;s go back to our branch and rebase
 it on <code>main</code>:</p>
 <pre tabindex="0"><code>&gt; git checkout hashtags
-Switched to branch 'hashtags'
+Switched to branch &#39;hashtags&#39;
 &gt; git rebase main
 First, rewinding head to replay your work on top of it...
 Applying: Add hashtags table.
@@ -891,12 +891,12 @@ Auto-merging sqitch.plan
 CONFLICT (content): Merge conflict in sqitch.plan
 error: Failed to merge in the changes.
 Patch failed at 0001 Add hashtags table.
-Use 'git am --show-current-patch' to see the failed patch
+Use &#39;git am --show-current-patch&#39; to see the failed patch
 
 Resolve all conflicts manually, mark them as resolved with
-&quot;git add/rm &lt;conflicted_files&gt;&quot;, then run &quot;git rebase --continue&quot;.
-You can instead skip this commit: run &quot;git rebase --skip&quot;.
-To abort and get back to the state before &quot;git rebase&quot;, run &quot;git rebase --abort&quot;.
+&#34;git add/rm &lt;conflicted_files&gt;&#34;, then run &#34;git rebase --continue&#34;.
+You can instead skip this commit: run &#34;git rebase --skip&#34;.
+To abort and get back to the state before &#34;git rebase&#34;, run &#34;git rebase --abort&#34;.
 </code></pre><p>Oy, that&rsquo;s kind of a pain. It seems like no matter what we do, we&rsquo;ll need to
 resolve conflicts in that file. Except in Git. Fortunately for us, we can tell
 Git to resolve conflicts in <code>sqitch.plan</code> differently. Because we only ever
@@ -961,16 +961,16 @@ command. Handy, right? It correctly reverted our changes, and then deployed
 them all again in the proper order. So let&rsquo;s commit <code>.gitattributes</code>; seems
 worthwhile to keep that change:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add `.gitattributes` with union merge for `sqitch.plan`.'
+&gt; git commit -m &#39;Add `.gitattributes` with union merge for `sqitch.plan`.&#39;
 [hashtags 86596a9] Add `.gitattributes` with union merge for `sqitch.plan`.
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 .gitattributes
 </code></pre><h3 id="merges-mastered">Merges Mastered</h3>
 <p>And now, finally, we can merge into <code>main</code>:</p>
 <pre tabindex="0"><code>&gt; git checkout main
-Switched to branch 'main'
-&gt; git merge --no-ff hashtags -m &quot;Merge branch 'hashtags'&quot;
-Merge made by the 'recursive' strategy.
+Switched to branch &#39;main&#39;
+&gt; git merge --no-ff hashtags -m &#34;Merge branch &#39;hashtags&#39;&#34;
+Merge made by the &#39;recursive&#39; strategy.
  .gitattributes      | 1 +
  deploy/hashtags.sql | 9 ++++++++++
  revert/hashtags.sql | 4 ++++
@@ -998,12 +998,12 @@ hashtags [flips] 2018-07-27T15:51:16Z Marge N. O’Vera &lt;marge@example.com&gt
 </code></pre><p>Much much better, a nice clean main now. And because it is now identical to
 the &ldquo;hashtags&rdquo; branch, we can just carry on. Go ahead and tag it, bundle, and
 release:</p>
-<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev2 -n 'Tag v1.0.0-dev2.'
-Tagged &quot;hashtags&quot; with @v1.0.0-dev2
-&gt; git commit -am 'Tag the database with v1.0.0-dev2.'
+<pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev2 -n &#39;Tag v1.0.0-dev2.&#39;
+Tagged &#34;hashtags&#34; with @v1.0.0-dev2
+&gt; git commit -am &#39;Tag the database with v1.0.0-dev2.&#39;
 [main 1c67e0d] Tag the database with v1.0.0-dev2.
  1 files changed, 1 insertion(+)
-&gt; git tag v1.0.0-dev2 -am 'Tag v1.0.0-dev2'
+&gt; git tag v1.0.0-dev2 -am &#39;Tag v1.0.0-dev2&#39;
 &gt; sqitch bundle --dest-dir flipr-1.0.0-dev2
 Bundling into flipr-1.0.0-dev2
 Writing config
@@ -1048,8 +1048,8 @@ tagged anyway, right? Well we have, with <code>@v1.0.0-dev2</code> added in the 
 section. With that, we can let Sqitch do most of the hard work for us, thanks
 to the <a href="/docs/manual/sqitch-rework"><code>rework</code></a> command, which is similar to
 <a href="/docs/manual/sqitch-add"><code>add</code></a>:</p>
-<pre tabindex="0"><code>&gt; sqitch rework userflips -n 'Adds userflips.twitter.'
-Added &quot;userflips [userflips@v1.0.0-dev2]&quot; to sqitch.plan.
+<pre tabindex="0"><code>&gt; sqitch rework userflips -n &#39;Adds userflips.twitter.&#39;
+Added &#34;userflips [userflips@v1.0.0-dev2]&#34; to sqitch.plan.
 Modify these files as appropriate:
   * deploy/userflips.sql
   * revert/userflips.sql
@@ -1059,23 +1059,23 @@ point of fact, it has copied the files to stand in for the previous instance
 of the <code>userflips</code> change, which we can see via <code>git status</code>:</p>
 <pre tabindex="0"><code>&gt; git status
 On branch main
-Your branch is up to date with 'origin/main'.
+Your branch is up to date with &#39;origin/main&#39;.
 
 Changes not staged for commit:
-  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
-  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+  (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
+  (use &#34;git checkout -- &lt;file&gt;...&#34; to discard changes in working directory)
 
   modified:   revert/userflips.sql
   modified:   sqitch.plan
 
 Untracked files:
-  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+  (use &#34;git add &lt;file&gt;...&#34; to include in what will be committed)
 
   deploy/userflips@v1.0.0-dev2.sql
   revert/userflips@v1.0.0-dev2.sql
   verify/userflips@v1.0.0-dev2.sql
 
-no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+no changes added to commit (use &#34;git add&#34; and/or &#34;git commit -a&#34;)
 </code></pre><p>The &ldquo;Untracked files&rdquo; part of the output is the first thing to notice. They&rsquo;re
 all named <code>userflips@v1.0.0-dev2.sql</code>. What that means is: &ldquo;the <code>userflips</code>
 change as it was implemented as of the <code>@v1.0.0-dev2</code> tag.&rdquo; These are copies
@@ -1102,30 +1102,30 @@ no duplicates or errors.</p>
 <p>As a result, there is no need to explicitly add changes. So go ahead. Modify
 the script to add the <code>twitter</code> column to the view. Make this change to
 <code>deploy/userflips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#75715e">@@ -5,6 +5,6 @@
-</span><span style="color:#75715e"></span>
-USE WAREHOUSE &amp;warehouse;
-CREATE OR REPLACE VIEW flipr.userflips AS
-<span style="color:#f92672">-SELECT f.id, u.nickname, u.fullname, f.body, f.timestamp
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT SELECT f.id, u.nickname, u.fullname, u.twitter, f.body, f.timestamp
-</span><span style="color:#a6e22e"></span>  FROM flipr.users u
-  JOIN flipr.flips f ON u.nickname = f.nickname;
-</code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>twitter</code> column.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -5,6 +5,6 @@
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>USE WAREHOUSE &amp;warehouse;
+</span></span><span style="display:flex;"><span>CREATE OR REPLACE VIEW flipr.userflips AS
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT f.id, u.nickname, u.fullname, f.body, f.timestamp
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT SELECT f.id, u.nickname, u.fullname, u.twitter, f.body, f.timestamp
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>  FROM flipr.users u
+</span></span><span style="display:flex;"><span>  JOIN flipr.flips f ON u.nickname = f.nickname;
+</span></span></code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>twitter</code> column.
 Here&rsquo;s the diff:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#75715e">@@ -1,6 +1,6 @@
-</span><span style="color:#75715e"></span> -- Verify flipr:userflips on snowflake
-
-<span style="color:#f92672">-SELECT id, nickname, fullname, body, timestamp
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT id, nickname, fullname, twitter, body, timestamp
-</span><span style="color:#a6e22e"></span>   FROM flipr.userflips
-  WHERE FALSE;
-</code></pre></div><p>Now try a deployment:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,6 @@
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- Verify flipr:userflips on snowflake
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT id, nickname, fullname, body, timestamp
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT id, nickname, fullname, twitter, body, timestamp
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>   FROM flipr.userflips
+</span></span><span style="display:flex;"><span>  WHERE FALSE;
+</span></span></code></pre></div><p>Now try a deployment:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + userflips .. ok
 </code></pre><p>So, are the changes deployed?</p>
 <pre tabindex="0"><code>&gt; snowsql --accountname example --username movera --dbname flipr -o friendly=false \
-  --query &quot;SHOW VIEWS LIKE 'userflips' IN flipr&quot;
+  --query &#34;SHOW VIEWS LIKE &#39;userflips&#39; IN flipr&#34;
 +-------------------------------+-----------+----------+---------------+-------------+--------+---------+---------------------------------------------------------------------+-----------+
 | created_on                    | name      | reserved | database_name | schema_name | owner  | comment | text                                                                | is_secure |
 |-------------------------------+-----------+----------+---------------+-------------+--------+---------+---------------------------------------------------------------------+-----------|
@@ -1141,7 +1141,7 @@ Reverting changes to hashtags @v1.0.0-dev2 from flipr_test
   - userflips .. ok
 </code></pre><p>Did that work, is the <code>twitter</code> column gone?</p>
 <pre tabindex="0"><code>&gt; snowsql --accountname example --username movera --dbname flipr -o friendly=false \
-  --query &quot;SHOW VIEWS LIKE 'userflips' IN flipr&quot;
+  --query &#34;SHOW VIEWS LIKE &#39;userflips&#39; IN flipr&#34;
 +-------------------------------+-----------+----------+---------------+-------------+--------+---------+----------------------------------------------------------+-----------+
 | created_on                    | name      | reserved | database_name | schema_name | owner  | comment | text                                                     | is_secure |
 |-------------------------------+-----------+----------+---------------+-------------+--------+---------+----------------------------------------------------------+-----------|
@@ -1155,7 +1155,7 @@ Reverting changes to hashtags @v1.0.0-dev2 from flipr_test
 in the new script files that include tags.</p>
 <p>Excellent. Let&rsquo;s go ahead and commit these changes:</p>
 <pre tabindex="0"><code>&gt; git add .
-&gt; git commit -m 'Add the twitter column to the userflips view.'
+&gt; git commit -m &#39;Add the twitter column to the userflips view.&#39;
 [main c004445] Add the twitter column to the userflips view.
  7 files changed, 31 insertions(+), 4 deletions(-)
  create mode 100644 deploy/userflips@v1.0.0-dev2.sql
