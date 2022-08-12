@@ -50,8 +50,7 @@
 				<li><a href='#add'>add</a></li>
 				<li><a href='#alter'>alter</a></li>
 				<li><a href='#remove-rm'>remove, rm</a></li>
-				<li><a href='#show'>show</a></li>
-				<li><a href='#update-config'>update-config</a></li></ul>
+				<li><a href='#show'>show</a></li></ul>
 				</li><li><a href='#configuration-variables'>Configuration Variables</a></li>
 				<li><a href='#sqitch'>Sqitch</a></li>
 			</ul>
@@ -68,7 +67,6 @@ sqitch engine add &lt;name&gt; [engine-options]
 sqitch engine alter &lt;name&gt; [engine-options]
 sqitch engine remove &lt;name&gt;
 sqitch engine show &lt;name&gt;
-sqitch engine update-config
 </code></pre><h2 id="description">Description</h2>
 <p>Manage the database engines you deploy to. The list of supported engines
 includes:</p>
@@ -262,9 +260,6 @@ and script directories will not be affected.</p>
 <p>Gives some information about the engine <code>&lt;name&gt;</code>, including the
 associated properties. Specify multiple engine names to see information for
 each.</p>
-<h3 id="update-config"><code>update-config</code></h3>
-<p>Update the configuration from a configuration file that predates the addition
-of the <code>engine</code> command to Sqitch.</p>
 <h2 id="configuration-variables">Configuration Variables</h2>
 <p>The engines are stored in the configuration file, but the command itself
 currently relies on no configuration variables.</p>

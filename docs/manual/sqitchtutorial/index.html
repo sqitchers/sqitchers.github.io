@@ -77,7 +77,9 @@ changes remain in sync and in the proper order.</p>
 <p>We&rsquo;ll start by creating a new project from scratch, a fictional antisocial
 networking site called Flipr. All examples use <a href="https://git-scm.com/">Git</a> as
 the VCS and <a href="https://www.postgresql.org/">PostgreSQL</a> as the storage engine,
-but for the most part you can substitute other VCSes and database engines in
+though <a href="https://www.yugabyte.com/yugabytedb/">YugabyteDB</a> and
+<a href="https://www.cockroachlabs.com/product/">CockroachDB</a> should work just as well.
+For the most part you can substitute other VCSes and database engines in
 the examples as appropriate.</p>
 <p>If you&rsquo;d like to manage an SQLite database, see <a href="/docs/manual/sqitchtutorial-sqlite">sqitchtutorial-sqlite</a>.</p>
 <p>If you&rsquo;d like to manage an Oracle database, see <a href="/docs/manual/sqitchtutorial-oracle">sqitchtutorial-oracle</a>.</p>
@@ -123,7 +125,11 @@ Created verify/
 engine, thanks to the <code>--engine pg</code> option, and saved it to the file.
 Furthermore, it wrote a commented-out <code>[engine &quot;pg&quot;]</code> section with all the
 available PostgreSQL engine-specific settings commented out and ready to be
-edited as appropriate.</p>
+edited as appropriate. This configuration will also fork for
+<a href="https://www.yugabyte.com/yugabytedb/">YugabyteDB</a> databases, too. For
+<a href="https://www.cockroachlabs.com/product/">CockroachDB</a>, use
+<code>--engine cockroach</code>, instead, and replace any instance of <code>pg</code> with
+<code>cockroach</code> in the rest of this document.</p>
 <p>By default, Sqitch will read <code>sqitch.conf</code> in the current directory for
 settings. But it will also read <code>~/.sqitch/sqitch.conf</code> for user-specific
 settings. Since PostgreSQL&rsquo;s <code>psql</code> client is not in the path on my system,
@@ -181,7 +187,15 @@ script, so we add this to <code>revert/appschema.sql</code>:</p>
 to deploy to:</p>
 <pre tabindex="0"><code>&gt; createdb flipr_test
 </code></pre><p>Now we tell Sqitch where to send the change via a
-<a href="https://github.com/libwww-perl/uri-db/">database URI</a>:</p>
+<a href="https://github.com/libwww-perl/uri-db/">database URI</a>. The examples here
+use <code>db:pg:flipr_test</code>, assuming a passwordless connection on a local
+socket. If you need to specify a username and hostname, it would be more
+like <code>db:pg://postgres@localhost/flipr_test</code>. For YugabyteDB, you might
+also need the port, as in <code>db:pg://postgres@localhost:5433/flipr_test</code>.
+For CockroachDB, use <code>db:cockroach:</code>, as in
+<code>db:cockroach://root@localhost:26257/flipr_test</code>.</p>
+<p>Sticking with simply <code>db:pg:flipr_test</code> for these examples, we use the
+<code>deploy</code> command to deploy the change:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy db:pg:flipr_test
 Adding registry tables to db:pg:flipr_test
 Deploying to db:pg:flipr_test
@@ -1021,10 +1035,6 @@ Auto-merging sqitch.plan
 %project=flipr
 %uri=https://github.com/sqitchers/sqitch-intro/
 
-%syntax-version=1.0.0
-%project=flipr
-%uri=https://github.com/sqitchers/sqitch-intro/
-
 appschema 2013-12-30T23:19:45Z Marge N. O’Vera &lt;marge@example.com&gt; # Add schema for all flipr objects.
 users [appschema] 2013-12-30T23:49:00Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates table to track our users.
 insert_user [users appschema] 2013-12-30T23:57:36Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates a function to insert a user.
@@ -1395,7 +1405,7 @@ is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 <h2 id="author">Author</h2>
 <p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
 <h2 id="license">License</h2>
-<p>Copyright (c) 2012-2021 iovation Inc., David E. Wheeler</p>
+<p>Copyright (c) 2012-2022 iovation Inc., David E. Wheeler</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal
 in the Software without restriction, including without limitation the rights

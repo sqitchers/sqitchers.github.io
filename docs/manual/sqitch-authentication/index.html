@@ -93,9 +93,9 @@ Any of these approaches may be used to specify a username, in this order:</p>
 follows:</p>
 <ul>
 <li>
-<p>PostgreSQL</p>
-<p>The Postgres engine uses the <code>PGUSER</code> environment variable, if set.
-Otherwise, it uses the system username.</p>
+<p>PostgreSQL, YugabyteDB, CockroachDB</p>
+<p>The Postgres, Yugabyte, and Cockroach engines use the <code>PGUSER</code> environment
+variable, if set. Otherwise, it uses the system username.</p>
 </li>
 <li>
 <p>MySQL</p>
@@ -246,8 +246,8 @@ format is specified by the database vendor, and not all database servers offer
 the feature. Here&rsquo;s how the database engines supported by Sqitch shake out:</p>
 <ul>
 <li>
-<p>PostgreSQL</p>
-<p>PostgreSQL will use a
+<p>PostgreSQL, YugabyteDB, CockroachDB</p>
+<p>PostgreSQL, YugabyteDB, and CockroachDB will use a
 <a href="https://www.postgresql.org/docs/current/static/libpq-pgpass.html"><code>.pgpass</code> file</a> in the
 user&rsquo;s home directory to or referenced by the <code>$PGPASSFILE</code> environment
 variable. This file must limit access only to the current user (<code>0600</code>) and
@@ -355,7 +355,7 @@ Some database engines support their own password environment variables, which
 you may wish to use instead. However, their behaviors may not be consistent:</p>
 <ul>
 <li>
-<p>PostgreSQL</p>
+<p>PostgreSQL, YugabyteDB, CockroachDB</p>
 <p><code>$PGPASSWORD</code></p>
 </li>
 <li>

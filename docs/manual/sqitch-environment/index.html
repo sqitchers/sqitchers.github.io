@@ -46,7 +46,7 @@
 				<li><a href='#description'>Description</a><ul>
 				<li><a href='#sqitch-environment'>Sqitch Environment</a></li>
 				<li><a href='#engine-environments'>Engine Environments</a><ul>
-				<li><a href='#postgresql'>PostgreSQL</a></li>
+				<li><a href='#postgresql-yugabytedb-cockroachdb'>PostgreSQL, YugabyteDB, CockroachDB</a></li>
 				<li><a href='#sqlite'>SQLite</a></li>
 				<li><a href='#mysql'>MySQL</a></li>
 				<li><a href='#oracle'>Oracle</a></li>
@@ -163,7 +163,7 @@ to find and use one of the commonly used pager programs like <code>less</code> a
 support environment variables of their own. These are not comprehensive for
 all variables supported by a database engine, but document those supported by
 Sqitch&rsquo;s implementation for each engine.</p>
-<h4 id="postgresql">PostgreSQL</h4>
+<h4 id="postgresql-yugabytedb-cockroachdb">PostgreSQL, YugabyteDB, CockroachDB</h4>
 <p>All the usual
 <a href="https://www.postgresql.org/docs/current/static/libpq-envars.html">PostgreSQL environment variables</a>
 should be implicitly used. However, the following variables are explicitly
@@ -280,12 +280,12 @@ and the target URI password.</p>
 </li>
 <li>
 <p><code>VSQL_HOST</code></p>
-<p>The PostgreSQL server host to connect to. Superseded by the target URI host
+<p>The Vertica server host to connect to. Superseded by the target URI host
 name.</p>
 </li>
 <li>
 <p><code>VSQL_PORT</code></p>
-<p>The PostgreSQL server port to connect to. Superseded by the target URI port.</p>
+<p>The Vertica server port to connect to. Superseded by the target URI port.</p>
 </li>
 <li>
 <p><code>VSQL_DATABASE</code></p>
