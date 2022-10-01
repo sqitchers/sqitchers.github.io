@@ -44,7 +44,8 @@
 			<h3>Contents</h3>
 			<ul><li><a href='#name'>Name</a></li>
 				<li><a href='#description'>Description</a><ul>
-				<li><a href='#change-names'>Change Names</a></li></ul>
+				<li><a href='#change-names'>Change Names</a></li>
+				<li><a href='#tag-names'>Tag Names</a></li></ul>
 				</li><li><a href='#specifying-changes'>Specifying Changes</a></li>
 				<li><a href='#sqitch'>Sqitch</a></li>
 			</ul>
@@ -63,15 +64,16 @@ relevant change, though some, such as <a href="/docs/manual/sqitch-revert"><code
 <a href="/docs/manual/sqitch-log"><code>sqitch log</code></a>, search the database for the change.</p>
 <h3 id="change-names">Change Names</h3>
 <p>A change name, such as that passed to <a href="/docs/manual/sqitch-add"><code>sqitch add</code></a> and written
-to the plan file has a few limitations on the characters it may contain. The
-same limitations apply to tag names. The rules are:</p>
+to the plan file, has a few limitations on the characters it may contain. The
+rules are:</p>
 <ul>
 <li>Must be at least one character.</li>
 <li>Must contain no blank characters.</li>
 <li>The first character may not be punctuation.</li>
 <li>Last letter may not be punctuation.</li>
 <li>Must not end in &ldquo;~&rdquo;, &ldquo;^&rdquo;, &ldquo;/&rdquo;, &ldquo;=&rdquo;, or &ldquo;%&rdquo; followed by digits.</li>
-<li>All other characters may be any UTF-8 character other than &ldquo;:&rdquo;, &ldquo;@&rdquo;, and &ldquo;#&rdquo;.</li>
+<li>All other characters may be any UTF-8 character other than &ldquo;:&rdquo;, &ldquo;@&rdquo;, &ldquo;#&rdquo;,
+and &ldquo;\&rdquo;.</li>
 </ul>
 <p>Note that &ldquo;_&rdquo; (underscore) is never considered punctuation. Some examples of
 valid names:</p>
@@ -101,9 +103,18 @@ valid names:</p>
 <li><code>hi!</code></li>
 <li><code>foo@bar</code></li>
 <li><code>foo:bar</code></li>
+<li><code>foo\bar</code></li>
 <li><code>+foo</code></li>
 <li><code>-foo</code></li>
 <li><code>@foo</code></li>
+</ul>
+<h3 id="tag-names">Tag Names</h3>
+<p>A tag name, such as that passed to <a href="/docs/manual/sqitch-tag"><code>sqitch tag</code></a> and written
+to the plan file, adhere by the same rules as <a href="#change-names">&ldquo;Change Names&rdquo;</a> with one
+additional limitation: tags must not contain a slash character (&quot;/&quot;).
+Example valid change name but invalid tag name:</p>
+<ul>
+<li><code>foo/bar</code></li>
 </ul>
 <h2 id="specifying-changes">Specifying Changes</h2>
 <p>A change parameter names a change object. It uses what is called an extended
