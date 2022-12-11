@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.104.3" />
+	<meta name="generator" content="Hugo 0.107.0">
 </head>
 <body>
 	<header id=masthead>
@@ -42,6 +42,7 @@
 use <a href="http://yum.baseurl.org">Yum</a> to install dependencies, and then build Sqitch itself via <a href="https://cpanmin.us">cpanminus</a>.
 For example, to install Sqitch with support for <a href="https://postgresql.org/" title="PostgreSQL: The World's Most Advanced Open Source Relational Database">PostgreSQL</a>:</p>
 <pre><code>sudo yum install perl-devel perl-CPAN postgresql perl-DBD-Pg
+sudo yum group install &quot;Development Tools&quot;
 curl -L https://cpanmin.us | perl - --sudo App::cpanminus
 cpanm --quiet --notest App::Sqitch
 </code></pre>
