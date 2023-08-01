@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.107.0">
+	<meta name="generator" content="Hugo 0.111.3">
 </head>
 <body>
 	<header id=masthead>
@@ -71,7 +71,7 @@
 <h2 id="synopsis">Synopsis</h2>
 <pre tabindex="0"><code>sqitch *
 </code></pre><h2 id="description">Description</h2>
-<p>This tutorial explains how to create a sqitch-enabled MySQL project, use a VCS
+<p>This tutorial explains how to create a sqitch-enabled MySQL 5.7 project, use a VCS
 for deployment planning, and work with other developers to make sure changes
 remain in sync and in the proper order.</p>
 <p>We&rsquo;ll start by creating new project from scratch, a fictional antisocial
@@ -128,7 +128,7 @@ as appropriate.</p>
 <p>By default, Sqitch will read <code>sqitch.conf</code> in the current directory for
 settings. But it will also read <code>~/.sqitch/sqitch.conf</code> for user-specific
 settings. Since MySQL&rsquo;s
-<a href="https://dev.mysql.com/doc/refman/5.6/en/mysql.html"><code>mysql</code> client</a> is not
+<a href="https://dev.mysql.com/doc/refman/5.7/en/mysql.html"><code>mysql client</code></a> is not
 in the path on my system, let&rsquo;s go ahead an tell it where to find the client
 on our computer (don&rsquo;t bother if you&rsquo;re using the
 <a href="https://hub.docker.com/r/sqitch/sqitch/">Docker image</a> because it uses the
@@ -591,13 +591,13 @@ planned the change, and a note.</p>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> sqitch.checkit(<span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>), <span style="color:#e6db74">&#39;Procedure &#34;insert_user&#34; does not exist&#39;</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> mysql.proc
-</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> db <span style="color:#f92672">=</span> <span style="color:#66d9ef">database</span>()
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">specific_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;insert_user&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> information_schema.routines
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">routine_schema</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">database</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">routine_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;insert_user&#39;</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
 </span></span></code></pre></div><p>We simply take advantage of the fact that the new procedure should be listed
-in the <code>mysql.proc</code> table and throw an exception if it does not exist.</p>
+in the <code>information_schema.routines</code> table and throw an exception if it does not exist.</p>
 <p>And <code>revert/insert_user.sql</code> should look something like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:insert_user from mysql
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">BEGIN</span>;
@@ -616,7 +616,7 @@ in the <code>mysql.proc</code> table and throw an exception if it does not exist
 </span></span><span style="display:flex;"><span>    nickname VARCHAR(<span style="color:#ae81ff">512</span>),
 </span></span><span style="display:flex;"><span>    oldpass  VARCHAR(<span style="color:#ae81ff">512</span>),
 </span></span><span style="display:flex;"><span>    newpass  VARCHAR(<span style="color:#ae81ff">512</span>)
-</span></span><span style="display:flex;"><span>) <span style="color:#66d9ef">RETURNS</span> INTEGER <span style="color:#66d9ef">SQL</span> <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span>
+</span></span><span style="display:flex;"><span>) <span style="color:#66d9ef">RETURNS</span> INTEGER <span style="color:#66d9ef">DETERMINISTIC</span> <span style="color:#66d9ef">SQL</span> <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">UPDATE</span> users
 </span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">SET</span> password <span style="color:#f92672">=</span> md5(newpass)
@@ -634,9 +634,9 @@ in the <code>mysql.proc</code> table and throw an exception if it does not exist
 </span></span></code></pre></div><p>Use <code>checkit()</code> in <code>verify/change_pass.sql</code> again:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> sqitch.checkit(<span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>), <span style="color:#e6db74">&#39;Procedure &#34;change_pass&#34; does not exist&#39;</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> mysql.proc
-</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> db <span style="color:#f92672">=</span> <span style="color:#66d9ef">database</span>()
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">specific_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;change_pass&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> information_schema.routines
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">routine_schema</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">database</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">routine_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;change_pass&#39;</span>;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
 </span></span></code></pre></div><p>And of course, its <code>revert</code> script, <code>revert/change_pass.sql</code>, should look
 something like:</p>
@@ -651,13 +651,13 @@ Deploying changes to flipr_test
   + change_pass .. ok
 </code></pre><p>Do we have the functions? Of course we do, they were verified. Still, have a
 look:</p>
-<pre tabindex="0"><code>&gt; mysql -u root --execute &#34;SELECT name FROM mysql.proc WHERE db = &#39;flipr_test&#39;&#34;
-+-------------+
-| name        |
-+-------------+
-| change_pass |
-| insert_user |
-+-------------+
+<pre tabindex="0"><code>&gt; mysql -u root --execute &#34;SELECT routine_name FROM information_schema.routines WHERE routine_schema = &#39;flipr_test&#39;&#34;
++--------------+
+| routine_name |
++--------------+
+| change_pass  |
+| insert_user  |
++--------------+
 </code></pre><p>And what&rsquo;s the status?</p>
 <pre tabindex="0"><code>&gt; sqitch status
 # On database flipr_test
@@ -673,7 +673,7 @@ Nothing to deploy (up-to-date)
 Reverting changes to users from flipr_test
   - change_pass .. ok
   - insert_user .. ok
-&gt; mysql -u root --execute &#34;SELECT name FROM mysql.proc WHERE db = &#39;flipr_test&#39;&#34;
+&gt; mysql -u root --execute &#34;SELECT routine_name FROM information_schema.routines WHERE routine_schema = &#39;flipr_test&#39;&#34;
 </code></pre><p>Note the use of <code>@HEAD^^</code> to specify that the revert be to two changes prior
 the last deployed change. Looks good. Let&rsquo;s do the commit and re-deploy dance:</p>
 <pre tabindex="0"><code>&gt; git add .
@@ -869,7 +869,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">FUNCTION</span> insert_flip(
 </span></span><span style="display:flex;"><span>    nickname VARCHAR(<span style="color:#ae81ff">512</span>),
 </span></span><span style="display:flex;"><span>    body     VARCHAR(<span style="color:#ae81ff">180</span>)
-</span></span><span style="display:flex;"><span>) <span style="color:#66d9ef">RETURNS</span> BIGINT <span style="color:#66d9ef">SQL</span> <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span>
+</span></span><span style="display:flex;"><span>) <span style="color:#66d9ef">RETURNS</span> BIGINT <span style="color:#66d9ef">DETERMINISTIC</span> <span style="color:#66d9ef">SQL</span> <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> flips (nickname, body)
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">VALUES</span> (nickname, body);
@@ -893,7 +893,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">FUNCTION</span> delete_flip(
 </span></span><span style="display:flex;"><span>    flip_id BIGINT
-</span></span><span style="display:flex;"><span>) <span style="color:#66d9ef">RETURNS</span> INTEGER <span style="color:#66d9ef">SQL</span> <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span>
+</span></span><span style="display:flex;"><span>) <span style="color:#66d9ef">RETURNS</span> INTEGER <span style="color:#66d9ef">DETERMINISTIC</span> <span style="color:#66d9ef">SQL</span> <span style="color:#66d9ef">SECURITY</span> <span style="color:#66d9ef">DEFINER</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">DELETE</span> <span style="color:#66d9ef">FROM</span> flips <span style="color:#66d9ef">WHERE</span> id <span style="color:#f92672">=</span> flip_id;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">RETURN</span> <span style="color:#66d9ef">ROW_COUNT</span>();
@@ -911,9 +911,9 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> sqitch.checkit(<span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>), <span style="color:#e6db74">&#39;Function &#34;insert_flip&#34; does not exist&#39;</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> mysql.proc
-</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> db <span style="color:#f92672">=</span> <span style="color:#66d9ef">database</span>()
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">specific_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;insert_flip&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> information_schema.routines
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">routine_schema</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">database</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">routine_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;insert_flip&#39;</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
 </span></span></code></pre></div><p>And:</p>
@@ -922,9 +922,9 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> sqitch.checkit(<span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>), <span style="color:#e6db74">&#39;Function &#34;delete_flip&#34; does not exist&#39;</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> mysql.proc
-</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> db <span style="color:#f92672">=</span> <span style="color:#66d9ef">database</span>()
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">specific_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;delete_flip&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> information_schema.routines
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">routine_schema</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">database</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">routine_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;delete_flip&#39;</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
 </span></span></code></pre></div><p>The <code>revert</code> scripts are:</p>
@@ -1206,7 +1206,7 @@ user &ldquo;bar&rdquo; has the same password and thus be able to exploit the acc
 a great idea. So we need to modify the <code>insert_user()</code> and <code>change_pass()</code>
 functions to fix that. How?</p>
 <p>We can use MySQL&rsquo;s
-<a href="https://dev.mysql.com/doc/refman/5.5/en/encryption-functions.html#function_encrypt"><code>ENCRYPT()</code></a>
+<a href="https://dev.mysql.com/doc/refman/5.7/en/encryption-functions.html#function_encrypt"><code>ENCRYPT()</code></a>
 function to encrypt passwords with a salt, so that they&rsquo;re all unique. But how
 to deploy the changes to <code>insert_user()</code> and <code>change_pass()</code>?</p>
 <p>Normally, modifying functions in database changes is a
@@ -1329,7 +1329,7 @@ Modify these files as appropriate:
 </span></span><span style="display:flex;"><span>     nickname VARCHAR(512),
 </span></span><span style="display:flex;"><span>     oldpass  VARCHAR(512),
 </span></span><span style="display:flex;"><span><span style="color:#75715e">@@ -13,9 +14,9 @@ CREATE FUNCTION change_pass(
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> ) RETURNS INTEGER SQL SECURITY DEFINER
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> ) RETURNS INTEGER DETERMINISTIC SQL SECURITY DEFINER
 </span></span><span style="display:flex;"><span> BEGIN
 </span></span><span style="display:flex;"><span>     UPDATE users
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-       SET password = md5(newpass)
@@ -1391,17 +1391,17 @@ in the new script files that include tags.</p>
 <p>But what about the verify script? How can we verify that the functions have
 been modified to use <code>ENCRYPT()</code>? I think the simplest thing to do is to
 examine the body of the function as returned by
-<a href="https://dev.mysql.com/doc/refman/5.6/en/routines-table.html"><code>INFORMATION_SCHEMA.ROUTINES</code></a>
+<a href="https://dev.mysql.com/doc/refman/5.7/en/information-schema-routines-table.html"><code>INFORMATION_SCHEMA.ROUTINES</code></a>
 So the <code>insert_user</code> verify script looks like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:insert_user on mysql
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> sqitch.checkit(<span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>), <span style="color:#e6db74">&#39;Procedure &#34;insert_user&#34; does not exist or is not up-to-date&#39;</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> mysql.proc
-</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> db <span style="color:#f92672">=</span> <span style="color:#66d9ef">database</span>()
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">specific_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;insert_user&#39;</span>
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> body_utf8 <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%ENCRYPT(md5(password), md5(FLOOR(RAND() * 0xFFFFFFFF))%&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> information_schema.routines
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">routine_schema</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">database</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">routine_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;insert_user&#39;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> routine_definition <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%ENCRYPT(md5(password), md5(FLOOR(RAND() * 0xFFFFFFFF))%&#39;</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
 </span></span></code></pre></div><p>And the <code>change_pass</code> verify script looks like this:</p>
@@ -1410,10 +1410,10 @@ So the <code>insert_user</code> verify script looks like this:</p>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> sqitch.checkit(<span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>), <span style="color:#e6db74">&#39;Procedure &#34;change_pass&#34; does not exist or is not up-to-date&#39;</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> mysql.proc
-</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> db <span style="color:#f92672">=</span> <span style="color:#66d9ef">database</span>()
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">specific_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;change_pass&#39;</span>
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> body_utf8 <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%ENCRYPT(md5(oldpass), password)%&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> information_schema.routines
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">routine_schema</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">database</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">routine_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;change_pass&#39;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> routine_definition <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%ENCRYPT(md5(oldpass), password)%&#39;</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
 </span></span></code></pre></div><p>Make sure these pass by re-deploying:</p>
@@ -1448,7 +1448,7 @@ is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 <h2 id="author">Author</h2>
 <p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
 <h2 id="license">License</h2>
-<p>Copyright (c) 2012-2022 iovation Inc., David E. Wheeler</p>
+<p>Copyright (c) 2012-2023 iovation Inc., David E. Wheeler</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal
 in the Software without restriction, including without limitation the rights

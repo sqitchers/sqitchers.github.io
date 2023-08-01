@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.107.0">
+	<meta name="generator" content="Hugo 0.111.3">
 </head>
 <body>
 	<header id=masthead>
@@ -362,6 +362,14 @@ executing the revert. The <code>rebase.no_prompt</code> variable takes precedenc
 executing the revert should be &ldquo;yes&rdquo; or &ldquo;no&rdquo;. The <code>rebase.prompt_accept</code>
 variable takes precedence over <code>revert.prompt_accept</code>, and both default to
 true, meaning to accept the revert by default.</p>
+</li>
+<li>
+<p><code>[rebase.strict]</code></p>
+</li>
+<li>
+<p><code>[revert.strict]</code></p>
+<p>A boolean value that, when true, disables the <code>revert</code> command. The
+<code>revert.strict</code> variable takes precedence over <code>revert.strict</code>.</p>
 </li>
 </ul>
 <h2 id="sqitch">Sqitch</h2>
