@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.111.3">
+	<meta name="generator" content="Hugo 0.122.0">
 </head>
 <body>
 	<header id=masthead>
@@ -85,7 +85,21 @@ db:engine:[//[user[:password]@][host][:port]/][dbname][?params][#fragment]
 <li><code>db:mysql://db.example.com/</code></li>
 <li><code>db:firebird://localhost//tmp/test.fdb</code></li>
 </ul>
-<p>See the <a href="https://github.com/libwww-perl/uri-db">DB URI Draft</a> for details.</p>
+<p>Note that, as with any URI or URL, special characters must be
+<a href="https://en.wikipedia.org/wiki/URL_encoding">URL encoded</a>. For example, when
+a username contains a reserved character, such as the <code>|</code> in <code>ro|michelle</code>,
+it must be percent-encoded as <code>%7c</code>:</p>
+<pre tabindex="0"><code>db:pg://ro%7Cmichelle@examle.org/inventory
+</code></pre><p>The rules are even more strict for query parameters, as often used by for
+ODBC connections. For example, when using a
+<a href="https://docs.snowflake.com/en/sql-reference/identifiers-syntax#double-quoted-identifiers">Snowflake identifier</a>
+with special characters, such as a warehouse name with a <code>.</code>, such as
+<code>sqitch.dev</code>, the identifier must be double-quoted &mdash; and double quote are
+reserved characters in URIs, so must be encoded as <code>%22</code>.</p>
+<pre tabindex="0"><code>db:snowflake://example/flipr?Driver=Snowflake;warehouse=%22sqitch.dev%22
+</code></pre><p>See <a href="https://en.wikipedia.org/wiki/URL_encoding">URL encoding</a> for details.
+and the <a href="https://github.com/libwww-perl/uri-db">DB URI Draft</a> for in-depth
+information on database URIs in general.</p>
 </li>
 <li>
 <p><code>registry</code></p>

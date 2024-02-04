@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.111.3">
+	<meta name="generator" content="Hugo 0.122.0">
 </head>
 <body>
 	<header id=masthead>
@@ -200,7 +200,10 @@ warehouse <code>sqitch</code>, and an ODBC driver named <code>Snowflake</code> (
 <a href="#connection-configuration">&ldquo;Connection Configuration&rdquo;</a> for details). The URI would be structured like
 this:</p>
 <pre tabindex="0"><code>db:snowflake://movera@example/flipr?Driver=Snowflake;warehouse=sqitch
-</code></pre><p>Note that Sqitch requires a <code>warehouse</code> parameter in order to record its work
+</code></pre><p>A few notes on the URL format:</p>
+<ul>
+<li>
+<p>Sqitch requires a <code>warehouse</code> parameter in order to record its work
 in the registry. The default warehouse is named <code>sqitch</code>, so you can omit it
 from the URI if that&rsquo;s the warehouse you want Sqitch to use (we&rsquo;ll omit it for
 the remainder of this tutorial). Otherwise, specify it in the URI. Snowflake
@@ -208,7 +211,21 @@ also requires a password, which could also be included in the URI, but it&rsquo;
 best to put it in the <code>connections</code> section of the
 <a href="https://docs.snowflake.com/en/user-guide/snowsql-start.html#configuring-default-connection-settings"><code>.snowsql/config</code> file</a>.
 See <a href="/docs/manual/sqitch-authentication">sqitch-authentication</a> for details.</p>
-<p>We just tell Sqitch to use that URI to deploy the change:</p>
+</li>
+<li>
+<p>This is a proper URI, where special characters must be
+<a href="https://en.wikipedia.org/wiki/URL_encoding">URL encoded</a>. For example, when
+a warehouse name or role requires
+<a href="https://docs.snowflake.com/en/sql-reference/identifiers-syntax#double-quoted-identifiers">identifier quoting</a>,
+use <code>%22</code> for the quotation marks:</p>
+<pre tabindex="0"><code>db:snowflake://movera@example/flipr?Driver=Snowflake;warehouse=%22sqitch.dev%22&amp;role=%22app.sqitch%22
+</code></pre><p>Of course that can be tricky to use on the command line, so there are also
+<a href="/docs/manual/sqitch-environment#Snowflake">environment variables</a> that can simplify things:</p>
+<pre tabindex="0"><code>export SNOWSQL_ROLE=&#39;&#34;app.sqitch&#34;&#39;
+export SNOWSQL_WAREHOUSE=&#39;&#34;sqitch.dev&#34;&#39;
+</code></pre></li>
+</ul>
+<p>Back to the change. We just tell Sqitch to use that URI to deploy it:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy &#39;db:snowflake://movera@example/flipr?Driver=Snowflake&#39;
 Adding registry tables to db:snowflake://movera@example/flipr?Driver=Snowflake
 Deploying changes to db:snowflake://movera@example/flipr?Driver=Snowflake
@@ -1167,7 +1184,7 @@ is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 <h2 id="author">Author</h2>
 <p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
 <h2 id="license">License</h2>
-<p>Copyright (c) 2012-2023 iovation Inc., David E. Wheeler</p>
+<p>Copyright (c) 2012-2024 iovation Inc., David E. Wheeler</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal
 in the Software without restriction, including without limitation the rights

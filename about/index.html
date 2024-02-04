@@ -7,7 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>About Sqitch</title>
 	<meta name="description" content="Sqitch is a database change management application. What makes it different from your typical migration-style approaches? A few things:
-No Opinions Sqitch is not tied to any framework, ORM, or platform. Rather, it is a standalone change management system with no opinions about your database engine, application framework, or development environment. Native scripting Changes are implemented as scripts native to your selected database engine. Writing a PostgreSQL application? Write SQL scripts for psql." />
+No Opinions Sqitch is not tied to any framework, ORM, or platform. Rather, it is a standalone change management system with no opinions about your database engine, application framework, or development environment.
+Native scripting Changes are implemented as scripts native to your selected database engine. Writing a PostgreSQL application? Write SQL scripts for psql." />
 	<link rel="stylesheet" href="/css/screen.css" />
 	<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch.png" />
 	<link rel="icon" type="image/png" sizes="32x32" href="/img/icon-32.png" />
@@ -16,7 +17,7 @@ No Opinions Sqitch is not tied to any framework, ORM, or platform. Rather, it is
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.111.3">
+	<meta name="generator" content="Hugo 0.122.0">
 </head>
 <body>
 	<header id=masthead>
@@ -44,33 +45,33 @@ your typical migration-style approaches? A few things:</p>
 <h2 id="no-opinions">No Opinions</h2>
 <p>Sqitch is not tied to any framework, ORM, or platform. Rather, it is a
 standalone change management system with no opinions about your database engine,
-application framework, or development environment.
+application framework, or development environment.</p>
 </section>
 <section class="cli">
 <h2 id="native-scripting">Native scripting</h2>
 <p>Changes are implemented as scripts native to your selected database engine.
 Writing a <a href="https://postgresql.org/" title="PostgreSQL: The World's Most Advanced Open Source Relational Database">PostgreSQL</a> application? Write SQL scripts for <code>psql</code>. Writing a
-<a href="https://mysql.com/" title="MySQL: The world's most popular open source database">MySQL</a>-backed app? Write SQL scripts for <code>mysql</code>.
+<a href="https://mysql.com/" title="MySQL: The world's most popular open source database">MySQL</a>-backed app? Write SQL scripts for <code>mysql</code>.</p>
 </section>
 <section class="depend">
 <h2 id="dependency-resolution">Dependency resolution</h2>
 <p>Database changes may declare dependencies on other changes &mdash; even changes from
 other Sqitch projects. This ensures proper order of execution, even when you&rsquo;ve
-committed changes to your VCS out-of-order.
+committed changes to your VCS out-of-order.</p>
 </section>
 <section class="hash">
 <h2 id="deployment-integrity">Deployment integrity</h2>
 <p>Sqitch manages changes and dependencies via a plan file, employing a <a href="https://en.wikipedia.org/wiki/Merkle_tree" title="Wikipedia: “Merkle tree”">Merkle
 tree</a> pattern similar to <a href="https://stackoverflow.com/a/18589734/" title="Stack Overflow: “What is the mathematical structure that represents a Git repo”">Git</a> and <a href="https://medium.com/byzantine-studio/blockchain-fundamentals-what-is-a-merkle-tree-d44c529391d7" title="Medium: “Blockchain Fundamentals #1: What is a Merkle Tree?”">Blockchain</a> to ensure deployment integrity.
 As such, there is no need to number your changes, although you can if you want.
-Sqitch doesn&rsquo;t much care how you name your changes.
+Sqitch doesn&rsquo;t much care how you name your changes.</p>
 </section>
 <section class="dev">
 <h2 id="iterative-development">Iterative development</h2>
 <p>Up until you <a href="/docs/manual/sqitch-tag/">tag</a> and <a href="/docs/manual/sqitch-bundle/" title="Sqitch commands: bundle">release</a> your application, you
 can modify your change deployment scripts as often as you like. They&rsquo;re not
 locked in just because they&rsquo;ve been committed to your VCS. This allows you to
-take an iterative or test-driven approach to developing your database schema.
+take an iterative or test-driven approach to developing your database schema.</p>
 </section>
 <hr>
 <p>Ready to give Sqitch a try? <a href="/download/">Download</a> it now or read <a href="/docs/">the docs</a>.</p>
