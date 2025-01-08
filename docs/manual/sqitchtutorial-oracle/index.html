@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.124.1">
+	<meta name="generator" content="Hugo 0.140.2">
 </head>
 <body>
 	<header id=masthead>
@@ -292,9 +292,9 @@ using the Docker or VM environments described above, you might need to
 <a href="https://docs.oracle.com/cd/B28359_01/server.111/b28310/create001.htm#ADMIN11068">create the database</a>
 and configure the SID. Assuming you have an Oracle SID named <code>FLIPR_TEST</code> set
 up in your <code>`TNSNAMES.ORA`|https://www.orafaq.com/wiki/Tnsnames.ora</code> file,
-tell Sqitch where to send the change via a
+tell Sqitch where to send the change to a target specified as a
 <a href="https://github.com/libwww-perl/uri-db/">database URI</a>, such as</p>
-<pre tabindex="0"><code>export SQITCH_URI=db:oracle://$username:$password@/flipr_test
+<pre tabindex="0"><code>export SQITCH_TARGET=db:oracle://$username:$password@/flipr_test
 </code></pre><p>With that URI set up, we can deploy:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy db:oracle://scott:tiger@/flipr_test
 Adding registry tables to db:oracle://scott:@/flipr_test
@@ -1650,7 +1650,7 @@ is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 <h2 id="author">Author</h2>
 <p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
 <h2 id="license">License</h2>
-<p>Copyright (c) 2012-2024 iovation Inc., David E. Wheeler</p>
+<p>Copyright (c) 2012-2025 David E. Wheeler, 2012-2021 iovation Inc.</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal
 in the Software without restriction, including without limitation the rights
