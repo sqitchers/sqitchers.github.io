@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.140.2">
+	<meta name="generator" content="Hugo 0.145.0">
 </head>
 <body>
 	<header id=masthead>
@@ -1008,8 +1008,7 @@ docs</a>:</p>
 <p>Run 3-way file level merge for text files, but take lines from both versions,
 instead of leaving conflict markers. This tends to leave the added lines in
 the resulting file in random order and the user should verify the result. Do
-not use this if you do not understand the implications.</p>
-</blockquote>
+not use this if you do not understand the implications.</p></blockquote>
 <p>This has the effect of appending lines from all the merging files, which is
 exactly what we need. So let&rsquo;s give it a try. First, back out the botched
 rebase:</p>
@@ -1182,8 +1181,7 @@ with a Sqitch change, alas. You&rsquo;ll have to install it manually, like so:</
 <pre tabindex="0"><code>psql -d flipr_test -f /path/to/pgsql/share/contrib/pgcrypto.sql
 </code></pre><p>Don&rsquo;t forget to do this with your staging and production databases, too. Or
 consider upgrading to PostgreSQL 9.1 or higher; the SQL-level extension
-support is amazingly useful.</p>
-</blockquote>
+support is amazingly useful.</p></blockquote>
 <p>We&rsquo;re going to use the <code>crypt()</code> and <code>gen_salt()</code> functions, so in the
 <code>verify</code> script, let&rsquo;s make sure that the extension exists <em>and</em> that both
 those functions exist:</p>
