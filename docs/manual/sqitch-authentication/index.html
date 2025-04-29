@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.145.0">
+	<meta name="generator" content="Hugo 0.147.0">
 </head>
 <body>
 	<header id=masthead>
@@ -220,14 +220,22 @@ query string, e.g.,</p>
 <p>Snowflake</p>
 <p>Snowflake does not support password-less authentication, but does support
 key-pair authentication. Follow
-<a href="https://docs.snowflake.com/en/user-guide/snowsql-start.html#using-key-pair-authentication">the instructions</a>
-to create a key pair, then set the following variables in the <code>~/.snowsql/config</code>
-file:</p>
-<pre tabindex="0"><code>authenticator = SNOWFLAKE_JWT
-private_key_path = &#34;path/to/privatekey.p8&#34;
+<a href="https://docs.snowflake.com/en/user-guide/key-pair-auth">the instructions</a>
+to create a key pair, then set the <code>private_key_path</code> in the <code>~/.snowsql/config</code>
+to point to the private key file:</p>
+<pre tabindex="0"><code>private_key_path = &#34;&lt;path&gt;/rsa_key.p8&#34;
 </code></pre><p>To connect, set the <code>$SNOWSQL_PRIVATE_KEY_PASSPHRASE</code> environment variable to
-the passphrase for the private key, and add these parameters to the query part
-of your connection URI:</p>
+the passphrase for the private key, and add these parameters under the
+configuration for your DSN in <code>/etc/odbc.ini</code> or <code>~/.odbc.ini</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[sqitch]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">AUTHENTICATOR</span>     <span style="color:#f92672">=</span> <span style="color:#e6db74">SNOWFLAKE_JWT</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">UID</span>               <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;username&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">PRIV_KEY_FILE</span>     <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;path&gt;/rsa_key.p8</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">PRIV_KEY_FILE_PWD</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;password&gt;</span>
+</span></span></code></pre></div><p>Then connect using the named DSN via the <code>DSN</code> query parameter:</p>
+<pre tabindex="0"><code>db:snowflake://movera@example.snowflakecomputing.com/flipr?warehouse=compute_wh;DSN=sqitch
+</code></pre><p>Or add the ODBC parameters directly to the query part of your connection URI
+(although it&rsquo;s safer to put <code>priv_key_file_pwd</code> in <code>odbc.ini</code>):</p>
 <ul>
 <li><code>authenticator=SNOWFLAKE_JWT</code></li>
 <li><code>uid=$username</code></li>
@@ -236,7 +244,10 @@ of your connection URI:</p>
 </ul>
 <p>For example:</p>
 <pre tabindex="0"><code>db:snowflake://movera@example.snowflakecomputing.com/flipr?Driver=Snowflake;warehouse=sqitch;authenticator=SNOWFLAKE_JWT;uid=movera;priv_key_file=path/to/privatekey.p8;priv_key_file_pwd=s0up3rs3cre7
-</code></pre></li>
+</code></pre><p>Sadly, both the <code>SNOWSQL_PRIVATE_KEY_PASSPHRASE</code> environment variable and
+the <code>priv_key_file_pwd</code> ODBC parameter must be set, as Sqitch uses ODBC to
+maintain its registry and SnowSQL to execute change scripts.</p>
+</li>
 </ul>
 <h3 id="use-a-password-file">Use a Password File</h3>
 <p>If you must use password authentication with your database server, you may be
