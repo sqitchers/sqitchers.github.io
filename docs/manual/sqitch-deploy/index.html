@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.147.4">
+	<meta name="generator" content="Hugo 0.151.0">
 </head>
 <body>
 	<header id=masthead>
@@ -240,16 +240,13 @@ configuration values. Defaults to <code>$top_dir/sqitch.plan</code>.</p>
 <li>
 <p><code>[deploy.variables]</code></p>
 <p>A section defining database client variables. Useful if your database engine
-supports variables in scripts, such as PostgreSQL&rsquo;s
-<a href="https://www.postgresql.org/docs/current/static/app-psql.html#APP-PSQL-INTERPOLATION"><code>psql</code> variables</a>,
-Vertica&rsquo;s
-<a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/ConnectingToHPVertica/vsql/Variables.htm"><code>vsql</code> variables</a>
-MySQL&rsquo;s
-<a href="https://dev.mysql.com/doc/refman/5.6/en/user-variables.html">user variables</a>,
-SQL*Plus&rsquo;s
-<a href="https://docs.oracle.com/cd/B19306_01/server.102/b14357/ch12017.htm"><code>DEFINE</code> variables</a>,
-and Snowflake&rsquo;s
-<a href="https://docs.snowflake.com/en/user-guide/snowsql-use.html#using-variables">SnowSQL variables</a>.</p>
+supports variables in scripts, such as
+PostgreSQL&rsquo;s <a href="https://www.postgresql.org/docs/current/static/app-psql.html#APP-PSQL-INTERPOLATION"><code>psql</code> variables</a>,
+Vertica&rsquo;s <a href="https://docs.vertica.com/24.2.x/en/connecting-to/using-vsql/variables/"><code>vsql</code> variables</a>,
+MySQL&rsquo;s <a href="https://dev.mysql.com/doc/refman/5.6/en/user-variables.html">user variables</a>,
+SQL*Plus&rsquo;s <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14357/ch12017.htm"><code>DEFINE</code> variables</a>,
+Snowflake&rsquo;s <a href="https://docs.snowflake.com/en/user-guide/snowsql-use.html#using-variables">SnowSQL variables</a>,
+and ClickHouse&rsquo;s <a href="https://clickhouse.com/docs/interfaces/cli#cli-queries-with-parameters">queries with parameters</a>.</p>
 <p>May be overridden by <code>--set</code> or target and engine configuration. Variables
 are merged in the following priority order:</p>
 <ul>

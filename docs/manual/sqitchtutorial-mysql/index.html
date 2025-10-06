@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.147.4">
+	<meta name="generator" content="Hugo 0.151.0">
 </head>
 <body>
 	<header id=masthead>
@@ -78,13 +78,18 @@ remain in sync and in the proper order.</p>
 <p>We&rsquo;ll start by creating new project from scratch, a fictional antisocial
 networking site called Flipr. All examples use <a href="https://git-scm.com/">Git</a> as
 the VCS and <a href="https://dev.mysql.com/">MySQL</a> as the storage engine.</p>
-<p>If you&rsquo;d like to manage a PostgreSQL database, see <a href="/docs/manual/sqitchtutorial">sqitchtutorial</a>.</p>
-<p>If you&rsquo;d like to manage an SQLite database, see <a href="/docs/manual/sqitchtutorial-sqlite">sqitchtutorial-sqlite</a>.</p>
-<p>If you&rsquo;d like to manage an Oracle database, see <a href="/docs/manual/sqitchtutorial-oracle">sqitchtutorial-oracle</a>.</p>
-<p>If you&rsquo;d like to manage a Firebird database, see <a href="/docs/manual/sqitchtutorial-firebird">sqitchtutorial-firebird</a>.</p>
-<p>If you&rsquo;d like to manage a Vertica database, see <a href="/docs/manual/sqitchtutorial-vertica">sqitchtutorial-vertica</a>.</p>
-<p>If you&rsquo;d like to manage an Exasol database, see <a href="/docs/manual/sqitchtutorial-exasol">sqitchtutorial-exasol</a>.</p>
-<p>If you&rsquo;d like to manage a Snowflake database, see <a href="/docs/manual/sqitchtutorial-snowflake">sqitchtutorial-snowflake</a>.</p>
+<p>If you&rsquo;d like to manage a database with a different database engine, see one
+of the following other tutorials:</p>
+<ul>
+<li><a href="/docs/manual/sqitchtutorial">PostgreSQL, Yugabyte, and CockroachDB Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-sqlite">SQLite Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-oracle">Oracle Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-firebird">Firebird Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-vertica">Vertica Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-exasol">Exasol Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-snowflake">Snowflake Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-clickhouse">ClickHouse Tutorial</a></li>
+</ul>
 <h2 id="starting-a-new-project">Starting a New Project</h2>
 <p>Usually the first thing to do when starting a new project is to create a
 source code repository. So let&rsquo;s do that with Git:</p>
@@ -239,7 +244,7 @@ every deploy?</p>
 did was it was supposed to. It should do so without regard to any data that
 might be in the database, and should throw an error if the deploy was not
 successful. The simplest way to see if a user exists is to check the
-<code>mysql.user</code> table.However, throwing an error in the event that the user
+<code>mysql.user</code> table. However, throwing an error in the event that the user
 does not exist is tricky in MySQL. To simplify things, on MySQL 5.5.0 and
 higher, Sqitch provides a custom function you can use in your tests,
 <code>checkit()</code>. It works kind of like a <code>CHECK</code> constraint in other databases:

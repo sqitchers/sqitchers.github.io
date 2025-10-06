@@ -5,8 +5,8 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="mobile-web-app-capable" content="yes" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Sqitch: sqitchtutorial-firebird Documentation</title>
-	<meta name="description" content="A tutorial introduction to Sqitch change management on Firebird" />
+	<title>Sqitch: sqitchtutorial-clickhouse Documentation</title>
+	<meta name="description" content="A tutorial introduction to Sqitch change management on ClickHouse" />
 	<link rel="stylesheet" href="/css/screen.css" />
 	<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch.png" />
 	<link rel="icon" type="image/png" sizes="32x32" href="/img/icon-32.png" />
@@ -34,7 +34,7 @@
 	</header>
 
 	<header id="title">
-		<h1>sqitchtutorial-firebird</h1>
+		<h1>sqitchtutorial-clickhouse</h1>
 	</header>
 	<main id="docs" class="page">
 		
@@ -45,8 +45,11 @@
 			<h3>Contents</h3>
 			<ul><li><a href='#name'>Name</a></li>
 				<li><a href='#synopsis'>Synopsis</a></li>
-				<li><a href='#description'>Description</a></li>
-				<li><a href='#starting-a-new-project'>Starting a New Project</a></li>
+				<li><a href='#description'>Description</a><ul>
+				<li><a href='#connection-configuration'>Connection Configuration</a><ul>
+				<li><a href='#ports'>Ports</a></li></ul>
+				</li></ul>
+				</li><li><a href='#starting-a-new-project'>Starting a New Project</a></li>
 				<li><a href='#our-first-change'>Our First Change</a><ul>
 				<li><a href='#trust-but-verify'>Trust, But Verify</a></li>
 				<li><a href='#status-revert-log-repeat'>Status, Revert, Log, Repeat</a></li></ul>
@@ -59,7 +62,7 @@
 				<li><a href='#merges-mastered'>Merges Mastered</a></li></ul>
 				</li><li><a href='#in-place-changes'>In Place Changes</a></li>
 				<li><a href='#more-to-come'>More to Come</a></li>
-				<li><a href='#authors'>Authors</a></li>
+				<li><a href='#author'>Author</a></li>
 				<li><a href='#license'>License</a></li>
 			</ul>
 		</nav>
@@ -67,16 +70,18 @@
 	<script src="/js/toc.js"></script>
 </aside>
 		<h2 id="name">Name</h2>
-<p>sqitchtutorial-firebird - A tutorial introduction to Sqitch change management on Firebird</p>
+<p>sqitchtutorial-clickhouse - A tutorial introduction to Sqitch change management on ClickHouse</p>
 <h2 id="synopsis">Synopsis</h2>
 <pre tabindex="0"><code>sqitch *
 </code></pre><h2 id="description">Description</h2>
-<p>This tutorial explains how to create a sqitch-enabled Firebird project, use a
+<p>This tutorial explains how to create a sqitch-enabled ClickHouse project, use a
 VCS for deployment planning, and work with other developers to make sure
 changes remain in sync and in the proper order.</p>
-<p>We&rsquo;ll start by creating new project from scratch, a fictional antisocial
+<p>We&rsquo;ll start by creating a new project from scratch, a fictional antisocial
 networking site called Flipr. All examples use <a href="https://git-scm.com/">Git</a> as
-the VCS and <a href="https://www.firebirdsql.org/">Firebird</a> as the storage engine.</p>
+the VCS and <a href="https://clickhouse.com/clickhouse">ClickHouse</a> as the storage
+engine, but for the most part you can substitute other VCSes and database
+engines in the examples as appropriate.</p>
 <p>If you&rsquo;d like to manage a database with a different database engine, see one
 of the following other tutorials:</p>
 <ul>
@@ -84,12 +89,44 @@ of the following other tutorials:</p>
 <li><a href="/docs/manual/sqitchtutorial-sqlite">SQLite Tutorial</a></li>
 <li><a href="/docs/manual/sqitchtutorial-oracle">Oracle Tutorial</a></li>
 <li><a href="/docs/manual/sqitchtutorial-mysql">MySQL and MariaDB Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-firebird">Firebird Tutorial</a></li>
 <li><a href="/docs/manual/sqitchtutorial-vertica">Vertica Tutorial</a></li>
 <li><a href="/docs/manual/sqitchtutorial-exasol">Exasol Tutorial</a></li>
 <li><a href="/docs/manual/sqitchtutorial-snowflake">Snowflake Tutorial</a></li>
 <li><a href="/docs/manual/sqitchtutorial-clickhouse">ClickHouse Tutorial</a></li>
 </ul>
-<h2 id="starting-a-new-project">Starting a New Project</h2>
+<h3 id="connection-configuration">Connection Configuration</h3>
+<p>Sqitch requires ClickHouse v25.8 or higher for its support for lightweight
+updates and deletes. If you&rsquo;ve upgraded an instance from an earlier version,
+be sure to <code>SET compatibility = '25.8'</code> or higher.</p>
+<p>Sqitch requires ODBC to connect to the ClickHouse database. As such, you&rsquo;ll
+need to make sure that the
+<a href="https://github.com/ClickHouse/clickhouse-odbc">ClickHouse ODBC driver</a>
+is installed and properly configured. At its simplest, on Unix-like systems,
+name the driver &ldquo;ClickHouse&rdquo; by adding this entry to <code>odbcinst.ini</code> (usually
+found in <code>/etc</code>, <code>/usr/etc</code>, or <code>/usr/local/etc</code>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[ClickHouse]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Description</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Unicode ODBC Driver for ClickHouse</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Driver</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/clickhouse/lib/libclickhouseodbcw.so</span>
+</span></span></code></pre></div><p>Note the use of the Unicode rather than the ANSI driver. Also, you might need
+to adjust the path depending on the version of the ODBC driver, and where you
+installed it. Consult the documentation for your ODBC driver manager (e.g.,
+<a href="https://www.unixodbc.org">UnixODBC</a> or <a href="https://www.iodbc.org">iODBC</a>) for
+details.</p>
+<p>With this configured, Sqitch target URIs can specify the driver name like so:</p>
+<pre tabindex="0"><code>db:clickhouse://user:pass@host:port/dbname?Driver=ClickHouse
+</code></pre><h4 id="ports">Ports</h4>
+<p>In addition to the ODBC connection Sqitch uses to maintain its registry
+tables, it depends on the
+<code>ClickHouse Client|https://clickhouse.com/docs/interfaces/cli</code> to run
+change scripts. As such, Sqitch requires on both the HTTP and Native
+<a href="https://clickhouse.com/docs/guides/sre/network-ports">ports</a> to connect.\
+The port provided as part of a URI will determines the HTTP port used
+by ODBC. Therefore, if your ClickHouse server uses a non-standard Native
+port (other than <code>9004</code> or <code>9440</code> for encrypted connections), you&rsquo;ll
+need to specify the native port via the <code>NativePort</code> query parameter:</p>
+<pre tabindex="0"><code>db:clickhouse://user:pass@host:port/dbname?Driver=ClickHouse?NativePort=9999
+</code></pre><h2 id="starting-a-new-project">Starting a New Project</h2>
 <p>Usually the first thing to do when starting a new project is to create a
 source code repository. So let&rsquo;s do that with Git:</p>
 <pre tabindex="0"><code>&gt; mkdir flipr
@@ -99,18 +136,18 @@ Initialized empty Git repository in /flipr/.git/
 &gt; touch README.md
 &gt; git add .
 &gt; git commit -am &#39;Initialize project, add README.&#39;
-[main (root-commit) 761ffcd] Initialize project, add README.
- 1 files changed, 39 insertions(+), 0 deletions(-)
+[main (root-commit) 046b8f5] Initialize project, add README.
+ 1 file changed, 38 insertions(+)
  create mode 100644 README.md
-</code></pre><p>If you&rsquo;re a Git user and want to follow along the history, the
-repository used in these examples is
-<a href="https://github.com/sqitchers/sqitch-firebird-intro">on GitHub</a>.</p>
+</code></pre><p>If you&rsquo;re a Git user and want to follow along the history, the repository
+used in these examples is
+<a href="https://github.com/sqitchers/sqitch-clickhouse-intro">on GitHub</a>.</p>
 <p>Now that we have a repository, let&rsquo;s get started with Sqitch. Every Sqitch
 project must have a name associated with it, and, optionally, a unique URI. We
 recommend including the URI, as it increases the uniqueness of object
 identifiers internally, and will prevent the deployment of a different project
 with the same name. So let&rsquo;s specify one when we initialize Sqitch:</p>
-<pre tabindex="0"><code>&gt; sqitch init flipr --uri https://github.com/sqitchers/sqitch-firebird-intro/ --engine firebird
+<pre tabindex="0"><code>&gt; sqitch init flipr --uri https://github.com/sqitchers/sqitch-clickhouse-intro/ --engine clickhouse
 Created sqitch.conf
 Created sqitch.plan
 Created deploy/
@@ -119,67 +156,56 @@ Created verify/
 </code></pre><p>Let&rsquo;s have a look at <code>sqitch.conf</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">firebird
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">clickhouse
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        # plan_file = sqitch.plan
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        # top_dir = .</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># [engine &#34;firebird&#34;]</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># target = db:firebird:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># [engine &#34;clickhouse&#34;]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># target = db:clickhouse:</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e"># registry = sqitch</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># client = isql-fb</span>
-</span></span></code></pre></div><p>Good, it picked up on the fact that we&rsquo;re creating changes for the Firebird
-engine, thanks to the <code>--engine firebird</code> option, and saved it to the
-file. Furthermore, it wrote a commented-out <code>[engine &quot;firebird&quot;]</code> section
-with all the available Firebird engine-specific settings commented out and
-ready to be edited as appropriate.</p>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># client = clickhouse-client</span>
+</span></span></code></pre></div><p>Good, it picked up on the fact that we&rsquo;re creating changes for the ClickHouse
+engine, thanks to the <code>--engine clickhouse</code> option, and saved it to the
+file. Furthermore, it wrote a commented-out <code>[engine &quot;clickhouse&quot;]</code> section
+with ClickHouse engine-specific settings commented out and ready to be edited
+as appropriate.</p>
 <p>By default, Sqitch will read <code>sqitch.conf</code> in the current directory for
 settings. But it will also read <code>~/.sqitch/sqitch.conf</code> for user-specific
-settings.</p>
-<p>The current implementation of the engine will try to find Firebird&rsquo;s
-<a href="https://www.firebirdsql.org/manual/isql-commands.html"><code>firebird</code> client</a>
-(implemented for GNU/Linux and Microsoft Windows).  This might fail,
-so we go ahead an tell it where to find the client on our computer,
-for example on GNU/Linux with the standard location of the Firebird
-installation the command is (don&rsquo;t bother if you&rsquo;re using the
+settings. Since ClickHouse&rsquo;s <code>clickhouse</code> client is not in the path on my
+system, let&rsquo;s go ahead an tell it where to find the client on our computer
+(don&rsquo;t bother if you&rsquo;re using the
 <a href="https://hub.docker.com/r/sqitch/sqitch/">Docker image</a> because it uses the
 client inside the container, not on your host machine):</p>
-<pre tabindex="0"><code>&gt; sqitch config --user engine.firebird.client /opt/firebird/bin/isql
-</code></pre><p>Note: On some GNU/Linux distributions the firebird client is renamed
-to <code>isql-fb</code>, for example in Debian and Fedora, or <code>fbsql</code> in
-Gentoo.</p>
-<p>And let&rsquo;s also tell it who we are, since this data will be used in all
+<pre tabindex="0"><code>&gt; sqitch config --user engine.clickhouse.client /opt/bin/clickhouse
+</code></pre><p>And let&rsquo;s also tell it who we are, since this data will be used in all
 of our projects:</p>
 <pre tabindex="0"><code>&gt; sqitch config --user user.name &#39;Marge N. O’Vera&#39;
 &gt; sqitch config --user user.email &#39;marge@example.com&#39;
-</code></pre><p>Have a look at <code>~/.sqitch/sqitch.conf</code> and you&rsquo;ll see something like
-this:</p>
+</code></pre><p>Have a look at <code>~/.sqitch/sqitch.conf</code> and you&rsquo;ll see this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;firebird&#34;]</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/local/bin/isql</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;clickhouse&#34;]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/bin/clickhouse</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[user]</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  email = marge@example.com</span>
-</span></span></code></pre></div><p>Which means that Sqitch should be able to find <code>isql</code> for any project, and
-that it will always properly identify us when planning and committing changes.</p>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        email = marge@example.com</span>
+</span></span></code></pre></div><p>Which means that Sqitch should be able to find <code>clickhouse</code> for any project,
+and that it will always properly identify us when planning and committing
+changes.</p>
 <p>Back to the repository. Have a look at the plan file, <code>sqitch.plan</code>:</p>
 <pre tabindex="0"><code>&gt; cat sqitch.plan
 %syntax-version=1.0.0
 %project=flipr
-%uri=https://github.com/sqitchers/sqitch-firebird-intro/
-</code></pre><p>Note that it has picked up on the name and URI of the app we&rsquo;re building.
-Sqitch uses this data to manage cross-project dependencies. The
-<code>%syntax-version</code> pragma is always set by Sqitch, so that it always knows how
-to parse the plan, even if the format changes in the future.</p>
+%uri=https://github.com/sqitchers/sqitch-clickhouse-intro/
+</code></pre><p>Note that it contains the name and URI of the app we&rsquo;re building. Sqitch uses
+this data to manage cross-project dependencies. The <code>%syntax-version</code> pragma
+is always set by Sqitch, so that it always knows how to parse the plan, even
+if the format changes in the future.</p>
 <p>Let&rsquo;s commit these changes and start creating the database changes.</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -am &#39;Initialize Sqitch configuration.&#39;
-[main 2177ce4] Initialize Sqitch configuration.
- 2 files changed, 19 insertions(+), 0 deletions(-)
+[main d32b8ae] Initialize Sqitch configuration.
+ 2 files changed, 12 insertions(+)
  create mode 100644 sqitch.conf
  create mode 100644 sqitch.plan
-</code></pre><p>Let&rsquo;s create our flipr test database using <code>isql</code>:</p>
-<pre tabindex="0"><code>&gt; sudo -u firebird mkdir /tmp/flipr_test
-&gt; echo &#34;CREATE DATABASE &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; exit;&#34; \
-  | isql-fb -q -u SYSDBA -p masterkey
 </code></pre><h2 id="our-first-change">Our First Change</h2>
 <p>Let&rsquo;s create a table. Our app will need users, of course, so we&rsquo;ll create a
 table for them. Run this command:</p>
@@ -192,163 +218,148 @@ Added &#34;users&#34; to sqitch.plan
 deploy, revert, and verify scripts that represent the change. Now we edit
 these files. The <code>deploy</code> script&rsquo;s job is to create the table. By default,
 the <code>deploy/users.sql</code> file looks like this:</p>
-<pre tabindex="0"><code>-- Deploy flipr:users to firebird
+<pre tabindex="0"><code>-- Deploy flipr:users to clickhouse
 
 -- XXX Add DDLs here.
 
 COMMIT;
 </code></pre><p>What we want to do is to replace the <code>XXX</code> comment with the <code>CREATE TABLE</code>
 statement, like so:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to firebird
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to clickhouse
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> users (
 </span></span><span style="display:flex;"><span>    nickname   VARCHAR(<span style="color:#ae81ff">50</span>)  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
 </span></span><span style="display:flex;"><span>    password   VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
 </span></span><span style="display:flex;"><span>    fullname   VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-</span></span><span style="display:flex;"><span>    twitter    VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-</span></span><span style="display:flex;"><span>    created_at <span style="color:#66d9ef">TIMESTAMP</span>    <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>
-</span></span><span style="display:flex;"><span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span><span style="display:flex;"><span>    mastodon   VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    created_at DATETIME64(<span style="color:#ae81ff">6</span>, <span style="color:#e6db74">&#39;UTC&#39;</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> now64(<span style="color:#ae81ff">6</span>, <span style="color:#e6db74">&#39;UTC&#39;</span>)
+</span></span><span style="display:flex;"><span>) ENGINE <span style="color:#f92672">=</span> MergeTree;
 </span></span></code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
 script, so we edit this to <code>revert/users.sql</code> to look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:users from firebird
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:users from clickhouse
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> users;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
-</span></span></code></pre></div><p>Now we can try deploying this change. We tell Sqitch where to send the change
-via a <a href="https://github.com/libwww-perl/uri-db/">database URI</a>. Here we&rsquo;ve
-specified a database file, <code>/tmp/flipr_test/flipr.fdb</code>:</p>
-<pre tabindex="0"><code>&gt; sqitch deploy db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
-Adding registry tables to db:firebird://sysdba:@localhost//tmp/flipr_test/sqitch.fdb
-Deploying changes to db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb
+</span></span></code></pre></div><p>Now we can try deploying this change. First, we need to create a database
+to deploy to. Assuming that ClickHouse is running on localhost using the
+<code>default</code> user (as is provided by the
+<a href="https://hub.docker.com/_/clickhouse">ClickHouse Docker Image</a>):</p>
+<pre tabindex="0"><code>&gt; clickhouse client --query &#39;CREATE DATABASE flipr_test&#39;
+</code></pre><p>Now we tell Sqitch where to send the change via a
+<a href="https://github.com/libwww-perl/uri-db/">database URI</a>, again assuming the
+<code>default</code> user &amp; database and an ODBC driver named <code>ClickHouse</code> (see
+<a href="#connection-configuration">&ldquo;Connection Configuration&rdquo;</a> for details):</p>
+<pre tabindex="0"><code>&gt; sqitch deploy &#39;db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse&#39;
+Adding registry tables to db:clickhouse://default@localhost/sqitch?Driver=ClickHouse
+Deploying changes to db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse
   + users .. ok
 </code></pre><p>First Sqitch created the registry database and tables used to track database
-changes. The registry is separate from the database to which the <code>users</code>
-change was deployed; by default, its name is <code>sqitch.$suffix</code>, where
-<code>$suffix</code> is the same as the suffix on the target database, if any. It lives
-in the same directory as the target database, which means that one registry
-database is used for all the databases with the same suffix in a single
-directory. In this case, we should end up with two databases:</p>
-<ul>
-<li>
-<p><code>/tmp/flipr_test/sqitch.fdb</code></p>
-<p>The Sqitch registry database.</p>
-</li>
-<li>
-<p><code>/tmp/flipr_test/flipr.fdb</code></p>
-<p>The database Sqitch manages.</p>
-</li>
-</ul>
-<p>Next, Sqitch deploys changes to the target database. We only have one change
-so far; the <code>+</code> reinforces the idea that the change is being <em>added</em> to the
-database.</p>
-<p>If you&rsquo;d like it to have a different name for the registry database, use
-<code>sqitch engine add firebird $name</code> to configure it (or via the
+changes. The registry database is separate from the database to which the
+<code>users</code> change was deployed; by default, its name is <code>sqitch</code>, and will be
+used to manage <em>all</em> projects on a single ClickHouse server. Ideally, only
+Sqitch data will be stored in this database, so it probably makes the most
+sense to create a superuser named <code>sqitch</code> or something similar and use it
+to deploy changes.</p>
+<p>If you&rsquo;d like it to use a different database as the registry database, use
+<code>sqitch engine add clickhouse $name</code> to configure it (or via the
 <a href="/docs/manual/sqitch-target"><code>target</code> command</a>; more <a href="#on-target">below</a>). This will be
 useful if you don&rsquo;t want to use the same registry database to manage multiple
-databases, or if you do, but they live in different directories.</p>
+databases on the same server.</p>
 <p>Next, Sqitch deploys changes to the target database, which we specified on the
-command-line. We only have one so far; the <code>+</code> reinforces the idea that the
-change is being <em>added</em> to the database.</p>
+command-line. We only have one change so far; the <code>+</code> reinforces the idea
+that the change is being <em>added</em> to the database.</p>
 <p>With this change deployed, if you connect to the database, you&rsquo;ll be able to
-see the <code>users</code> table:</p>
-<pre tabindex="0"><code>&gt; echo &#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW TABLES; quit;&#34; \
-  | isql-fb -q -u SYSDBA -p masterkey
-     USERS                        
+see the user:</p>
+<pre tabindex="0"><code>&gt; clickhouse client -d flipr_test -q &#39;show tables&#39;
+users
 </code></pre><h3 id="trust-but-verify">Trust, But Verify</h3>
-<p>But that&rsquo;s too much work. do you really want to do something like that after
+<p>But that&rsquo;s too much work. Do you really want to do something like that after
 every deploy?</p>
 <p>Here&rsquo;s where the <code>verify</code> script comes in. Its job is to test that the deploy
 did was it was supposed to. It should do so without regard to any data that
 might be in the database, and should throw an error if the deploy was not
 successful. The easiest way to do that with a table is to simply <code>SELECT</code>
 from it. Put this query into <code>verify/users.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, mastodon
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users
-</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">false</span>;
 </span></span></code></pre></div><p>Now you can run the <code>verify</code> script with the <a href="/docs/manual/sqitch-verify"><code>verify</code></a>
 command:</p>
-<pre tabindex="0"><code>&gt; sqitch verify db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
-Verifying db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb
+<pre tabindex="0"><code>&gt; sqitch verify &#39;db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse&#39;
+Verifying db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse
   * users .. ok
 Verify successful
 </code></pre><p>Looks good! If you want to make sure that the verify script correctly dies if
 the table doesn&rsquo;t exist, temporarily change the table name in the script to
 something that doesn&rsquo;t exist, something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter, created_at
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, mastodon, created_at
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users_nonesuch
-</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">false</span>;
 </span></span></code></pre></div><p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
-<pre tabindex="0"><code>&gt; sqitch verify db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
-Verifying db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb
-  * users .. Statement failed, SQLSTATE = 42S02
-Dynamic SQL Error
--SQL error code = -204
--Table unknown
--USERS_NONESUCH
--At line 3, column 2
-At line 3 in file verify/users.sql
-# Verify script &#34;verify/users.sql&#34; failed.
-not ok
-
-Verify Summary Report
----------------------
-Changes: 1
-Errors:  1
-Verify failed
-</code></pre><p>Firebird is kind enough to tell us what the problem is. Don&rsquo;t forget to change
-the table name back before continuing!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> sqitch verify <span style="color:#e6db74">&#39;db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse&#39;</span>
+</span></span><span style="display:flex;"><span>Verifying db:clickhouse:<span style="color:#f92672">//</span><span style="color:#66d9ef">default</span><span style="color:#f92672">@</span>localhost<span style="color:#f92672">/</span>flipr_test<span style="color:#f92672">?</span>Driver<span style="color:#f92672">=</span>ClickHouse
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span> users .. Received <span style="color:#66d9ef">exception</span> <span style="color:#66d9ef">from</span> server (<span style="color:#66d9ef">version</span> <span style="color:#ae81ff">25</span>.<span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>Code: <span style="color:#ae81ff">60</span>. DB::<span style="color:#66d9ef">Exception</span>: Received <span style="color:#66d9ef">from</span> clickhouse:<span style="color:#ae81ff">9000</span>. DB::<span style="color:#66d9ef">Exception</span>: <span style="color:#66d9ef">Unknown</span> <span style="color:#66d9ef">table</span> expression identifier <span style="color:#e6db74">&#39;users_nonesuch&#39;</span> <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">scope</span> <span style="color:#66d9ef">SELECT</span> nickname, password, fullname, mastodon <span style="color:#66d9ef">FROM</span> users_nonesuch <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">false</span>. (UNKNOWN_TABLE)
+</span></span><span style="display:flex;"><span>(query: <span style="color:#75715e">-- Verify flipr:users on clickhouse
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, mastodon
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users_nonesuch
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">false</span>;)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">#</span> Verify script <span style="color:#e6db74">&#34;verify/users.sql&#34;</span> failed.
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">not</span> ok
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Verify Summary Report
+</span></span><span style="display:flex;"><span><span style="color:#75715e">---------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Changes: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Errors:  <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Verify failed
+</span></span></code></pre></div><p>ClickHouse is kind enough to tell us what the problem is. Don&rsquo;t forget to
+change the table name back before continuing!</p>
 <h3 id="status-revert-log-repeat">Status, Revert, Log, Repeat</h3>
 <p>For purely informational purposes, we can always see how a deployment was
-recorded via the <a href="/docs/manual/sqitch-status"><code>status</code></a> command, which reads the tables
-from the registry database:</p>
-<pre tabindex="0"><code>&gt; sqitch status db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
-# On database db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb
+recorded via the <a href="/docs/manual/sqitch-status"><code>status</code></a> command, which reads the registry
+tables from the database:</p>
+<pre tabindex="0"><code>&gt; sqitch status &#39;db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse&#39;
+# On database db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse
 # Project:  flipr
-# Change:   2cde9cc8c19161e9837de57741502243b2ad380e
+# Change:   02916d6d5dca9faef8f2bb5822c53de8b7ae16bc
 # Name:     users
-# Deployed: 2014-01-05 14:05:22 -0800
+# Deployed: 2025-09-19 14:32:08 -0400
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
 Nothing to deploy (up-to-date)
 </code></pre><p>Let&rsquo;s make sure that we can revert the change:</p>
-<pre tabindex="0"><code>&gt; sqitch revert db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
-Revert all changes from db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb? [Yes] 
+<pre tabindex="0"><code>&gt; sqitch revert &#39;db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse&#39;
+Revert all changes from db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse? [Yes]
   - users .. ok
 </code></pre><p>The <a href="/docs/manual/sqitch-revert"><code>revert</code></a> command first prompts to make sure that we
 really do want to revert. This is to prevent unnecessary accidents. You can
 pass the <code>-y</code> option to disable the prompt. Also, notice the <code>-</code> before the
 change name in the output, which reinforces that the change is being
-<em>removed</em> from the database. And now the <code>users</code> table should be gone:</p>
-<pre tabindex="0"><code>&gt; echo &#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW TABLES; quit;&#34; \
-  | isql-fb -q -u SYSDBA -p masterkey
-There are no tables in this database
+<em>removed</em> from the database. And now the schema should be gone:</p>
+<pre tabindex="0"><code>&gt; clickhouse client -d flipr_test -q &#39;show tables&#39;
 </code></pre><p>And the status message should reflect as much:</p>
-<pre tabindex="0"><code>&gt; sqitch status db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
-# On database db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb
+<pre tabindex="0"><code>&gt; sqitch status &#39;db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse&#39;
+# On database db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse
 No changes deployed
 </code></pre><p>Of course, since nothing is deployed, the <a href="/docs/manual/sqitch-verify"><code>verify</code></a> command
 has nothing to verify:</p>
-<pre tabindex="0"><code>&gt; sqitch verify db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
-Verifying db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb
+<pre tabindex="0"><code>&gt; sqitch verify &#39;db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse&#39;
+Verifying db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse
 No changes deployed
 </code></pre><p>However, we still have a record that the change happened, visible via the
 <a href="/docs/manual/sqitch-log"><code>log</code></a> command:</p>
-<pre tabindex="0"><code>&gt; sqitch log db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
-On database db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb
-Revert 2cde9cc8c19161e9837de57741502243b2ad380e
+<pre tabindex="0"><code>&gt; sqitch log &#39;db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse&#39;
+Revert 02916d6d5dca9faef8f2bb5822c53de8b7ae16bc
 Name:      users
 Committer: Marge N. O’Vera &lt;marge@example.com&gt;
-Date:      2014-01-05 14:06:59 -0800
+Date:      2025-09-19 14:33:23 -0400
 
     Creates table to track our users.
 
-Deploy 2cde9cc8c19161e9837de57741502243b2ad380e
+Deploy 02916d6d5dca9faef8f2bb5822c53de8b7ae16bc
 Name:      users
 Committer: Marge N. O’Vera &lt;marge@example.com&gt;
-Date:      2014-01-05 14:05:22 -0800
+Date:      2025-09-19 14:32:08 -0400
 
     Creates table to track our users.
 </code></pre><p>Note that the actions we took are shown in reverse chronological order, with
@@ -356,53 +367,52 @@ the revert first and then the deploy.</p>
 <p>Cool. Now let&rsquo;s commit it.</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -m &#39;Add users table.&#39;
-[main ec72105] Add users table.
- 4 files changed, 24 insertions(+), 0 deletions(-)
+[main 414672a] Add users table.
+ 4 files changed, 18 insertions(+)
  create mode 100644 deploy/users.sql
  create mode 100644 revert/users.sql
  create mode 100644 verify/users.sql
 </code></pre><p>And then deploy again. This time, let&rsquo;s use the <code>--verify</code> option, so that
 the <code>verify</code> script is applied when the change is deployed:</p>
-<pre tabindex="0"><code>&gt; sqitch deploy db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb --verify
-Deploying changes to db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb
+<pre tabindex="0"><code>&gt; sqitch deploy --verify &#39;db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse&#39;
+Deploying changes to db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse
   + users .. ok
-</code></pre><p>And now the <code>users</code> table should be back:</p>
-<pre tabindex="0"><code>&gt; echo &#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW TABLES; quit;&#34; \
-  | isql-fb -q -u SYSDBA -p masterkey
-       USERS                           
+</code></pre><p>And now the schema should be back:</p>
+<pre tabindex="0"><code>&gt; clickhouse client -d flipr_test -q &#39;show tables&#39;
+users
 </code></pre><p>When we look at the status, the deployment will be there:</p>
-<pre tabindex="0"><code>&gt; sqitch status db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
-# On database db:firebird://sysdba:@localhost//tmp/flipr_test/flipr.fdb
+<pre tabindex="0"><code>&gt; sqitch status &#39;db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse&#39;
+# On database db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse
 # Project:  flipr
-# Change:   2cde9cc8c19161e9837de57741502243b2ad380e
+# Change:   02916d6d5dca9faef8f2bb5822c53de8b7ae16bc
 # Name:     users
-# Deployed: 2014-01-05 14:19:32 -0800
+# Deployed: 2025-09-19 14:34:21 -0400
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
 Nothing to deploy (up-to-date)
 </code></pre><h2 id="on-target">On Target</h2>
 <p>I&rsquo;m getting a little tired of always having to type
-<code>db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb</code>, aren&rsquo;t
-you? This <a href="https://github.com/libwww-perl/uri-db/">database connection URI</a> tells
+<code>db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse</code>, aren&rsquo;t you?
+This <a href="https://github.com/libwww-perl/uri-db/">database connection URI</a> tells
 Sqitch how to connect to the deployment target, but we don&rsquo;t have to keep
 using the URI. We can name the target:</p>
-<pre tabindex="0"><code>&gt; sqitch target add flipr_test db:firebird://sysdba:masterkey@localhost//tmp/flipr_test/flipr.fdb
+<pre tabindex="0"><code>&gt; sqitch target add flipr_test &#39;db:clickhouse://default@localhost/flipr_test?Driver=ClickHouse&#39;
 </code></pre><p>The <a href="/docs/manual/sqitch-target"><code>target</code></a> command, inspired by
 <a href="https://git-scm.com/docs/git-remote"><code>git-remote</code></a>, allows management of one
 or more named deployment targets. We&rsquo;ve just added a target named
 <code>flipr_test</code>, which means we can use the string <code>flipr_test</code> for the target,
 rather than the URI. But since we&rsquo;re doing so much testing, we can also tell
 Sqitch to deploy to the <code>flipr_test</code> target by default:</p>
-<pre tabindex="0"><code>&gt; sqitch engine add firebird target flipr_test
+<pre tabindex="0"><code>&gt; sqitch engine add clickhouse flipr_test
 </code></pre><p>Now we can omit the target argument altogether, unless we need to deploy to
 another database. Which we will, eventually, but at least our examples will be
 simpler from here on in, e.g.:</p>
 <pre tabindex="0"><code>&gt; sqitch status
 # On database flipr_test
 # Project:  flipr
-# Change:   2cde9cc8c19161e9837de57741502243b2ad380e
+# Change:   02916d6d5dca9faef8f2bb5822c53de8b7ae16bc
 # Name:     users
-# Deployed: 2014-01-05 14:19:32 -0800
+# Deployed: 2025-09-19 14:34:21 -0400
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
 Nothing to deploy (up-to-date)
@@ -412,9 +422,9 @@ changes are verified after deploying them:</p>
 &gt; sqitch config --bool rebase.verify true
 </code></pre><p>We&rsquo;ll see the <a href="/docs/manual/sqitch-rebase"><code>rebase</code></a> command a bit later. In the meantime,
 let&rsquo;s commit the new configuration and and make some more changes!</p>
-<pre tabindex="0"><code>&gt; git commit -am &#39;Set default target and always verify.&#39;
-[main cfc9fea] Set default target and always verify.
- 1 files changed, 8 insertions(+), 0 deletions(-)
+<pre tabindex="0"><code>&gt; git commit -am &#39;Set default deployment target and always verify.&#39;
+[main ad3a3b0] Set default deployment target and always verify.
+ 1 file changed, 8 insertions(+)
 </code></pre><h2 id="deploy-with-dependency">Deploy with Dependency</h2>
 <p>Let&rsquo;s add another change. Our app will need to store status messages from
 users. Let&rsquo;s call them &ndash; and the table to store them &ndash; &ldquo;flips&rdquo;. First, add
@@ -430,51 +440,49 @@ therefore should always be applied before the <code>flips</code> change, it&rsqu
 idea to be explicit about dependencies.</p>
 <p>Now edit the scripts. When you&rsquo;re done, <code>deploy/flips.sql</code> should look like
 this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to firebird
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to clickhouse
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flips (
 </span></span><span style="display:flex;"><span>    id         INTEGER       <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
-</span></span><span style="display:flex;"><span>    nickname   VARCHAR(<span style="color:#ae81ff">50</span>)   <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> users(nickname),
-</span></span><span style="display:flex;"><span>    body       VARCHAR(<span style="color:#ae81ff">512</span>)  <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">CHECK</span> ( <span style="color:#66d9ef">char_length</span>(body) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">180</span> ),
-</span></span><span style="display:flex;"><span>    created_at <span style="color:#66d9ef">TIMESTAMP</span>     <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>
-</span></span><span style="display:flex;"><span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span><span style="display:flex;"><span>    nickname   VARCHAR(<span style="color:#ae81ff">50</span>)   <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    body       VARCHAR(<span style="color:#ae81ff">512</span>)  <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    created_at DATETIME64(<span style="color:#ae81ff">6</span>, <span style="color:#e6db74">&#39;UTC&#39;</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> now64(<span style="color:#ae81ff">6</span>, <span style="color:#e6db74">&#39;UTC&#39;</span>),
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">CONSTRAINT</span> body_length_check <span style="color:#66d9ef">CHECK</span> ( <span style="color:#66d9ef">char_length</span>(body) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">180</span> ),
+</span></span><span style="display:flex;"><span>) ENGINE <span style="color:#f92672">=</span> MergeTree;
 </span></span></code></pre></div><p>A couple things to notice here. On the second line, the dependence on the
 <code>users</code> change has been listed. This doesn&rsquo;t do anything, but the default
 <code>deploy</code> template lists it here for your reference while editing the file.
 Useful, right?</p>
-<p>The <code>users.nickname</code> column references the <code>users</code> table. This is why we
-need to require the <code>users</code> change.</p>
+<p>The <code>users.nickname</code> column implicitly references the <code>users</code> table. This
+is why we need to require the <code>users</code> change, even though ClickHouse itself
+does not enforce such relationships.</p>
 <p>Now for the verify script. Again, all we need to do is <code>SELECT</code> from the
 table. I recommend selecting each column by name, too, to be sure that no
 column is missing. Here&rsquo;s the <code>verify/flips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on firebird
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on clickhouse
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, body, created_at
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flips
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">false</span>;
 </span></span></code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
 <code>revert/flips.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from firebird
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flips;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
 </span></span></code></pre></div><p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + flips .. ok
 </code></pre><p>We know, since verification is enabled, that the table must have been created.
 But for the purposes of visibility, let&rsquo;s have a quick look:</p>
-<pre tabindex="0"><code>&gt; echo &#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW TABLES; quit;&#34; \
-  | isql-fb -q -u SYSDBA -p masterkey
-       FLIPS                                  USERS
+<pre tabindex="0"><code>&gt; clickhouse client -d flipr_test -q &#39;show tables&#39;
+flips
+users
 </code></pre><p>We can also verify all currently deployed changes with the
 <a href="/docs/manual/sqitch-verify"><code>verify</code></a> command:</p>
 <pre tabindex="0"><code>&gt; sqitch verify
-Verifying flipr_test.db
+Verifying flipr_test
   * users .. ok
   * flips .. ok
 Verify successful
@@ -482,9 +490,9 @@ Verify successful
 <pre tabindex="0"><code>&gt; sqitch status
 # On database flipr_test
 # Project:  flipr
-# Change:   dfe72351c686bd36017a2b586042b5336301e809
+# Change:   0756d81da8a858a991dca5ffd167fea2de8e98df
 # Name:     flips
-# Deployed: 2014-01-05 14:22:33 -0800
+# Deployed: 2025-09-19 14:36:09 -0400
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
 Nothing to deploy (up-to-date)
@@ -502,17 +510,16 @@ other potentially useful symbolic tag is <code>@ROOT</code>, which refers to the
 change deployed to the database (or in the plan, depending on the command).</p>
 <p>Back to the database. The <code>flips</code> table should be gone but the
 <code>users</code> table should still be around:</p>
-<pre tabindex="0"><code>&gt; echo &#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW TABLES; quit;&#34; \
-  | isql-fb -q -u SYSDBA -p masterkey
-     USERS                        
+<pre tabindex="0"><code>&gt; clickhouse client -d flipr_test -q &#39;show tables&#39;
+users
 </code></pre><p>The <a href="/docs/manual/sqitch-status"><code>status</code></a> command politely informs us that we have
 undeployed changes:</p>
 <pre tabindex="0"><code>&gt; sqitch status
 # On database flipr_test
 # Project:  flipr
-# Change:   2cde9cc8c19161e9837de57741502243b2ad380e
+# Change:   02916d6d5dca9faef8f2bb5822c53de8b7ae16bc
 # Name:     users
-# Deployed: 2014-01-05 14:19:32 -0800
+# Deployed: 2025-09-19 14:34:21 -0400
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
 Undeployed change:
@@ -530,8 +537,8 @@ the current state.</p>
 <p>Okay, let&rsquo;s commit and deploy again:</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -am &#39;Add flips table.&#39;
-[main 09c636c] Add flips table.
- 4 files changed, 24 insertions(+), 0 deletions(-)
+[main 347f867] Add flips table.
+ 4 files changed, 19 insertions(+)
  create mode 100644 deploy/flips.sql
  create mode 100644 revert/flips.sql
  create mode 100644 verify/flips.sql
@@ -542,9 +549,9 @@ Deploying changes to flipr_test
 <pre tabindex="0"><code>&gt; sqitch status
 # On database flipr_test
 # Project:  flipr
-# Change:   dfe72351c686bd36017a2b586042b5336301e809
+# Change:   0756d81da8a858a991dca5ffd167fea2de8e98df
 # Name:     flips
-# Deployed: 2014-01-05 14:24:06 -0800
+# Deployed: 2025-09-19 14:38:00 -0400
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
 Nothing to deploy (up-to-date)
@@ -558,14 +565,14 @@ Created revert/userflips.sql
 Created verify/userflips.sql
 Added &#34;userflips [users flips]&#34; to sqitch.plan
 </code></pre><p>Now add this SQL to <code>deploy/userflips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">VIEW</span> userflips <span style="color:#66d9ef">AS</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.created_at
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">VIEW</span> userflips <span style="color:#66d9ef">AS</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.created_at <span style="color:#66d9ef">AS</span> created_at
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users u
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">JOIN</span> flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname;
 </span></span></code></pre></div><p>Add this SQL to <code>verify/userflips.sql</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, fullname, body, created_at
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> userflips
-</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">false</span>;
 </span></span></code></pre></div><p>And add the <code>DROP VIEW</code> statement to <code>revert/userflips.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">VIEW</span> userflips;
 </span></span></code></pre></div><p>Now Try it out!</p>
@@ -585,8 +592,8 @@ Deploying changes to flipr_test
 </code></pre><p>Looks good! Commit it.</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -m &#39;Add the userflips view.&#39;
-[main 28ffa63] Add the userflips view.
- 4 files changed, 23 insertions(+), 0 deletions(-)
+[main f21de26] Add the userflips view.
+ 4 files changed, 17 insertions(+)
  create mode 100644 deploy/userflips.sql
  create mode 100644 revert/userflips.sql
  create mode 100644 verify/userflips.sql
@@ -597,33 +604,10 @@ release, let&rsquo;s tag it:</p>
 <pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev1 -n &#39;Tag v1.0.0-dev1.&#39;
 Tagged &#34;userflips&#34; with @v1.0.0-dev1
 &gt; git commit -am &#39;Tag the database with v1.0.0-dev1.&#39;
-[main 696a891] Tag the database with v1.0.0-dev1.
+[main a821008] Tag the database with v1.0.0-dev1.
  1 files changed, 1 insertions(+), 0 deletions(-)
 &gt; git tag v1.0.0-dev1 -am &#39;Tag v1.0.0-dev1&#39;
-</code></pre><p>We can try deploying to make sure the tag gets picked up like so:</p>
-<pre tabindex="0"><code>&gt; sudo -u firebird mkdir /tmp/flipr_dev
-&gt; echo &#34;CREATE DATABASE &#39;localhost:/tmp/flipr_dev/flipr.fdb&#39;; exit;&#34; \
-  | isql-fb -q -u SYSDBA -p masterkey
-&gt; sqitch deploy db:firebird://sysdba:masterkey@localhost//tmp/flipr_dev/flipr.fdb
-Adding registry tables to db:firebird://sysdba:@localhost//tmp/flipr_dev/sqitch.fdb
-Deploying changes to db:firebird://sysdba:@localhost//tmp/flipr_dev/flipr.fdb
-  + users ................... ok
-  + flips ................... ok
-  + userflips @v1.0.0-dev1 .. ok
-</code></pre><p>Great, both changes were deployed and <code>userflips</code> was tagged with
-<code>@v1.0.0-dev1</code>. Let&rsquo;s have a look at the status:</p>
-<pre tabindex="0"><code>&gt; sqitch status db:firebird://sysdba:masterkey@localhost//tmp/flipr_dev/flipr.fdb
-# On database db:firebird://sysdba:@localhost//tmp/flipr_dev/flipr.fdb
-# Project:  flipr
-# Change:   785a0d14a5e26b2ae24882a137db45d34f71b5ff
-# Name:     userflips
-# Tag:      @v1.0.0-dev1
-# Deployed: 2014-01-05 14:43:28 -0800
-# By:       Marge N. O’Vera &lt;marge@example.com&gt;
-# 
-Nothing to deploy (up-to-date)
-</code></pre><p>Note the listing of the tag as part of the status message. Now let&rsquo;s bundle
-everything up for release:</p>
+</code></pre><p>Now let&rsquo;s bundle everything up for release:</p>
 <pre tabindex="0"><code>&gt; sqitch bundle
 Bundling into bundle
 Writing config
@@ -633,27 +617,51 @@ Writing scripts
   + flips
   + userflips @v1.0.0-dev1
 </code></pre><p>Now we can package the <code>bundle</code> directory and distribute it. When it gets
-installed somewhere, users can use Sqitch to deploy to the database. Let&rsquo;s try
-deploying it:</p>
+installed somewhere, users can use Sqitch to deploy to the database. We ought
+to try deploying it, but first we&rsquo;ll need to revert our existing databases, as
+a single Sqitch project cannot be deployed to two databases on the same server
+unless it uses a different registry database. Fortunately, it&rsquo;s easy to build
+the database again, so let&rsquo;s just revert it.</p>
+<pre tabindex="0"><code>&gt; sqitch revert -y
+Reverting all changes from flipr_test
+  - userflips @v1.0.0-dev1 .. ok
+  - flips ................... ok
+  - users ................... ok
+</code></pre><p>Now we can try deploying the bundle:</p>
 <pre tabindex="0"><code>&gt; cd bundle
-&gt; sudo -u firebird mkdir /tmp/flipr_prod
-&gt; echo &#34;CREATE DATABASE &#39;localhost:/tmp/flipr_prod/flipr.fdb&#39;; exit;&#34; \
-  | isql-fb -q -u SYSDBA -p masterkey
-&gt; sqitch deploy db:firebird://sysdba:masterkey@localhost//tmp/flipr_prod/flipr.fdb
-Adding registry tables to db:firebird://sysdba:@localhost//tmp/flipr_prod/sqitch.fdb
-Deploying changes to db:firebird://sysdba:@localhost//tmp/flipr_prod/flipr.fdb
+&gt; clickhouse client --query &#39;CREATE DATABASE flipr_dev&#39;
+&gt; sqitch deploy &#39;db:clickhouse://default@localhost/flipr_dev?Driver=ClickHouse&#39;
+Deploying changes to db:clickhouse://default@localhost/flipr_dev?Driver=ClickHouse
   + users ................... ok
   + flips ................... ok
   + userflips @v1.0.0-dev1 .. ok
-</code></pre><p>Looks much the same as before, eh? Package it up and ship it!</p>
+</code></pre><p>Great, all four changes were deployed and <code>userflips</code> was tagged with
+<code>@v1.0.0-dev1</code>. Let&rsquo;s have a look at the status:</p>
+<pre tabindex="0"><code>&gt; sqitch status &#39;db:clickhouse://default@localhost/flipr_dev?Driver=ClickHouse&#39;
+# On database db:clickhouse://default@localhost/flipr_dev?Driver=ClickHouse
+# Project:  flipr
+# Change:   afdfa60d0fd2b7910601648667a23546fe0f7f43
+# Name:     userflips
+# Tag:      @v1.0.0-dev1
+# Deployed: 2025-09-19 14:40:20 -0400
+# By:       Marge N. O’Vera &lt;marge@example.com&gt;
+# 
+Nothing to deploy (up-to-date)
+</code></pre><p>Looks good, eh? Go ahead and revert it:</p>
+<pre tabindex="0"><code>&gt; sqitch revert -y &#39;db:clickhouse://default@localhost/flipr_dev?Driver=ClickHouse&#39;
+Revert all changes from db:clickhouse://default@localhost/flipr_dev?Driver=ClickHouse? [Yes]
+  - userflips @v1.0.0-dev1 .. ok
+  - flips ................... ok
+  - users ................... ok
+</code></pre><p>Now package it up and ship it!</p>
 <pre tabindex="0"><code>&gt; cd ..
 &gt; mv bundle flipr-v1.0.0-dev1
 &gt; tar -czf flipr-v1.0.0-dev1.tgz flipr-v1.0.0-dev1
 </code></pre><h2 id="making-a-hash-of-things">Making a Hash of Things</h2>
 <p>Now that we&rsquo;ve got the basics of the app done, let&rsquo;s add a feature. Gotta
 track the hashtags associated with flips, right? Let&rsquo;s add a table for them.
-But since other folks are working on other tasks in the repository, we&rsquo;ll work
-on a branch, so we can all stay out of each other&rsquo;s way. So let&rsquo;s branch:</p>
+Since other folks are working on other tasks in the repository, we&rsquo;ll work on
+a branch, so we can all stay out of each other&rsquo;s way. So let&rsquo;s branch:</p>
 <pre tabindex="0"><code>&gt; git checkout -b hashtags
 Switched to a new branch &#39;hashtags&#39;
 </code></pre><p>Now we can add a new change to create a table for hashtags.</p>
@@ -664,37 +672,41 @@ Created verify/hashtags.sql
 Added &#34;hashtags [flips]&#34; to sqitch.plan
 </code></pre><p>You know the drill by now. Add this to <code>deploy/hashtags.sql</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> hashtags (
-</span></span><span style="display:flex;"><span>    flip_id   INTEGER      <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flips(id),
-</span></span><span style="display:flex;"><span>    hashtag   VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">CHECK</span>(<span style="color:#66d9ef">char_length</span>(hashtag) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>),
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (flip_id, hashtag)
-</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>    flip_id   INTEGER      <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    hashtag   VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">CONSTRAINT</span> hashtag <span style="color:#66d9ef">CHECK</span>(<span style="color:#66d9ef">char_length</span>(hashtag) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>)  ENGINE <span style="color:#f92672">=</span> MergeTree
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (flip_id, hashtag);
 </span></span></code></pre></div><p>Again, select from the table in <code>verify/hashtags.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> flip_id, hashtag <span style="color:#66d9ef">FROM</span> hashtags <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> flip_id, hashtag <span style="color:#66d9ef">FROM</span> hashtags <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">false</span>;
 </span></span></code></pre></div><p>And drop it in <code>revert/hashtags.sql</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> hashtags;
 </span></span></code></pre></div><p>And give it a whirl:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
-  + hashtags .. ok
+  + users ................... ok
+  + flips ................... ok
+  + userflips @v1.0.0-dev1 .. ok
+  + hashtags ................ ok
 </code></pre><p>Look good?</p>
 <pre tabindex="0"><code>&gt; sqitch status --show-tags
 # On database flipr_test
 # Project:  flipr
-# Change:   9474af3b057294633ccf81b9e8d7771a9588ac67
+# Change:   dca0003c3d411c71a672172acab78e4a42dfaa8d
 # Name:     hashtags
-# Deployed: 2014-01-05 14:55:56 -0800
+# Deployed: 2025-09-19 14:48:13 -0400
 # By:       Marge N. O’Vera &lt;marge@example.com&gt;
 # 
 # Tag:
-#   @v1.0.0-dev1 - 2014-01-05 14:49:56 -0800 - Marge N. O’Vera &lt;marge@example.com&gt;
+#   @v1.0.0-dev1 - 2025-09-19 14:48:13 -0400 - Marge N. O’Vera &lt;marge@example.com&gt;
 # 
 Nothing to deploy (up-to-date)
 </code></pre><p>Note the use of <code>--show-tags</code> to show all the deployed tags. Now make it so:</p>
 <pre tabindex="0"><code>&gt; rm -rf flipr-v1.0.0-dev1*
 &gt; git add .
 &gt; git commit -am &#39;Add hashtags table.&#39;
-[hashtags 9c40bf5] Add hashtags table.
- 4 files changed, 22 insertions(+), 0 deletions(-)
+[hashtags 1359929] Add hashtags table.
+ 4 files changed, 17 insertions(+)
  create mode 100644 deploy/hashtags.sql
  create mode 100644 revert/hashtags.sql
  create mode 100644 verify/hashtags.sql
@@ -704,13 +716,13 @@ Nothing to deploy (up-to-date)
 <pre tabindex="0"><code>&gt; git checkout main
 Switched to branch &#39;main&#39;
 &gt; git pull
-Updating 696a891..9af80a1
+Updating a821008..b800878
 Fast-forward
- deploy/lists.sql |   11 +++++++++++
- revert/lists.sql |    5 +++++
- sqitch.plan      |    2 ++
- verify/lists.sql |    7 +++++++
- 4 files changed, 25 insertions(+), 0 deletions(-)
+ deploy/lists.sql | 10 ++++++++++
+ revert/lists.sql |  3 +++
+ sqitch.plan      |  2 ++
+ verify/lists.sql |  5 +++++
+ 4 files changed, 20 insertions(+)
  create mode 100644 deploy/lists.sql
  create mode 100644 revert/lists.sql
  create mode 100644 verify/lists.sql
@@ -737,34 +749,27 @@ might have to do if you&rsquo;re sending changes to another user, especially if 
 VCS is not Git.</li>
 </ul>
 <p>So let&rsquo;s restore things to how they were at main:</p>
-<pre tabindex="0"><code>&gt; git reset --hard HEAD
-HEAD is now at d5e7e86 Merge branch &#39;lists&#39;
+<pre tabindex="0"><code>&gt; git merge --abort
 </code></pre><p>That throws out our botched merge. Now let&rsquo;s go back to our branch and rebase
 it on <code>main</code>:</p>
 <pre tabindex="0"><code>&gt; git checkout hashtags
 Switched to branch &#39;hashtags&#39;
 &gt; git rebase main
-First, rewinding head to replay your work on top of it...
-Applying: Add hashtags table.
-Using index info to reconstruct a base tree...
-M       sqitch.plan
-Falling back to patching base and 3-way merge...
 Auto-merging sqitch.plan
 CONFLICT (content): Merge conflict in sqitch.plan
-Failed to merge in the changes.
-Patch failed at 0001 Add hashtags table.
-The copy of the patch that failed is found in:
-   .git/rebase-apply/patch
-
-When you have resolved this problem, run &#34;git rebase --continue&#34;.
-If you prefer to skip this patch, run &#34;git rebase --skip&#34; instead.
-To check out the original branch and stop rebasing, run &#34;git rebase --abort&#34;.
+error: could not apply 1359929... Add hashtags table.
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: &#34;git add/rm &lt;conflicted_files&gt;&#34;, then run &#34;git rebase --continue&#34;.
+hint: You can instead skip this commit: run &#34;git rebase --skip&#34;.
+hint: To abort and get back to the state before &#34;git rebase&#34;, run &#34;git rebase --abort&#34;.
+hint: Disable this message with &#34;git config set advice.mergeConflict false&#34;
+Could not apply 1359929... # Add hashtags table.
 </code></pre><p>Oy, that&rsquo;s kind of a pain. It seems like no matter what we do, we&rsquo;ll need to
 resolve conflicts in that file. Except in Git. Fortunately for us, we can tell
 Git to resolve conflicts in <code>sqitch.plan</code> differently. Because we only ever
 append lines to the file, we can have it use the &ldquo;union&rdquo; merge driver, which,
-according to <a href="https://git-scm.com/docs/gitattributes#_built-in_merge_drivers">its
-docs</a>:</p>
+according to
+<a href="https://git-scm.com/docs/gitattributes#_built-in_merge_drivers">its docs</a>:</p>
 <blockquote>
 <p>Run 3-way file level merge for text files, but take lines from both versions,
 instead of leaving conflict markers. This tends to leave the added lines in
@@ -778,25 +783,20 @@ rebase:</p>
 and rebase again:</p>
 <pre tabindex="0"><code>&gt; echo sqitch.plan merge=union &gt; .gitattributes
 &gt; git rebase main
-First, rewinding head to replay your work on top of it...
-Applying: Add hashtags table.
-Using index info to reconstruct a base tree...
-M sqitch.plan
-Falling back to patching base and 3-way merge...
-Auto-merging sqitch.plan
+Successfully rebased and updated refs/heads/hashtags.
 </code></pre><p>Ah, that looks a bit better. Let&rsquo;s have a look at the plan:</p>
 <pre tabindex="0"><code>&gt; cat sqitch.plan
 %syntax-version=1.0.0
 %project=flipr
-%uri=https://github.com/sqitchers/sqitch-firebird-intro/
+%uri=https://github.com/sqitchers/sqitch-clickhouse-intro/
 
-users 2014-01-05T22:01:30Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates table to track our users.
-flips [users] 2014-01-05T22:21:24Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing flips.
-userflips [users flips] 2014-01-05T22:40:29Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates the userflips view.
-@v1.0.0-dev1 2014-01-05T22:42:36Z Marge N. O’Vera &lt;marge@example.com&gt; # Tag v1.0.0-dev1.
+users 2025-09-19T18:29:21Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates table to track our users.
+flips [users] 2025-09-19T18:35:31Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing flips.
+userflips [users flips] 2025-09-19T18:38:26Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates the userflips view.
+@v1.0.0-dev1 2025-09-19T18:39:48Z Marge N. O’Vera &lt;marge@example.com&gt; # Tag v1.0.0-dev1.
 
-lists [flips] 2014-01-05T22:44:41Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing lists.
-hashtags [flips] 2014-01-05T22:54:27Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing hashtags.
+lists [flips] 2025-09-19T18:41:17Z An Oth R. Developer &lt;another@example.com&gt; # Adds table for storing lists.
+hashtags [flips] 2025-09-19T18:47:02Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing hashtags.
 </code></pre><p>Note that it has appended the changes from the merged &ldquo;lists&rdquo; branch, and then
 merged the changes from our &ldquo;hashtags&rdquo; branch. Test it to make sure it works
 as expected:</p>
@@ -819,21 +819,21 @@ them all again in the proper order. So let&rsquo;s commit <code>.gitattributes</
 worthwhile to keep that change:</p>
 <pre tabindex="0"><code>&gt; git add .
 &gt; git commit -m &#39;Add `.gitattributes` with union merge for `sqitch.plan`.&#39;
-[hashtags 52ed9a2] Add `.gitattributes` with union merge for `sqitch.plan`.
- 1 files changed, 1 insertions(+), 0 deletions(-)
+[hashtags 862ea7a] Add `.gitattributes` with union merge for `sqitch.plan`.
+ 1 file changed, 1 insertion(+)
  create mode 100644 .gitattributes
 </code></pre><h3 id="merges-mastered">Merges Mastered</h3>
 <p>And now, finally, we can merge into <code>main</code>:</p>
 <pre tabindex="0"><code>&gt; git checkout main
 Switched to branch &#39;main&#39;
 &gt; git merge --no-ff hashtags -m &#34;Merge branch &#39;hashtags&#39;&#34;
-Merge made by recursive.
- .gitattributes      |    1 +
- deploy/hashtags.sql |   10 ++++++++++
- revert/hashtags.sql |    5 +++++
- sqitch.plan         |    1 +
- verify/hashtags.sql |    5 +++++
- 5 files changed, 22 insertions(+), 0 deletions(-)
+Merge made by the &#39;ort&#39; strategy.
+ .gitattributes      | 1 +
+ deploy/hashtags.sql | 9 +++++++++
+ revert/hashtags.sql | 3 +++
+ sqitch.plan         | 1 +
+ verify/hashtags.sql | 3 +++
+ 5 files changed, 17 insertions(+)
  create mode 100644 .gitattributes
  create mode 100644 deploy/hashtags.sql
  create mode 100644 revert/hashtags.sql
@@ -842,22 +842,22 @@ Merge made by recursive.
 <pre tabindex="0"><code>&gt; cat sqitch.plan
 %syntax-version=1.0.0
 %project=flipr
-%uri=https://github.com/sqitchers/sqitch-firebird-intro/
+%uri=https://github.com/sqitchers/sqitch-clickhouse-intro/
 
-users 2014-01-05T22:01:30Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates table to track our users.
-flips [users] 2014-01-05T22:21:24Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing flips.
-userflips [users flips] 2014-01-05T22:40:29Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates the userflips view.
-@v1.0.0-dev1 2014-01-05T22:42:36Z Marge N. O’Vera &lt;marge@example.com&gt; # Tag v1.0.0-dev1.
+users 2025-09-19T18:29:21Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates table to track our users.
+flips [users] 2025-09-19T18:35:31Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing flips.
+userflips [users flips] 2025-09-19T18:38:26Z Marge N. O’Vera &lt;marge@example.com&gt; # Creates the userflips view.
+@v1.0.0-dev1 2025-09-19T18:39:48Z Marge N. O’Vera &lt;marge@example.com&gt; # Tag v1.0.0-dev1.
 
-lists [flips] 2014-01-05T22:44:41Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing lists.
-hashtags [flips] 2014-01-05T22:54:27Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing hashtags.
+lists [flips] 2025-09-19T18:41:17Z An Oth R. Developer &lt;another@example.com&gt; # Adds table for storing lists.
+hashtags [flips] 2025-09-19T18:47:02Z Marge N. O’Vera &lt;marge@example.com&gt; # Adds table for storing hashtags.
 </code></pre><p>Much much better, a nice clean main now. And because it is now identical to
 the &ldquo;hashtags&rdquo; branch, we can just carry on. Go ahead and tag it, bundle, and
 release:</p>
 <pre tabindex="0"><code>&gt; sqitch tag v1.0.0-dev2 -n &#39;Tag v1.0.0-dev2.&#39;
 Tagged &#34;hashtags&#34; with @v1.0.0-dev2
 &gt; git commit -am &#39;Tag the database with v1.0.0-dev2.&#39;
-[main 7d07ee3] Tag the database with v1.0.0-dev2.
+[main 5b56772] Tag the database with v1.0.0-dev2.
  1 file changed, 1 insertion(+)
 &gt; git tag v1.0.0-dev2 -am &#39;Tag v1.0.0-dev2&#39;
 &gt; sqitch bundle --dest-dir flipr-1.0.0-dev2
@@ -875,35 +875,36 @@ to create the top-level directory name so we don&rsquo;t have to rename it from
 <code>bundle</code>.</p>
 <h2 id="in-place-changes">In Place Changes</h2>
 <p>Well, some folks have been testing the <code>1.0.0-dev2</code> release and have demanded
-that Twitter user links be added to Flipr pages. Why anyone would want to
+that Mastodon user links be added to Flipr pages. Why anyone would want to
 include social network links in an anti-social networking app is beyond us
 programmers, but we&rsquo;re just the plumbers, right? Gotta go with what Marketing
 demands. The upshot is that we need to update the <code>userflips</code> view, which is
-used for the feature in question, to include the Twitter user names.</p>
+used for the feature in question, to include the Mastodon user names.</p>
 <p>Normally, modifying views in database changes is a
 <a href="https://www.urbandictionary.com/define.php?term=pita">PITA</a>. You have to make
 changes like these:</p>
 <ol>
-<li>Copy <code>deploy/userflips.sql</code> to <code>deploy/userflips_twitter.sql</code>.</li>
-<li>Edit <code>deploy/userflips_twitter.sql</code> to re-create the view with the
-new <code>twitter</code> column added to the view.</li>
-<li>Copy <code>deploy/userflips.sql</code> to <code>revert/userflips_twitter.sql</code>.
+<li>Copy <code>deploy/userflips.sql</code> to <code>deploy/userflips_mastodon.sql</code>.</li>
+<li>Edit <code>deploy/userflips_mastodon.sql</code> to re-create the view with the
+new <code>mastodon</code> column added to the view.</li>
+<li>Copy <code>deploy/userflips.sql</code> to <code>revert/userflips_mastodon.sql</code>.
 Yes, copy the original change script to the new revert change.</li>
-<li>Add a <code>DROP VIEW</code> statement to <code>revert/userflips_twitter.sql</code>.</li>
-<li>Copy <code>verify/userflips.sql</code> to <code>verify/userflips_twitter.sql</code>.</li>
-<li>Modify <code>verify/userflips_twitter.sql</code> to include a check for the <code>twitter</code>
+<li>Add a <code>DROP VIEW</code> statement to <code>revert/userflips_mastodon.sql</code>.</li>
+<li>Copy <code>verify/userflips.sql</code> to <code>verify/userflips_mastodon.sql</code>.</li>
+<li>Modify <code>verify/userflips_mastodon.sql</code> to include a check for the <code>mastodon</code>
 column.</li>
 <li>Test the changes to make sure you can deploy and revert the
-<code>userflips_twitter</code> change.</li>
+<code>userflips_mastodon</code> change.</li>
 </ol>
-<p>But you can have Sqitch do most of the work for you.  The only requirement is
+<p>But you can have Sqitch do most of the work for you. The only requirement is
 that a tag appear between the two instances of a change we want to modify. In
 general, you&rsquo;re going to make a change like this after a release, which you&rsquo;ve
 tagged anyway, right? Well we have, with <code>@v1.0.0-dev2</code> added in the previous
 section. With that, we can let Sqitch do most of the hard work for us, thanks
 to the <a href="/docs/manual/sqitch-rework"><code>rework</code></a> command, which is similar to
 <a href="/docs/manual/sqitch-add"><code>add</code></a>:</p>
-<pre tabindex="0"><code>&gt; sqitch rework userflips -n &#39;Adds userflips.twitter.&#39;
+<pre tabindex="0"><code>&gt; git checkout -b mastodon
+&gt; sqitch rework userflips -n &#39;Adds userflips.mastodon.&#39;
 Added &#34;userflips [userflips@v1.0.0-dev2]&#34; to sqitch.plan.
 Modify these files as appropriate:
   * deploy/userflips.sql
@@ -913,23 +914,20 @@ Modify these files as appropriate:
 point of fact, it has copied the files to stand in for the previous instance
 of the <code>userflips</code> change, which we can see via <code>git status</code>:</p>
 <pre tabindex="0"><code>&gt; git status
-# On branch main
-# Your branch is ahead of &#39;origin/main&#39; by 4 commits.
-#   (use &#34;git push&#34; to publish your local commits)
-#
-# Changes not staged for commit:
-#   (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
-#   (use &#34;git checkout -- &lt;file&gt;...&#34; to discard changes in working directory)
-#
-#       modified:   revert/userflips.sql
-#       modified:   sqitch.plan
-#
-# Untracked files:
-#   (use &#34;git add &lt;file&gt;...&#34; to include in what will be committed)
-#
-#       deploy/userflips@v1.0.0-dev2.sql
-#       revert/userflips@v1.0.0-dev2.sql
-#       verify/userflips@v1.0.0-dev2.sql
+On branch mastodon
+Changes not staged for commit:
+  (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
+  (use &#34;git restore &lt;file&gt;...&#34; to discard changes in working directory)
+        modified:   revert/userflips.sql
+        modified:   sqitch.plan
+
+Untracked files:
+  (use &#34;git add &lt;file&gt;...&#34; to include in what will be committed)
+        deploy/userflips@v1.0.0-dev2.sql
+        flipr-1.0.0-dev2/
+        revert/userflips@v1.0.0-dev2.sql
+        verify/userflips@v1.0.0-dev2.sql
+
 no changes added to commit (use &#34;git add&#34; and/or &#34;git commit -a&#34;)
 </code></pre><p>The &ldquo;untracked files&rdquo; part of the output is the first thing to notice. They
 are all named <code>userflips@v1.0.0-dev2.sql</code>. What that means is: &ldquo;the
@@ -952,84 +950,85 @@ properly restores things to how they were after the original deploy script was
 deployed. Or, more simply, it should revert changes back to how they were
 as-of the deployment of <code>deploy/userflips@v1.0.0-dev2.sql</code>.</p>
 <p>Fortunately, our view deploy scripts are already idempotent, thanks to the
-use of the <code>OR ALTER</code> expression. No matter how many times a deployment
+use of the <code>OR REPLACE</code> expression. No matter how many times a deployment
 script is run, the end result will be the same instance of the view, with
 no duplicates or errors.</p>
 <p>As a result, there is no need to explicitly add changes. So go ahead. Modify
-<code>deploy/userflips.sql</code> to add the <code>twitter</code> column.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -3,7 +3,7 @@
+<code>deploy/userflips.sql</code> to add the <code>mastodon</code> column.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#f92672">--- a/deploy/userflips.sql
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/deploy/userflips.sql
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -3,6 +3,6 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- requires: flips
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span> CREATE OR ALTER VIEW userflips AS
-</span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT f.id, u.nickname, u.fullname, f.body, f.created_at
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT f.id, u.nickname, u.fullname, u.twitter, f.body, f.created_at
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> CREATE OR REPLACE VIEW userflips AS
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT f.id, u.nickname, u.fullname, f.body, f.created_at AS created_at
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT f.id, u.nickname, u.fullname, u.mastodon, f.body, f.created_at created_at
 </span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>   FROM users u
 </span></span><span style="display:flex;"><span>   JOIN flips f ON u.nickname = f.nickname;
-</span></span><span style="display:flex;"><span> 
-</span></span></code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>twitter</code> column.
+</span></span></code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>mastodon</code> column.
 Here&rsquo;s the diff:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,6 @@
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- Verify flipr:userflips on firebird
-</span></span><span style="display:flex;"><span> 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#f92672">--- a/verify/userflips.sql
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/verify/userflips.sql
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -1,5 +1,5 @@
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- Verify flipr:userflips on clickhouse
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT id, nickname, fullname, body, created_at
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT id, nickname, twitter, fullname, body, created_at
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT id, nickname, mastodon, fullname, body, created_at
 </span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>   FROM userflips
-</span></span><span style="display:flex;"><span>  WHERE 1=2;
-</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>  WHERE false;
 </span></span></code></pre></div><p>Now try a deployment:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
   + userflips .. ok
 </code></pre><p>So, are the changes deployed?</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> echo <span style="color:#e6db74">&#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW VIEW userflips; quit;&#34;</span> <span style="color:#960050;background-color:#1e0010">\</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">|</span> isql<span style="color:#f92672">-</span>fb <span style="color:#f92672">-</span>q <span style="color:#f92672">-</span>u SYSDBA <span style="color:#f92672">-</span>p masterkey
-</span></span><span style="display:flex;"><span>ID                              INTEGER <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-</span></span><span style="display:flex;"><span>NICKNAME                        VARCHAR(<span style="color:#ae81ff">50</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-</span></span><span style="display:flex;"><span>FULLNAME                        VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-</span></span><span style="display:flex;"><span>TWITTER                         VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-</span></span><span style="display:flex;"><span>BODY                            VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-</span></span><span style="display:flex;"><span>CREATED_AT                      <span style="color:#66d9ef">TIMESTAMP</span> <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">View</span> <span style="color:#66d9ef">Source</span>:
-</span></span><span style="display:flex;"><span><span style="color:#f92672">====</span> <span style="color:#f92672">======</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, u.twitter, f.body, f.created_at
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users u
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">JOIN</span> flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname
-</span></span></code></pre></div><p>Awesome, the view now includes the <code>twitter</code> column. But can we revert?</p>
+<pre tabindex="0"><code>&gt; clickhouse client -d flipr_test -q &#39;describe userflips&#39;
+id      Int32
+nickname        String
+fullname        String
+mastodon        String
+body    String
+created_at      DateTime64(6, \&#39;UTC\&#39;)
+</code></pre><p>Awesome, the view now includes the <code>mastodon</code> column. But can we revert?</p>
 <pre tabindex="0"><code>&gt; sqitch revert --to @HEAD^ -y
 Reverting changes to hashtags @v1.0.0-dev2 from flipr_test
   - userflips .. ok
-</code></pre><p>Did that work, is the <code>twitter</code> column gone?</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> echo <span style="color:#e6db74">&#34;CONNECT &#39;localhost:/tmp/flipr_test/flipr.fdb&#39;; SHOW VIEW userflips; quit;&#34;</span> <span style="color:#960050;background-color:#1e0010">\</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">|</span> isql<span style="color:#f92672">-</span>fb <span style="color:#f92672">-</span>q <span style="color:#f92672">-</span>u SYSDBA <span style="color:#f92672">-</span>p masterkey
-</span></span><span style="display:flex;"><span>ID                              INTEGER <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-</span></span><span style="display:flex;"><span>NICKNAME                        VARCHAR(<span style="color:#ae81ff">50</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-</span></span><span style="display:flex;"><span>FULLNAME                        VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-</span></span><span style="display:flex;"><span>BODY                            VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-</span></span><span style="display:flex;"><span>CREATED_AT                      <span style="color:#66d9ef">TIMESTAMP</span> <span style="color:#66d9ef">Not</span> <span style="color:#66d9ef">Null</span> 
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">View</span> <span style="color:#66d9ef">Source</span>:
-</span></span><span style="display:flex;"><span><span style="color:#f92672">====</span> <span style="color:#f92672">======</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.created_at
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users u
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">JOIN</span> flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname
-</span></span></code></pre></div><p>Yes, it works! Sqitch properly finds the original instances of these changes
+</code></pre><p>Did that work, is the <code>mastodon</code> column gone?</p>
+<pre tabindex="0"><code>&gt; clickhouse client -d flipr_test -q &#39;describe userflips&#39;
+id      Int32
+nickname        String
+fullname        String
+body    String
+created_at      DateTime64(6, \&#39;UTC\&#39;)
+</code></pre><p>Yes, it works! Sqitch properly finds the original instances of these changes
 in the new script files that include tags.</p>
-<p>Excellent. Let&rsquo;s go ahead and commit these changes:</p>
+<p>Excellent. Let&rsquo;s go ahead and commit these changes and merge them into main:</p>
 <pre tabindex="0"><code>&gt; rm -rf flipr-1.0.0-dev2
 &gt; git add .
-&gt; git commit -m &#39;Add the twitter column to the userflips view.&#39;
-[main f530359] Add the twitter column to the userflips view.
- 7 files changed, 32 insertions(+), 4 deletions(-)
+&gt; git commit -m &#39;Add the mastodon column to the userflips view.&#39;
+[mastodon 571662b] Add the mastodon column to the userflips view.
+ 7 files changed, 26 insertions(+), 4 deletions(-)
+ create mode 100644 deploy/userflips@v1.0.0-dev2.sql
+ create mode 100644 revert/userflips@v1.0.0-dev2.sql
+ create mode 100644 verify/userflips@v1.0.0-dev2.sql
+&gt; git checkout main
+&gt; git merge --no-ff mastodon -m &#34;Merge branch &#39;mastodon&#39;&#34;
+Merge made by the &#39;ort&#39; strategy.
+ deploy/userflips.sql             | 2 +-
+ deploy/userflips@v1.0.0-dev2.sql | 8 ++++++++
+ revert/userflips.sql             | 9 +++++++--
+ revert/userflips@v1.0.0-dev2.sql | 3 +++
+ sqitch.plan                      | 1 +
+ verify/userflips.sql             | 2 +-
+ verify/userflips@v1.0.0-dev2.sql | 5 +++++
+ 7 files changed, 26 insertions(+), 4 deletions(-)
  create mode 100644 deploy/userflips@v1.0.0-dev2.sql
  create mode 100644 revert/userflips@v1.0.0-dev2.sql
  create mode 100644 verify/userflips@v1.0.0-dev2.sql
 </code></pre><h2 id="more-to-come">More to Come</h2>
 <p>Sqitch is a work in progress. Better integration with version control systems
 is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
-<h2 id="authors">Authors</h2>
+<h2 id="author">Author</h2>
 <ul>
-<li>Ștefan Suciu <a href="mailto:stefbv70@gmail.com">stefbv70@gmail.com</a></li>
 <li>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></li>
 </ul>
 <h2 id="license">License</h2>

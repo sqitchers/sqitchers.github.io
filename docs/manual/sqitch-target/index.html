@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.147.4">
+	<meta name="generator" content="Hugo 0.151.0">
 </head>
 <body>
 	<header id=masthead>
@@ -85,6 +85,7 @@ db:engine:[//[user[:password]@][host][:port]/][dbname][?params][#fragment]
 <li><code>db:pg://dba@example.net/blanket</code></li>
 <li><code>db:mysql://db.example.com/</code></li>
 <li><code>db:firebird://localhost//tmp/test.fdb</code></li>
+<li><code>db:clickhouse://default@localhost/default?Driver=ClickHouse</code></li>
 </ul>
 <p>Note that, as with any URI or URL, special characters must be
 <a href="https://en.wikipedia.org/wiki/URL_encoding">URL encoded</a>. For example, when

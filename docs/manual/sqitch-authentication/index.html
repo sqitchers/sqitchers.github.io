@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.147.4">
+	<meta name="generator" content="Hugo 0.151.0">
 </head>
 <body>
 	<header id=masthead>
@@ -131,6 +131,10 @@ Next, it looks in the
 <a href="https://docs.snowflake.com/en/user-guide/snowsql-start.html#snowsql-config-file"><code>~/.snowsql/config</code> file</a>
 and use the default <code>connections.username</code> value. Otherwise, it uses the
 system username.</p>
+</li>
+<li>
+<p>ClickHouse</p>
+<p>The ClickHouse engine uses the <code>CLICKHOUSE_USER</code> environment variable, if set.</p>
 </li>
 </ul>
 <h2 id="passwords">Passwords</h2>
@@ -249,6 +253,60 @@ configuration for your DSN in <code>/etc/odbc.ini</code> or <code>~/.odbc.ini</c
 the <code>priv_key_file_pwd</code> ODBC parameter must be set, as Sqitch uses ODBC to
 maintain its registry and SnowSQL to execute change scripts.</p>
 </li>
+<li>
+<p>ClickHouse</p>
+<p>ClickHouse does not support password-less authentication, but does support
+<a href="https://metacpan.org/pod/%20https%3A#clickhouse.com-docs-guides-sre-ssl-user-auth">TLS Client authentication</a>.
+Sqitch reads the <code>$.openSSL.client</code> section of the
+<code>Client configuration|https://clickhouse.com/docs/interfaces/cli#connection-credentials</code>
+to also configure is ODBC connection. For example, given this config:</p>
+<pre tabindex="0"><code>&lt;config&gt;
+ &lt;openSSL&gt;
+   &lt;client&gt;
+     &lt;certificateFile&gt;my_cert_name.crt&lt;/certificateFile&gt;
+     &lt;privateKeyFile&gt;my_cert_name.key&lt;/privateKeyFile&gt;
+   &lt;/client&gt;
+ &lt;/openSSL&gt;
+  &lt;/config&gt;
+</code></pre><p>It maps the configuration parameters to the
+<code>ODBC parameters https://github.com/clickHouse/clickhouse-odbc?tab=readme-ov-file#configuration</code>
+as follows:</p>
+<ul>
+<li>
+<p><code>privateKeyFile</code>: <code>PrivateKeyFile</code></p>
+<p>Path to private key file. Raises an error if both are set and not the same
+value.</p>
+</li>
+<li>
+<p><code>certificateFile</code>: <code>CertificateFile</code></p>
+<p>Path to certificate file. Raises an error if both are set and not the same
+value.</p>
+</li>
+<li>
+<p><code>caConfig</code>: <code>CALocation</code></p>
+<p>Path to the file or directory containing the CA/root certificates. Raises an
+error if both are set and not the same value.</p>
+</li>
+<li>
+<p><code>secure</code>, <code>port</code>, <code>host</code>, <code>verificationMode</code>: <code>SSLMode</code></p>
+<p>Sets the ODBC <code>SSLMode</code> parameter to <code>require</code> when the <code>secure</code> parameter
+from the configuration file is true or the port is <code>9440</code>, or the host name
+from the configuration file or the target ends in <code>.clickhouse.cloud</code>. If
+none of those are true but <code>verificationMode</code> is set, set the <code>SSLMode</code>
+query parameters as follows:</p>
+<pre tabindex="0"><code>verificationMode | SSLMode
+  ------------------|-----------
+none             | [not set]
+relaxed          | allow
+strict           | require
+once             | require
+</code></pre></li>
+</ul>
+<p>Unfortunately, these parameters cannot currently be specified exclusively via
+ODBC parameters, because the client lacks options or environment variables to
+match. It&rsquo;s best for now to omit them from target URIs and rely only on the
+client configuration.</p>
+</li>
 </ul>
 <h3 id="use-a-password-file">Use a Password File</h3>
 <p>If you must use password authentication with your database server, you may be
@@ -355,6 +413,43 @@ An example:</p>
 <li><code>connections.dbname</code></li>
 </ul>
 </li>
+<li>
+<p>ClickHouse</p>
+<p>ClickHouse supports password configuration via its
+<a href="https://clickhouse.com/docs/interfaces/cli#connection-credentials">client configuration file</a>.
+Sqitch will read the <code>host</code>, <code>port</code>, <code>database</code>, and <code>password</code> parameters
+from either the root of the configuration file, as well as the <code>secure</code> and
+<code>openSSL.client</code> parameters, for example:</p>
+<pre tabindex="0"><code>&lt;config&gt;
+  &lt;user&gt;username&lt;/user&gt;
+  &lt;password&gt;password&lt;/password&gt;
+  &lt;secure&gt;true&lt;/secure&gt;
+  &lt;openSSL&gt;
+    &lt;client&gt;
+      &lt;caConfig&gt;/etc/ssl/cert.pem&lt;/caConfig&gt;
+    &lt;/client&gt;
+  &lt;/openSSL&gt;
+&lt;/config&gt;
+</code></pre><p>All but the <code>openSSL.client</code> parameters may be set on a named connection
+basis, matched by the host name in the target URL (or the
+<code>$CLICKHOUSE_HOSTNAME</code> environment variable). All the parameters are the
+same except <code>host</code> becomes <code>hostname</code>. For example, to set parameters for
+the host <code>click.house</code>:</p>
+<pre tabindex="0"><code>&lt;config&gt;
+  &lt;connections_credentials&gt;
+    &lt;connection&gt;
+      &lt;name&gt;click.house&lt;/name&gt;
+      &lt;hostname&gt;clickhouse.example.com&lt;/hostname&gt;
+      &lt;port&gt;9440&lt;/port&gt;
+      &lt;secure&gt;1&lt;/secure&gt;
+      &lt;user&gt;default&lt;/user&gt;
+      &lt;password&gt;password&lt;/password&gt;
+    &lt;/connection&gt;
+  &lt;/connections_credentials&gt;
+&lt;/config&gt;
+</code></pre><p>Note that setting <code>port</code> to 9440 will implicitly set the ODBC port to 8443
+unless it&rsquo;s explicitly set to something else.</p>
+</li>
 </ul>
 <h3 id="use-sqitch_password">Use <code>$SQITCH_PASSWORD</code></h3>
 <p>The <code>$SQITCH_PASSWORD</code> environment variable can be used to specify the
@@ -385,6 +480,10 @@ you may wish to use instead. However, their behaviors may not be consistent:</p>
 <li>
 <p>Snowflake</p>
 <p><code>$SNOWSQL_PWD</code></p>
+</li>
+<li>
+<p>ClickHouse</p>
+<p><code>$CLICKHOUSE_PASSWORD</code></p>
 </li>
 </ul>
 <h3 id="use-target-uris">Use Target URIs</h3>

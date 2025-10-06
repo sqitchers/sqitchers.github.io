@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.147.4">
+	<meta name="generator" content="Hugo 0.151.0">
 </head>
 <body>
 	<header id=masthead>
@@ -392,6 +392,7 @@ appropriate manual page.</p>
 <li><code>exasol</code> - <a href="https://www.exasol.com/">Exasol</a></li>
 <li><code>snowflake</code> - <a href="https://www.snowflake.net/">Snowflake</a></li>
 <li><code>cockroach</code> - <a href="https://www.cockroachlabs.com/product/">CockroachDB</a></li>
+<li><code>clickhouse</code> - <a href="https://www.clickhouse.com/clickhouse/">ClickHouse</a></li>
 </ul>
 </li>
 <li>
@@ -537,6 +538,13 @@ to use for its own data. No other data should be stored there. Defaults to
 <p>For the Snowflake engine, the <code>registry</code> value identifies the schema for
 Sqitch to use for its own data. No other data should be stored there. Defaults
 to <code>sqitch</code>.</p>
+</li>
+<li>
+<p><code>engine.clickhouse.registry</code></p>
+<p>For the ClickHouse engine, the <code>registry</code> value identifies the database for
+Sqitch to use for its own data. If you need to manage multiple databases on a
+single server, and don&rsquo;t want them all to share the same registry, change this
+property to a value specific for your database. Defaults to <code>sqitch</code>.</p>
 </li>
 </ul>
 <h4 id="corevcs"><code>core.vcs</code></h4>

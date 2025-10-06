@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.147.4">
+	<meta name="generator" content="Hugo 0.151.0">
 </head>
 <body>
 	<header id=masthead>
@@ -54,7 +54,8 @@
 				<li><a href='#firebird'>Firebird</a></li>
 				<li><a href='#vertica'>Vertica</a></li>
 				<li><a href='#exasol'>Exasol</a></li>
-				<li><a href='#snowflake'>Snowflake</a></li></ul>
+				<li><a href='#snowflake'>Snowflake</a></li>
+				<li><a href='#clickhouse'>ClickHouse</a></li></ul>
 				</li></ul>
 				</li><li><a href='#see-also'>See Also</a></li>
 				<li><a href='#sqitch'>Sqitch</a></li>
@@ -346,6 +347,25 @@ name. Deprecated by Snowflake.</p>
 <p><code>SNOWSQL_REGION</code></p>
 <p>The Snowflake region. Superseded by the target URI host name. Deprecated by
 Snowflake.</p>
+</li>
+</ul>
+<h4 id="clickhouse">ClickHouse</h4>
+<p>The Sqitch ClickHouse engine supports the following environment variables:</p>
+<ul>
+<li>
+<p><code>CLICKHOUSE_USER</code></p>
+<p>The username to use to connect to ClickHouse. Superseded by
+<code>$SQITCH_USERNAME</code> and the target URI username.</p>
+</li>
+<li>
+<p><code>CLICKHOUSE_PASSWORD</code></p>
+<p>The password to use to connect to ClickHouse. Superseded by
+<code>$SQITCH_PASSWORD</code> and the target URI password.</p>
+</li>
+<li>
+<p><code>CLICKHOUSE_HOST</code></p>
+<p>The ClickHouse server host to connect to. Superseded by the target URI host
+name.</p>
 </li>
 </ul>
 <h2 id="see-also">See Also</h2>

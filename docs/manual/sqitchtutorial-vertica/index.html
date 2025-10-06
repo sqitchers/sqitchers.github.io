@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.147.4">
+	<meta name="generator" content="Hugo 0.151.0">
 </head>
 <body>
 	<header id=masthead>
@@ -81,13 +81,18 @@ networking site called Flipr. All examples use <a href="https://git-scm.com/">Gi
 the VCS and <a href="https://my.vertica.com/">Vertica</a> as the storage engine, but for
 the most part you can substitute other VCSes and database engines in the
 examples as appropriate.</p>
-<p>If you&rsquo;d like to manage a PostgreSQL database, see <a href="/docs/manual/sqitchtutorial">sqitchtutorial</a>.</p>
-<p>If you&rsquo;d like to manage an SQLite database, see <a href="/docs/manual/sqitchtutorial-sqlite">sqitchtutorial-sqlite</a>.</p>
-<p>If you&rsquo;d like to manage an Oracle database, see <a href="/docs/manual/sqitchtutorial-oracle">sqitchtutorial-oracle</a>.</p>
-<p>If you&rsquo;d like to manage a MySQL database, see <a href="/docs/manual/sqitchtutorial-mysql">sqitchtutorial-mysql</a>.</p>
-<p>If you&rsquo;d like to manage a Firebird database, see <a href="/docs/manual/sqitchtutorial-firebird">sqitchtutorial-firebird</a>.</p>
-<p>If you&rsquo;d like to manage an Exasol database, see <a href="/docs/manual/sqitchtutorial-exasol">sqitchtutorial-exasol</a>.</p>
-<p>If you&rsquo;d like to manage a Snowflake database, see <a href="/docs/manual/sqitchtutorial-snowflake">sqitchtutorial-snowflake</a>.</p>
+<p>If you&rsquo;d like to manage a database with a different database engine, see one
+of the following other tutorials:</p>
+<ul>
+<li><a href="/docs/manual/sqitchtutorial">PostgreSQL, Yugabyte, and CockroachDB Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-sqlite">SQLite Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-oracle">Oracle Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-mysql">MySQL and MariaDB Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-firebird">Firebird Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-exasol">Exasol Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-snowflake">Snowflake Tutorial</a></li>
+<li><a href="/docs/manual/sqitchtutorial-clickhouse">ClickHouse Tutorial</a></li>
+</ul>
 <h3 id="connection-configuration">Connection Configuration</h3>
 <p>Sqitch requires ODBC to connect to the Vertica database. As such, you&rsquo;ll need
 to make sure that the Vertica ODBC driver is properly configured. At its
@@ -1002,7 +1007,7 @@ changes like these:</p>
 Yes, copy the original change script to the new revert change.</li>
 <li>Add a <code>DROP VIEW</code> statement to <code>revert/userflips_twitter.sql</code>.</li>
 <li>Copy <code>verify/userflips.sql</code> to <code>verify/userflips_twitter.sql</code>.</li>
-<li>Modify <code>verify/userflips_twitter.sql</code> to include a check for the <code>twiter</code>
+<li>Modify <code>verify/userflips_twitter.sql</code> to include a check for the <code>twitter</code>
 column.</li>
 <li>Test the changes to make sure you can deploy and revert the
 <code>userflips_twitter</code> change.</li>

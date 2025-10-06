@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.147.4">
+	<meta name="generator" content="Hugo 0.151.0">
 </head>
 <body>
 	<header id=masthead>
@@ -178,7 +178,8 @@ be evaluated.</p>
 <p>This option allows one to define templates for specific tasks, such as
 creating a table, and then use them for changes that perform those tasks.
 Defaults to the name of the database engine (<code>pg</code>, <code>sqlite</code>, <code>mysql</code>,
-<code>oracle</code>, <code>firebird</code>, <code>vertica</code>, <code>exasol</code>, or <code>snowflake</code>).</p>
+<code>oracle</code>, <code>firebird</code>, <code>vertica</code>, <code>exasol</code>, <code>snowflake</code>, <code>cockroach</code>, or
+<code>clickhouse</code>).</p>
 </li>
 <li>
 <p><code>--use script=template</code></p>
@@ -361,8 +362,8 @@ specified via <code>--set</code> will override configuration variables.</p>
 <li>
 <p><code>engine</code></p>
 <p>The name of the engine for which the change was added. One of <code>pg</code>,
-<code>sqlite</code>, <code>mysql</code>, <code>oracle</code>, <code>firebird</code>, <code>vertica</code> <code>exasol</code>, or
-<code>snowflake</code>.</p>
+<code>sqlite</code>, <code>mysql</code>, <code>oracle</code>, <code>firebird</code>, <code>vertica</code> <code>exasol</code>,
+<code>snowflake</code>, <code>cockroach</code>, or <code>clickhouse</code>).</p>
 </li>
 <li>
 <p><code>project</code></p>
