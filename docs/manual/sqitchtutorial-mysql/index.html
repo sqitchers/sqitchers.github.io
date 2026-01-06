@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.151.0">
+	<meta name="generator" content="Hugo 0.154.2">
 </head>
 <body>
 	<header id=masthead>
@@ -182,16 +182,16 @@ deploy, revert, and verify scripts that represent the change. Now we edit
 these files. The <code>deploy</code> script&rsquo;s job is to create the table. By default,
 the <code>deploy/appuser.sql</code> file looks like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:appuser to mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">-- XXX Add DDLs here.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
 </span></span></code></pre></div><p>What we want to do is to replace the <code>XXX</code> comment with the <code>CREATE USER</code>
 statement, like so:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">USER</span> flipr;
@@ -200,7 +200,7 @@ statement, like so:</p>
 </span></span></code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
 script, so we edit this to <code>revert/appuser.sql</code> to look like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:users from mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">USER</span> flipr;
@@ -426,7 +426,7 @@ idea to be explicit about dependencies.</p>
 this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to mysql
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appuser
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> users (
@@ -581,7 +581,7 @@ planned the change, and a note.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:insert_user to mysql
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appuser
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DELIMITER</span> <span style="color:#f92672">//</span>
@@ -604,7 +604,7 @@ planned the change, and a note.</p>
 </span></span></code></pre></div><p>Here&rsquo;s what <code>verify/insert_user.sql</code> might look like, using the Sqitch
 <code>checkit()</code> function again:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:insert_user on mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> sqitch.checkit(<span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>), <span style="color:#e6db74">&#39;Procedure &#34;insert_user&#34; does not exist&#39;</span>)
@@ -617,14 +617,14 @@ planned the change, and a note.</p>
 in the <code>information_schema.routines</code> table and throw an exception if it does not exist.</p>
 <p>And <code>revert/insert_user.sql</code> should look something like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:insert_user from mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">BEGIN</span>;
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> insert_user;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
 </span></span></code></pre></div><p>Now for <code>change_pass</code>; <code>deploy/change_pass.sql</code> might look like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:change_pass to mysql
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appuser
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DELIMITER</span> <span style="color:#f92672">//</span>
@@ -658,7 +658,7 @@ in the <code>information_schema.routines</code> table and throw an exception if 
 </span></span></code></pre></div><p>And of course, its <code>revert</code> script, <code>revert/change_pass.sql</code>, should look
 something like:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:change_pass from mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">BEGIN</span>;
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> change_pass;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
 </span></span></code></pre></div><p>Try em out!</p>
@@ -809,7 +809,7 @@ Added &#34;flips [appuser users]&#34; to sqitch.plan
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to mysql
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appuser
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flips (
@@ -824,7 +824,7 @@ Added &#34;flips [appuser users]&#34; to sqitch.plan
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
 </span></span></code></pre></div><p>Edit <code>verify/flips.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id
@@ -837,7 +837,7 @@ Added &#34;flips [appuser users]&#34; to sqitch.plan
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
 </span></span></code></pre></div><p>And edit <code>revert/flips.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flips;
@@ -878,7 +878,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:insert_flip to mysql
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: flips
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appuser
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DELIMITER</span> <span style="color:#f92672">//</span>
@@ -903,7 +903,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:delete_flip to mysql
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: flips
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appuser
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DELIMITER</span> <span style="color:#f92672">//</span>
@@ -924,7 +924,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
 </span></span></code></pre></div><p>The <code>verify</code> scripts are:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:insert_flip on mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> sqitch.checkit(<span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>), <span style="color:#e6db74">&#39;Function &#34;insert_flip&#34; does not exist&#39;</span>)
@@ -935,7 +935,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
 </span></span></code></pre></div><p>And:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:delete_flip on mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> sqitch.checkit(<span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>), <span style="color:#e6db74">&#39;Function &#34;delete_flip&#34; does not exist&#39;</span>)
@@ -946,7 +946,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
 </span></span></code></pre></div><p>The <code>revert</code> scripts are:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:insert_flip from mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> insert_flip;
@@ -954,7 +954,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
 </span></span></code></pre></div><p>And:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:delete_flip from mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> delete_flip;
@@ -1059,7 +1059,8 @@ docs</a>:</p>
 <p>Run 3-way file level merge for text files, but take lines from both versions,
 instead of leaving conflict markers. This tends to leave the added lines in
 the resulting file in random order and the user should verify the result. Do
-not use this if you do not understand the implications.</p></blockquote>
+not use this if you do not understand the implications.</p>
+</blockquote>
 <p>This has the effect of appending lines from all the merging files, which is
 exactly what we need. So let&rsquo;s give it a try. First, back out the botched
 rebase:</p>
@@ -1303,29 +1304,29 @@ drop the function before re-creating it. So let&rsquo;s do it. We&rsquo;ll modif
 scripts drop and re-create the functions with to use <code>ENCRYPT()</code>. Make this
 change to <code>deploy/insert_user.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -6,13 +6,14 @@ BEGIN;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> DELIMITER //
 </span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">+DROP PROCEDURE insert_user;
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span> CREATE PROCEDURE insert_user(
+</span></span></span><span style="display:flex;"><span> CREATE PROCEDURE insert_user(
 </span></span><span style="display:flex;"><span>     nickname VARCHAR(512),
 </span></span><span style="display:flex;"><span>     password VARCHAR(512)
 </span></span><span style="display:flex;"><span> ) SQL SECURITY DEFINER
 </span></span><span style="display:flex;"><span> BEGIN
 </span></span><span style="display:flex;"><span>     INSERT INTO users (nickname, password, timestamp)
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-    VALUES (nickname, md5(password), UTC_TIMESTAMP(6));
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+    VALUES (nickname, ENCRYPT(md5(password), md5(FLOOR(RAND() * 0xFFFFFFFF))), UTC_TIMESTAMP(6));
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span> END
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+    VALUES (nickname, ENCRYPT(md5(password), md5(FLOOR(RAND() * 0xFFFFFFFF))), UTC_TIMESTAMP(6));
+</span></span></span><span style="display:flex;"><span> END
 </span></span><span style="display:flex;"><span> //
 </span></span><span style="display:flex;"><span> 
 </span></span></code></pre></div><p>We just need to add the <code>DROP</code> statement to the revert script,
 <code>revert/insert_user.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -6,6 +6,7 @@ BEGIN;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> DELIMITER //
 </span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">+DROP PROCEDURE insert_user;
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span> CREATE PROCEDURE insert_user(
+</span></span></span><span style="display:flex;"><span> CREATE PROCEDURE insert_user(
 </span></span><span style="display:flex;"><span>     nickname VARCHAR(512),
 </span></span><span style="display:flex;"><span>     password VARCHAR(512)
 </span></span></code></pre></div><p>Go ahead and rework the <code>change_pass</code> change, too:</p>
@@ -1337,32 +1338,32 @@ Modify these files as appropriate:
   * verify/change_pass.sql
 </code></pre><p>And make this change to <code>deploy/change_pass.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -6,6 +6,7 @@ BEGIN;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> DELIMITER //
 </span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">+DROP FUNCTION change_pass;
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span> CREATE FUNCTION change_pass(
+</span></span></span><span style="display:flex;"><span> CREATE FUNCTION change_pass(
 </span></span><span style="display:flex;"><span>     nickname VARCHAR(512),
 </span></span><span style="display:flex;"><span>     oldpass  VARCHAR(512),
 </span></span><span style="display:flex;"><span><span style="color:#75715e">@@ -13,9 +14,9 @@ CREATE FUNCTION change_pass(
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> ) RETURNS INTEGER DETERMINISTIC SQL SECURITY DEFINER
+</span></span></span><span style="display:flex;"><span> ) RETURNS INTEGER DETERMINISTIC SQL SECURITY DEFINER
 </span></span><span style="display:flex;"><span> BEGIN
 </span></span><span style="display:flex;"><span>     UPDATE users
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-       SET password = md5(newpass)
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+       SET password = ENCRYPT(md5(newpass), md5(FLOOR(RAND() * 0xFFFFFFFF)))
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>      WHERE nickname = nickname
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+       SET password = ENCRYPT(md5(newpass), md5(FLOOR(RAND() * 0xFFFFFFFF)))
+</span></span></span><span style="display:flex;"><span>      WHERE nickname = nickname
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-       AND password = md5(oldpass);
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+       AND password = ENCRYPT(md5(oldpass), password);
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>     RETURN ROW_COUNT();
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+       AND password = ENCRYPT(md5(oldpass), password);
+</span></span></span><span style="display:flex;"><span>     RETURN ROW_COUNT();
 </span></span><span style="display:flex;"><span> END;
 </span></span><span style="display:flex;"><span> //
 </span></span></code></pre></div><p>And add the <code>DROP FUNCTION</code> statement to its revert script, too:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -6,6 +6,7 @@ BEGIN;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> DELIMITER //
 </span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">+DROP FUNCTION change_pass;
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span> CREATE FUNCTION change_pass(
+</span></span></span><span style="display:flex;"><span> CREATE FUNCTION change_pass(
 </span></span><span style="display:flex;"><span>     nickname VARCHAR(512),
 </span></span><span style="display:flex;"><span>     oldpass  VARCHAR(512),
 </span></span></code></pre></div><p>And now we&rsquo;re ready to try a deployment:</p>
@@ -1410,7 +1411,7 @@ examine the body of the function as returned by
 <a href="https://dev.mysql.com/doc/refman/5.7/en/information-schema-routines-table.html"><code>INFORMATION_SCHEMA.ROUTINES</code></a>
 So the <code>insert_user</code> verify script looks like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:insert_user on mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> sqitch.checkit(<span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>), <span style="color:#e6db74">&#39;Procedure &#34;insert_user&#34; does not exist or is not up-to-date&#39;</span>)
@@ -1422,7 +1423,7 @@ So the <code>insert_user</code> verify script looks like this:</p>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
 </span></span></code></pre></div><p>And the <code>change_pass</code> verify script looks like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:change_pass on mysql
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> sqitch.checkit(<span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>), <span style="color:#e6db74">&#39;Procedure &#34;change_pass&#34; does not exist or is not up-to-date&#39;</span>)
@@ -1464,7 +1465,7 @@ is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 <h2 id="author">Author</h2>
 <p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
 <h2 id="license">License</h2>
-<p>Copyright (c) 2012-2025 David E. Wheeler, 2012-2021 iovation Inc.</p>
+<p>Copyright (c) 2012-2026 David E. Wheeler, 2012-2021 iovation Inc.</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal
 in the Software without restriction, including without limitation the rights

@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.151.0">
+	<meta name="generator" content="Hugo 0.154.2">
 </head>
 <body>
 	<header id=masthead>
@@ -180,16 +180,16 @@ deploy, revert, and verify scripts that represent the change. Now we edit
 these files. The <code>deploy</code> script&rsquo;s job is to create the table. By default,
 the <code>deploy/users.sql</code> file looks like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to sqlite
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">-- XXX Add DDLs here.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
 </span></span></code></pre></div><p>What we want to do is to replace the <code>XXX</code> comment with the <code>CREATE TABLE</code>
 statement, like so:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to sqlite
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> users (
@@ -204,7 +204,7 @@ statement, like so:</p>
 </span></span></code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
 script, so we edit this to <code>revert/users.sql</code> to look like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:users from sqlite
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> users;
@@ -417,7 +417,7 @@ idea to be explicit about dependencies.</p>
 this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to sqlite
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flips (
@@ -438,7 +438,7 @@ need to require the <code>users</code> change.</p>
 table. I recommend selecting each column by name, too, to be sure that no
 column is missing. Here&rsquo;s the <code>verify/flips.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on sqlite
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, body, <span style="color:#66d9ef">timestamp</span>
@@ -449,7 +449,7 @@ column is missing. Here&rsquo;s the <code>verify/flips.sql</code>:</p>
 </span></span></code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
 <code>revert/flips.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from sqlite
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flips;
@@ -598,10 +598,11 @@ Adding registry tables to db:sqlite:dev/sqitch.db
 Deploying changes to db:sqlite:dev/flipr.db
   + users ................... ok
   + flips ................... ok
+  + userflips @v1.0.0-dev1 .. ok
 </code></pre><p>Great, both changes were deployed and <code>userflips</code> was tagged with
 <code>@v1.0.0-dev1</code>. Let&rsquo;s have a look at the status:</p>
-<pre tabindex="0"><code>&gt; sqitch status db:sqlite:dev/flipr_dev.db
-# On database db:sqlite:dev/flipr_dev.db
+<pre tabindex="0"><code>&gt; sqitch status db:sqlite:dev/flipr.db
+# On database db:sqlite:dev/flipr.db
 # Project:  flipr
 # Change:   60ee3aba0445bf3287f9dc1dd97b1877523fa139
 # Name:     userflips
@@ -763,7 +764,8 @@ docs</a>:</p>
 <p>Run 3-way file level merge for text files, but take lines from both versions,
 instead of leaving conflict markers. This tends to leave the added lines in
 the resulting file in random order and the user should verify the result. Do
-not use this if you do not understand the implications.</p></blockquote>
+not use this if you do not understand the implications.</p>
+</blockquote>
 <p>This has the effect of appending lines from all the merging files, which is
 exactly what we need. So let&rsquo;s give it a try. First, back out the botched
 rebase:</p>
@@ -948,35 +950,35 @@ how they were as-of the deployment of <code>deploy/userflips@v1.0.0-dev2.sql</co
 also add a <code>DROP VIEW IF EXISTS</code> statement, in case we need to rework this
 change again in the future:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -4,8 +4,9 @@
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> BEGIN;
 </span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">+DROP VIEW IF EXISTS userflips;
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span> CREATE VIEW userflips AS
+</span></span></span><span style="display:flex;"><span> CREATE VIEW userflips AS
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT f.id, u.nickname, u.fullname, f.body, f.timestamp
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT f.id, u.nickname, u.fullname, u.twitter, f.body, f.timestamp
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>   FROM users u
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+SELECT f.id, u.nickname, u.fullname, u.twitter, f.body, f.timestamp
+</span></span></span><span style="display:flex;"><span>   FROM users u
 </span></span><span style="display:flex;"><span>   JOIN flips f ON u.nickname = f.nickname;
 </span></span><span style="display:flex;"><span> 
 </span></span></code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>twitter</code> column.
 Here&rsquo;s the diff:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -2,7 +2,7 @@
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> BEGIN;
 </span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT id, nickname, fullname, body, timestamp
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT id, nickname, fullname, twitter, body, timestamp
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>   FROM userflips
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+SELECT id, nickname, fullname, twitter, body, timestamp
+</span></span></span><span style="display:flex;"><span>   FROM userflips
 </span></span><span style="display:flex;"><span>  WHERE 0;
 </span></span><span style="display:flex;"><span> 
 </span></span></code></pre></div><p>And finally, modify <code>revert/userflips.sql</code> to drop the view
 before creating it:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -4,6 +4,7 @@
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> BEGIN;
 </span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">+DROP VIEW IF EXISTS userflips;
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span> CREATE VIEW userflips AS
+</span></span></span><span style="display:flex;"><span> CREATE VIEW userflips AS
 </span></span><span style="display:flex;"><span> SELECT f.id, u.nickname, u.fullname, f.body, f.timestamp
 </span></span><span style="display:flex;"><span>   FROM users u
 </span></span></code></pre></div><p>Note that if we had included that statement when we originally created the
@@ -1017,7 +1019,7 @@ is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 <h2 id="author">Author</h2>
 <p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
 <h2 id="license">License</h2>
-<p>Copyright (c) 2012-2025 David E. Wheeler, 2012-2021 iovation Inc.</p>
+<p>Copyright (c) 2012-2026 David E. Wheeler, 2012-2021 iovation Inc.</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal
 in the Software without restriction, including without limitation the rights

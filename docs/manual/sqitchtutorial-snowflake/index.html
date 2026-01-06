@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.151.0">
+	<meta name="generator" content="Hugo 0.154.2">
 </head>
 <body>
 	<header id=masthead>
@@ -465,7 +465,7 @@ idea to be explicit about dependencies.</p>
 this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to snowflake
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.users (
 </span></span><span style="display:flex;"><span>    nickname  TEXT         <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
@@ -627,7 +627,7 @@ should look like:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to snowflake
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.flips (
 </span></span><span style="display:flex;"><span>    id        INTEGER        <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
@@ -637,14 +637,14 @@ should look like:</p>
 </span></span><span style="display:flex;"><span>);
 </span></span></code></pre></div><p>Here&rsquo;s what <code>verify/flips.sql</code> might look like:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on snowflake
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, body, <span style="color:#66d9ef">timestamp</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.flips
 </span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
 </span></span></code></pre></div><p>And <code>revert/flips.sql</code> should look something like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from snowflake
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.flips;
 </span></span></code></pre></div><p>Now for <code>userflips</code>; <code>deploy/userflips.sql</code> might look like this:</p>
@@ -652,7 +652,7 @@ should look like:</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: flips
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">VIEW</span> flipr.userflips <span style="color:#66d9ef">AS</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.<span style="color:#66d9ef">timestamp</span>
@@ -660,7 +660,7 @@ should look like:</p>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">JOIN</span> flipr.flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname;
 </span></span></code></pre></div><p>Use a <code>SELECT</code> statement in <code>verify/userflips.sql</code> again:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:userflips on snowflake
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, fullname, body, <span style="color:#66d9ef">timestamp</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.userflips
@@ -668,7 +668,7 @@ should look like:</p>
 </span></span></code></pre></div><p>And of course, its <code>revert</code> script, <code>revert/userflips.sql</code>, should look
 something like:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:userflips from snowflake
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>USE WAREHOUSE <span style="color:#f92672">&amp;</span>warehouse;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">VIEW</span> flipr.userflips;
 </span></span></code></pre></div><p>Try em out!</p>
@@ -930,7 +930,8 @@ according to
 <p>Run 3-way file level merge for text files, but take lines from both versions,
 instead of leaving conflict markers. This tends to leave the added lines in
 the resulting file in random order and the user should verify the result. Do
-not use this if you do not understand the implications.</p></blockquote>
+not use this if you do not understand the implications.</p>
+</blockquote>
 <p>This has the effect of appending lines from all the merging files, which is
 exactly what we need. So let&rsquo;s give it a try. First, back out the botched
 rebase:</p>
@@ -1125,21 +1126,21 @@ no duplicates or errors.</p>
 the script to add the <code>twitter</code> column to the view. Make this change to
 <code>deploy/userflips.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -5,6 +5,6 @@
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>USE WAREHOUSE &amp;warehouse;
 </span></span><span style="display:flex;"><span>CREATE OR REPLACE VIEW flipr.userflips AS
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT f.id, u.nickname, u.fullname, f.body, f.timestamp
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT SELECT f.id, u.nickname, u.fullname, u.twitter, f.body, f.timestamp
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>  FROM flipr.users u
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+SELECT SELECT f.id, u.nickname, u.fullname, u.twitter, f.body, f.timestamp
+</span></span></span><span style="display:flex;"><span>  FROM flipr.users u
 </span></span><span style="display:flex;"><span>  JOIN flipr.flips f ON u.nickname = f.nickname;
 </span></span></code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>twitter</code> column.
 Here&rsquo;s the diff:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,6 @@
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- Verify flipr:userflips on snowflake
+</span></span></span><span style="display:flex;"><span> -- Verify flipr:userflips on snowflake
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT id, nickname, fullname, body, timestamp
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT id, nickname, fullname, twitter, body, timestamp
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>   FROM flipr.userflips
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+SELECT id, nickname, fullname, twitter, body, timestamp
+</span></span></span><span style="display:flex;"><span>   FROM flipr.userflips
 </span></span><span style="display:flex;"><span>  WHERE FALSE;
 </span></span></code></pre></div><p>Now try a deployment:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
@@ -1189,7 +1190,7 @@ is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 <h2 id="author">Author</h2>
 <p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
 <h2 id="license">License</h2>
-<p>Copyright (c) 2012-2025 David E. Wheeler, 2012-2021 iovation Inc.</p>
+<p>Copyright (c) 2012-2026 David E. Wheeler, 2012-2021 iovation Inc.</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal
 in the Software without restriction, including without limitation the rights

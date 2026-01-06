@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.151.0">
+	<meta name="generator" content="Hugo 0.154.2">
 </head>
 <body>
 	<header id=masthead>
@@ -221,12 +221,10 @@ the <code>deploy/users.sql</code> file looks like this:</p>
 <pre tabindex="0"><code>-- Deploy flipr:users to clickhouse
 
 -- XXX Add DDLs here.
-
-COMMIT;
 </code></pre><p>What we want to do is to replace the <code>XXX</code> comment with the <code>CREATE TABLE</code>
 statement, like so:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to clickhouse
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> users (
 </span></span><span style="display:flex;"><span>    nickname   VARCHAR(<span style="color:#ae81ff">50</span>)  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
 </span></span><span style="display:flex;"><span>    password   VARCHAR(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
@@ -237,7 +235,7 @@ statement, like so:</p>
 </span></span></code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
 script, so we edit this to <code>revert/users.sql</code> to look like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:users from clickhouse
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> users;
 </span></span></code></pre></div><p>Now we can try deploying this change. First, we need to create a database
 to deploy to. Assuming that ClickHouse is running on localhost using the
@@ -300,7 +298,7 @@ something that doesn&rsquo;t exist, something like:</p>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span> users .. Received <span style="color:#66d9ef">exception</span> <span style="color:#66d9ef">from</span> server (<span style="color:#66d9ef">version</span> <span style="color:#ae81ff">25</span>.<span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">2</span>):
 </span></span><span style="display:flex;"><span>Code: <span style="color:#ae81ff">60</span>. DB::<span style="color:#66d9ef">Exception</span>: Received <span style="color:#66d9ef">from</span> clickhouse:<span style="color:#ae81ff">9000</span>. DB::<span style="color:#66d9ef">Exception</span>: <span style="color:#66d9ef">Unknown</span> <span style="color:#66d9ef">table</span> expression identifier <span style="color:#e6db74">&#39;users_nonesuch&#39;</span> <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">scope</span> <span style="color:#66d9ef">SELECT</span> nickname, password, fullname, mastodon <span style="color:#66d9ef">FROM</span> users_nonesuch <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">false</span>. (UNKNOWN_TABLE)
 </span></span><span style="display:flex;"><span>(query: <span style="color:#75715e">-- Verify flipr:users on clickhouse
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, mastodon
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users_nonesuch
 </span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">false</span>;)
@@ -309,7 +307,7 @@ something that doesn&rsquo;t exist, something like:</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Verify Summary Report
 </span></span><span style="display:flex;"><span><span style="color:#75715e">---------------------
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Changes: <span style="color:#ae81ff">1</span>
+</span></span></span><span style="display:flex;"><span>Changes: <span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>Errors:  <span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>Verify failed
 </span></span></code></pre></div><p>ClickHouse is kind enough to tell us what the problem is. Don&rsquo;t forget to
@@ -442,7 +440,7 @@ idea to be explicit about dependencies.</p>
 this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to clickhouse
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flips (
 </span></span><span style="display:flex;"><span>    id         INTEGER       <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
 </span></span><span style="display:flex;"><span>    nickname   VARCHAR(<span style="color:#ae81ff">50</span>)   <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
@@ -461,14 +459,14 @@ does not enforce such relationships.</p>
 table. I recommend selecting each column by name, too, to be sure that no
 column is missing. Here&rsquo;s the <code>verify/flips.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on clickhouse
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, body, created_at
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flips
 </span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">false</span>;
 </span></span></code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
 <code>revert/flips.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from firebird
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flips;
 </span></span></code></pre></div><p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
@@ -774,7 +772,8 @@ according to
 <p>Run 3-way file level merge for text files, but take lines from both versions,
 instead of leaving conflict markers. This tends to leave the added lines in
 the resulting file in random order and the user should verify the result. Do
-not use this if you do not understand the implications.</p></blockquote>
+not use this if you do not understand the implications.</p>
+</blockquote>
 <p>This has the effect of appending lines from all the merging files, which is
 exactly what we need. So let&rsquo;s give it a try. First, back out the botched
 rebase:</p>
@@ -889,7 +888,6 @@ changes like these:</p>
 new <code>mastodon</code> column added to the view.</li>
 <li>Copy <code>deploy/userflips.sql</code> to <code>revert/userflips_mastodon.sql</code>.
 Yes, copy the original change script to the new revert change.</li>
-<li>Add a <code>DROP VIEW</code> statement to <code>revert/userflips_mastodon.sql</code>.</li>
 <li>Copy <code>verify/userflips.sql</code> to <code>verify/userflips_mastodon.sql</code>.</li>
 <li>Modify <code>verify/userflips_mastodon.sql</code> to include a check for the <code>mastodon</code>
 column.</li>
@@ -956,25 +954,25 @@ no duplicates or errors.</p>
 <p>As a result, there is no need to explicitly add changes. So go ahead. Modify
 <code>deploy/userflips.sql</code> to add the <code>mastodon</code> column.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#f92672">--- a/deploy/userflips.sql
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/deploy/userflips.sql
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -3,6 +3,6 @@
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- requires: flips
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+++ b/deploy/userflips.sql
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">@@ -3,6 +3,6 @@
+</span></span></span><span style="display:flex;"><span> -- requires: flips
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span> CREATE OR REPLACE VIEW userflips AS
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT f.id, u.nickname, u.fullname, f.body, f.created_at AS created_at
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT f.id, u.nickname, u.fullname, u.mastodon, f.body, f.created_at created_at
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>   FROM users u
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+SELECT f.id, u.nickname, u.fullname, u.mastodon, f.body, f.created_at created_at
+</span></span></span><span style="display:flex;"><span>   FROM users u
 </span></span><span style="display:flex;"><span>   JOIN flips f ON u.nickname = f.nickname;
 </span></span></code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>mastodon</code> column.
 Here&rsquo;s the diff:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#f92672">--- a/verify/userflips.sql
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/verify/userflips.sql
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -1,5 +1,5 @@
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- Verify flipr:userflips on clickhouse
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+++ b/verify/userflips.sql
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">@@ -1,5 +1,5 @@
+</span></span></span><span style="display:flex;"><span> -- Verify flipr:userflips on clickhouse
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT id, nickname, fullname, body, created_at
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+SELECT id, nickname, mastodon, fullname, body, created_at
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>   FROM userflips
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+SELECT id, nickname, mastodon, fullname, body, created_at
+</span></span></span><span style="display:flex;"><span>   FROM userflips
 </span></span><span style="display:flex;"><span>  WHERE false;
 </span></span></code></pre></div><p>Now try a deployment:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
@@ -1032,7 +1030,7 @@ is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 <li>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></li>
 </ul>
 <h2 id="license">License</h2>
-<p>Copyright (c) 2012-2025 David E. Wheeler, 2012-2021 iovation Inc.</p>
+<p>Copyright (c) 2012-2026 David E. Wheeler, 2012-2021 iovation Inc.</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal
 in the Software without restriction, including without limitation the rights

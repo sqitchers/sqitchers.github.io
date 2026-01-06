@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.151.0">
+	<meta name="generator" content="Hugo 0.154.2">
 </head>
 <body>
 	<header id=masthead>
@@ -531,7 +531,7 @@ idea to be explicit about dependencies.</p>
 this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.users (
 </span></span><span style="display:flex;"><span>    nickname  VARCHAR2(<span style="color:#ae81ff">512</span> CHAR) <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
 </span></span><span style="display:flex;"><span>    password  VARCHAR2(<span style="color:#ae81ff">512</span> CHAR) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
@@ -685,7 +685,7 @@ planned the change, and a note.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:insert_user to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.insert_user(
 </span></span><span style="display:flex;"><span>    nickname VARCHAR2,
 </span></span><span style="display:flex;"><span>    password VARCHAR2
@@ -704,7 +704,7 @@ planned the change, and a note.</p>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SHOW</span> ERRORS;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">-- Drop and die on error.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DECLARE</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span>
 </span></span><span style="display:flex;"><span>    l_err_count INTEGER;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>)
@@ -730,12 +730,12 @@ DESCRIBE flipr.insert_user;
 the specified function does not exist.</p>
 <p>And <code>revert/insert_user.sql</code> should look something like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:insert_user from oracle
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.insert_user;
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.insert_user;
 </span></span></code></pre></div><p>Now for <code>change_pass</code>; <code>deploy/change_pass.sql</code> might look like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:change_pass to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.change_pass(
 </span></span><span style="display:flex;"><span>    nick    VARCHAR2,
 </span></span><span style="display:flex;"><span>    oldpass VARCHAR2,
@@ -758,7 +758,7 @@ the specified function does not exist.</p>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SHOW</span> ERRORS;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">-- Drop and die on error.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DECLARE</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span>
 </span></span><span style="display:flex;"><span>    l_err_count INTEGER;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>)
@@ -780,7 +780,7 @@ DESCRIBE flipr.change_pass;
 </code></pre><p>And of course, its <code>revert</code> script, <code>revert/change_pass.sql</code>, should look
 something like:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:change_pass from oracle
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.change_pass;
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.change_pass;
 </span></span></code></pre></div><p>Try em out!</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
@@ -946,7 +946,7 @@ Added &#34;flips [appschema users]&#34; to sqitch.plan
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.flips (
 </span></span><span style="display:flex;"><span>    id        INTEGER             <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
 </span></span><span style="display:flex;"><span>    nickname  VARCHAR2(<span style="color:#ae81ff">512</span> CHAR)  <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flipr.users(nickname),
@@ -970,7 +970,7 @@ Added &#34;flips [appschema users]&#34; to sqitch.plan
 DESCRIBE flipr.flips;
 </code></pre><p>And edit <code>revert/flips.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from oracle
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TRIGGER</span>  flipr.flip_pk;
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TRIGGER</span>  flipr.flip_pk;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> SEQUENCE flipr.flip_id_seq;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span>    flipr.flips;
 </span></span></code></pre></div><p>And give it a whirl:</p>
@@ -1005,7 +1005,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:insert_flip to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: flips
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.insert_flip(
 </span></span><span style="display:flex;"><span>    nickname  VARCHAR2,
 </span></span><span style="display:flex;"><span>    body      VARCHAR2
@@ -1019,7 +1019,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SHOW</span> ERRORS;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">-- Drop and die on error.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DECLARE</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span>
 </span></span><span style="display:flex;"><span>    l_err_count INTEGER;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>)
@@ -1038,7 +1038,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:delete_flip to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: flips
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.delete_flip(
 </span></span><span style="display:flex;"><span>    flip_id INTEGER
 </span></span><span style="display:flex;"><span>) <span style="color:#66d9ef">IS</span>
@@ -1052,7 +1052,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SHOW</span> ERRORS;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">-- Drop and die on error.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DECLARE</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span>
 </span></span><span style="display:flex;"><span>    l_err_count INTEGER;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>)
@@ -1075,10 +1075,10 @@ DESCRIBE flipr.insert_flip;
 DESCRIBE flipr.delete_flip;
 </code></pre><p>The <code>revert</code> scripts are:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:insert_flip from oracle
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.insert_flip;
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.insert_flip;
 </span></span></code></pre></div><p>And:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:delete_flip from oracle
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.delete_flip;
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.delete_flip;
 </span></span></code></pre></div><p>Check the <a href="https://github.com/sqitchers/sqitch-oracle-intro">example git repository</a> for
 the complete details. Test <a href="/docs/manual/sqitch-deploy"><code>deploy</code></a> and
 <a href="/docs/manual/sqitch-revert"><code>revert</code></a>, then commit it to the repository. The status
@@ -1178,7 +1178,8 @@ docs</a>:</p>
 <p>Run 3-way file level merge for text files, but take lines from both versions,
 instead of leaving conflict markers. This tends to leave the added lines in
 the resulting file in random order and the user should verify the result. Do
-not use this if you do not understand the implications.</p></blockquote>
+not use this if you do not understand the implications.</p>
+</blockquote>
 <p>This has the effect of appending lines from all the merging files, which is
 exactly what we need. So let&rsquo;s give it a try. First, back out the botched
 rebase:</p>
@@ -1363,7 +1364,7 @@ will allow the password hashes to be stored with random hashing. So we&rsquo;ll 
 to add the function. The deploy script should be:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:crypt to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">FUNCTION</span> flipr.crypt(
 </span></span><span style="display:flex;"><span>    password VARCHAR2,
 </span></span><span style="display:flex;"><span>    salt     VARCHAR2
@@ -1379,7 +1380,7 @@ to add the function. The deploy script should be:</p>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SHOW</span> ERRORS;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">-- Drop and die on error.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DECLARE</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span>
 </span></span><span style="display:flex;"><span>    l_err_count INTEGER;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>)
@@ -1396,7 +1397,7 @@ to add the function. The deploy script should be:</p>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">/</span>
 </span></span></code></pre></div><p>And the revert script should be:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:crypt. from oracle
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> flipr.crypt;
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> flipr.crypt;
 </span></span></code></pre></div><p>And, as usual, the verify script should just use <code>DESCRIBE</code>:</p>
 <pre tabindex="0"><code>-- Verify flipr:crypt on oracle
 DESCRIBE flipr.crypt;
@@ -1482,22 +1483,22 @@ no duplicates or errors.</p>
 script to switch to <code>crypt()</code>. Make this change to
 <code>deploy/insert_user.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,7 @@
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- Deploy flipr:insert_user to oracle
+</span></span></span><span style="display:flex;"><span> -- Deploy flipr:insert_user to oracle
 </span></span><span style="display:flex;"><span> -- requires: users
 </span></span><span style="display:flex;"><span> -- requires: appschema
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">+-- requires: crypt
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span> 
+</span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> CREATE OR REPLACE PROCEDURE flipr.insert_user(
 </span></span><span style="display:flex;"><span>     nickname VARCHAR2,
 </span></span><span style="display:flex;"><span><span style="color:#75715e">@@ -9,9 +10,7 @@ CREATE OR REPLACE PROCEDURE flipr.insert_user(
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> BEGIN
+</span></span></span><span style="display:flex;"><span> BEGIN
 </span></span><span style="display:flex;"><span>     INSERT INTO flipr.users VALUES(
 </span></span><span style="display:flex;"><span>         nickname,
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-        LOWER( RAWTOHEX( UTL_RAW.CAST_TO_RAW(
 </span></span></span><span style="display:flex;"><span><span style="color:#f92672">-             sys.dbms_obfuscation_toolkit.md5(input_string =&gt; password)
 </span></span></span><span style="display:flex;"><span><span style="color:#f92672">-        ) ) ),
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+        flipr.crypt(password, DBMS_RANDOM.STRING(&#39;p&#39;, 10)),
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>         DEFAULT
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+        flipr.crypt(password, DBMS_RANDOM.STRING(&#39;p&#39;, 10)),
+</span></span></span><span style="display:flex;"><span>         DEFAULT
 </span></span><span style="display:flex;"><span>     );
 </span></span><span style="display:flex;"><span> END;
 </span></span></code></pre></div><p>Go ahead and rework the <code>change_pass</code> change, too:</p>
@@ -1509,27 +1510,27 @@ Modify these files as appropriate:
   * verify/change_pass.sql
 </code></pre><p>And make this change to <code>deploy/change_pass.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,7 @@
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> -- Deploy flipr:change_pass to oracle
+</span></span></span><span style="display:flex;"><span> -- Deploy flipr:change_pass to oracle
 </span></span><span style="display:flex;"><span> -- requires: users
 </span></span><span style="display:flex;"><span> -- requires: appschema
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">+-- requires: crypt
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span> 
+</span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> CREATE OR REPLACE PROCEDURE flipr.change_pass(
 </span></span><span style="display:flex;"><span>     nick    VARCHAR2,
 </span></span><span style="display:flex;"><span><span style="color:#75715e">@@ -10,13 +11,9 @@ CREATE OR REPLACE PROCEDURE flipr.change_pass(
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    flipr_auth_failed EXCEPTION;
+</span></span></span><span style="display:flex;"><span>    flipr_auth_failed EXCEPTION;
 </span></span><span style="display:flex;"><span> BEGIN
 </span></span><span style="display:flex;"><span>     UPDATE flipr.users
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-       SET password = LOWER( RAWTOHEX( UTL_RAW.CAST_TO_RAW(
 </span></span></span><span style="display:flex;"><span><span style="color:#f92672">-               sys.dbms_obfuscation_toolkit.md5(input_string =&gt; newpass)
 </span></span></span><span style="display:flex;"><span><span style="color:#f92672">-           ) ) )
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+       SET password = flipr.crypt(newpass, DBMS_RANDOM.STRING(&#39;p&#39;, 10))
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>      WHERE nickname = nick
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+       SET password = flipr.crypt(newpass, DBMS_RANDOM.STRING(&#39;p&#39;, 10))
+</span></span></span><span style="display:flex;"><span>      WHERE nickname = nick
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-       AND password = LOWER( RAWTOHEX( UTL_RAW.CAST_TO_RAW(
 </span></span></span><span style="display:flex;"><span><span style="color:#f92672">-               sys.dbms_obfuscation_toolkit.md5(input_string =&gt; oldpass)
 </span></span></span><span style="display:flex;"><span><span style="color:#f92672">-           ) ) );
-</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+       AND password = flipr.crypt(oldpass, password);
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>      IF SQL%ROWCOUNT = 0 THEN RAISE flipr_auth_failed; END IF;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">+       AND password = flipr.crypt(oldpass, password);
+</span></span></span><span style="display:flex;"><span>      IF SQL%ROWCOUNT = 0 THEN RAISE flipr_auth_failed; END IF;
 </span></span><span style="display:flex;"><span> END;
 </span></span><span style="display:flex;"><span> /
 </span></span></code></pre></div><p>And then try a deployment:</p>
@@ -1601,7 +1602,7 @@ examine the body of the function by querying the
 <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14237/statviews_2063.htm"><code>all_source</code></a>
 view. So the <code>insert_user</code> verify script looks like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:insert_user on oracle
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DESCRIBE</span> flipr.insert_user;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>)
@@ -1611,7 +1612,7 @@ view. So the <code>insert_user</code> verify script looks like this:</p>
 </span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> text <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%flipr.crypt(password, DBMS_RANDOM.STRING(&#39;&#39;p&#39;&#39;, 10))%&#39;</span>;
 </span></span></code></pre></div><p>And the <code>change_pass</code> verify script looks like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:change_pass on oracle
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DESCRIBE</span> flipr.change_pass;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>)
@@ -1655,7 +1656,7 @@ is planned to make managing idempotent reworkings even easier. Stay tuned.</p>
 <h2 id="author">Author</h2>
 <p>David E. Wheeler <a href="mailto:david@justatheory.com">david@justatheory.com</a></p>
 <h2 id="license">License</h2>
-<p>Copyright (c) 2012-2025 David E. Wheeler, 2012-2021 iovation Inc.</p>
+<p>Copyright (c) 2012-2026 David E. Wheeler, 2012-2021 iovation Inc.</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal
 in the Software without restriction, including without limitation the rights
