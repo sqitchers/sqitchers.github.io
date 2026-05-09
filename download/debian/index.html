@@ -42,15 +42,13 @@
 <p>The <a href="https://packages.debian.org/stretch/sqitch">Debian Sqitch Apt</a> package tends to lag behind several versions, but
 provides easy access to Debian and Ubuntu users. For example, to install Sqitch
 with <a href="https://postgresql.org/" title="PostgreSQL: The World's Most Advanced Open Source Relational Database">PostgreSQL</a> and <a href="https://sqlite.org/" title="SQLite: Small. Fast. Reliable. Choose any three.">SQLite</a> support:</p>
-<pre><code>apt-get install sqitch libdbd-pg-perl postgresql-client libdbd-sqlite3-perl sqlite3
-</code></pre>
-<p>An alternative that gets you the latest version of Sqitch is to just <code>apt-get</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt-get install sqitch libdbd-pg-perl postgresql-client libdbd-sqlite3-perl sqlite3
+</span></span></code></pre></div><p>An alternative that gets you the latest version of Sqitch is to just <code>apt-get</code>
 the external dependencies, and then build Sqitch itself via <a href="https://cpanmin.us">cpanminus</a>. To
 install Sqitch with [MySQL] support, for example:</p>
-<pre><code>apt-get install build-essential cpanminus perl perl-doc mysql libdbd-mysql-perl
-cpanm --quiet --notest App::Sqitch
-</code></pre>
-<p>The client and connection libraries for each engine are:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt-get install build-essential cpanminus perl perl-doc mysql libdbd-mysql-perl
+</span></span><span style="display:flex;"><span>cpanm --quiet --notest App::Sqitch
+</span></span></code></pre></div><p>The client and connection libraries for each engine are:</p>
 <ul>
 <li>PostgreSQL, YugabyteDB, and CockroachDB: <code>libdbd-pg-perl postgresql-client</code></li>
 <li>SQLite: <code>libdbd-sqlite3-perl sqlite3</code></li>
