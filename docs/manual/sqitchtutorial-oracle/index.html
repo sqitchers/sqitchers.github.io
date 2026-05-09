@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.154.2">
+	<meta name="generator" content="Hugo 0.161.1">
 </head>
 <body>
 	<header id=masthead>
@@ -232,7 +232,7 @@ Created deploy/
 Created revert/
 Created verify/
 </code></pre><p>Let&rsquo;s have a look at <code>sqitch.conf</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        # plan_file = sqitch.plan
@@ -254,7 +254,7 @@ projects:</p>
 <pre tabindex="0"><code>&gt; sqitch config --user user.name &#39;Marge N. O’Vera&#39;
 &gt; sqitch config --user user.email &#39;marge@example.com&#39;
 </code></pre><p>Have a look at <code>~/.sqitch/sqitch.conf</code> and you&rsquo;ll see this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[user]</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        email = marge@example.com</span>
@@ -289,10 +289,10 @@ Added &#34;appschema&#34; to sqitch.plan
 deploy, revert, and verify scripts that represent the change. Now we edit
 these files. The <code>deploy</code> script&rsquo;s job is to create the user. So we add
 this to <code>deploy/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">USER</span> flipr IDENTIFIED <span style="color:#66d9ef">BY</span> whatever;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">USER</span> flipr IDENTIFIED <span style="color:#66d9ef">BY</span> whatever;
 </span></span></code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
 script, so we add this to <code>revert/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">USER</span> flipr;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">USER</span> flipr;
 </span></span></code></pre></div><p>Now we can try deploying this change. Before going any further, unless you&rsquo;re
 using the Docker or VM environments described above, you might need to
 <a href="https://docs.oracle.com/cd/B28359_01/server.111/b28310/create001.htm#ADMIN11068">create the database</a>
@@ -337,7 +337,7 @@ might be in the database, and should throw an error if the deploy was not
 successful. In Oracle, the simplest way to do so for schema is probably to
 simply create an object in the schema. Put this SQL into
 <code>verify/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.verify__ (id int);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.verify__ (id int);
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span>   <span style="color:#66d9ef">TABLE</span> flipr.verify__;
 </span></span></code></pre></div><p>In truth, you can use <em>any</em> query that generates an SQL error if the schema
 doesn&rsquo;t exist. This works because Sqitch configures SQL*Plus so that SQL
@@ -345,7 +345,7 @@ errors cause it to exit with the error code (more on that below). Another
 handy way to do that is to divide by zero if an object doesn&rsquo;t exist. For
 example, to throw an error when the <code>flipr</code> schema does not exist, you could
 do something like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> sys.all_users <span style="color:#66d9ef">WHERE</span> username <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;FLIPR&#39;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> sys.all_users <span style="color:#66d9ef">WHERE</span> username <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;FLIPR&#39;</span>;
 </span></span></code></pre></div><p>Either way, run the <code>verify</code> script with the <a href="/docs/manual/sqitch-verify"><code>verify</code></a>
 command:</p>
 <pre tabindex="0"><code>&gt; sqitch verify db:oracle://scott:tiger@/flipr_test
@@ -355,7 +355,7 @@ Verify successful
 </code></pre><p>Looks good! If you want to make sure that the verify script correctly dies if
 the schema doesn&rsquo;t exist, temporarily change the schema name in the script to
 something that doesn&rsquo;t exist, something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> nonesuch.verify__ (id int);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> nonesuch.verify__ (id int);
 </span></span></code></pre></div><p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
 <pre tabindex="0"><code>&gt; sqitch verify db:oracle://scott:tiger@/flipr_test
 Verifying db:oracle://scott:@/flipr_test
@@ -376,7 +376,7 @@ Errors:  1
 Verify failed
 </code></pre><p>It&rsquo;s even nice enough to tell us what the problem is. Or, for the
 divide-by-zero example, change the schema name:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> sys.all_users <span style="color:#66d9ef">WHERE</span> username <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;NONESUCH&#39;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> sys.all_users <span style="color:#66d9ef">WHERE</span> username <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;NONESUCH&#39;</span>;
 </span></span></code></pre></div><p>Then the verify will look something like:</p>
 <pre tabindex="0"><code>&gt; sqitch verify db:oracle://scott:tiger@/flipr_test
 Verifying db:oracle://scott:@/flipr_test
@@ -529,7 +529,7 @@ therefore should always be applied before the <code>users</code> change, it&rsqu
 idea to be explicit about dependencies.</p>
 <p>Now edit the scripts. When you&rsquo;re done, <code>deploy/users.sql</code> should look like
 this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
 </span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.users (
@@ -553,12 +553,12 @@ your scripts, so you don&rsquo;t have to.</p>
 <p>Now for the verify script. The simplest way to check that the table was
 created and has the expected columns without touching the data? Just select
 from the table with a false <code>WHERE</code> clause. Add this to <code>verify/users.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, <span style="color:#66d9ef">timestamp</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, <span style="color:#66d9ef">timestamp</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.users
 </span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
 </span></span></code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
 <code>revert/users.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.users;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.users;
 </span></span></code></pre></div><p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
@@ -682,7 +682,7 @@ list of dependencies, a timestamp, the name and email address of the user who
 planned the change, and a note.</p>
 <p>Let&rsquo;s write the code for the new changes. Here&rsquo;s what
 <code>deploy/insert_user.sql</code> should look like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:insert_user to oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:insert_user to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
 </span></span></span><span style="display:flex;"><span>
@@ -729,10 +729,10 @@ DESCRIBE flipr.insert_user;
 </code></pre><p>We simply take advantage of the fact that <code>DESCRIBE</code> throws an exception if
 the specified function does not exist.</p>
 <p>And <code>revert/insert_user.sql</code> should look something like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:insert_user from oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:insert_user from oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.insert_user;
 </span></span></code></pre></div><p>Now for <code>change_pass</code>; <code>deploy/change_pass.sql</code> might look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:change_pass to oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:change_pass to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
 </span></span></span><span style="display:flex;"><span>
@@ -779,7 +779,7 @@ make the script die. Use <code>DESCRIBE</code> in <code>verify/change_pass.sql</
 DESCRIBE flipr.change_pass;
 </code></pre><p>And of course, its <code>revert</code> script, <code>revert/change_pass.sql</code>, should look
 something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:change_pass from oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:change_pass from oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.change_pass;
 </span></span></code></pre></div><p>Try em out!</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
@@ -943,7 +943,7 @@ Created revert/flips.sql
 Created verify/flips.sql
 Added &#34;flips [appschema users]&#34; to sqitch.plan
 </code></pre><p>You know the drill by now. Edit <code>deploy/flips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
 </span></span></span><span style="display:flex;"><span>
@@ -969,7 +969,7 @@ Added &#34;flips [appschema users]&#34; to sqitch.plan
 <pre tabindex="0"><code>-- Verify flipr:flips on oracle
 DESCRIBE flipr.flips;
 </code></pre><p>And edit <code>revert/flips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TRIGGER</span>  flipr.flip_pk;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> SEQUENCE flipr.flip_id_seq;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span>    flipr.flips;
@@ -1002,7 +1002,7 @@ Nothing to deploy (up-to-date)
 <p>Now comes the time to add functions to manage flips. I&rsquo;m sure you have things
 nailed down now. Go ahead and add <code>insert_flip</code> and <code>delete_flip</code> changes
 and commit them. The <code>insert_flip</code> deploy script might look something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:insert_flip to oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:insert_flip to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: flips
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
 </span></span></span><span style="display:flex;"><span>
@@ -1035,7 +1035,7 @@ and commit them. The <code>insert_flip</code> deploy script might look something
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span>;
 </span></span><span style="display:flex;"><span><span style="color:#f92672">/</span>
 </span></span></code></pre></div><p>And the <code>delete_flip</code> deploy script might look something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:delete_flip to oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:delete_flip to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: flips
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
 </span></span></span><span style="display:flex;"><span>
@@ -1074,10 +1074,10 @@ DESCRIBE flipr.insert_flip;
 <pre tabindex="0"><code>-- Verify flipr:delete_flip on oracle
 DESCRIBE flipr.delete_flip;
 </code></pre><p>The <code>revert</code> scripts are:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:insert_flip from oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:insert_flip from oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.insert_flip;
 </span></span></code></pre></div><p>And:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:delete_flip from oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:delete_flip from oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">PROCEDURE</span> flipr.delete_flip;
 </span></span></code></pre></div><p>Check the <a href="https://github.com/sqitchers/sqitch-oracle-intro">example git repository</a> for
 the complete details. Test <a href="/docs/manual/sqitch-deploy"><code>deploy</code></a> and
@@ -1362,7 +1362,7 @@ functions to fix that. How?</p>
 <a href="https://en.wikipedia.org/wiki/Salt_(cryptography)">cryptographic salt</a>. This
 will allow the password hashes to be stored with random hashing. So we&rsquo;ll need
 to add the function. The deploy script should be:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:crypt to oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:crypt to oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
 </span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">OR</span> <span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">FUNCTION</span> flipr.crypt(
@@ -1396,7 +1396,7 @@ to add the function. The deploy script should be:</p>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span>;
 </span></span><span style="display:flex;"><span><span style="color:#f92672">/</span>
 </span></span></code></pre></div><p>And the revert script should be:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:crypt. from oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:crypt. from oracle
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">FUNCTION</span> flipr.crypt;
 </span></span></code></pre></div><p>And, as usual, the verify script should just use <code>DESCRIBE</code>:</p>
 <pre tabindex="0"><code>-- Verify flipr:crypt on oracle
@@ -1482,7 +1482,7 @@ no duplicates or errors.</p>
 <p>As a result, there is no need to explicitly add changes. So go ahead. Modify the
 script to switch to <code>crypt()</code>. Make this change to
 <code>deploy/insert_user.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,7 @@
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,7 @@
 </span></span></span><span style="display:flex;"><span> -- Deploy flipr:insert_user to oracle
 </span></span><span style="display:flex;"><span> -- requires: users
 </span></span><span style="display:flex;"><span> -- requires: appschema
@@ -1509,7 +1509,7 @@ Modify these files as appropriate:
   * revert/change_pass.sql
   * verify/change_pass.sql
 </code></pre><p>And make this change to <code>deploy/change_pass.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,7 @@
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,7 @@
 </span></span></span><span style="display:flex;"><span> -- Deploy flipr:change_pass to oracle
 </span></span><span style="display:flex;"><span> -- requires: users
 </span></span><span style="display:flex;"><span> -- requires: appschema
@@ -1601,7 +1601,7 @@ been modified to use <code>crypt()</code>? I think the simplest thing to do is t
 examine the body of the function by querying the
 <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14237/statviews_2063.htm"><code>all_source</code></a>
 view. So the <code>insert_user</code> verify script looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:insert_user on oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:insert_user on oracle
 </span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DESCRIBE</span> flipr.insert_user;
 </span></span><span style="display:flex;"><span>
@@ -1611,7 +1611,7 @@ view. So the <code>insert_user</code> verify script looks like this:</p>
 </span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;INSERT_USER&#39;</span>
 </span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">AND</span> text <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%flipr.crypt(password, DBMS_RANDOM.STRING(&#39;&#39;p&#39;&#39;, 10))%&#39;</span>;
 </span></span></code></pre></div><p>And the <code>change_pass</code> verify script looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:change_pass on oracle
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:change_pass on oracle
 </span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DESCRIBE</span> flipr.change_pass;
 </span></span><span style="display:flex;"><span>

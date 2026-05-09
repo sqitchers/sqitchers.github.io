@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.154.2">
+	<meta name="generator" content="Hugo 0.161.1">
 </head>
 <body>
 	<header id=masthead>
@@ -232,7 +232,7 @@ to point to the private key file:</p>
 </code></pre><p>To connect, set the <code>$SNOWSQL_PRIVATE_KEY_PASSPHRASE</code> environment variable to
 the passphrase for the private key, and add these parameters under the
 configuration for your DSN in <code>/etc/odbc.ini</code> or <code>~/.odbc.ini</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[sqitch]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[sqitch]</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">AUTHENTICATOR</span>     <span style="color:#f92672">=</span> <span style="color:#e6db74">SNOWFLAKE_JWT</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">UID</span>               <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;username&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">PRIV_KEY_FILE</span>     <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;path&gt;/rsa_key.p8</span>
@@ -369,7 +369,7 @@ by default. See the <a href="https://www.exasol.com/portal/display/DOC/Database+
 for more information on connection profiles, specifically the EXAplus section in
 the chapter on &ldquo;Clients and interfaces&rdquo;.</p>
 <p>For ODBC connections from Sqitch, we can use connection settings in <code>~/.odbc.ini</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[flipr_test]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[flipr_test]</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">DRIVER</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Exasol</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">EXAHOST</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">localhost:8563</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">EXAUID</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">sys</span>
@@ -395,7 +395,7 @@ Deploying changes to db:exasol:flipr_test
 <a href="https://docs.snowflake.com/en/user-guide/snowsql-start.html#snowsql-config-file"><code>~/.snowsql/config</code> file</a>
 and use the default connections settings; named connections are not supported.
 An example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[connections]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[connections]</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">accountname</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">myaccount.us-east-1</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">warehousename</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">compute</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">username</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">frank</span>

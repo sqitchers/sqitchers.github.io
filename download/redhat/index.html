@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.154.2">
+	<meta name="generator" content="Hugo 0.161.1">
 </head>
 <body>
 	<header id=masthead>
@@ -44,12 +44,12 @@ use <a href="https://docs.fedoraproject.org/en-US/quick-docs/dnf/">DNF</a> or <a
 <a href="https://cpanmin.us">cpanminus</a>.</p>
 <p>For example, to install Sqitch with support for <a href="https://postgresql.org/" title="PostgreSQL: The World's Most Advanced Open Source Relational Database">PostgreSQL</a> On newer
 DNF/DNF5‑based systems (e.g., Fedora 41+):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo dnf install perl-devel perl-CPAN postgresql-devel
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo dnf install perl-devel perl-CPAN postgresql-devel
 </span></span><span style="display:flex;"><span>sudo dnf group install development-tools
 </span></span><span style="display:flex;"><span>curl -L https://cpanmin.us | perl - --sudo App::cpanminus
 </span></span><span style="display:flex;"><span>cpanm --sudo --quiet --notest App::Sqitch
 </span></span></code></pre></div><p>On older Yum‑based systems:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo yum install perl-devel perl-CPAN postgresql perl-DBD-Pg
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo yum install perl-devel perl-CPAN postgresql perl-DBD-Pg
 </span></span><span style="display:flex;"><span>sudo yum group install <span style="color:#e6db74">&#34;Development Tools&#34;</span>
 </span></span><span style="display:flex;"><span>curl -L https://cpanmin.us | perl - --sudo App::cpanminus
 </span></span><span style="display:flex;"><span>cpanm --quiet --notest App::Sqitch

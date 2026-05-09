@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.154.2">
+	<meta name="generator" content="Hugo 0.161.1">
 </head>
 <body>
 	<header id=masthead>
@@ -372,7 +372,7 @@ VCS for a project that deploys to PostgreSQL and stores its deployment scripts
 with the extension <code>ddl</code> under the <code>migrations</code> directory. It also wants
 bundle to be created in the <code>_build/sql</code> directory, and to deploy starting
 with the &ldquo;gamma&rdquo; tag:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">engine</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">pg
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    top_dir   = migrations
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    extension = ddl</span>
@@ -392,7 +392,7 @@ with the &ldquo;gamma&rdquo; tag:</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">uri</span>       <span style="color:#f92672">=</span> <span style="color:#e6db74">db:pg:widgetopolis</span>
 </span></span></code></pre></div><p>And here&rsquo;s an example of useful configuration in <code>~/.sqitch/sqitch.conf</code>, to
 point to system-specific engine information:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[user]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[user]</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">name</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">Marge N. O’Vera
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    email     = marge@example.com</span>
 </span></span><span style="display:flex;"><span>

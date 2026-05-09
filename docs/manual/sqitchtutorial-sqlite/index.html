@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.154.2">
+	<meta name="generator" content="Hugo 0.161.1">
 </head>
 <body>
 	<header id=masthead>
@@ -116,7 +116,7 @@ Created deploy/
 Created revert/
 Created verify/
 </code></pre><p>Let&rsquo;s have a look at <code>sqitch.conf</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">sqlite
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        # plan_file = sqitch.plan
@@ -143,7 +143,7 @@ of our projects:</p>
 <pre tabindex="0"><code>&gt; sqitch config --user user.name &#39;Marge N. O’Vera&#39;
 &gt; sqitch config --user user.email &#39;marge@example.com&#39;
 </code></pre><p>Have a look at <code>~/.sqitch/sqitch.conf</code> and you&rsquo;ll see this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;sqlite&#34;]</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/local/bin/sqlite3</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[user]</span>
@@ -179,7 +179,7 @@ Added &#34;users&#34; to sqitch.plan
 deploy, revert, and verify scripts that represent the change. Now we edit
 these files. The <code>deploy</code> script&rsquo;s job is to create the table. By default,
 the <code>deploy/users.sql</code> file looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to sqlite
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to sqlite
 </span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
@@ -188,7 +188,7 @@ the <code>deploy/users.sql</code> file looks like this:</p>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
 </span></span></code></pre></div><p>What we want to do is to replace the <code>XXX</code> comment with the <code>CREATE TABLE</code>
 statement, like so:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to sqlite
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to sqlite
 </span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
@@ -203,7 +203,7 @@ statement, like so:</p>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
 </span></span></code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
 script, so we edit this to <code>revert/users.sql</code> to look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:users from sqlite
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:users from sqlite
 </span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
@@ -257,7 +257,7 @@ did was it was supposed to. It should do so without regard to any data that
 might be in the database, and should throw an error if the deploy was not
 successful. The easiest way to do that with a table is to simply <code>SELECT</code>
 from it. Put this query into <code>verify/users.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">FROM</span> users
 </span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">0</span>;
 </span></span></code></pre></div><p>Now you can run the <code>verify</code> script with the <a href="/docs/manual/sqitch-verify"><code>verify</code></a>
@@ -269,7 +269,7 @@ Verify successful
 </code></pre><p>Looks good! If you want to make sure that the verify script correctly dies if
 the table doesn&rsquo;t exist, temporarily change the table name in the script to
 something that doesn&rsquo;t exist, something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, <span style="color:#66d9ef">timestamp</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, <span style="color:#66d9ef">timestamp</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">FROM</span> users_nonesuch
 </span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">0</span>;
 </span></span></code></pre></div><p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
@@ -415,7 +415,7 @@ therefore should always be applied before the <code>flips</code> change, it&rsqu
 idea to be explicit about dependencies.</p>
 <p>Now edit the scripts. When you&rsquo;re done, <code>deploy/flips.sql</code> should look like
 this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to sqlite
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to sqlite
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
 </span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
@@ -437,7 +437,7 @@ need to require the <code>users</code> change.</p>
 <p>Now for the verify script. Again, all we need to do is <code>SELECT</code> from the
 table. I recommend selecting each column by name, too, to be sure that no
 column is missing. Here&rsquo;s the <code>verify/flips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on sqlite
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on sqlite
 </span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
@@ -448,7 +448,7 @@ column is missing. Here&rsquo;s the <code>verify/flips.sql</code>:</p>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
 </span></span></code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
 <code>revert/flips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from sqlite
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from sqlite
 </span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
 </span></span><span style="display:flex;"><span>
@@ -549,16 +549,16 @@ Created revert/userflips.sql
 Created verify/userflips.sql
 Added &#34;userflips [users flips]&#34; to sqitch.plan
 </code></pre><p>Now add this SQL to <code>deploy/userflips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">VIEW</span> userflips <span style="color:#66d9ef">AS</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">VIEW</span> userflips <span style="color:#66d9ef">AS</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.<span style="color:#66d9ef">timestamp</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">FROM</span> users u
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">JOIN</span> flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname;
 </span></span></code></pre></div><p>Add this SQL to <code>verify/userflips.sql</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, fullname, body, <span style="color:#66d9ef">timestamp</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, fullname, body, <span style="color:#66d9ef">timestamp</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">FROM</span> userflips
 </span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">0</span>;
 </span></span></code></pre></div><p>And add the <code>DROP VIEW</code> statement to <code>revert/userflips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">VIEW</span> userflips;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">VIEW</span> userflips;
 </span></span></code></pre></div><p>Now Try it out!</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
@@ -651,15 +651,15 @@ Created revert/hashtags.sql
 Created verify/hashtags.sql
 Added &#34;hashtags [flips]&#34; to sqitch.plan
 </code></pre><p>You know the drill by now. Add this to <code>deploy/hashtags.sql</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> hashtags (
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> hashtags (
 </span></span><span style="display:flex;"><span>          flip_id   INTEGER   <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flips(id),
 </span></span><span style="display:flex;"><span>          hashtag   TEXT      <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">CHECK</span> ( <span style="color:#66d9ef">length</span>(hashtag) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> ),
 </span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (flip_id, hashtag)
 </span></span><span style="display:flex;"><span>);
 </span></span></code></pre></div><p>Again, select from the table in <code>verify/hashtags.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> flip_id, hashtag <span style="color:#66d9ef">FROM</span> hashtags <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">0</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> flip_id, hashtag <span style="color:#66d9ef">FROM</span> hashtags <span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">0</span>;
 </span></span></code></pre></div><p>And drop it in <code>revert/hashtags.sql</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> hashtags;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> hashtags;
 </span></span></code></pre></div><p>And give it a whirl:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
@@ -949,7 +949,7 @@ how they were as-of the deployment of <code>deploy/userflips@v1.0.0-dev2.sql</co
 <p>Modify <code>deploy/userflips.sql</code> to add the <code>twitter</code> column; in fact, let&rsquo;s
 also add a <code>DROP VIEW IF EXISTS</code> statement, in case we need to rework this
 change again in the future:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -4,8 +4,9 @@
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -4,8 +4,9 @@
 </span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> BEGIN;
 </span></span><span style="display:flex;"><span> 
@@ -962,7 +962,7 @@ change again in the future:</p>
 </span></span><span style="display:flex;"><span> 
 </span></span></code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>twitter</code> column.
 Here&rsquo;s the diff:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -2,7 +2,7 @@
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -2,7 +2,7 @@
 </span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> BEGIN;
 </span></span><span style="display:flex;"><span> 
@@ -973,7 +973,7 @@ Here&rsquo;s the diff:</p>
 </span></span><span style="display:flex;"><span> 
 </span></span></code></pre></div><p>And finally, modify <code>revert/userflips.sql</code> to drop the view
 before creating it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -4,6 +4,7 @@
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -4,6 +4,7 @@
 </span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> BEGIN;
 </span></span><span style="display:flex;"><span> 
@@ -988,7 +988,7 @@ before creating it:</p>
 Deploying changes to flipr_test
         + userflips .. ok
 </code></pre><p>So, are the changes deployed?</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> sqlite3 flipr_test.db <span style="color:#e6db74">&#39;.schema userflips&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> sqlite3 flipr_test.db <span style="color:#e6db74">&#39;.schema userflips&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">VIEW</span> userflips <span style="color:#66d9ef">AS</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, u.twitter, f.body, f.<span style="color:#66d9ef">timestamp</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> users u
@@ -998,7 +998,7 @@ Deploying changes to flipr_test
 Reverting changes to hashtags @v1.0.0-dev2 from flipr_test
         - userflips .. ok
 </code></pre><p>Did that work, is the <code>twitter</code> column gone?</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> sqlite3 flipr_test.db <span style="color:#e6db74">&#39;.schema userflips&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> sqlite3 flipr_test.db <span style="color:#e6db74">&#39;.schema userflips&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">VIEW</span> userflips <span style="color:#66d9ef">AS</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> f.id, u.nickname, u.fullname, f.body, f.<span style="color:#66d9ef">timestamp</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">FROM</span> users u

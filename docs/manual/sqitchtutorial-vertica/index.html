@@ -15,7 +15,7 @@
 	<link rel="mask-icon" href="/img/sqitch-icon-black.svg" color="#22538e" />
 	<meta name="msapplication-TileColor" content="#22538e" />
 	<meta name="theme-color" content="#fcffff" />
-	<meta name="generator" content="Hugo 0.154.2">
+	<meta name="generator" content="Hugo 0.161.1">
 </head>
 <body>
 	<header id=masthead>
@@ -99,18 +99,18 @@ to make sure that the Vertica ODBC driver is properly configured. At its
 simplest, on Unix-like systems, name the driver &ldquo;Vertica&rdquo; by adding this entry
 to <code>odbcinst.ini</code> (usually found in <code>/etc</code>, <code>/usr/etc</code>, or
 <code>/usr/local/etc</code>):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[Vertica]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[Vertica]</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">Description</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">ODBC for Vertica</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">Driver</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/vertica/lib64/libverticaodbc.so</span>
 </span></span></code></pre></div><p>And also creating a <code>vertica.ini</code> file in the same directory that contains:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[Driver]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[Driver]</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">DriverManagerEncoding</span><span style="color:#f92672">=</span><span style="color:#e6db74">UTF-16</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">ODBCInstLib</span><span style="color:#f92672">=</span><span style="color:#e6db74">/usr/lib64/libodbcinst.so</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">ErrorMessagesPath</span><span style="color:#f92672">=</span><span style="color:#e6db74">/opt/vertica/lib64</span>
 </span></span></code></pre></div><p>You might also consider naming your database connection by putting an entry in
 <code>odbc.ini</code> (same directory), like so (assuming that Vertica is running on
 your local host):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[dbadmin]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[dbadmin]</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">Description</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Vertica dbadmin connection</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">Driver</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">Vertica</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">Database</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">dbadmin</span>
@@ -153,7 +153,7 @@ Created deploy/
 Created revert/
 Created verify/
 </code></pre><p>Let&rsquo;s have a look at <code>sqitch.conf</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat sqitch.conf</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[core]</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">engine</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">vertica
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        # plan_file = sqitch.plan
@@ -180,7 +180,7 @@ of our projects:</p>
 <pre tabindex="0"><code>&gt; sqitch config --user user.name &#39;Marge N. O’Vera&#39;
 &gt; sqitch config --user user.email &#39;marge@example.com&#39;
 </code></pre><p>Have a look at <code>~/.sqitch/sqitch.conf</code> and you&rsquo;ll see this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">&gt; cat ~/.sqitch/sqitch.conf</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[engine &#34;vertica&#34;]</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/opt/vertica/bin/vsql</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[user]</span>
@@ -216,10 +216,10 @@ Added &#34;appschema&#34; to sqitch.plan
 deploy, revert, and verify scripts that represent the change. Now we edit
 these files. The <code>deploy</code> script&rsquo;s job is to create the schema. So we add
 this to <code>deploy/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
 </span></span></code></pre></div><p>The <code>revert</code> script&rsquo;s job is to precisely revert the change to the deploy
 script, so we add this to <code>revert/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">SCHEMA</span> flipr;
 </span></span></code></pre></div><p>Now we can try deploying this change. We tell Sqitch where to send the change
 via a <a href="https://github.com/libwww-perl/uri-db/">database URI</a>, assuming the default
 <code>dbadmin</code> database and user and an ODBC driver named <code>Vertica</code> (see
@@ -251,13 +251,13 @@ might be in the database, and should throw an error if the deploy was not
 successful. In Vertica, the simplest way to do so for schema is probably to
 simply create an object in the schema. Put this SQL into
 <code>verify/appschema.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.verify__ (id int);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.verify__ (id int);
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span>   <span style="color:#66d9ef">TABLE</span> flipr.verify__;
 </span></span></code></pre></div><p>In truth, you can use <em>any</em> query that generates an SQL error if the schema
 doesn&rsquo;t exist. Another handy way to do that is to divide by zero if an object
 doesn&rsquo;t exist. For example, to throw an error when the <code>flipr</code> schema does
 not exist, you could do something like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> v_catalog.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;flipr&#39;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> v_catalog.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;flipr&#39;</span>;
 </span></span></code></pre></div><p>Either way, run the <code>verify</code> script with the <a href="/docs/manual/sqitch-verify"><code>verify</code></a>
 command:</p>
 <pre tabindex="0"><code>&gt; sqitch verify &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
@@ -267,7 +267,7 @@ Verify successful
 </code></pre><p>Looks good! If you want to make sure that the verify script correctly dies if
 the schema doesn&rsquo;t exist, temporarily change the schema name in the script to
 something that doesn&rsquo;t exist, something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> nonesuch.verify__ (id int);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> nonesuch.verify__ (id int);
 </span></span></code></pre></div><p>Then <a href="/docs/manual/sqitch-verify"><code>verify</code></a> again:</p>
 <pre tabindex="0"><code>&gt; sqitch verify &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 Verifying db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
@@ -282,7 +282,7 @@ Errors:  1
 Verify failed
 </code></pre><p>It&rsquo;s even nice enough to tell us what the problem is. Or, for the
 divide-by-zero example, change the schema name:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> v_catalog.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;nonesuch&#39;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> v_catalog.schemata <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">schema_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;nonesuch&#39;</span>;
 </span></span></code></pre></div><p>Then the verify will look something like:</p>
 <pre tabindex="0"><code>&gt; sqitch verify &#39;db:vertica://dbadmin:password@localhost:5433/dbadmin?Driver=Vertica&#39;
 Verifying db:vertica://dbadmin:@localhost:5433/dbadmin?Driver=Vertica
@@ -432,7 +432,7 @@ therefore should always be applied before the <code>users</code> change, it&rsqu
 idea to be explicit about dependencies.</p>
 <p>Now edit the scripts. When you&rsquo;re done, <code>deploy/users.sql</code> should look like
 this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to vertica
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:users to vertica
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema                                                                          
 </span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.users (
@@ -451,12 +451,12 @@ to require the <code>appschema</code> change.</p>
 <p>Now for the verify script. The simplest way to check that the table was
 created and has the expected columns without touching the data? Just select
 from the table with a false <code>WHERE</code> clause. Add this to <code>verify/users.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter, <span style="color:#66d9ef">timestamp</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> nickname, password, fullname, twitter, <span style="color:#66d9ef">timestamp</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.users
 </span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
 </span></span></code></pre></div><p>Now for the revert script: all we have to do is drop the table. Add this to
 <code>revert/users.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.users;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.users;
 </span></span></code></pre></div><p>Couldn&rsquo;t be much simpler, right? Let&rsquo;s deploy this bad boy:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
@@ -579,7 +579,7 @@ list of dependencies, a timestamp, the name and email address of the user who
 planned the change, and a note.</p>
 <p>Let&rsquo;s write the code for the new changes. Here&rsquo;s what <code>deploy/flips.sql</code>
 should look like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to vertica
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:flips to vertica
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
 </span></span></span><span style="display:flex;"><span>
@@ -590,17 +590,17 @@ should look like:</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">timestamp</span> TIMESTAMPTZ    <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> clock_timestamp()
 </span></span><span style="display:flex;"><span>);
 </span></span></code></pre></div><p>Here&rsquo;s what <code>verify/flips.sql</code> might look like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on vertica
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:flips on vertica
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, body, <span style="color:#66d9ef">timestamp</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.flips
 </span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
 </span></span></code></pre></div><p>We simply take advantage of the fact that <code>has_function_privilege()</code> throws
 an exception if the specified function does not exist.</p>
 <p>And <code>revert/flips.sql</code> should look something like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from vertica
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:flips from vertica
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.flips;
 </span></span></code></pre></div><p>Now for <code>userflips</code>; <code>deploy/userflips.sql</code> might look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:userflips to vertica
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Deploy flipr:userflips to vertica
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: appschema
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: users
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- requires: flips
@@ -610,13 +610,13 @@ an exception if the specified function does not exist.</p>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.users u
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">JOIN</span> flipr.flips f <span style="color:#66d9ef">ON</span> u.nickname <span style="color:#f92672">=</span> f.nickname;
 </span></span></code></pre></div><p>Use a <code>SELECT</code> statement in <code>verify/userflips.sql</code> again:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:userflips on vertica
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Verify flipr:userflips on vertica
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, nickname, fullname, body, <span style="color:#66d9ef">timestamp</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">FROM</span> flipr.userflips
 </span></span><span style="display:flex;"><span> <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
 </span></span></code></pre></div><p>And of course, its <code>revert</code> script, <code>revert/userflips.sql</code>, should look
 something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:userflips from vertica
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Revert flipr:userflips from vertica
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">VIEW</span> flipr.userflips;
 </span></span></code></pre></div><p>Try em out!</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
@@ -764,15 +764,15 @@ Created revert/hashtags.sql
 Created verify/hashtags.sql
 Added &#34;hashtags [appschema flips]&#34; to sqitch.plan
 </code></pre><p>You know the drill by now. Add this to <code>deploy/hashtags.sql</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.hashtags (
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> flipr.hashtags (
 </span></span><span style="display:flex;"><span>    flip_id   BIGINT  <span style="color:#66d9ef">NOT</span>   <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">REFERENCES</span> flipr.Flips(id),
 </span></span><span style="display:flex;"><span>    hashtag   VARCHAR(<span style="color:#ae81ff">128</span>)  <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (flip_id, hashtag)
 </span></span><span style="display:flex;"><span>);
 </span></span></code></pre></div><p>Again, select from the table in <code>verify/hashtags.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> flip_id, hashtag <span style="color:#66d9ef">FROM</span> flipr.hashtags <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> flip_id, hashtag <span style="color:#66d9ef">FROM</span> flipr.hashtags <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">FALSE</span>;
 </span></span></code></pre></div><p>And drop it in <code>revert/hashtags.sql</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.hashtags;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> flipr.hashtags;
 </span></span></code></pre></div><p>And give it a whirl:</p>
 <pre tabindex="0"><code>&gt; sqitch deploy
 Deploying changes to flipr_test
@@ -1071,7 +1071,7 @@ no duplicates or errors.</p>
 <p>As a result, there is no need to explicitly add changes. So go ahead. Modify
 the script to add the <code>twitter</code> column to the view. Make this change to
 <code>deploy/userflips.sql</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -4,8 +4,9 @@
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -4,8 +4,9 @@
 </span></span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span> BEGIN;
 </span></span><span style="display:flex;"><span> 
@@ -1085,7 +1085,7 @@ the script to add the <code>twitter</code> column to the view. Make this change 
 </span></span><span style="display:flex;"><span>   JOIN flipr.flips f ON u.nickname = f.nickname;
 </span></span></code></pre></div><p>Next, modify <code>verify/userflips.sql</code> to check for the <code>twitter</code> column.
 Here&rsquo;s the diff:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,6 @@
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#75715e">@@ -1,6 +1,6 @@
 </span></span></span><span style="display:flex;"><span> -- Verify flipr:userflips on vertica
 </span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span><span style="color:#f92672">-SELECT id, nickname, fullname, body, timestamp
